@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/extension-code-block",
+  "name": "@rich-editor/extension-find-replace",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -22,13 +22,11 @@
   },
   "dependencies": {
     "@rich-editor/core": "workspace:*",
-    "lowlight": "^3.3.0",
     "prosemirror-model": "^1.24.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.37.0"
   },
   "devDependencies": {
-    "@types/hast": "^3.0.4",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
   }

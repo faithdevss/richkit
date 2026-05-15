@@ -1,4 +1,5 @@
 import type { Editor } from '@rich-editor/core'
+import { downloadDocx } from '@rich-editor/docx'
 import { createElement } from 'react'
 import {
   AlignCenterIcon,
@@ -77,29 +78,22 @@ function insertText(editor: Editor, text: string) {
   editor.focus()
 }
 
-function exportFile(editor: Editor, kind: 'html' | 'json' | 'word') {
-  let data: string
-  let mime: string
-  let ext: string
-  if (kind === 'html') {
-    data = `<!doctype html><html><head><meta charset="utf-8"></head><body>${editor.getHTML()}</body></html>`
-    mime = 'text/html'
-    ext = 'html'
-  } else if (kind === 'json') {
-    data = JSON.stringify(editor.getJSON(), null, 2)
-    mime = 'application/json'
-    ext = 'json'
-  } else {
-    data = `<!doctype html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>body{font-family:Calibri,sans-serif}table{border-collapse:collapse}th,td{border:1px solid #000;padding:4px 8px}</style></head><body>${editor.getHTML()}</body></html>`
-    mime = 'application/msword'
-    ext = 'doc'
-  }
+function exportFile(editor: Editor, kind: 'html' | 'json') {
+  const data =
+    kind === 'html'
+      ? `<!doctype html><html><head><meta charset="utf-8"></head><body>${editor.getHTML()}</body></html>`
+      : JSON.stringify(editor.getJSON(), null, 2)
+  const mime = kind === 'html' ? 'text/html' : 'application/json'
   const blob = new Blob([data], { type: mime })
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
-  a.download = `document.${ext}`
+  a.download = `document.${kind}`
   a.click()
   URL.revokeObjectURL(a.href)
+}
+
+async function exportWord(editor: Editor) {
+  await downloadDocx(editor, { filename: 'document.docx', author: 'Rich Editor' })
 }
 
 function exportPdf(editor: Editor) {
@@ -221,7 +215,7 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
         { label: 'Export to HTML…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'html') },
         { label: 'Export to JSON…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'json') },
         { label: 'Export to PDF…', icon: icon(FontIcon), onSelect: exportPdf },
-        { label: 'Export to Word…', icon: icon(FontIcon), onSelect: (e) => exportFile(e, 'word') },
+        { label: 'Export to Word…', icon: icon(FontIcon), onSelect: exportWord },
         { separator: true },
         { label: 'Print…', icon: icon(FontIcon), shortcut: `${MOD}P`, onSelect: () => window.print() },
         { separator: true },

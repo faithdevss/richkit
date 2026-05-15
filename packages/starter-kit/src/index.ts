@@ -1,4 +1,5 @@
 import { Blockquote } from '@rich-editor/extension-blockquote'
+import { FindReplace } from '@rich-editor/extension-find-replace'
 import { Bold } from '@rich-editor/extension-bold'
 import { BulletList } from '@rich-editor/extension-bullet-list'
 import { CaseChange } from '@rich-editor/extension-case-change'
@@ -55,10 +56,12 @@ export const StarterKit = [
   Placeholder,
   Typography,
   MarkdownShortcuts,
+  FindReplace,
 ]
 
 export {
   Blockquote,
+  FindReplace,
   Bold,
   BulletList,
   CaseChange,

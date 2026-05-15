@@ -45,6 +45,7 @@
     "@rich-editor/extension-page-break": "workspace:*",
     "@rich-editor/extension-table": "workspace:*",
     "@rich-editor/extension-typography": "workspace:*",
+    "@rich-editor/extension-find-replace": "workspace:*",
     "@rich-editor/extension-task-list": "workspace:*",
     "@rich-editor/extension-text-align": "workspace:*",
     "@rich-editor/extension-text-style": "workspace:*",
