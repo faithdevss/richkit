@@ -1,0 +1,57 @@
+{
+  "name": "@rich-editor/starter-kit",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@rich-editor/core": "workspace:*",
+    "@rich-editor/extension-blockquote": "workspace:*",
+    "@rich-editor/extension-bold": "workspace:*",
+    "@rich-editor/extension-bullet-list": "workspace:*",
+    "@rich-editor/extension-code": "workspace:*",
+    "@rich-editor/extension-code-block": "workspace:*",
+    "@rich-editor/extension-heading": "workspace:*",
+    "@rich-editor/extension-history": "workspace:*",
+    "@rich-editor/extension-image": "workspace:*",
+    "@rich-editor/extension-italic": "workspace:*",
+    "@rich-editor/extension-link": "workspace:*",
+    "@rich-editor/extension-list-item": "workspace:*",
+    "@rich-editor/extension-markdown-shortcuts": "workspace:*",
+    "@rich-editor/extension-ordered-list": "workspace:*",
+    "@rich-editor/extension-paragraph": "workspace:*",
+    "@rich-editor/extension-placeholder": "workspace:*",
+    "@rich-editor/extension-strike": "workspace:*",
+    "@rich-editor/extension-case-change": "workspace:*",
+    "@rich-editor/extension-highlight": "workspace:*",
+    "@rich-editor/extension-horizontal-rule": "workspace:*",
+    "@rich-editor/extension-line-height": "workspace:*",
+    "@rich-editor/extension-page-break": "workspace:*",
+    "@rich-editor/extension-table": "workspace:*",
+    "@rich-editor/extension-typography": "workspace:*",
+    "@rich-editor/extension-task-list": "workspace:*",
+    "@rich-editor/extension-text-align": "workspace:*",
+    "@rich-editor/extension-text-style": "workspace:*",
+    "@rich-editor/extension-underline": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

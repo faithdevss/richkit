@@ -1,0 +1,30 @@
+{
+  "name": "integration-tests",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rich-editor/core": "workspace:*",
+    "@rich-editor/extension-bold": "workspace:*",
+    "@rich-editor/extension-case-change": "workspace:*",
+    "@rich-editor/extension-heading": "workspace:*",
+    "@rich-editor/extension-highlight": "workspace:*",
+    "@rich-editor/extension-horizontal-rule": "workspace:*",
+    "@rich-editor/extension-line-height": "workspace:*",
+    "@rich-editor/extension-page-break": "workspace:*",
+    "@rich-editor/extension-paragraph": "workspace:*",
+    "@rich-editor/extension-table": "workspace:*",
+    "@rich-editor/extension-text-align": "workspace:*",
+    "@rich-editor/extension-text-style": "workspace:*"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "prosemirror-state": "^1.4.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  }
+}

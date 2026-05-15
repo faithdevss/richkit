@@ -1,0 +1,199 @@
+import {
+  BubbleMenu,
+  EditorContent,
+  FindReplace,
+  Icons,
+  Menubar,
+  SourceCode,
+  buildMenus,
+  useEditor,
+} from '@rich-editor/react'
+import { StarterKit } from '@rich-editor/starter-kit'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Toolbar } from './Toolbar'
+
+const DRAFT_KEY = 'rich-editor:draft'
+
+const INITIAL = `
+<h1>Hello rich editor</h1>
+<p>Try the menubar above (File · Edit · Insert · Format · Tools · Table · Help) or the icon toolbar.</p>
+<p>Type <strong>**bold**</strong>, <em>*italic*</em>, <code>\`code\`</code>, <code># heading</code>, <code>- bullet</code>, <code>1. ordered</code>, <code>&gt; quote</code>.</p>
+<p>Smart typography: type <code>--</code>, <code>...</code>, <code>(c)</code>, <code>(tm)</code>, <code>-&gt;</code>, or quotes.</p>
+`
+
+export function App() {
+  const [html, setHtml] = useState(INITIAL)
+  const [showFindReplace, setShowFindReplace] = useState(false)
+  const [showSource, setShowSource] = useState(false)
+  const [spellcheck, setSpellcheck] = useState(true)
+
+  const editor = useEditor({
+    extensions: StarterKit,
+    content: typeof window !== 'undefined' ? localStorage.getItem(DRAFT_KEY) || INITIAL : INITIAL,
+    onUpdate: ({ editor }) => {
+      const next = editor.getHTML()
+      setHtml(next)
+      try {
+        localStorage.setItem(DRAFT_KEY, next)
+      } catch {
+        // ignore
+      }
+    },
+  })
+
+  useEffect(() => {
+    if (!editor) return
+    editor.view.dom.setAttribute('spellcheck', spellcheck ? 'true' : 'false')
+  }, [editor, spellcheck])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'f') {
+        e.preventDefault()
+        setShowFindReplace(true)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const restoreDraft = useCallback(() => {
+    if (!editor) return
+    const saved = localStorage.getItem(DRAFT_KEY)
+    if (saved) editor.setContent(saved)
+  }, [editor])
+
+  const importFile = useCallback(() => {
+    if (!editor) return
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.html,.htm,.txt,.md,.doc,.docx'
+    input.onchange = async () => {
+      const f = input.files?.[0]
+      if (!f) return
+      const txt = await f.text()
+      editor.setContent(txt)
+    }
+    input.click()
+  }, [editor])
+
+  const wordCount = useCallback(() => {
+    if (!editor) return
+    const text = editor.getText().trim()
+    const words = text ? text.split(/\s+/).length : 0
+    const chars = text.length
+    window.alert(`Words: ${words}\nCharacters: ${chars}`)
+  }, [editor])
+
+  const shortcuts = useCallback(() => {
+    const lines = [
+      'Mod+B / I / U      Bold / Italic / Underline',
+      'Mod+Shift+S        Strikethrough',
+      'Mod+E              Inline code',
+      'Mod+Z / Shift+Z    Undo / Redo',
+      'Mod+K              Link',
+      'Mod+A              Select all',
+      'Mod+F              Find & replace',
+      'Mod+Alt+1..6       Heading 1..6',
+      'Mod+Shift+7 / 8    Numbered / Bullet list',
+      'Mod+Shift+L/E/R/J  Align L/C/R/Justify',
+      'Mod+Shift+H        Highlight',
+      'Mod+P              Print',
+    ]
+    window.alert('Keyboard shortcuts:\n\n' + lines.join('\n'))
+  }, [])
+
+  const menus = useMemo(
+    () =>
+      editor
+        ? buildMenus(editor, {
+            findReplace: () => setShowFindReplace(true),
+            sourceCode: () => setShowSource(true),
+            restoreDraft,
+            importFile,
+            wordCount,
+            shortcuts,
+            toggleSpellcheck: () => setSpellcheck((v) => !v),
+            spellcheckOn: spellcheck,
+          })
+        : [],
+    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck],
+  )
+
+  return (
+    <main className="playground">
+      <header className="ph-header">
+        <h1>Rich Editor</h1>
+        <p>Playground · v0.1.0</p>
+      </header>
+      {editor && <Menubar editor={editor} menus={menus} />}
+      <Toolbar editor={editor} />
+      <section className="editor-shell">
+        <EditorContent editor={editor} className="editor" />
+        <BubbleMenu editor={editor} className="bubble-menu">
+          {editor && (
+            <>
+              <button
+                type="button"
+                className={`tb-btn${editor.isActive('bold') ? ' is-active' : ''}`}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  editor.chain().call('toggleBold').focus().run()
+                }}
+                title="Bold"
+              >
+                <Icons.BoldIcon />
+              </button>
+              <button
+                type="button"
+                className={`tb-btn${editor.isActive('italic') ? ' is-active' : ''}`}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  editor.chain().call('toggleItalic').focus().run()
+                }}
+                title="Italic"
+              >
+                <Icons.ItalicIcon />
+              </button>
+              <button
+                type="button"
+                className={`tb-btn${editor.isActive('underline') ? ' is-active' : ''}`}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  editor.chain().call('toggleUnderline').focus().run()
+                }}
+                title="Underline"
+              >
+                <Icons.UnderlineIcon />
+              </button>
+              <button
+                type="button"
+                className={`tb-btn${editor.isActive('link') ? ' is-active' : ''}`}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  const url = window.prompt('Link URL')
+                  if (url === null) return
+                  if (url === '') editor.chain().call('unsetLink').focus().run()
+                  else editor.chain().call('setLink', { href: url }).focus().run()
+                }}
+                title="Link"
+              >
+                <Icons.LinkIcon />
+              </button>
+            </>
+          )}
+        </BubbleMenu>
+      </section>
+      <section className="output">
+        <h2>HTML output</h2>
+        <pre>{html}</pre>
+      </section>
+      {editor && (
+        <>
+          <FindReplace editor={editor} open={showFindReplace} onClose={() => setShowFindReplace(false)} />
+          <SourceCode editor={editor} open={showSource} onClose={() => setShowSource(false)} />
+        </>
+      )}
+    </main>
+  )
+}
