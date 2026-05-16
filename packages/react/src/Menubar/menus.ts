@@ -47,6 +47,13 @@ export interface MenuActions {
   shortcuts?: () => void
   toggleSpellcheck?: () => void
   spellcheckOn?: boolean
+  addComment?: () => void
+  toggleComments?: () => void
+  commentsOpen?: boolean
+  toggleTrackChanges?: () => void
+  trackChangesOn?: boolean
+  toggleSuggestions?: () => void
+  suggestionsOpen?: boolean
 }
 
 function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
@@ -242,6 +249,9 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
       items: [
         { label: 'Fullscreen', icon: icon(FullscreenIcon), shortcut: 'F11', onSelect: toggleFullscreen },
         { label: 'Source code', icon: icon(CodeIcon), disabled: !actions.sourceCode, onSelect: () => actions.sourceCode?.() },
+        { label: 'Comments panel', checked: actions.commentsOpen, disabled: !actions.toggleComments, onSelect: () => actions.toggleComments?.() },
+        { label: 'Track changes', checked: actions.trackChangesOn, disabled: !actions.toggleTrackChanges, onSelect: () => actions.toggleTrackChanges?.() },
+        { label: 'Suggestions panel', checked: actions.suggestionsOpen, disabled: !actions.toggleSuggestions, onSelect: () => actions.toggleSuggestions?.() },
       ],
     },
     {
@@ -270,6 +280,8 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
         { label: 'Horizontal line', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertHorizontalRule') },
         { label: 'Page break', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertPageBreak') },
         { label: 'Table of contents', icon: icon(BulletListIcon), onSelect: insertTableOfContents },
+        { separator: true },
+        { label: 'Comment', shortcut: `${MOD}⌥M`, disabled: !actions.addComment, onSelect: () => actions.addComment?.() },
       ],
     },
     {

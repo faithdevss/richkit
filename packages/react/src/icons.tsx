@@ -352,3 +352,11 @@ export function FontSizeIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+
+export function CommentIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-9a8 8 0 0 1 8-8h2a8 8 0 0 1 8 6z" />
+    </svg>
+  )
+}

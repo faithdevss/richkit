@@ -1,13 +1,17 @@
 import {
   BubbleMenu,
+  CommentComposer,
+  CommentSidebar,
   EditorContent,
   FindReplace,
   Icons,
   Menubar,
   SourceCode,
+  SuggestionSidebar,
   buildMenus,
   useEditor,
 } from '@rich-editor/react'
+import { getTrackState } from '@rich-editor/extension-track-changes'
 import { StarterKit } from '@rich-editor/starter-kit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Toolbar } from './Toolbar'
@@ -26,6 +30,10 @@ export function App() {
   const [showFindReplace, setShowFindReplace] = useState(false)
   const [showSource, setShowSource] = useState(false)
   const [spellcheck, setSpellcheck] = useState(true)
+  const [commentsOpen, setCommentsOpen] = useState(false)
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false)
+  const [trackOn, setTrackOn] = useState(false)
+  const [composerRange, setComposerRange] = useState<{ from: number; to: number } | null>(null)
 
   const editor = useEditor({
     extensions: StarterKit,
@@ -45,6 +53,11 @@ export function App() {
     if (!editor) return
     editor.view.dom.setAttribute('spellcheck', spellcheck ? 'true' : 'false')
   }, [editor, spellcheck])
+
+  useEffect(() => {
+    if (!editor) return
+    ;(window as unknown as { __editor: typeof editor }).__editor = editor
+  }, [editor])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -103,6 +116,48 @@ export function App() {
     window.alert('Keyboard shortcuts:\n\n' + lines.join('\n'))
   }, [])
 
+  const addComment = useCallback(() => {
+    if (!editor) return
+    const { from, to, empty } = editor.state.selection
+    if (empty) {
+      window.alert('Select some text first.')
+      return
+    }
+    setCommentsOpen(true)
+    setComposerRange({ from, to })
+  }, [editor])
+
+  const submitComment = useCallback(
+    (body: string) => {
+      if (!editor || !composerRange) return
+      editor
+        .chain()
+        .call('addComment', {
+          body,
+          author: 'You',
+          from: composerRange.from,
+          to: composerRange.to,
+        })
+        .focus()
+        .run()
+      setComposerRange(null)
+    },
+    [editor, composerRange],
+  )
+
+  const toggleTrackChanges = useCallback(() => {
+    if (!editor) return
+    const isOn = getTrackState(editor.state)?.enabled ?? false
+    if (isOn) {
+      editor.chain().call('disableTrackChanges').focus().run()
+      setTrackOn(false)
+    } else {
+      editor.chain().call('enableTrackChanges', 'You').focus().run()
+      setTrackOn(true)
+      setSuggestionsOpen(true)
+    }
+  }, [editor])
+
   const menus = useMemo(
     () =>
       editor
@@ -115,9 +170,16 @@ export function App() {
             shortcuts,
             toggleSpellcheck: () => setSpellcheck((v) => !v),
             spellcheckOn: spellcheck,
+            addComment,
+            toggleComments: () => setCommentsOpen((v) => !v),
+            commentsOpen,
+            toggleTrackChanges,
+            trackChangesOn: trackOn,
+            toggleSuggestions: () => setSuggestionsOpen((v) => !v),
+            suggestionsOpen,
           })
         : [],
-    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck],
+    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck, addComment, commentsOpen, toggleTrackChanges, trackOn, suggestionsOpen],
   )
 
   return (
@@ -128,7 +190,7 @@ export function App() {
       </header>
       {editor && <Menubar editor={editor} menus={menus} />}
       <Toolbar editor={editor} />
-      <section className="editor-shell">
+      <section className={`editor-shell${(commentsOpen || suggestionsOpen) ? ' has-comments' : ''}`}>
         <EditorContent editor={editor} className="editor" />
         <BubbleMenu editor={editor} className="bubble-menu">
           {editor && (
@@ -180,9 +242,39 @@ export function App() {
               >
                 <Icons.LinkIcon />
               </button>
+              <button
+                type="button"
+                className="tb-btn"
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  addComment()
+                }}
+                title="Add comment"
+              >
+                <Icons.CommentIcon />
+              </button>
             </>
           )}
         </BubbleMenu>
+        {commentsOpen && editor && (
+          <CommentSidebar
+            editor={editor}
+            onAddRequest={addComment}
+            onClose={() => setCommentsOpen(false)}
+          />
+        )}
+        {suggestionsOpen && editor && (
+          <SuggestionSidebar editor={editor} onClose={() => setSuggestionsOpen(false)} />
+        )}
+        {editor && (
+          <CommentComposer
+            editor={editor}
+            range={composerRange}
+            onClose={() => setComposerRange(null)}
+            onSubmit={submitComment}
+            author="You"
+          />
+        )}
       </section>
       <section className="output">
         <h2>HTML output</h2>

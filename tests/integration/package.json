@@ -14,6 +14,8 @@
     "@rich-editor/docx": "workspace:*",
     "@rich-editor/extension-code-block": "workspace:*",
     "@rich-editor/extension-find-replace": "workspace:*",
+    "@rich-editor/extension-comments": "workspace:*",
+    "@rich-editor/extension-track-changes": "workspace:*",
     "@rich-editor/extension-heading": "workspace:*",
     "@rich-editor/extension-highlight": "workspace:*",
     "@rich-editor/extension-horizontal-rule": "workspace:*",

@@ -41,6 +41,9 @@ importers:
       '@rich-editor/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@rich-editor/extension-track-changes':
+        specifier: workspace:*
+        version: link:../../packages/extension-track-changes
       '@rich-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -230,6 +233,25 @@ importers:
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.14)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-comments:
+    dependencies:
+      '@rich-editor/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+    devDependencies:
       tsup:
         specifier: ^8.3.5
         version: 8.5.1(postcss@8.5.14)(typescript@5.9.3)(yaml@2.9.0)
@@ -551,6 +573,28 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/extension-track-changes:
+    dependencies:
+      '@rich-editor/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+      prosemirror-transform:
+        specifier: ^1.10.2
+        version: 1.12.0
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.14)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/extension-typography:
     dependencies:
       '@rich-editor/core':
@@ -604,9 +648,15 @@ importers:
       '@rich-editor/docx':
         specifier: workspace:*
         version: link:../docx
+      '@rich-editor/extension-comments':
+        specifier: workspace:*
+        version: link:../extension-comments
       '@rich-editor/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
+      '@rich-editor/extension-track-changes':
+        specifier: workspace:*
+        version: link:../extension-track-changes
       prosemirror-model:
         specifier: ^1.24.1
         version: 1.25.5
@@ -659,6 +709,9 @@ importers:
       '@rich-editor/extension-code-block':
         specifier: workspace:*
         version: link:../extension-code-block
+      '@rich-editor/extension-comments':
+        specifier: workspace:*
+        version: link:../extension-comments
       '@rich-editor/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
@@ -719,6 +772,9 @@ importers:
       '@rich-editor/extension-text-style':
         specifier: workspace:*
         version: link:../extension-text-style
+      '@rich-editor/extension-track-changes':
+        specifier: workspace:*
+        version: link:../extension-track-changes
       '@rich-editor/extension-typography':
         specifier: workspace:*
         version: link:../extension-typography
@@ -762,6 +818,9 @@ importers:
       '@rich-editor/extension-code-block':
         specifier: workspace:*
         version: link:../../packages/extension-code-block
+      '@rich-editor/extension-comments':
+        specifier: workspace:*
+        version: link:../../packages/extension-comments
       '@rich-editor/extension-find-replace':
         specifier: workspace:*
         version: link:../../packages/extension-find-replace
@@ -792,6 +851,9 @@ importers:
       '@rich-editor/extension-text-style':
         specifier: workspace:*
         version: link:../../packages/extension-text-style
+      '@rich-editor/extension-track-changes':
+        specifier: workspace:*
+        version: link:../../packages/extension-track-changes
     devDependencies:
       jsdom:
         specifier: ^25.0.1

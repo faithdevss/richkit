@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@rich-editor/core": "workspace:*",
+    "@rich-editor/extension-track-changes": "workspace:*",
     "@rich-editor/react": "workspace:*",
     "@rich-editor/starter-kit": "workspace:*",
     "react": "^18.3.1",

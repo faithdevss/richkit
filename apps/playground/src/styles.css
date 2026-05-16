@@ -892,6 +892,9 @@ body {
   position: relative;
   overflow: hidden;
 }
+.editor-shell.has-comments .editor {
+  min-width: 0;
+}
 
 .editor {
   min-height: 400px;
@@ -1209,4 +1212,397 @@ kbd {
   padding: 1px 6px;
   font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 0.8em;
+}
+
+/* ============ TABLE CONTEXT MENU ============ */
+.rich-editor-table-ctx {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  min-width: 200px;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+.rich-editor-table-ctx-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.rich-editor-table-ctx-item:hover {
+  background: var(--surface-2);
+}
+.rich-editor-table-ctx-item:focus {
+  outline: none;
+  background: var(--surface-2);
+}
+.rich-editor-table-ctx-sep {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--border);
+}
+
+/* ============ COMMENTS ============ */
+.comment-mark {
+  background: rgba(255, 220, 100, 0.35);
+  border-bottom: 2px solid #f59e0b;
+  cursor: pointer;
+}
+.comment-mark.comment-resolved {
+  background: rgba(180, 180, 180, 0.18);
+  border-bottom-color: #cbd5e1;
+}
+.re-comments-sidebar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 320px;
+  max-height: calc(100% - 2rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  z-index: 25;
+  overflow-y: auto;
+}
+.re-comments-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 1;
+}
+.re-comments-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.re-comments-filter {
+  display: flex;
+  gap: 4px;
+}
+.re-comments-filter button {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.re-comments-filter button.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.re-comments-add {
+  align-self: stretch;
+}
+.re-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.re-comments-empty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+}
+.re-comment-thread {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-size: 0.85rem;
+}
+.re-comment-thread.is-resolved {
+  opacity: 0.7;
+}
+.re-comment-anchor {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.re-comment-anchor:hover {
+  color: var(--accent);
+}
+.re-comment-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.re-comment-body {
+  margin: 0 0 8px 0;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+.re-comment-replies {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+  border-left: 2px solid var(--border);
+  padding-left: 8px;
+}
+.re-comment-replies li {
+  margin-bottom: 6px;
+}
+.re-comment-replies p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+.re-comment-reply input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  background: var(--surface);
+  margin-bottom: 6px;
+}
+.re-comment-reply input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.re-comment-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.re-comment-actions button {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+}
+
+/* ============ TRACK CHANGES ============ */
+.suggestion-insertion {
+  background: rgba(34, 197, 94, 0.18);
+  border-bottom: 1.5px solid #16a34a;
+  color: #166534;
+}
+.suggestion-deletion {
+  background: rgba(239, 68, 68, 0.15);
+  text-decoration: line-through;
+  color: #991b1b;
+}
+.re-suggestions-sidebar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 320px;
+  max-height: calc(100% - 2rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  z-index: 25;
+  overflow-y: auto;
+}
+.editor-shell:has(.re-comments-sidebar) .re-suggestions-sidebar {
+  right: 348px;
+}
+.re-suggestions-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 1;
+}
+.re-suggestions-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.re-track-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.re-track-toggle.is-on {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border-color: #86efac;
+}
+.re-suggestions-bulk {
+  display: flex;
+  gap: 4px;
+}
+.re-suggestions-bulk button {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+.re-suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.re-suggestions-empty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+}
+.re-suggestion {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 0.82rem;
+}
+.re-suggestion-insertion {
+  border-left-color: #16a34a;
+}
+.re-suggestion-deletion {
+  border-left-color: #dc2626;
+}
+.re-suggestion-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.re-suggestion-badge {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.re-suggestion-badge-insertion {
+  background: rgba(34, 197, 94, 0.2);
+  color: #166534;
+}
+.re-suggestion-badge-deletion {
+  background: rgba(239, 68, 68, 0.18);
+  color: #991b1b;
+}
+.re-suggestion-snippet {
+  margin: 0 0 6px 0;
+  cursor: pointer;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+.re-suggestion-snippet:hover {
+  color: var(--accent);
+}
+.re-suggestion-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.re-suggestion-actions button {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+}
+
+/* ============ COMMENT COMPOSER (inline) ============ */
+.re-comment-composer {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 10px;
+  min-width: 280px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.re-comment-composer-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.re-comment-composer-input {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.85rem;
+  background: var(--surface);
+  color: var(--text);
+  min-height: 56px;
+  outline: none;
+}
+.re-comment-composer-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.re-comment-composer-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.re-comment-composer-actions button {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+}
+
+/* ============ SIDEBAR CLOSE BUTTON ============ */
+.re-comments-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.re-sidebar-close {
+  background: transparent;
+  border: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.re-sidebar-close:hover {
+  background: var(--surface-2);
+  color: var(--text);
 }

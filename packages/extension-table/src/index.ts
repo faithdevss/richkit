@@ -1,4 +1,5 @@
 import { Extension, Node, type Command } from '@rich-editor/core'
+import { NodeSelection } from 'prosemirror-state'
 import {
   addColumnAfter,
   addColumnBefore,
@@ -16,6 +17,7 @@ import {
   toggleHeaderColumn,
   toggleHeaderRow,
 } from 'prosemirror-tables'
+import { tableContextMenu } from './context-menu'
 import { tableResize } from './resize-plugin'
 
 const specs = tableNodes({
@@ -102,6 +104,20 @@ export const Table = Node.create({
       () => ({ state, dispatch }) => toggleHeaderColumn(state, dispatch ?? undefined),
     toggleHeaderCell:
       () => ({ state, dispatch }) => toggleHeaderCell(state, dispatch ?? undefined),
+    selectTable:
+      (): Command =>
+      ({ state, dispatch }) => {
+        const { $from } = state.selection
+        for (let depth = $from.depth; depth > 0; depth--) {
+          const node = $from.node(depth)
+          if (node.type.name === 'table') {
+            const pos = $from.before(depth)
+            if (dispatch) dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)))
+            return true
+          }
+        }
+        return false
+      },
   }),
 })
 
@@ -127,7 +143,7 @@ export const TableHeader = Node.create({
 
 export const TablePlugins = Extension.create({
   name: 'tablePlugins',
-  addProseMirrorPlugins: () => [columnResizing(), tableEditing(), tableResize()],
+  addProseMirrorPlugins: () => [columnResizing(), tableEditing(), tableResize(), tableContextMenu()],
 })
 
 export const TableKit = [Table, TableRow, TableCell, TableHeader, TablePlugins]
