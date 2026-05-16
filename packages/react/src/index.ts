@@ -22,6 +22,16 @@ export { CommentComposer } from './Comments/CommentComposer'
 export type { CommentComposerProps } from './Comments/CommentComposer'
 export { SuggestionSidebar } from './TrackChanges/SuggestionSidebar'
 export type { SuggestionSidebarProps } from './TrackChanges/SuggestionSidebar'
+export { NotificationsHost } from './Notifications/NotificationsHost'
+export { notify } from './Notifications/notify'
+export type {
+  ToastKind,
+  ToastEntry,
+  ToastOptions,
+  PromptOptions,
+  ConfirmOptions,
+  AlertOptions,
+} from './Notifications/notify'
 export { Modal } from './Modals/Modal'
 export { FindReplace } from './Modals/FindReplace'
 export { SourceCode } from './Modals/SourceCode'

@@ -6,6 +6,7 @@ import {
 } from '@rich-editor/extension-comments'
 import { TextSelection } from 'prosemirror-state'
 import { useEffect, useMemo, useState } from 'react'
+import { notify } from '../Notifications/notify'
 
 export interface CommentSidebarProps {
   editor: Editor | null
@@ -62,18 +63,23 @@ export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onCl
 
   if (!editor) return null
 
-  const addComment = () => {
+  const addComment = async () => {
     if (onAddRequest) {
       onAddRequest()
       return
     }
     if (editor.state.selection.empty) {
-      window.alert('Select some text in the editor first.')
+      notify.toast.warn('Select some text in the editor first.')
       return
     }
-    const body = window.prompt('Comment body')
-    if (!body) return
     const { from, to } = editor.state.selection
+    const body = await notify.prompt({
+      title: 'New comment',
+      placeholder: 'Write a comment…',
+      required: true,
+      okLabel: 'Comment',
+    })
+    if (!body) return
     editor.chain().call('addComment', { body, author: currentUser, from, to }).focus().run()
   }
 
@@ -170,10 +176,14 @@ export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onCl
                 <button
                   type="button"
                   className="tb-btn-ghost"
-                  onClick={() => {
-                    if (window.confirm('Delete this comment thread?')) {
-                      editor.chain().call('removeComment', t.id).run()
-                    }
+                  onClick={async () => {
+                    const ok = await notify.confirm({
+                      title: 'Delete comment',
+                      message: 'Delete this comment thread? This cannot be undone.',
+                      destructive: true,
+                      okLabel: 'Delete',
+                    })
+                    if (ok) editor.chain().call('removeComment', t.id).run()
                   }}
                 >
                   Delete

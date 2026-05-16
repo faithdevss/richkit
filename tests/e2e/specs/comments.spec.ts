@@ -121,8 +121,10 @@ test.describe('comments', () => {
     await selectFirstWord(page)
     await addCommentViaBubble(page, 'rev')
 
-    page.once('dialog', (d) => d.accept())
     await page.locator('.re-comment-thread button:has-text("Delete")').click()
+    const dlg = page.locator('.re-dialog-confirm')
+    await expect(dlg).toBeVisible()
+    await dlg.locator('button:has-text("Delete")').click()
 
     await expect(page.locator('.re-comment-thread')).toHaveCount(0)
     await expect(page.locator('.editor .comment-mark')).toHaveCount(0)

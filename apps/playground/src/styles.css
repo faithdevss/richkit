@@ -1606,3 +1606,155 @@ kbd {
   background: var(--surface-2);
   color: var(--text);
 }
+
+/* ============ TOAST + DIALOG ============ */
+.re-toast-stack {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.re-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+  max-width: 420px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
+  animation: re-toast-in 0.18s ease-out;
+}
+.re-toast-info {
+  border-left: 4px solid var(--accent);
+}
+.re-toast-success {
+  border-left: 4px solid #16a34a;
+}
+.re-toast-warn {
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+}
+.re-toast-error {
+  border-left: 4px solid #dc2626;
+  background: #fef2f2;
+}
+.re-toast-message {
+  flex: 1;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.re-toast-close {
+  background: transparent;
+  border: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 22px;
+  height: 22px;
+}
+.re-toast-close:hover {
+  color: var(--text);
+}
+@keyframes re-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.re-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  animation: re-dialog-fade 0.12s ease-out;
+}
+.re-dialog {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  min-width: 360px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  animation: re-dialog-pop 0.12s ease-out;
+}
+.re-dialog-header {
+  padding: 14px 18px 6px;
+}
+.re-dialog-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.re-dialog-body {
+  padding: 6px 18px 14px;
+}
+.re-dialog-message {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+.re-dialog-input {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 0.9rem;
+  outline: none;
+}
+.re-dialog-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.re-dialog-footer {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  padding: 10px 18px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.tb-btn-danger {
+  background: var(--danger);
+  color: white;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.tb-btn-danger:hover {
+  background: #b91c1c;
+}
+@keyframes re-dialog-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes re-dialog-pop {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

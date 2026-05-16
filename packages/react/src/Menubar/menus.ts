@@ -1,6 +1,7 @@
 import type { Editor } from '@rich-editor/core'
 import { downloadDocx } from '@rich-editor/docx'
 import { createElement } from 'react'
+import { notify } from '../Notifications/notify'
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -60,23 +61,40 @@ function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
   editor.chain().call(cmd, ...args).focus().run()
 }
 
-function promptLink(editor: Editor) {
-  const url = window.prompt('Link URL')
+async function promptLink(editor: Editor) {
+  const url = await notify.prompt({
+    title: 'Insert link',
+    message: 'Paste a URL (leave empty to remove an existing link).',
+    placeholder: 'https://example.com',
+    okLabel: 'Apply',
+  })
   if (url === null) return
   if (url === '') runCmd(editor, 'unsetLink')
   else runCmd(editor, 'setLink', { href: url })
 }
 
-function promptImage(editor: Editor) {
-  const url = window.prompt('Image URL')
+async function promptImage(editor: Editor) {
+  const url = await notify.prompt({
+    title: 'Insert image',
+    placeholder: 'https://… or data: URL',
+    okLabel: 'Insert',
+    required: true,
+  })
   if (!url) return
   runCmd(editor, 'insertImage', { src: url })
 }
 
-function promptTable(editor: Editor) {
-  const rows = parseInt(window.prompt('Rows', '3') ?? '0', 10)
-  const cols = parseInt(window.prompt('Columns', '3') ?? '0', 10)
-  if (!rows || !cols) return
+async function promptTable(editor: Editor) {
+  const rowsStr = await notify.prompt({ title: 'Table rows', defaultValue: '3', okLabel: 'Next' })
+  if (rowsStr === null) return
+  const colsStr = await notify.prompt({ title: 'Table columns', defaultValue: '3', okLabel: 'Insert' })
+  if (colsStr === null) return
+  const rows = parseInt(rowsStr || '0', 10)
+  const cols = parseInt(colsStr || '0', 10)
+  if (!rows || !cols) {
+    notify.toast.warn('Rows and columns must be positive integers.')
+    return
+  }
   runCmd(editor, 'insertTable', { rows, cols, withHeaderRow: true })
 }
 
@@ -126,7 +144,7 @@ async function pasteAsText(editor: Editor) {
     const text = await navigator.clipboard.readText()
     if (text) insertText(editor, text)
   } catch {
-    window.alert('Clipboard read denied. Use Cmd/Ctrl+Shift+V.')
+    notify.toast.warn('Clipboard read denied. Use Cmd/Ctrl+Shift+V.')
   }
 }
 
@@ -159,7 +177,7 @@ function insertTableOfContents(editor: Editor) {
     return true
   })
   if (!headings.length) {
-    window.alert('No headings found.')
+    notify.toast.info('No headings found in the document.')
     return
   }
   const items = headings
@@ -188,8 +206,14 @@ function insertFileLink(editor: Editor) {
   input.click()
 }
 
-function insertMedia(editor: Editor) {
-  const url = window.prompt('Media URL (YouTube/Vimeo/MP4)')
+async function insertMedia(editor: Editor) {
+  const url = await notify.prompt({
+    title: 'Insert media',
+    message: 'YouTube, Vimeo, or MP4 URL',
+    placeholder: 'https://youtube.com/watch?v=…',
+    okLabel: 'Insert',
+    required: true,
+  })
   if (!url) return
   const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/)
   const embed = yt
@@ -403,7 +427,7 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
       label: 'Help',
       items: [
         { label: 'Keyboard shortcuts', disabled: !actions.shortcuts, onSelect: () => actions.shortcuts?.() },
-        { label: 'About Rich Editor', onSelect: () => window.alert('Rich Editor v0.1.0') },
+        { label: 'About Rich Editor', onSelect: () => notify.alert({ title: 'About', message: 'Rich Editor v0.1.0' }) },
       ],
     },
   ]

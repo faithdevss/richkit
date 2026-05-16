@@ -6,9 +6,11 @@ import {
   FindReplace,
   Icons,
   Menubar,
+  NotificationsHost,
   SourceCode,
   SuggestionSidebar,
   buildMenus,
+  notify,
   useEditor,
 } from '@rich-editor/react'
 import { getTrackState } from '@rich-editor/extension-track-changes'
@@ -95,7 +97,7 @@ export function App() {
     const text = editor.getText().trim()
     const words = text ? text.split(/\s+/).length : 0
     const chars = text.length
-    window.alert(`Words: ${words}\nCharacters: ${chars}`)
+    notify.alert({ title: 'Document statistics', message: `Words: ${words}\nCharacters: ${chars}` })
   }, [editor])
 
   const shortcuts = useCallback(() => {
@@ -113,14 +115,14 @@ export function App() {
       'Mod+Shift+H        Highlight',
       'Mod+P              Print',
     ]
-    window.alert('Keyboard shortcuts:\n\n' + lines.join('\n'))
+    notify.alert({ title: 'Keyboard shortcuts', message: lines.join('\n') })
   }, [])
 
   const addComment = useCallback(() => {
     if (!editor) return
     const { from, to, empty } = editor.state.selection
     if (empty) {
-      window.alert('Select some text first.')
+      notify.toast.warn('Select some text in the editor first.')
       return
     }
     setCommentsOpen(true)
@@ -231,9 +233,14 @@ export function App() {
               <button
                 type="button"
                 className={`tb-btn${editor.isActive('link') ? ' is-active' : ''}`}
-                onMouseDown={(e) => {
+                onMouseDown={async (e) => {
                   e.preventDefault()
-                  const url = window.prompt('Link URL')
+                  const url = await notify.prompt({
+                    title: 'Link',
+                    message: 'Paste a URL (leave empty to remove).',
+                    placeholder: 'https://example.com',
+                    okLabel: 'Apply',
+                  })
                   if (url === null) return
                   if (url === '') editor.chain().call('unsetLink').focus().run()
                   else editor.chain().call('setLink', { href: url }).focus().run()
@@ -286,6 +293,7 @@ export function App() {
           <SourceCode editor={editor} open={showSource} onClose={() => setShowSource(false)} />
         </>
       )}
+      <NotificationsHost />
     </main>
   )
 }
