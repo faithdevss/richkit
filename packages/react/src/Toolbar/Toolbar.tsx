@@ -16,6 +16,8 @@ import {
   OrderedListIcon,
   RedoIcon,
   StrikeIcon,
+  SubscriptIcon,
+  SuperscriptIcon,
   UnderlineIcon,
   UndoIcon,
 } from '../icons'
@@ -148,6 +150,8 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
           <ToolbarButton editor={editor} command="toggleUnderline" isActiveName="underline" label={<UnderlineIcon />} title="Underline (Mod+U)" />
           <ToolbarButton editor={editor} command="toggleStrike" isActiveName="strike" label={<StrikeIcon />} title="Strikethrough" />
           <ToolbarButton editor={editor} command="toggleCode" isActiveName="code" label={<CodeIcon />} title="Inline code" />
+          <ToolbarButton editor={editor} command="toggleSubscript" isActiveName="subscript" label={<SubscriptIcon />} title="Subscript (Mod+,)" />
+          <ToolbarButton editor={editor} command="toggleSuperscript" isActiveName="superscript" label={<SuperscriptIcon />} title="Superscript (Mod+.)" />
         </ToolbarGroup>
         <ToolbarGroup>
           <TextColorMenu editor={editor} />

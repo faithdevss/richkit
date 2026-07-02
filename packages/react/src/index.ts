@@ -32,6 +32,12 @@ export type {
   ConfirmOptions,
   AlertOptions,
 } from './Notifications/notify'
+export { SlashMenu, defaultSlashItems } from './SlashMenu/SlashMenu'
+export type { SlashMenuProps, SlashItem } from './SlashMenu/SlashMenu'
+export { OutlineSidebar, getOutline } from './Outline/OutlineSidebar'
+export type { OutlineSidebarProps, OutlineEntry } from './Outline/OutlineSidebar'
+export { printEditor } from './print'
+export type { PrintOptions } from './print'
 export { Modal } from './Modals/Modal'
 export { FindReplace } from './Modals/FindReplace'
 export { SourceCode } from './Modals/SourceCode'

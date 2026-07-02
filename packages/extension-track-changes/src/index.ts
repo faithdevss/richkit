@@ -2,7 +2,6 @@ import { Extension, Mark, type Command } from '@rich-editor/core'
 import { TextSelection } from 'prosemirror-state'
 import {
   getSuggestions,
-  getTrackState,
   newId,
   trackChangesPlugin,
   trackKey,

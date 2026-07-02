@@ -15,7 +15,7 @@ export const ListItem = Node.create({
   name: 'listItem',
   content: 'paragraph block*',
   defining: true,
-  parseHTML: () => [{ tag: 'li' }],
+  parseHTML: () => [{ tag: 'li:not([data-type="task-item"])' }],
   renderHTML: () => ['li', 0],
   addCommands: () => ({
     splitListItem: () => liCommand(splitListItem),

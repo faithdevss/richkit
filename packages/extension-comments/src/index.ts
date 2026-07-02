@@ -1,5 +1,5 @@
 import { Mark, type Command } from '@rich-editor/core'
-import { commentsKey, commentsPlugin, getCommentsState, newId, type Thread } from './store'
+import { commentsKey, commentsPlugin, newId, type Thread } from './store'
 
 export const Comment = Mark.create({
   name: 'comment',

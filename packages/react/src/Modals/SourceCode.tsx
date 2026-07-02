@@ -1,4 +1,5 @@
 import type { Editor } from '@rich-editor/core'
+import { docToMarkdown, setMarkdownContent } from '@rich-editor/markdown'
 import { useEffect, useState } from 'react'
 import { Modal } from './Modal'
 
@@ -8,15 +9,19 @@ export interface SourceCodeProps {
   onClose: () => void
 }
 
+type SourceTab = 'html' | 'markdown'
+
 export function SourceCode({ editor, open, onClose }: SourceCodeProps) {
-  const [html, setHtml] = useState('')
+  const [tab, setTab] = useState<SourceTab>('html')
+  const [source, setSource] = useState('')
 
   useEffect(() => {
-    if (open) setHtml(editor.getHTML())
-  }, [open, editor])
+    if (open) setSource(tab === 'html' ? editor.getHTML() : docToMarkdown(editor.state.doc))
+  }, [open, tab, editor])
 
   const apply = () => {
-    editor.setContent(html)
+    if (tab === 'html') editor.setContent(source)
+    else setMarkdownContent(editor, source)
     onClose()
   }
 
@@ -37,10 +42,30 @@ export function SourceCode({ editor, open, onClose }: SourceCodeProps) {
         </>
       }
     >
+      <div className="re-source-tabs" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === 'html'}
+          className={tab === 'html' ? 'is-active' : ''}
+          onClick={() => setTab('html')}
+        >
+          HTML
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === 'markdown'}
+          className={tab === 'markdown' ? 'is-active' : ''}
+          onClick={() => setTab('markdown')}
+        >
+          Markdown
+        </button>
+      </div>
       <textarea
         className="re-source-textarea"
-        value={html}
-        onChange={(e) => setHtml(e.target.value)}
+        value={source}
+        onChange={(e) => setSource(e.target.value)}
         spellCheck={false}
       />
     </Modal>

@@ -15,6 +15,7 @@ import { docToHtml, htmlToDoc } from './html'
 
 export interface EditorEvents {
   create: { editor: Editor }
+  transaction: { editor: Editor; transaction: Transaction }
   update: { editor: Editor; transaction: Transaction }
   selectionUpdate: { editor: Editor }
   focus: { editor: Editor; event: FocusEvent }
@@ -160,6 +161,7 @@ export class Editor {
   private handleTransaction(tr: Transaction): void {
     const next = this.view.state.apply(tr)
     this.view.updateState(next)
+    this.emitter.emit('transaction', { editor: this, transaction: tr })
     if (tr.docChanged) this.emitter.emit('update', { editor: this, transaction: tr })
     if (tr.selectionSet) this.emitter.emit('selectionUpdate', { editor: this })
   }

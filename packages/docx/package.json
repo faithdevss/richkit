@@ -13,7 +13,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
@@ -22,7 +24,8 @@
   },
   "dependencies": {
     "@rich-editor/core": "workspace:*",
-    "docx": "^9.5.1"
+    "docx": "^9.5.1",
+    "mammoth": "^1.11.0"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

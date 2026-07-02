@@ -1,7 +1,9 @@
 import type { Editor } from '@rich-editor/core'
 import { downloadDocx } from '@rich-editor/docx'
+import { docToMarkdown } from '@rich-editor/markdown'
 import { createElement } from 'react'
 import { notify } from '../Notifications/notify'
+import { printEditor } from '../print'
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -29,7 +31,10 @@ import {
   OrderedListIcon,
   ParagraphIcon,
   RedoIcon,
+  ListTreeIcon,
   StrikeIcon,
+  SubscriptIcon,
+  SuperscriptIcon,
   TableIcon,
   TextColorIcon,
   UnderlineIcon,
@@ -55,6 +60,8 @@ export interface MenuActions {
   trackChangesOn?: boolean
   toggleSuggestions?: () => void
   suggestionsOpen?: boolean
+  toggleOutline?: () => void
+  outlineOpen?: boolean
 }
 
 function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
@@ -103,12 +110,14 @@ function insertText(editor: Editor, text: string) {
   editor.focus()
 }
 
-function exportFile(editor: Editor, kind: 'html' | 'json') {
+function exportFile(editor: Editor, kind: 'html' | 'json' | 'md') {
   const data =
     kind === 'html'
       ? `<!doctype html><html><head><meta charset="utf-8"></head><body>${editor.getHTML()}</body></html>`
-      : JSON.stringify(editor.getJSON(), null, 2)
-  const mime = kind === 'html' ? 'text/html' : 'application/json'
+      : kind === 'md'
+        ? docToMarkdown(editor.state.doc)
+        : JSON.stringify(editor.getJSON(), null, 2)
+  const mime = kind === 'html' ? 'text/html' : kind === 'md' ? 'text/markdown' : 'application/json'
   const blob = new Blob([data], { type: mime })
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
@@ -122,12 +131,7 @@ async function exportWord(editor: Editor) {
 }
 
 function exportPdf(editor: Editor) {
-  const w = window.open('', '_blank', 'width=900,height=700')
-  if (!w) return
-  w.document.write(
-    `<!doctype html><html><head><meta charset="utf-8"><title>Export PDF</title><style>@page{margin:1in}body{font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.6;color:#1a1a1a;max-width:7in;margin:0 auto}img{max-width:100%}table{border-collapse:collapse;width:auto}th,td{border:1px solid #999;padding:6px 10px}.page-break{page-break-after:always}h1,h2,h3{margin:.8em 0 .4em}</style></head><body>${editor.getHTML()}<script>window.onload=()=>setTimeout(()=>window.print(),200);</script></body></html>`,
-  )
-  w.document.close()
+  printEditor(editor, { title: 'Export PDF' })
 }
 
 function previewHtml(editor: Editor) {
@@ -168,31 +172,6 @@ async function pasteRich(editor: Editor) {
   }
 }
 
-function insertTableOfContents(editor: Editor) {
-  const headings: { level: number; text: string }[] = []
-  editor.state.doc.descendants((node) => {
-    if (node.type.name === 'heading') {
-      headings.push({ level: node.attrs.level as number, text: node.textContent })
-    }
-    return true
-  })
-  if (!headings.length) {
-    notify.toast.info('No headings found in the document.')
-    return
-  }
-  const items = headings
-    .map((h) => `<li style="margin-left: ${(h.level - 1) * 20}px">${escapeHtml(h.text)}</li>`)
-    .join('')
-  const tocHtml = `<h2>Table of contents</h2><ul>${items}</ul>`
-  editor.setContent(tocHtml + editor.getHTML())
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) =>
-    c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#39;',
-  )
-}
-
 function insertFileLink(editor: Editor) {
   const input = document.createElement('input')
   input.type = 'file'
@@ -209,20 +188,17 @@ function insertFileLink(editor: Editor) {
 async function insertMedia(editor: Editor) {
   const url = await notify.prompt({
     title: 'Insert media',
-    message: 'YouTube, Vimeo, or MP4 URL',
+    message: 'YouTube, Vimeo, video, or page URL',
     placeholder: 'https://youtube.com/watch?v=…',
     okLabel: 'Insert',
     required: true,
   })
   if (!url) return
-  const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/)
-  const embed = yt
-    ? `<p><iframe src="https://www.youtube.com/embed/${yt[1]}" width="560" height="315" frameborder="0" allowfullscreen></iframe></p>`
-    : url.endsWith('.mp4')
-      ? `<p><video src="${escapeHtml(url)}" controls width="560"></video></p>`
-      : `<p><iframe src="${escapeHtml(url)}" width="560" height="315" frameborder="0"></iframe></p>`
-  const current = editor.getHTML()
-  editor.setContent(current + embed)
+  const before = editor.state.doc
+  runCmd(editor, 'insertEmbed', url)
+  if (editor.state.doc === before) {
+    notify.toast.warn('Could not embed that URL. Use an http(s) link.')
+  }
 }
 
 const EMOJI = ['😀', '😂', '😍', '😎', '🤔', '👍', '🎉', '❤️', '🔥', '🚀', '✨', '⭐']
@@ -242,13 +218,14 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
         { separator: true },
         { label: 'Preview', icon: icon(FontIcon), onSelect: previewHtml },
         { separator: true },
-        { label: 'Import HTML…', icon: icon(LinkIcon), disabled: !actions.importFile, onSelect: () => actions.importFile?.() },
+        { label: 'Import file…', icon: icon(LinkIcon), disabled: !actions.importFile, onSelect: () => actions.importFile?.() },
         { label: 'Export to HTML…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'html') },
         { label: 'Export to JSON…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'json') },
+        { label: 'Export to Markdown…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'md') },
         { label: 'Export to PDF…', icon: icon(FontIcon), onSelect: exportPdf },
         { label: 'Export to Word…', icon: icon(FontIcon), onSelect: exportWord },
         { separator: true },
-        { label: 'Print…', icon: icon(FontIcon), shortcut: `${MOD}P`, onSelect: () => window.print() },
+        { label: 'Print…', icon: icon(FontIcon), shortcut: `${MOD}P`, onSelect: (e) => printEditor(e) },
         { separator: true },
         { label: 'Clear document', icon: icon(ClearFormatIcon), onSelect: (e) => e.setContent('<p></p>') },
       ],
@@ -273,6 +250,7 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
       items: [
         { label: 'Fullscreen', icon: icon(FullscreenIcon), shortcut: 'F11', onSelect: toggleFullscreen },
         { label: 'Source code', icon: icon(CodeIcon), disabled: !actions.sourceCode, onSelect: () => actions.sourceCode?.() },
+        { label: 'Outline panel', icon: icon(ListTreeIcon), checked: actions.outlineOpen, disabled: !actions.toggleOutline, onSelect: () => actions.toggleOutline?.() },
         { label: 'Comments panel', checked: actions.commentsOpen, disabled: !actions.toggleComments, onSelect: () => actions.toggleComments?.() },
         { label: 'Track changes', checked: actions.trackChangesOn, disabled: !actions.toggleTrackChanges, onSelect: () => actions.toggleTrackChanges?.() },
         { label: 'Suggestions panel', checked: actions.suggestionsOpen, disabled: !actions.toggleSuggestions, onSelect: () => actions.toggleSuggestions?.() },
@@ -303,7 +281,7 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
         { separator: true },
         { label: 'Horizontal line', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertHorizontalRule') },
         { label: 'Page break', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertPageBreak') },
-        { label: 'Table of contents', icon: icon(BulletListIcon), onSelect: insertTableOfContents },
+        { label: 'Table of contents', icon: icon(ListTreeIcon), disabled: !actions.toggleOutline, onSelect: () => actions.toggleOutline?.() },
         { separator: true },
         { label: 'Comment', shortcut: `${MOD}⌥M`, disabled: !actions.addComment, onSelect: () => actions.addComment?.() },
       ],
@@ -320,6 +298,8 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
             { label: 'Underline', icon: icon(UnderlineIcon), shortcut: `${MOD}U`, onSelect: (e) => runCmd(e, 'toggleUnderline') },
             { label: 'Strikethrough', icon: icon(StrikeIcon), onSelect: (e) => runCmd(e, 'toggleStrike') },
             { label: 'Inline code', icon: icon(CodeIcon), onSelect: (e) => runCmd(e, 'toggleCode') },
+            { label: 'Subscript', icon: icon(SubscriptIcon), shortcut: `${MOD},`, onSelect: (e) => runCmd(e, 'toggleSubscript') },
+            { label: 'Superscript', icon: icon(SuperscriptIcon), shortcut: `${MOD}.`, onSelect: (e) => runCmd(e, 'toggleSuperscript') },
             { label: 'Highlight', icon: icon(HighlightIcon), shortcut: `${MOD}⇧H`, onSelect: (e) => runCmd(e, 'setHighlight', '#fff59d') },
             { label: 'Text color (red)', icon: icon(TextColorIcon), onSelect: (e) => runCmd(e, 'setColor', '#dc2626') },
           ],

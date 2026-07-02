@@ -43,3 +43,5 @@ export async function downloadDocx(editor: Editor, opts: ExportDocxOptions = {})
 
 export { convertDoc } from './convert'
 export type { JSONNode, JSONMark } from './types'
+export { importDocxToHtml, importDocxFile } from './import'
+export type { DocxImportResult } from './import'

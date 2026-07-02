@@ -360,3 +360,33 @@ export function CommentIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+
+export function SubscriptIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m4 5 8 10" />
+      <path d="m12 5-8 10" />
+      <path d="M17 14a2 2 0 0 1 2 2c0 .6-.3 1.1-.8 1.5L15.5 20H19" />
+    </svg>
+  )
+}
+
+export function SuperscriptIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m4 9 8 10" />
+      <path d="m12 9-8 10" />
+      <path d="M17 4a2 2 0 0 1 2 2c0 .6-.3 1.1-.8 1.5L15.5 10H19" />
+    </svg>
+  )
+}
+
+export function ListTreeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="8" y1="12" x2="20" y2="12" />
+      <line x1="12" y1="18" x2="20" y2="18" />
+    </svg>
+  )
+}

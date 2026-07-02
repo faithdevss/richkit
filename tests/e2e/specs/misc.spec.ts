@@ -192,7 +192,7 @@ test.describe('select all', () => {
 })
 
 test.describe('table of contents', () => {
-  test('Insert > Table of contents creates list', async ({ page }) => {
+  test('Insert > Table of contents opens outline panel with headings', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
     await page.keyboard.press(`${MOD}+Alt+Digit2`)
@@ -202,6 +202,7 @@ test.describe('table of contents', () => {
     await page.locator('.tb-pop-blocktype .tb-menu-item:has-text("Paragraph")').click()
     await page.locator('.menubar-trigger:has-text("Insert")').click()
     await page.locator('.menu-item:has-text("Table of contents")').click()
-    await expect(page.locator('.editor h2:has-text("Table of contents")')).toBeVisible()
+    await expect(page.locator('.re-outline-sidebar')).toBeVisible()
+    await expect(page.locator('.re-outline-item:has-text("First Section")')).toBeVisible()
   })
 })

@@ -155,7 +155,19 @@ pnpm --filter e2e exec playwright test     # E2E suite
 
 **Phase 1 (v0.1.0)** — complete.
 
-**Phase 2+** (out of scope here): collaboration (Yjs), comments, track changes, AI assistant, DOCX/PDF import-export, Vue/Angular/Svelte bindings, slash commands, find & replace, mobile UI, SSR renderer.
+**Phase 2 (editor completeness)** — complete:
+- Bidirectional Markdown (`@rich-editor/markdown`: prosemirror-markdown serializer + markdown-it parser, GFM tables & task lists)
+- DOCX import (`@rich-editor/docx` via mammoth) alongside existing export
+- PDF export / print via hidden iframe (`printEditor` in `@rich-editor/react`)
+- Subscript / superscript marks (Mod-, / Mod-.)
+- Slash-command menu (`@rich-editor/extension-slash-commands` + `SlashMenu`)
+- Live word count (`@rich-editor/extension-word-count` + playground status bar)
+- Outline / table-of-contents sidebar (`OutlineSidebar`)
+- Embed node — YouTube/Vimeo/video/generic iframe, XSS-allowlisted (`@rich-editor/extension-embed`)
+- Word / Google Docs paste cleanup + Mod-Shift-V plain paste (`@rich-editor/extension-paste-handler`)
+- Source-code modal HTML | Markdown tabs
+
+**Phase 3+**: collaboration (Yjs), AI assistant, page-based layout, Vue/Angular/Svelte bindings, mobile UI, SSR renderer, ODT, footnotes, revision history.
 
 ## License
 

@@ -7,15 +7,21 @@ import {
   Icons,
   Menubar,
   NotificationsHost,
+  OutlineSidebar,
+  SlashMenu,
   SourceCode,
   SuggestionSidebar,
   buildMenus,
   notify,
   useEditor,
 } from '@rich-editor/react'
+import { importDocxFile } from '@rich-editor/docx'
 import { getTrackState } from '@rich-editor/extension-track-changes'
+import { getWordCount } from '@rich-editor/extension-word-count'
+import { setMarkdownContent } from '@rich-editor/markdown'
 import { StarterKit } from '@rich-editor/starter-kit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { StatusBar } from './StatusBar'
 import { Toolbar } from './Toolbar'
 
 const DRAFT_KEY = 'rich-editor:draft'
@@ -34,6 +40,7 @@ export function App() {
   const [spellcheck, setSpellcheck] = useState(true)
   const [commentsOpen, setCommentsOpen] = useState(false)
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
+  const [outlineOpen, setOutlineOpen] = useState(false)
   const [trackOn, setTrackOn] = useState(false)
   const [composerRange, setComposerRange] = useState<{ from: number; to: number } | null>(null)
 
@@ -82,22 +89,33 @@ export function App() {
     if (!editor) return
     const input = document.createElement('input')
     input.type = 'file'
-    input.accept = '.html,.htm,.txt,.md,.doc,.docx'
+    input.accept = '.html,.htm,.txt,.md,.docx'
     input.onchange = async () => {
       const f = input.files?.[0]
       if (!f) return
-      const txt = await f.text()
-      editor.setContent(txt)
+      try {
+        if (/\.docx$/i.test(f.name)) {
+          const warnings = await importDocxFile(editor, f)
+          if (warnings.length) notify.toast.warn(`DOCX import: ${warnings[0]}`)
+        } else if (/\.(md|markdown)$/i.test(f.name)) {
+          setMarkdownContent(editor, await f.text())
+        } else {
+          editor.setContent(await f.text())
+        }
+      } catch (err) {
+        notify.toast.error(`Import failed: ${err instanceof Error ? err.message : String(err)}`)
+      }
     }
     input.click()
   }, [editor])
 
   const wordCount = useCallback(() => {
     if (!editor) return
-    const text = editor.getText().trim()
-    const words = text ? text.split(/\s+/).length : 0
-    const chars = text.length
-    notify.alert({ title: 'Document statistics', message: `Words: ${words}\nCharacters: ${chars}` })
+    const s = getWordCount(editor.state.doc)
+    notify.alert({
+      title: 'Document statistics',
+      message: `Words: ${s.words}\nCharacters: ${s.characters}\nCharacters (no spaces): ${s.charactersNoSpaces}\nReading time: ~${s.readingTimeMinutes} min`,
+    })
   }, [editor])
 
   const shortcuts = useCallback(() => {
@@ -179,9 +197,11 @@ export function App() {
             trackChangesOn: trackOn,
             toggleSuggestions: () => setSuggestionsOpen((v) => !v),
             suggestionsOpen,
+            toggleOutline: () => setOutlineOpen((v) => !v),
+            outlineOpen,
           })
         : [],
-    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck, addComment, commentsOpen, toggleTrackChanges, trackOn, suggestionsOpen],
+    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck, addComment, commentsOpen, toggleTrackChanges, trackOn, suggestionsOpen, outlineOpen],
   )
 
   return (
@@ -192,8 +212,9 @@ export function App() {
       </header>
       {editor && <Menubar editor={editor} menus={menus} />}
       <Toolbar editor={editor} />
-      <section className={`editor-shell${(commentsOpen || suggestionsOpen) ? ' has-comments' : ''}`}>
+      <section className={`editor-shell${(commentsOpen || suggestionsOpen || outlineOpen) ? ' has-comments' : ''}`}>
         <EditorContent editor={editor} className="editor" />
+        <SlashMenu editor={editor} />
         <BubbleMenu editor={editor} className="bubble-menu">
           {editor && (
             <>
@@ -273,6 +294,9 @@ export function App() {
         {suggestionsOpen && editor && (
           <SuggestionSidebar editor={editor} onClose={() => setSuggestionsOpen(false)} />
         )}
+        {outlineOpen && editor && (
+          <OutlineSidebar editor={editor} onClose={() => setOutlineOpen(false)} />
+        )}
         {editor && (
           <CommentComposer
             editor={editor}
@@ -283,6 +307,7 @@ export function App() {
           />
         )}
       </section>
+      <StatusBar editor={editor} />
       <section className="output">
         <h2>HTML output</h2>
         <pre>{html}</pre>

@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@rich-editor/core": "workspace:*",
+    "@rich-editor/docx": "workspace:*",
     "@rich-editor/extension-track-changes": "workspace:*",
+    "@rich-editor/extension-word-count": "workspace:*",
+    "@rich-editor/markdown": "workspace:*",
     "@rich-editor/react": "workspace:*",
     "@rich-editor/starter-kit": "workspace:*",
     "react": "^18.3.1",
