@@ -8,6 +8,12 @@ async function insertTable(page: Page, rows = 2, cols = 3) {
   const idx = (rows - 1) * 10 + (cols - 1)
   await panel.locator('.tb-table-grid .tb-cell').nth(idx).click()
   await page.waitForSelector('.editor table')
+  // sticky toolbar occludes the table's top rows at default scroll; posAtCoords
+  // then resolves to the wrong element and the resize plugin never engages
+  await page.evaluate(() => {
+    document.querySelector('.editor table')?.scrollIntoView({ block: 'center' })
+  })
+  await page.waitForTimeout(50)
 }
 
 async function dragColumnBoundary(page: Page, columnIndex: number, dx: number) {

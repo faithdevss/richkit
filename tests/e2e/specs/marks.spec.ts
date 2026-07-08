@@ -58,6 +58,14 @@ test.describe('inline marks', () => {
     await expect(page.locator('.editor s').first()).toHaveText('struck')
   })
 
+  test('strikethrough via Mod+Shift+S', async ({ page }) => {
+    await page.goto('/')
+    await focusEditor(page)
+    await page.keyboard.press(`${MOD}+Shift+s`)
+    await page.keyboard.type('struckKb')
+    await expect(page.locator('.editor s').first()).toHaveText('struckKb')
+  })
+
   test('inline code toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
