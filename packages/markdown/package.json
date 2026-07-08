@@ -32,5 +32,21 @@
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "@types/markdown-it": "^14.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "directory": "packages/markdown"
+  },
+  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "bugs": {
+    "url": "https://github.com/faithdevss/rich_editor/issues"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "rich-text",
+    "editor",
+    "wysiwyg",
+    "prosemirror"
+  ]
 }

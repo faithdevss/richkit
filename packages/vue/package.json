@@ -1,0 +1,58 @@
+{
+  "name": "@rich-editor/vue",
+  "version": "0.0.0",
+  "description": "Vue 3 bindings for @rich-editor/core",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run",
+    "clean": "rm -rf dist .turbo"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "@rich-editor/core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6",
+    "vue": "^3.5.13",
+    "jsdom": "^25.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "bugs": {
+    "url": "https://github.com/faithdevss/rich_editor/issues"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "rich-text",
+    "editor",
+    "wysiwyg",
+    "prosemirror",
+    "vue"
+  ]
+}

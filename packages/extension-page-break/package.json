@@ -13,7 +13,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
@@ -26,5 +28,22 @@
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "directory": "packages/extension-page-break"
+  },
+  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "bugs": {
+    "url": "https://github.com/faithdevss/rich_editor/issues"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "rich-text",
+    "editor",
+    "wysiwyg",
+    "prosemirror",
+    "page-break"
+  ]
 }
