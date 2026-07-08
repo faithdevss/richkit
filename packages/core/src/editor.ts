@@ -79,13 +79,15 @@ export class Editor {
   private buildPlugins(): Plugin[] {
     const plugins: Plugin[] = []
     const rules: InputRule[] = []
-    const shortcuts: Record<string, Command> = {}
+    const shortcuts: Record<string, Command[]> = {}
 
     for (const ext of this.extensions) {
       const ctx = { name: ext.name, options: ext.options, editor: this }
       plugins.push(...(ext.config.addProseMirrorPlugins?.(ctx) ?? []))
       rules.push(...(ext.config.addInputRules?.(ctx) ?? []))
-      Object.assign(shortcuts, ext.config.addKeyboardShortcuts?.(ctx) ?? {})
+      for (const [key, cmd] of Object.entries(ext.config.addKeyboardShortcuts?.(ctx) ?? {})) {
+        ;(shortcuts[key] ??= []).push(cmd)
+      }
     }
 
     if (rules.length) plugins.push(inputRules({ rules }))
@@ -99,15 +101,19 @@ export class Editor {
   }
 
   private adaptShortcuts(
-    shortcuts: Record<string, Command>,
+    shortcuts: Record<string, Command[]>,
   ): Record<string, (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean> {
     const out: Record<
       string,
       (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
     > = {}
-    for (const [key, cmd] of Object.entries(shortcuts)) {
+    for (const [key, cmds] of Object.entries(shortcuts)) {
+      // later extensions take precedence; fall through until one handles the key
+      const ordered = [...cmds].reverse()
       out[key] = (state, dispatch) =>
-        cmd({ state, tr: state.tr, view: this.view ?? null, dispatch: dispatch ?? null })
+        ordered.some((cmd) =>
+          cmd({ state, tr: state.tr, view: this.view ?? null, dispatch: dispatch ?? null }),
+        )
     }
     return out
   }
