@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/extension-placeholder",
+  "name": "@richkit/extension-placeholder",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*",
+    "@richkit/core": "workspace:*",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.37.0"
   },

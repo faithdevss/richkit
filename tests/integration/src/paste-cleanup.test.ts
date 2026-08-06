@@ -1,4 +1,4 @@
-import { cleanPastedHTML } from '@rich-editor/extension-paste-handler'
+import { cleanPastedHTML } from '@richkit/extension-paste-handler'
 import { describe, expect, it } from 'vitest'
 
 const OPTS = { cleanWord: true, cleanGoogleDocs: true }

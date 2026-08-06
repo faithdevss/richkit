@@ -1,4 +1,4 @@
-import { Extension } from '@rich-editor/core'
+import { Extension } from '@richkit/core'
 import {
   InputRule,
   textblockTypeInputRule,

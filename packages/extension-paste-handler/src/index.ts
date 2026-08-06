@@ -1,4 +1,4 @@
-import { Extension } from '@rich-editor/core'
+import { Extension } from '@richkit/core'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { cleanPastedHTML, type CleanOptions } from './clean'
 

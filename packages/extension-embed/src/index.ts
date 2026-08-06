@@ -1,4 +1,4 @@
-import { Node, type Command } from '@rich-editor/core'
+import { Node, type Command } from '@richkit/core'
 import { EmbedNodeView } from './nodeView'
 import { normalizeEmbedUrl, type EmbedProvider } from './providers'
 

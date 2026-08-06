@@ -131,7 +131,7 @@ test.describe('autosave + draft restore', () => {
     await focusEditor(page)
     await page.keyboard.type('save me')
     await page.waitForTimeout(150)
-    const draft = await page.evaluate(() => localStorage.getItem('rich-editor:draft'))
+    const draft = await page.evaluate(() => localStorage.getItem('richkit:draft'))
     expect(draft).toContain('save me')
   })
 

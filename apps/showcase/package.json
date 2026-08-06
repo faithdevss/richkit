@@ -12,14 +12,14 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*",
-    "@rich-editor/docx": "workspace:*",
-    "@rich-editor/extension-slash-commands": "workspace:*",
-    "@rich-editor/extension-track-changes": "workspace:*",
-    "@rich-editor/extension-word-count": "workspace:*",
-    "@rich-editor/markdown": "workspace:*",
-    "@rich-editor/react": "workspace:*",
-    "@rich-editor/starter-kit": "workspace:*",
+    "@richkit/core": "workspace:*",
+    "@richkit/docx": "workspace:*",
+    "@richkit/extension-slash-commands": "workspace:*",
+    "@richkit/extension-track-changes": "workspace:*",
+    "@richkit/extension-word-count": "workspace:*",
+    "@richkit/markdown": "workspace:*",
+    "@richkit/react": "workspace:*",
+    "@richkit/starter-kit": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.2"

@@ -1,17 +1,17 @@
-# @rich-editor/docx
+# @richkit/docx
 
-DOCX import and export for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core).
+DOCX import and export for [@richkit/core](https://www.npmjs.com/package/@richkit/core).
 
 ## Install
 
 ```sh
-npm install @rich-editor/docx @rich-editor/core
+npm install @richkit/docx @richkit/core
 ```
 
 ## Usage
 
 ```ts
-import { exportToDocx, downloadDocx, importDocxFile } from '@rich-editor/docx'
+import { exportToDocx, downloadDocx, importDocxFile } from '@richkit/docx'
 
 await downloadDocx(editor, { filename: 'document.docx' })
 

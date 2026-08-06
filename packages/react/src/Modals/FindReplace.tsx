@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import {
   clearFind,
   getFindState,
@@ -7,7 +7,7 @@ import {
   replaceAll as replaceAllFn,
   replaceCurrent,
   setQuery,
-} from '@rich-editor/extension-find-replace'
+} from '@richkit/extension-find-replace'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Modal } from './Modal'
 

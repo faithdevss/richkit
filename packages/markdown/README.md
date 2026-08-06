@@ -1,17 +1,17 @@
-# @rich-editor/markdown
+# @richkit/markdown
 
-Markdown serialization and parsing for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core).
+Markdown serialization and parsing for [@richkit/core](https://www.npmjs.com/package/@richkit/core).
 
 ## Install
 
 ```sh
-npm install @rich-editor/markdown @rich-editor/core
+npm install @richkit/markdown @richkit/core
 ```
 
 ## Usage
 
 ```ts
-import { docToMarkdown, markdownToDoc, setMarkdownContent } from '@rich-editor/markdown'
+import { docToMarkdown, markdownToDoc, setMarkdownContent } from '@richkit/markdown'
 
 const md = docToMarkdown(editor.state.doc)
 setMarkdownContent(editor, '# Hello\n\nWorld')

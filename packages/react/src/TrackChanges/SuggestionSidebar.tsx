@@ -1,9 +1,9 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import {
   getSuggestions,
   getTrackState,
   type SuggestionEntry,
-} from '@rich-editor/extension-track-changes'
+} from '@richkit/extension-track-changes'
 import { TextSelection } from 'prosemirror-state'
 import { useEffect, useMemo, useState } from 'react'
 

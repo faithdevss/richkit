@@ -1,4 +1,4 @@
-import { Node, type Command } from '@rich-editor/core'
+import { Node, type Command } from '@richkit/core'
 import { ImageNodeView } from './nodeView'
 
 export interface ImageAttrs {

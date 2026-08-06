@@ -1,18 +1,18 @@
-# @rich-editor/react
+# @richkit/react
 
-React bindings and UI components for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core).
+React bindings and UI components for [@richkit/core](https://www.npmjs.com/package/@richkit/core).
 
 ## Install
 
 ```sh
-npm install @rich-editor/react @rich-editor/core @rich-editor/starter-kit
+npm install @richkit/react @richkit/core @richkit/starter-kit
 ```
 
 ## Usage
 
 ```tsx
-import { useEditor, EditorContent, DefaultToolbar } from '@rich-editor/react'
-import { StarterKit } from '@rich-editor/starter-kit'
+import { useEditor, EditorContent, DefaultToolbar } from '@richkit/react'
+import { StarterKit } from '@richkit/starter-kit'
 
 export function MyEditor() {
   const editor = useEditor({

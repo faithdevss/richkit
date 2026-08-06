@@ -1,4 +1,4 @@
-import { Node, type Editor } from '@rich-editor/core'
+import { Node, type Editor } from '@richkit/core'
 import { describe, expect, it } from 'vitest'
 import { createApp, h, nextTick, type ShallowRef } from 'vue'
 import { EditorContent, useEditor } from '../index'

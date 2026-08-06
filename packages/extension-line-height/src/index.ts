@@ -1,4 +1,4 @@
-import { Extension, type Command } from '@rich-editor/core'
+import { Extension, type Command } from '@richkit/core'
 
 export interface LineHeightOptions extends Record<string, unknown> {
   types: string[]

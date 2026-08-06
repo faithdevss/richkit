@@ -1,4 +1,4 @@
-import { Node, wrapInList, type Command } from '@rich-editor/core'
+import { Node, wrapInList, type Command } from '@richkit/core'
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
 
 function taskCommand(factory: typeof splitListItem, attrs?: Record<string, unknown>): Command {

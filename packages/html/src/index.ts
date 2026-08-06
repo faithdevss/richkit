@@ -1,1 +1,1 @@
-export { htmlToDoc, docToHtml } from '@rich-editor/core'
+export { htmlToDoc, docToHtml } from '@richkit/core'

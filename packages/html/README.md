@@ -1,17 +1,17 @@
-# @rich-editor/html
+# @richkit/html
 
-HTML serialization helpers for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core). Re-exports `htmlToDoc` and `docToHtml` for standalone use (e.g. server-side rendering of stored documents).
+HTML serialization helpers for [@richkit/core](https://www.npmjs.com/package/@richkit/core). Re-exports `htmlToDoc` and `docToHtml` for standalone use (e.g. server-side rendering of stored documents).
 
 ## Install
 
 ```sh
-npm install @rich-editor/html @rich-editor/core
+npm install @richkit/html @richkit/core
 ```
 
 ## Usage
 
 ```ts
-import { htmlToDoc, docToHtml } from '@rich-editor/html'
+import { htmlToDoc, docToHtml } from '@richkit/html'
 
 const html = docToHtml(editor.state.doc)
 ```

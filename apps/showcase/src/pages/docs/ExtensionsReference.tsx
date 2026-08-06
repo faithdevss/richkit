@@ -5,7 +5,7 @@ export function ExtensionsReference() {
     <div className="docs-prose">
       <h1>Extensions reference</h1>
       <p>
-        Every <code>@rich-editor/*</code> package, grouped by category. Install only what
+        Every <code>@richkit/*</code> package, grouped by category. Install only what
         you need — <code>starter-kit</code> bundles the common ones.
       </p>
 
@@ -26,7 +26,7 @@ export function ExtensionsReference() {
                 {rows.map((r) => (
                   <tr id={`pkg-${r.pkg}`} key={r.pkg}>
                     <td>
-                      <code>@rich-editor/{r.pkg}</code>
+                      <code>@richkit/{r.pkg}</code>
                     </td>
                     <td>{r.description}</td>
                   </tr>

@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { createContext, useContext, type ReactNode } from 'react'
 
 const EditorContext = createContext<Editor | null>(null)

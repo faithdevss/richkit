@@ -4,7 +4,7 @@
 
 ## Editor
 
-`Editor` (from `@rich-editor/core`) owns the document state and drives everything else.
+`Editor` (from `@richkit/core`) owns the document state and drives everything else.
 It's constructed with an `EditorOptions` object — extensions plus initial content — and
 emits `update` and `selectionUpdate` events that the React binding subscribes to.
 
@@ -36,9 +36,9 @@ which build on the same core APIs.
 
 ## Framework bindings
 
-`@rich-editor/react` wraps `Editor` in `useEditor` (a hook returning `Editor | null`,
+`@richkit/react` wraps `Editor` in `useEditor` (a hook returning `Editor | null`,
 `null` until mount) and `EditorContent` (the contenteditable surface), plus toolbar,
 menu, and sidebar components (`Toolbar`, `BubbleMenu`, `CommentSidebar`,
-`SuggestionSidebar`, and more). `@rich-editor/vue` mirrors the same shape for Vue.
+`SuggestionSidebar`, and more). `@richkit/vue` mirrors the same shape for Vue.
 
 </div>

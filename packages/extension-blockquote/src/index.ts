@@ -1,4 +1,4 @@
-import { Node, toggleWrap } from '@rich-editor/core'
+import { Node, toggleWrap } from '@richkit/core'
 
 export const Blockquote = Node.create({
   name: 'blockquote',

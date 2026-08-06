@@ -1,13 +1,13 @@
-import { Editor } from '@rich-editor/core'
-import { Bold } from '@rich-editor/extension-bold'
-import { Heading } from '@rich-editor/extension-heading'
-import { Paragraph } from '@rich-editor/extension-paragraph'
+import { Editor } from '@richkit/core'
+import { Bold } from '@richkit/extension-bold'
+import { Heading } from '@richkit/extension-heading'
+import { Paragraph } from '@richkit/extension-paragraph'
 import {
   TrackChangesKit,
   getSuggestions,
   getTrackState,
   trackKey,
-} from '@rich-editor/extension-track-changes'
+} from '@richkit/extension-track-changes'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

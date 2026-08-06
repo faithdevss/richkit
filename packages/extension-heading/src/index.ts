@@ -1,4 +1,4 @@
-import { Node, setBlockType, type Command } from '@rich-editor/core'
+import { Node, setBlockType, type Command } from '@richkit/core'
 
 export interface HeadingOptions extends Record<string, unknown> {
   levels: number[]

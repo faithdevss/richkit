@@ -1,9 +1,9 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import {
   findCommentRange,
   getCommentsState,
   type Thread,
-} from '@rich-editor/extension-comments'
+} from '@richkit/extension-comments'
 import { TextSelection } from 'prosemirror-state'
 import { useEffect, useMemo, useState } from 'react'
 import { notify } from '../Notifications/notify'

@@ -47,11 +47,11 @@ test.describe('notifications (toast + dialog)', () => {
     await page.goto('/')
     await focusEditor(page)
     await page.locator('.menubar-trigger:has-text("Help")').click()
-    await page.locator('.menu-item:has-text("About Rich Editor")').click()
+    await page.locator('.menu-item:has-text("About RichKit")').click()
 
     const dlg = page.locator('.re-dialog-alert')
     await expect(dlg).toBeVisible()
-    await expect(dlg).toContainText('Rich Editor')
+    await expect(dlg).toContainText('RichKit')
     await dlg.locator('button:has-text("OK")').click()
     await expect(page.locator('.re-dialog-alert')).toHaveCount(0)
   })

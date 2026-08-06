@@ -1,4 +1,4 @@
-import { Mark, setMark, unsetMark, type Command } from '@rich-editor/core'
+import { Mark, setMark, unsetMark, type Command } from '@richkit/core'
 
 export const Highlight = Mark.create({
   name: 'highlight',

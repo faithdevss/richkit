@@ -5,12 +5,12 @@ import { Demo } from '../../../mdx-components'
 
 # Usecase: docx editing
 
-The `@rich-editor/docx` package handles DOCX import and export against the same document
+The `@richkit/docx` package handles DOCX import and export against the same document
 model as everything else — no separate "docx mode". This demo starts from an editable
 NDA template and can round-trip it to a real `.docx` file.
 
 ```tsx
-import { downloadDocx, importDocxFile } from '@rich-editor/docx'
+import { downloadDocx, importDocxFile } from '@richkit/docx'
 
 // export
 await downloadDocx(editor, 'document.docx')

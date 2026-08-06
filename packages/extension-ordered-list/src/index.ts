@@ -1,4 +1,4 @@
-import { Node, wrapInList } from '@rich-editor/core'
+import { Node, wrapInList } from '@richkit/core'
 
 export const OrderedList = Node.create({
   name: 'orderedList',

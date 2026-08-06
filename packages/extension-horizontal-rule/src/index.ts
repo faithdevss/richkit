@@ -1,4 +1,4 @@
-import { Node, type Command } from '@rich-editor/core'
+import { Node, type Command } from '@richkit/core'
 
 export const HorizontalRule = Node.create({
   name: 'horizontalRule',

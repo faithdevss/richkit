@@ -6,8 +6,8 @@ import {
   Icons,
   notify,
   ToolbarButton,
-} from '@rich-editor/react'
-import { StarterKit } from '@rich-editor/starter-kit'
+} from '@richkit/react'
+import { StarterKit } from '@richkit/starter-kit'
 import { NOTION_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 

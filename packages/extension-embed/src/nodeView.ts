@@ -10,7 +10,7 @@ export class EmbedNodeView implements NodeView {
   constructor(node: PMNode) {
     this.node = node
     this.dom = document.createElement('div')
-    this.dom.className = 'rich-editor-embed'
+    this.dom.className = 'richkit-embed'
     this.dom.setAttribute('data-embed', '')
     this.media = this.buildMedia(node)
     this.dom.appendChild(this.media)
@@ -74,10 +74,10 @@ export class EmbedNodeView implements NodeView {
   }
 
   selectNode(): void {
-    this.dom.classList.add('rich-editor-embed-selected')
+    this.dom.classList.add('richkit-embed-selected')
   }
 
   deselectNode(): void {
-    this.dom.classList.remove('rich-editor-embed-selected')
+    this.dom.classList.remove('richkit-embed-selected')
   }
 }

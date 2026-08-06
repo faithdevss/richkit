@@ -1,11 +1,11 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import {
   closeSlash,
   getSlashState,
   registerSlashEnter,
   setSlashItemCount,
   type SlashRange,
-} from '@rich-editor/extension-slash-commands'
+} from '@richkit/extension-slash-commands'
 import { computePosition, flip, offset, shift } from '@floating-ui/dom'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { notify } from '../Notifications/notify'

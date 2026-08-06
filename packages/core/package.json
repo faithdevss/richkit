@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/core",
+  "name": "@richkit/core",
   "version": "0.0.0",
   "description": "Headless rich text editor core (ProseMirror-based)",
   "license": "MIT",

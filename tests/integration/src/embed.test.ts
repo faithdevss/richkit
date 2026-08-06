@@ -1,6 +1,6 @@
-import { Editor } from '@rich-editor/core'
-import { Embed, normalizeEmbedUrl } from '@rich-editor/extension-embed'
-import { Paragraph } from '@rich-editor/extension-paragraph'
+import { Editor } from '@richkit/core'
+import { Embed, normalizeEmbedUrl } from '@richkit/extension-embed'
+import { Paragraph } from '@richkit/extension-paragraph'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 function makeEditor(content: string) {

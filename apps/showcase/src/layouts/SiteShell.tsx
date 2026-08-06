@@ -1,4 +1,4 @@
-import { NotificationsHost } from '@rich-editor/react'
+import { NotificationsHost } from '@richkit/react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
@@ -47,7 +47,7 @@ export function SiteShell() {
       <div className="site-inner">
         <header className="site-nav">
           <Link to="/" className="site-brand">
-            <span className="site-logo">▤</span> Rich&nbsp;Editor
+            <span className="site-logo">▤</span> RichKit
           </Link>
           <nav className="site-links">
             <a href="/#features">Platform</a>
@@ -73,7 +73,7 @@ export function SiteShell() {
           <div className="foot-cols">
             <div className="foot-brand-col">
               <div className="site-brand">
-                <span className="site-logo">▤</span> Rich&nbsp;Editor
+                <span className="site-logo">▤</span> RichKit
               </div>
               <p className="foot-tagline">
                 The open-source rich text editor toolkit for React.
@@ -97,8 +97,8 @@ export function SiteShell() {
             ))}
           </div>
           <div className="foot-base">
-            Built with <code>@rich-editor/core</code> · <code>@rich-editor/react</code> ·{' '}
-            <code>@rich-editor/starter-kit</code> · MIT licensed
+            Built with <code>@richkit/core</code> · <code>@richkit/react</code> ·{' '}
+            <code>@richkit/starter-kit</code> · MIT licensed
           </div>
         </footer>
       </div>

@@ -45,9 +45,9 @@ async function tableBox(locator: Locator) {
 }
 
 async function waitForCorner(page: Page) {
-  await page.waitForSelector('.rich-editor-table-corner', { state: 'attached' })
+  await page.waitForSelector('.richkit-table-corner', { state: 'attached' })
   await page.waitForFunction(() => {
-    const c = document.querySelector('.rich-editor-table-corner') as HTMLElement | null
+    const c = document.querySelector('.richkit-table-corner') as HTMLElement | null
     if (!c) return false
     const r = c.getBoundingClientRect()
     return r.x > 0 && r.y > 0
@@ -140,7 +140,7 @@ test.describe('table corner resize', () => {
     await page.goto('/')
     await focusEditor(page)
     await insertViaGrid(page, 3, 3)
-    await expect(page.locator('.rich-editor-table-corner').first()).toBeVisible()
+    await expect(page.locator('.richkit-table-corner').first()).toBeVisible()
   })
 
   test('corner drag right enlarges table width', async ({ page }) => {
@@ -150,7 +150,7 @@ test.describe('table corner resize', () => {
     const table = page.locator('.editor table').first()
     const before = await tableBox(table)
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 120, 0)
+    await dragElement(page, '.richkit-table-corner', 120, 0)
     const after = await tableBox(table)
     expect(after.width).toBeGreaterThan(before.width + 40)
   })
@@ -162,7 +162,7 @@ test.describe('table corner resize', () => {
     const table = page.locator('.editor table').first()
     const before = await tableBox(table)
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 0, 120)
+    await dragElement(page, '.richkit-table-corner', 0, 120)
     const after = await tableBox(table)
     expect(after.height).toBeGreaterThan(before.height + 40)
   })
@@ -174,7 +174,7 @@ test.describe('table corner resize', () => {
     const table = page.locator('.editor table').first()
     const before = await tableBox(table)
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 100, 100)
+    await dragElement(page, '.richkit-table-corner', 100, 100)
     const after = await tableBox(table)
     expect(after.width).toBeGreaterThan(before.width + 20)
     expect(after.height).toBeGreaterThan(before.height + 20)
@@ -188,7 +188,7 @@ test.describe('table corner resize', () => {
     const editorBox = await editor.boundingBox()
     if (!editorBox) throw new Error('Editor missing')
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 3000, 0)
+    await dragElement(page, '.richkit-table-corner', 3000, 0)
     const table = page.locator('.editor table').first()
     const after = await tableBox(table)
     expect(after.x + after.width).toBeLessThanOrEqual(editorBox.x + editorBox.width + 4)
@@ -203,8 +203,8 @@ test.describe('table corner resize', () => {
     const firstBefore = await rows.nth(0).boundingBox()
     const secondBefore = await rows.nth(1).boundingBox()
     if (!firstBefore || !secondBefore) throw new Error('Rows missing')
-    await dragElement(page, '.rich-editor-table-row-handle:nth-of-type(1)', 0, 60).catch(async () => {
-      await dragElement(page, '.rich-editor-table-row-handle', 0, 60)
+    await dragElement(page, '.richkit-table-row-handle:nth-of-type(1)', 0, 60).catch(async () => {
+      await dragElement(page, '.richkit-table-row-handle', 0, 60)
     })
     const firstAfter = await rows.nth(0).boundingBox()
     const secondAfter = await rows.nth(1).boundingBox()
@@ -218,7 +218,7 @@ test.describe('table corner resize', () => {
     await focusEditor(page)
     await insertViaGrid(page, 2, 4)
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 3000, 200)
+    await dragElement(page, '.richkit-table-corner', 3000, 200)
     const editorShell = page.locator('.editor-shell').first()
     const shellBox = await editorShell.boundingBox()
     const viewport = page.viewportSize()
@@ -232,7 +232,7 @@ test.describe('table corner resize', () => {
     await insertViaGrid(page, 2, 2)
     const table = page.locator('.editor table').first()
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', -9999, -9999)
+    await dragElement(page, '.richkit-table-corner', -9999, -9999)
     const after = await tableBox(table)
     expect(after.width).toBeGreaterThanOrEqual(2 * 40 - 8)
     expect(after.height).toBeGreaterThanOrEqual(2 * 24 - 8)
@@ -243,7 +243,7 @@ test.describe('table corner resize', () => {
     await focusEditor(page)
     await insertViaGrid(page, 2, 2)
     await waitForCorner(page)
-    await dragElement(page, '.rich-editor-table-corner', 80, 60)
+    await dragElement(page, '.richkit-table-corner', 80, 60)
 
     const table = page.locator('.editor table').first()
     const widthBefore = (await tableBox(table)).width

@@ -14,7 +14,7 @@ import {
 } from 'prosemirror-tables'
 import type { EditorView } from 'prosemirror-view'
 
-const MENU_CLASS = 'rich-editor-table-ctx'
+const MENU_CLASS = 'richkit-table-ctx'
 
 interface MenuItem {
   label: string

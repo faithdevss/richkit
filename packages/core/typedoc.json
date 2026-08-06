@@ -5,5 +5,5 @@
   "excludePrivate": true,
   "excludeInternal": true,
   "readme": "none",
-  "name": "@rich-editor/core"
+  "name": "@richkit/core"
 }

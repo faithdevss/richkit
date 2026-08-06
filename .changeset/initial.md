@@ -1,27 +1,27 @@
 ---
-'@rich-editor/core': minor
-'@rich-editor/react': minor
-'@rich-editor/starter-kit': minor
-'@rich-editor/html': minor
-'@rich-editor/extension-blockquote': minor
-'@rich-editor/extension-bold': minor
-'@rich-editor/extension-bullet-list': minor
-'@rich-editor/extension-code': minor
-'@rich-editor/extension-code-block': minor
-'@rich-editor/extension-heading': minor
-'@rich-editor/extension-history': minor
-'@rich-editor/extension-image': minor
-'@rich-editor/extension-italic': minor
-'@rich-editor/extension-link': minor
-'@rich-editor/extension-list-item': minor
-'@rich-editor/extension-markdown-shortcuts': minor
-'@rich-editor/extension-ordered-list': minor
-'@rich-editor/extension-paragraph': minor
-'@rich-editor/extension-placeholder': minor
-'@rich-editor/extension-strike': minor
-'@rich-editor/extension-table': minor
-'@rich-editor/extension-task-list': minor
-'@rich-editor/extension-underline': minor
+'@richkit/core': minor
+'@richkit/react': minor
+'@richkit/starter-kit': minor
+'@richkit/html': minor
+'@richkit/extension-blockquote': minor
+'@richkit/extension-bold': minor
+'@richkit/extension-bullet-list': minor
+'@richkit/extension-code': minor
+'@richkit/extension-code-block': minor
+'@richkit/extension-heading': minor
+'@richkit/extension-history': minor
+'@richkit/extension-image': minor
+'@richkit/extension-italic': minor
+'@richkit/extension-link': minor
+'@richkit/extension-list-item': minor
+'@richkit/extension-markdown-shortcuts': minor
+'@richkit/extension-ordered-list': minor
+'@richkit/extension-paragraph': minor
+'@richkit/extension-placeholder': minor
+'@richkit/extension-strike': minor
+'@richkit/extension-table': minor
+'@richkit/extension-task-list': minor
+'@richkit/extension-underline': minor
 ---
 
 Initial v0.1.0 release — Phase 1 MVP.

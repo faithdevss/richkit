@@ -1,4 +1,4 @@
-import { Extension, Node, type Command } from '@rich-editor/core'
+import { Extension, Node, type Command } from '@richkit/core'
 import { NodeSelection } from 'prosemirror-state'
 import {
   addColumnAfter,

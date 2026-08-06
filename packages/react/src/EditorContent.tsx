@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { useEffect, useRef, type HTMLAttributes } from 'react'
 
 export interface EditorContentProps extends HTMLAttributes<HTMLDivElement> {

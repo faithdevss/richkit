@@ -1,4 +1,4 @@
-import { Node, toggleBlockType } from '@rich-editor/core'
+import { Node, toggleBlockType } from '@richkit/core'
 import { codeBlockHighlightPlugin } from './highlight'
 import { CodeBlockNodeView } from './nodeView'
 

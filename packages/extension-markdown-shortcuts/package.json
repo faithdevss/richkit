@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/extension-markdown-shortcuts",
+  "name": "@richkit/extension-markdown-shortcuts",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*",
+    "@richkit/core": "workspace:*",
     "prosemirror-inputrules": "^1.4.0",
     "prosemirror-model": "^1.24.1"
   },

@@ -1,25 +1,25 @@
-# @rich-editor/starter-kit
+# @richkit/starter-kit
 
-All standard extensions for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core) in one package: paragraphs, headings, bold, italic, lists, tables, images, links, code blocks, task lists, track changes, comments, find & replace, and more.
+All standard extensions for [@richkit/core](https://www.npmjs.com/package/@richkit/core) in one package: paragraphs, headings, bold, italic, lists, tables, images, links, code blocks, task lists, track changes, comments, find & replace, and more.
 
 ## Install
 
 ```sh
-npm install @rich-editor/starter-kit @rich-editor/core
+npm install @richkit/starter-kit @richkit/core
 ```
 
 ## Usage
 
 ```ts
-import { Editor } from '@rich-editor/core'
-import { StarterKit } from '@rich-editor/starter-kit'
+import { Editor } from '@richkit/core'
+import { StarterKit } from '@richkit/starter-kit'
 
 const editor = new Editor({
   extensions: [...StarterKit],
 })
 ```
 
-Individual extensions are also published separately as `@rich-editor/extension-*` if you want a smaller bundle.
+Individual extensions are also published separately as `@richkit/extension-*` if you want a smaller bundle.
 
 ## Docs
 

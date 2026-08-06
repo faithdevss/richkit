@@ -1,4 +1,4 @@
-import { Mark, type Command } from '@rich-editor/core'
+import { Mark, type Command } from '@richkit/core'
 import type { Attrs, MarkType } from 'prosemirror-model'
 
 function setTextStyleAttrs(patch: Partial<Attrs>): Command {

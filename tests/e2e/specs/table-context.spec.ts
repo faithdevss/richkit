@@ -23,7 +23,7 @@ test.describe('table context menu', () => {
     await insertTable(page)
     await rightClickFirstCell(page)
 
-    const menu = page.locator('.rich-editor-table-ctx')
+    const menu = page.locator('.richkit-table-ctx')
     await expect(menu).toBeVisible()
     await expect(menu.locator('button:has-text("Select table")')).toBeVisible()
     await expect(menu.locator('button:has-text("Cut")')).toBeVisible()
@@ -38,7 +38,7 @@ test.describe('table context menu', () => {
     await expect(page.locator('.editor table')).toHaveCount(1)
 
     await rightClickFirstCell(page)
-    await page.locator('.rich-editor-table-ctx button:has-text("Delete table")').click()
+    await page.locator('.richkit-table-ctx button:has-text("Delete table")').click()
     await expect(page.locator('.editor table')).toHaveCount(0)
   })
 
@@ -47,7 +47,7 @@ test.describe('table context menu', () => {
     await focusEditor(page)
     await insertTable(page)
     await rightClickFirstCell(page)
-    await page.locator('.rich-editor-table-ctx button:has-text("Select table")').click()
+    await page.locator('.richkit-table-ctx button:has-text("Select table")').click()
     await page.waitForTimeout(100)
 
     const info = await page.evaluate(() => {
@@ -71,10 +71,10 @@ test.describe('table context menu', () => {
     await focusEditor(page)
     await insertTable(page)
     await rightClickFirstCell(page)
-    await expect(page.locator('.rich-editor-table-ctx')).toBeVisible()
+    await expect(page.locator('.richkit-table-ctx')).toBeVisible()
 
     await page.keyboard.press('Escape')
-    await expect(page.locator('.rich-editor-table-ctx')).toBeHidden()
+    await expect(page.locator('.richkit-table-ctx')).toBeHidden()
   })
 
   test('Add row above adds row', async ({ page }) => {
@@ -84,7 +84,7 @@ test.describe('table context menu', () => {
     await expect(page.locator('.editor table tr')).toHaveCount(2)
 
     await rightClickFirstCell(page)
-    await page.locator('.rich-editor-table-ctx button:has-text("Add row above")').click()
+    await page.locator('.richkit-table-ctx button:has-text("Add row above")').click()
     await expect(page.locator('.editor table tr')).toHaveCount(3)
   })
 
@@ -95,7 +95,7 @@ test.describe('table context menu', () => {
     await expect(page.locator('.editor table tr')).toHaveCount(3)
 
     await rightClickFirstCell(page)
-    await page.locator('.rich-editor-table-ctx button:has-text("Delete row")').click()
+    await page.locator('.richkit-table-ctx button:has-text("Delete row")').click()
     await expect(page.locator('.editor table tr')).toHaveCount(2)
   })
 
@@ -104,10 +104,10 @@ test.describe('table context menu', () => {
     await focusEditor(page)
     await insertTable(page)
     await rightClickFirstCell(page)
-    await expect(page.locator('.rich-editor-table-ctx')).toBeVisible()
+    await expect(page.locator('.richkit-table-ctx')).toBeVisible()
 
     await page.mouse.click(10, 10)
-    await expect(page.locator('.rich-editor-table-ctx')).toBeHidden()
+    await expect(page.locator('.richkit-table-ctx')).toBeHidden()
   })
 })
 
@@ -116,14 +116,14 @@ test.describe('vertical resize sanity', () => {
     await page.goto('/')
     await focusEditor(page)
     await insertTable(page, 2, 2)
-    await page.waitForSelector('.rich-editor-table-corner')
+    await page.waitForSelector('.richkit-table-corner')
     await page.waitForTimeout(150)
 
     const before = await page.locator('.editor table').first().boundingBox()
     if (!before) throw new Error('no table box')
 
     await page.evaluate((dy) => {
-      const corner = document.querySelector('.rich-editor-table-corner') as HTMLElement | null
+      const corner = document.querySelector('.richkit-table-corner') as HTMLElement | null
       if (!corner) throw new Error('no corner')
       const r = corner.getBoundingClientRect()
       const x = r.left + r.width / 2
@@ -156,14 +156,14 @@ test.describe('vertical resize sanity', () => {
     await page.goto('/')
     await focusEditor(page)
     await insertTable(page, 3, 2)
-    await page.waitForSelector('.rich-editor-table-row-handle')
+    await page.waitForSelector('.richkit-table-row-handle')
     await page.waitForTimeout(150)
 
     const rowBefore = await page.locator('.editor table tr').nth(0).boundingBox()
     if (!rowBefore) throw new Error('no row box')
 
     await page.evaluate((dy) => {
-      const handle = document.querySelectorAll('.rich-editor-table-row-handle')[0] as HTMLElement | null
+      const handle = document.querySelectorAll('.richkit-table-row-handle')[0] as HTMLElement | null
       if (!handle) throw new Error('no row handle')
       const r = handle.getBoundingClientRect()
       const x = r.left + r.width / 2

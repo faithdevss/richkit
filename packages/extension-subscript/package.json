@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/extension-subscript",
+  "name": "@richkit/extension-subscript",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*"
+    "@richkit/core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

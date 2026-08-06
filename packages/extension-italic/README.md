@@ -1,14 +1,14 @@
-# @rich-editor/extension-italic
+# @richkit/extension-italic
 
-Italic extension for [@rich-editor/core](https://www.npmjs.com/package/@rich-editor/core), a headless ProseMirror-based rich text editor.
+Italic extension for [@richkit/core](https://www.npmjs.com/package/@richkit/core), a headless ProseMirror-based rich text editor.
 
 ## Install
 
 ```sh
-npm install @rich-editor/extension-italic @rich-editor/core
+npm install @richkit/extension-italic @richkit/core
 ```
 
-Most users should install [@rich-editor/starter-kit](https://www.npmjs.com/package/@rich-editor/starter-kit) instead, which bundles all extensions.
+Most users should install [@richkit/starter-kit](https://www.npmjs.com/package/@richkit/starter-kit) instead, which bundles all extensions.
 
 ## Docs
 

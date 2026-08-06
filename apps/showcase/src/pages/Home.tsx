@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Icons } from '@rich-editor/react'
+import { Icons } from '@richkit/react'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
 import { NotionEditor } from '../editors/NotionEditor'
@@ -160,7 +160,7 @@ export function Home() {
         <div className="hero-actions">
           <a href="#examples" className="btn-primary">Explore examples</a>
           <Link to="/docs/installation" className="btn-secondary">Read the docs</Link>
-          <code className="hero-install">npm i @rich-editor/starter-kit</code>
+          <code className="hero-install">npm i @richkit/starter-kit</code>
         </div>
 
         <div className="hero-metrics">
@@ -227,7 +227,7 @@ export function Home() {
 
         <p className="stage-caption">
           Every example above is a live editor built with the same{' '}
-          <code>@rich-editor</code> packages. Switch tabs to see how far one core
+          <code>@richkit</code> packages. Switch tabs to see how far one core
           stretches. Want the write-up and code for each? See the{' '}
           <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
         </p>
@@ -287,7 +287,7 @@ export function Home() {
           Support the <em>project</em>
         </h2>
         <p className="section-sub">
-          Rich Editor is free and MIT-licensed. Sponsorship funds maintenance and new
+          RichKit is free and MIT-licensed. Sponsorship funds maintenance and new
           extensions.
         </p>
         <div className="support-grid">

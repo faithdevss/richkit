@@ -1,4 +1,4 @@
-import { Mark, toggleMark } from '@rich-editor/core'
+import { Mark, toggleMark } from '@richkit/core'
 
 export const Italic = Mark.create({
   name: 'italic',

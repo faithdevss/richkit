@@ -1,6 +1,6 @@
-import { Editor } from '@rich-editor/core'
-import { CodeBlock, getRegisteredLanguages } from '@rich-editor/extension-code-block'
-import { Paragraph } from '@rich-editor/extension-paragraph'
+import { Editor } from '@richkit/core'
+import { CodeBlock, getRegisteredLanguages } from '@richkit/extension-code-block'
+import { Paragraph } from '@richkit/extension-paragraph'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 function makeEditor(content = '<p></p>') {

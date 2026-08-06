@@ -1,4 +1,4 @@
-import { Extension } from '@rich-editor/core'
+import { Extension } from '@richkit/core'
 import { slashCommandsPlugin } from './plugin'
 
 export const SlashCommands = Extension.create({

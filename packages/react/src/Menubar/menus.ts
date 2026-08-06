@@ -1,6 +1,6 @@
-import type { Editor } from '@rich-editor/core'
-import { downloadDocx } from '@rich-editor/docx'
-import { docToMarkdown } from '@rich-editor/markdown'
+import type { Editor } from '@richkit/core'
+import { downloadDocx } from '@richkit/docx'
+import { docToMarkdown } from '@richkit/markdown'
 import { createElement } from 'react'
 import { notify } from '../Notifications/notify'
 import { printEditor } from '../print'
@@ -127,7 +127,7 @@ function exportFile(editor: Editor, kind: 'html' | 'json' | 'md') {
 }
 
 async function exportWord(editor: Editor) {
-  await downloadDocx(editor, { filename: 'document.docx', author: 'Rich Editor' })
+  await downloadDocx(editor, { filename: 'document.docx', author: 'RichKit' })
 }
 
 function exportPdf(editor: Editor) {
@@ -407,7 +407,7 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
       label: 'Help',
       items: [
         { label: 'Keyboard shortcuts', disabled: !actions.shortcuts, onSelect: () => actions.shortcuts?.() },
-        { label: 'About Rich Editor', onSelect: () => notify.alert({ title: 'About', message: 'Rich Editor v0.1.0' }) },
+        { label: 'About RichKit', onSelect: () => notify.alert({ title: 'About', message: 'RichKit v0.1.0' }) },
       ],
     },
   ]

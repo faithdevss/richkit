@@ -1,4 +1,4 @@
-import { Editor } from '@rich-editor/core'
+import { Editor } from '@richkit/core'
 import {
   FindReplace,
   findMatches,
@@ -7,10 +7,10 @@ import {
   replaceAll,
   replaceCurrent,
   setQuery,
-} from '@rich-editor/extension-find-replace'
-import { Bold } from '@rich-editor/extension-bold'
-import { Heading } from '@rich-editor/extension-heading'
-import { Paragraph } from '@rich-editor/extension-paragraph'
+} from '@richkit/extension-find-replace'
+import { Bold } from '@richkit/extension-bold'
+import { Heading } from '@richkit/extension-heading'
+import { Paragraph } from '@richkit/extension-paragraph'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 function makeEditor(content: string) {

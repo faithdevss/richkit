@@ -15,7 +15,7 @@ export class ImageNodeView implements NodeView {
     this.getPos = getPos
 
     this.dom = document.createElement('figure')
-    this.dom.className = 'rich-editor-image'
+    this.dom.className = 'richkit-image'
     this.dom.style.display = 'inline-block'
     this.dom.style.position = 'relative'
     this.dom.style.margin = '0'
@@ -25,7 +25,7 @@ export class ImageNodeView implements NodeView {
     this.dom.appendChild(this.img)
 
     this.handle = document.createElement('span')
-    this.handle.className = 'rich-editor-image-resize'
+    this.handle.className = 'richkit-image-resize'
     Object.assign(this.handle.style, {
       position: 'absolute',
       right: '-4px',

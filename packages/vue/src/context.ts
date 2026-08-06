@@ -1,8 +1,8 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
 
 export const editorInjectionKey: InjectionKey<ShallowRef<Editor | null>> =
-  Symbol('rich-editor')
+  Symbol('richkit')
 
 /** Makes the editor available to descendant components via inject. */
 export function provideEditor(editor: ShallowRef<Editor | null>): void {

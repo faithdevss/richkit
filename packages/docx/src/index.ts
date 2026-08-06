@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { Document, LevelFormat, Packer } from 'docx'
 import { convertDoc } from './convert'
 import type { JSONNode } from './types'
@@ -13,7 +13,7 @@ export async function exportToDocx(editor: Editor, opts: ExportDocxOptions = {})
   const json = editor.getJSON() as unknown as JSONNode
   const children = convertDoc(json)
   const doc = new Document({
-    creator: opts.author ?? 'Rich Editor',
+    creator: opts.author ?? 'RichKit',
     title: opts.title,
     numbering: {
       config: [

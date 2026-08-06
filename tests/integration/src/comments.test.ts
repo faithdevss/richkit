@@ -1,12 +1,12 @@
-import { Editor } from '@rich-editor/core'
-import { Bold } from '@rich-editor/extension-bold'
+import { Editor } from '@richkit/core'
+import { Bold } from '@richkit/extension-bold'
 import {
   Comment,
   findCommentRange,
   getCommentsState,
-} from '@rich-editor/extension-comments'
-import { Heading } from '@rich-editor/extension-heading'
-import { Paragraph } from '@rich-editor/extension-paragraph'
+} from '@richkit/extension-comments'
+import { Heading } from '@richkit/extension-heading'
+import { Paragraph } from '@richkit/extension-paragraph'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

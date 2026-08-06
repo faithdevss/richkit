@@ -1,5 +1,5 @@
-import { useEditor, EditorContent, SlashMenu, BubbleMenu, Toolbar, Icons, notify } from '@rich-editor/react'
-import { StarterKit } from '@rich-editor/starter-kit'
+import { useEditor, EditorContent, SlashMenu, BubbleMenu, Toolbar, Icons, notify } from '@richkit/react'
+import { StarterKit } from '@richkit/starter-kit'
 import {
   AlignMenu,
   BlockTypeMenu,
@@ -8,7 +8,7 @@ import {
   LinkMenu,
   ToolbarButton,
   ToolbarGroup,
-} from '@rich-editor/react'
+} from '@richkit/react'
 import { SIMPLE_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 

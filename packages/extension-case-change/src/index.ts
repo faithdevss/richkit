@@ -1,4 +1,4 @@
-import { Extension, type Command } from '@rich-editor/core'
+import { Extension, type Command } from '@richkit/core'
 
 export type CaseMode = 'upper' | 'lower' | 'title' | 'sentence' | 'toggle'
 

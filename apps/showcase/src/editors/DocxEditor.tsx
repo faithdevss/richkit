@@ -15,9 +15,9 @@ import {
   TableMenu,
   ToolbarButton,
   ToolbarGroup,
-} from '@rich-editor/react'
-import { StarterKit } from '@rich-editor/starter-kit'
-import { downloadDocx, importDocxFile } from '@rich-editor/docx'
+} from '@richkit/react'
+import { StarterKit } from '@richkit/starter-kit'
+import { downloadDocx, importDocxFile } from '@richkit/docx'
 import { DOCX_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 
@@ -93,7 +93,7 @@ export function DocxEditor() {
         <div className="demo-page demo-page-docx">
           <div className="docx-page-header">
             <span className="docx-page-title">Non-disclosure agreement</span>
-            <span className="docx-brand">▤ Rich Editor <em>DOCX EDITOR</em></span>
+            <span className="docx-brand">▤ RichKit <em>DOCX EDITOR</em></span>
           </div>
           <EditorContent editor={editor} className="editor" />
           <BubbleMenu editor={editor} className="bubble-menu">

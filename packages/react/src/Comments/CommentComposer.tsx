@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 export interface CommentComposerProps {

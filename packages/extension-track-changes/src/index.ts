@@ -1,4 +1,4 @@
-import { Extension, Mark, type Command } from '@rich-editor/core'
+import { Extension, Mark, type Command } from '@richkit/core'
 import { TextSelection } from 'prosemirror-state'
 import {
   getSuggestions,

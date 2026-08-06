@@ -3,9 +3,9 @@ import type { EditorView } from 'prosemirror-view'
 
 export const tableResizeKey = new PluginKey('tableResize')
 
-const CORNER_CLASS = 'rich-editor-table-corner'
-const ROW_HANDLE_CLASS = 'rich-editor-table-row-handle'
-const OVERLAY_CLASS = 'rich-editor-table-overlay'
+const CORNER_CLASS = 'richkit-table-corner'
+const ROW_HANDLE_CLASS = 'richkit-table-row-handle'
+const OVERLAY_CLASS = 'richkit-table-overlay'
 const MIN_COL = 40
 const MIN_ROW = 24
 
@@ -151,25 +151,30 @@ function startCornerDrag(view: EditorView, e: MouseEvent, table: HTMLTableElemen
     ? editorEl.clientWidth - (table.getBoundingClientRect().left - editorEl.getBoundingClientRect().left) - 8
     : Number.POSITIVE_INFINITY
 
+  let lastColWidths: number[] = [...startColWidths]
+  let lastRowHeights: number[] = [...startRowHeights]
+
   const onMove = (ev: MouseEvent) => {
     const dx = ev.clientX - startX
     const dy = ev.clientY - startY
     const minColScale = (MIN_COL * cols.length) / Math.max(totalColWidth, 1)
-    const maxColScale = maxTableWidth > 0 ? maxTableWidth / Math.max(totalColWidth, 1) : Number.POSITIVE_INFINITY
+    const maxColScale =
+      maxTableWidth > 0 ? maxTableWidth / Math.max(totalColWidth, 1) : Number.POSITIVE_INFINITY
     let scaleX = (totalColWidth + dx) / Math.max(totalColWidth, 1)
     scaleX = Math.max(minColScale, Math.min(scaleX, maxColScale))
     const minRowScale = (MIN_ROW * rows.length) / Math.max(startHeight, 1)
     let scaleY = (startHeight + dy) / Math.max(startHeight, 1)
     scaleY = Math.max(minRowScale, scaleY)
 
+    lastColWidths = startColWidths.map((w) => Math.max(MIN_COL, w * scaleX))
+    lastRowHeights = startRowHeights.map((h) => Math.max(MIN_ROW, h * scaleY))
+
     cols.forEach((col, i) => {
-      const w = Math.max(MIN_COL, startColWidths[i]! * scaleX)
-      col.style.width = `${w}px`
+      col.style.width = `${lastColWidths[i]}px`
     })
     rows.forEach((row, i) => {
-      const h = Math.max(MIN_ROW, startRowHeights[i]! * scaleY)
       Array.from(row.cells).forEach((cell) => {
-        cell.style.height = `${h}px`
+        cell.style.height = `${lastRowHeights[i]}px`
       })
     })
   }
@@ -177,7 +182,7 @@ function startCornerDrag(view: EditorView, e: MouseEvent, table: HTMLTableElemen
   const onUp = () => {
     document.removeEventListener('mousemove', onMove)
     document.removeEventListener('mouseup', onUp)
-    commitTableDims(view, table)
+    commitTableDimsExplicit(view, table, lastColWidths.map(Math.round), lastRowHeights.map(Math.round))
   }
 
   document.addEventListener('mousemove', onMove)
@@ -193,37 +198,34 @@ function startRowDrag(view: EditorView, e: MouseEvent, table: HTMLTableElement, 
   const startY = e.clientY
   const startHeight = row.getBoundingClientRect().height
   const cells = Array.from(row.cells)
+  let lastHeight = startHeight
 
   const onMove = (ev: MouseEvent) => {
     const dy = ev.clientY - startY
-    const h = Math.max(MIN_ROW, startHeight + dy)
+    lastHeight = Math.max(MIN_ROW, startHeight + dy)
     cells.forEach((cell) => {
-      cell.style.height = `${h}px`
+      cell.style.height = `${lastHeight}px`
     })
   }
 
   const onUp = () => {
     document.removeEventListener('mousemove', onMove)
     document.removeEventListener('mouseup', onUp)
-    commitTableDims(view, table)
+    commitRowHeight(view, table, rowIndex, Math.round(lastHeight))
   }
 
   document.addEventListener('mousemove', onMove)
   document.addEventListener('mouseup', onUp)
 }
 
-function commitTableDims(view: EditorView, tableDOM: HTMLTableElement) {
+function commitTableDimsExplicit(
+  view: EditorView,
+  tableDOM: HTMLTableElement,
+  colWidths: number[],
+  rowHeights: number[],
+) {
   const tr = view.state.tr
   let changed = false
-
-  const colgroup = tableDOM.querySelector(':scope > colgroup')
-  const cols = colgroup ? (Array.from(colgroup.children) as HTMLTableColElement[]) : []
-  const colWidths = cols.map((c) =>
-    Math.round(parseFloat(c.style.width) || c.getBoundingClientRect().width),
-  )
-  const heightByRow: number[] = Array.from(tableDOM.rows).map((r) =>
-    Math.round(r.getBoundingClientRect().height),
-  )
 
   Array.from(tableDOM.rows).forEach((rowDOM, rowIdx) => {
     Array.from(rowDOM.cells).forEach((cellDOM, colIdx) => {
@@ -235,13 +237,34 @@ function commitTableDims(view: EditorView, tableDOM: HTMLTableElement) {
       const attrs = {
         ...node.attrs,
         colwidth: nextColwidth,
-        height: heightByRow[rowIdx],
+        height: rowHeights[rowIdx] ?? node.attrs.height,
       }
       tr.setNodeMarkup(pos, undefined, attrs)
       changed = true
     })
   })
 
+  if (changed) view.dispatch(tr)
+}
+
+function commitRowHeight(
+  view: EditorView,
+  tableDOM: HTMLTableElement,
+  rowIndex: number,
+  height: number,
+) {
+  const tr = view.state.tr
+  const rowDOM = tableDOM.rows[rowIndex]
+  if (!rowDOM) return
+  let changed = false
+  Array.from(rowDOM.cells).forEach((cellDOM) => {
+    const pos = cellPos(view, cellDOM)
+    if (pos == null) return
+    const node = tr.doc.nodeAt(pos)
+    if (!node) return
+    tr.setNodeMarkup(pos, undefined, { ...node.attrs, height })
+    changed = true
+  })
   if (changed) view.dispatch(tr)
 }
 

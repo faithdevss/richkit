@@ -2,7 +2,7 @@
 
 # Styling
 
-`@rich-editor/react` ships **no CSS**. `EditorContent` renders a plain wrapper div and
+`@richkit/react` ships **no CSS**. `EditorContent` renders a plain wrapper div and
 mounts ProseMirror's own DOM into it — you write the stylesheet.
 
 ## What you get to style
@@ -10,7 +10,7 @@ mounts ProseMirror's own DOM into it — you write the stylesheet.
 - **`.ProseMirror`** — the actual content-editable root ProseMirror mounts. Your
   paragraph/heading/list/table styles go here, scoped under this class.
 - **`.toolbar`, `.tb-group`, `.tb-btn`, `.is-active`** — fixed class names baked into
-  `Toolbar`, `ToolbarGroup`, and `ToolbarButton` from `@rich-editor/react`. Style these
+  `Toolbar`, `ToolbarGroup`, and `ToolbarButton` from `@richkit/react`. Style these
   directly; they're not renamed per-project.
 - **`EditorContent` and `BubbleMenu`** accept a `className` prop with no default —
   whatever you pass is the only hook, so name it yourself.

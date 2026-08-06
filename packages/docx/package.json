@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/docx",
+  "name": "@richkit/docx",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*",
+    "@richkit/core": "workspace:*",
     "docx": "^9.5.1",
     "mammoth": "^1.11.0"
   },

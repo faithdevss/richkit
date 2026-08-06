@@ -1,4 +1,4 @@
-import { Extension } from '@rich-editor/core'
+import { Extension } from '@richkit/core'
 import type { Node as PMNode } from 'prosemirror-model'
 
 export interface WordCountStats {

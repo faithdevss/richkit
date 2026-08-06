@@ -1,8 +1,8 @@
-import { Editor } from '@rich-editor/core'
-import { CodeBlock } from '@rich-editor/extension-code-block'
-import { Heading } from '@rich-editor/extension-heading'
-import { Paragraph } from '@rich-editor/extension-paragraph'
-import { SlashCommands, getSlashState, closeSlash } from '@rich-editor/extension-slash-commands'
+import { Editor } from '@richkit/core'
+import { CodeBlock } from '@richkit/extension-code-block'
+import { Heading } from '@richkit/extension-heading'
+import { Paragraph } from '@richkit/extension-paragraph'
+import { SlashCommands, getSlashState, closeSlash } from '@richkit/extension-slash-commands'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

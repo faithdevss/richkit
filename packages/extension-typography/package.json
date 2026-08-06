@@ -1,5 +1,5 @@
 {
-  "name": "@rich-editor/extension-typography",
+  "name": "@richkit/extension-typography",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@rich-editor/core": "workspace:*",
+    "@richkit/core": "workspace:*",
     "prosemirror-inputrules": "^1.4.0"
   },
   "devDependencies": {

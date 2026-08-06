@@ -1,4 +1,4 @@
-import type { Editor } from '@rich-editor/core'
+import type { Editor } from '@richkit/core'
 import { defineComponent, h, ref, watch, type PropType } from 'vue'
 
 export const EditorContent = defineComponent({

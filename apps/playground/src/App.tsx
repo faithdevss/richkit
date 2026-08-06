@@ -14,17 +14,17 @@ import {
   buildMenus,
   notify,
   useEditor,
-} from '@rich-editor/react'
-import { importDocxFile } from '@rich-editor/docx'
-import { getTrackState } from '@rich-editor/extension-track-changes'
-import { getWordCount } from '@rich-editor/extension-word-count'
-import { setMarkdownContent } from '@rich-editor/markdown'
-import { StarterKit } from '@rich-editor/starter-kit'
+} from '@richkit/react'
+import { importDocxFile } from '@richkit/docx'
+import { getTrackState } from '@richkit/extension-track-changes'
+import { getWordCount } from '@richkit/extension-word-count'
+import { setMarkdownContent } from '@richkit/markdown'
+import { StarterKit } from '@richkit/starter-kit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { StatusBar } from './StatusBar'
 import { Toolbar } from './Toolbar'
 
-const DRAFT_KEY = 'rich-editor:draft'
+const DRAFT_KEY = 'richkit:draft'
 
 const INITIAL = `
 <h1>Hello rich editor</h1>
@@ -207,7 +207,7 @@ export function App() {
   return (
     <main className="playground">
       <header className="ph-header">
-        <h1>Rich Editor</h1>
+        <h1>RichKit</h1>
         <p>Playground · v0.1.0</p>
       </header>
       {editor && <Menubar editor={editor} menus={menus} />}

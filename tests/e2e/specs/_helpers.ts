@@ -6,7 +6,7 @@ export const MOD = os.platform() === 'darwin' ? 'Meta' : 'Control'
 export async function focusEditor(page: Page) {
   await page.evaluate(() => {
     try {
-      localStorage.removeItem('rich-editor:draft')
+      localStorage.removeItem('richkit:draft')
     } catch {
       // ignore
     }
