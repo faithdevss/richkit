@@ -1,0 +1,73 @@
+<div className="docs-prose">
+
+# Styling
+
+`@rich-editor/react` ships **no CSS**. `EditorContent` renders a plain wrapper div and
+mounts ProseMirror's own DOM into it — you write the stylesheet.
+
+## What you get to style
+
+- **`.ProseMirror`** — the actual content-editable root ProseMirror mounts. Your
+  paragraph/heading/list/table styles go here, scoped under this class.
+- **`.toolbar`, `.tb-group`, `.tb-btn`, `.is-active`** — fixed class names baked into
+  `Toolbar`, `ToolbarGroup`, and `ToolbarButton` from `@rich-editor/react`. Style these
+  directly; they're not renamed per-project.
+- **`EditorContent` and `BubbleMenu`** accept a `className` prop with no default —
+  whatever you pass is the only hook, so name it yourself.
+
+```css
+.ProseMirror {
+  min-height: 300px;
+  outline: none;
+  padding: 16px;
+}
+.ProseMirror p {
+  margin: 0 0 12px;
+}
+.tb-btn.is-active {
+  background: #eef2ff;
+}
+```
+
+## Theming with CSS custom properties
+
+Every live example on this site (the [usecases](/docs/usecases/agent-workflows)) is
+styled this way, but it's a convention you can adopt in your own app — the library
+doesn't require it. Define a small palette as custom properties, then flip them per
+container with a `data-theme` attribute:
+
+```css
+[data-theme='light'] {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --border: #e3e6ea;
+  --text: #1a1d21;
+  --accent: #2563eb;
+}
+[data-theme='dark'] {
+  --bg: #0c0c0e;
+  --surface: #17171a;
+  --border: #2a2a2f;
+  --text: #ececee;
+  --accent: #7c8bff;
+}
+```
+
+```tsx
+<div data-theme="dark">
+  <Toolbar editor={editor}>{/* ... */}</Toolbar>
+  <EditorContent editor={editor} className="editor" />
+</div>
+```
+
+Because `[data-theme='dark']` is a plain attribute selector, it applies to whichever
+element carries the attribute — put it on a wrapper div and everything inside picks up
+the palette. Switch it with state to support a light/dark toggle.
+
+## Reference implementation
+
+This site's own `apps/showcase/src/editor-base.css` and `showcase.css` are a complete,
+working example of the pattern above — copy the variable list and `.ProseMirror`
+rules as a starting point rather than writing a theme from scratch.
+
+</div>

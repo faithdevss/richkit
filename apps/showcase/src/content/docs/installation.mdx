@@ -1,0 +1,71 @@
+<div className="docs-prose">
+
+# Installation
+
+Install the React binding and the starter kit:
+
+```bash
+pnpm add @rich-editor/react @rich-editor/starter-kit
+```
+
+Render an editor:
+
+```tsx
+import { useEditor, EditorContent } from '@rich-editor/react'
+import { StarterKit } from '@rich-editor/starter-kit'
+
+export function MyEditor() {
+  const editor = useEditor({
+    extensions: StarterKit,
+    content: '<p>Hello world</p>',
+  })
+
+  return <EditorContent editor={editor} />
+}
+```
+
+`useEditor` returns `null` on the first render (the `Editor` instance is created in an
+effect) — `EditorContent` handles that automatically.
+
+## Adding a toolbar
+
+`@rich-editor/react` ships a default toolbar and the building blocks to compose your own:
+
+```tsx
+import { useEditor, EditorContent, Toolbar, DefaultToolbar } from '@rich-editor/react'
+import { StarterKit } from '@rich-editor/starter-kit'
+
+export function MyEditor() {
+  const editor = useEditor({ extensions: StarterKit, content: '<p>Hello world</p>' })
+
+  return (
+    <>
+      <Toolbar editor={editor}>
+        <DefaultToolbar />
+      </Toolbar>
+      <EditorContent editor={editor} />
+    </>
+  )
+}
+```
+
+## Picking extensions yourself
+
+`StarterKit` is just an array of extensions — swap it for your own selection instead of
+pulling in everything:
+
+```tsx
+import { Paragraph } from '@rich-editor/extension-paragraph'
+import { Bold } from '@rich-editor/extension-bold'
+import { Italic } from '@rich-editor/extension-italic'
+
+const extensions = [Paragraph, Bold, Italic]
+```
+
+See the full [extensions reference](/docs/extensions) for every available package.
+
+## Vue
+
+`@rich-editor/vue` mirrors the React package's API for Vue apps.
+
+</div>

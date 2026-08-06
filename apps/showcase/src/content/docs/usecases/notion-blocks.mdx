@@ -1,0 +1,29 @@
+import { NotionEditor } from '../../../editors/NotionEditor'
+import { Demo } from '../../../mdx-components'
+
+<div className="docs-prose">
+
+# Usecase: Notion-like blocks
+
+A clean, block-based writing surface driven by `extension-slash-commands` — type `/` to
+open a menu and insert headings, lists, quotes, and more without touching a toolbar.
+Markdown shortcuts (`#`, `-`, `>`) work too, via `extension-markdown-shortcuts`.
+
+```tsx
+import { SlashMenu } from '@rich-editor/react'
+
+<SlashMenu editor={editor} />
+```
+
+</div>
+
+<Demo title="Notion-like editor">
+  <NotionEditor />
+</Demo>
+
+<div className="docs-prose">
+
+The same `StarterKit` schema powers this and the other examples — it's the surrounding
+UI (slash menu instead of a fixed toolbar) that gives it a different feel.
+
+</div>

@@ -1,0 +1,31 @@
+import { AgentEditor } from '../../../editors/AgentEditor'
+import { Demo } from '../../../mdx-components'
+
+<div className="docs-prose">
+
+# Usecase: agent workflows
+
+An AI agent shouldn't need a side channel into the document — it should drive the editor
+through the same command chain a toolbar button uses. This demo simulates that: type an
+instruction, the "agent" drafts a section as HTML and inserts it at the cursor via the
+editor's normal `chain()` API, no special-cased path.
+
+```tsx
+const editor = useEditor({ extensions: StarterKit, content: AGENT_CONTENT })
+
+// agent drafts HTML, then inserts it exactly like a user action would
+editor.chain().insertContent(draftedHtml).focus().run()
+```
+
+</div>
+
+<Demo title="Agent editor">
+  <AgentEditor />
+</Demo>
+
+<div className="docs-prose">
+
+Because the agent only ever calls public commands, anything built for a human toolbar —
+undo/redo, track changes, comments — works unmodified for agent-driven edits too.
+
+</div>

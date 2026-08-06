@@ -1,0 +1,44 @@
+<div className="docs-prose">
+
+# Core concepts
+
+## Editor
+
+`Editor` (from `@rich-editor/core`) owns the document state and drives everything else.
+It's constructed with an `EditorOptions` object — extensions plus initial content — and
+emits `update` and `selectionUpdate` events that the React binding subscribes to.
+
+## Extensions
+
+Everything editable is an extension. Two base classes:
+
+- **`Node`** — a block or inline element in the schema (paragraph, heading, table cell).
+- **`Mark`** — an inline formatting annotation applied to a range (bold, link, highlight).
+
+A plain `Extension` class exists for behavior that doesn't add schema — history,
+placeholder text, paste handling, slash commands.
+
+The schema itself is built from the extension list via `buildSchema`, so the set of
+extensions you pass to `useEditor` **is** your document's schema.
+
+## Commands
+
+Document mutations go through a `CommandChain` — the same chain the toolbar buttons call.
+Marks use `toggleMark` / `setMark` / `unsetMark`; blocks use `setBlockType`, `wrapIn`,
+`lift`, `wrapInList`. This is why programmatic edits (an AI agent inserting a section,
+for example) and user-driven toolbar clicks behave identically — same code path.
+
+## HTML interchange
+
+`htmlToDoc` and `docToHtml` convert between the editor's document representation and
+HTML. Higher-level conversion lives in the `docx`, `markdown`, and `html` packages,
+which build on the same core APIs.
+
+## Framework bindings
+
+`@rich-editor/react` wraps `Editor` in `useEditor` (a hook returning `Editor | null`,
+`null` until mount) and `EditorContent` (the contenteditable surface), plus toolbar,
+menu, and sidebar components (`Toolbar`, `BubbleMenu`, `CommentSidebar`,
+`SuggestionSidebar`, and more). `@rich-editor/vue` mirrors the same shape for Vue.
+
+</div>

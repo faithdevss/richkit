@@ -1,0 +1,34 @@
+import { DocxEditor } from '../../../editors/DocxEditor'
+import { Demo } from '../../../mdx-components'
+
+<div className="docs-prose">
+
+# Usecase: docx editing
+
+The `@rich-editor/docx` package handles DOCX import and export against the same document
+model as everything else — no separate "docx mode". This demo starts from an editable
+NDA template and can round-trip it to a real `.docx` file.
+
+```tsx
+import { downloadDocx, importDocxFile } from '@rich-editor/docx'
+
+// export
+await downloadDocx(editor, 'document.docx')
+
+// import
+const doc = await importDocxFile(file)
+editor.commands.setContent(doc)
+```
+
+</div>
+
+<Demo title="Docx editor">
+  <DocxEditor />
+</Demo>
+
+<div className="docs-prose">
+
+Formatting, tables, and headings that fit the schema survive the round trip; see the
+[extensions reference](/docs/extensions#pkg-docx) for the `docx` package.
+
+</div>

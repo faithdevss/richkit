@@ -1,0 +1,28 @@
+import { SimpleEditor } from '../../../editors/SimpleEditor'
+import { Demo } from '../../../mdx-components'
+
+<div className="docs-prose">
+
+# Usecase: simple editor
+
+The batteries-included starting point — a fixed toolbar over `StarterKit`, no extra
+configuration. This is the shortest path from `pnpm add` to a working editor; see
+[Installation](/docs/installation) for the full setup.
+
+```tsx
+const editor = useEditor({ extensions: StarterKit, content })
+
+<Toolbar editor={editor}>
+  <ToolbarGroup>
+    <ToolbarButton editor={editor} command="bold" label={<Icons.BoldIcon />} />
+    {/* ... */}
+  </ToolbarGroup>
+</Toolbar>
+<EditorContent editor={editor} />
+```
+
+</div>
+
+<Demo title="Simple editor">
+  <SimpleEditor />
+</Demo>
