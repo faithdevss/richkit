@@ -38,7 +38,8 @@ declare global {
 /**
  * Stub transport for local development — no network, no API key.
  * Echoes a deterministic transformation so the AI flow can be driven end to end.
- * Real apps pass `openaiComplete({ endpoint })` from `@richkit/ai-openai`.
+ * Real apps pass `openaiComplete({ endpoint })` from `@richkit/ai-openai`, or
+ * `anthropicComplete({ endpoint })` from `@richkit/ai-anthropic`.
  */
 const stubComplete: AIComplete = async function* (req, { signal }) {
   const words = (req.selection || `response to "${req.prompt}"`).split(/(\s+)/)

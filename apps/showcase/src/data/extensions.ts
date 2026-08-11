@@ -60,6 +60,7 @@ export const EXTENSIONS: ExtensionEntry[] = [
 
   { pkg: 'extension-ai', category: 'AI', description: 'Streams model output into the document; provider-agnostic, output reviewable via track changes.' },
   { pkg: 'ai-openai', category: 'AI', description: 'OpenAI transport for extension-ai. Proxy through your own endpoint, or use an end-user-supplied key.' },
+  { pkg: 'ai-anthropic', category: 'AI', description: 'Anthropic (Claude) transport for extension-ai. Proxy through your own endpoint, or use an end-user-supplied key.' },
 
   { pkg: 'docx', category: 'Conversion', description: 'DOCX import and export.' },
   { pkg: 'markdown', category: 'Conversion', description: 'Markdown import and export.' },

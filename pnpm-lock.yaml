@@ -149,6 +149,25 @@ importers:
         specifier: ^5.4.11
         version: 5.4.21(@types/node@25.8.0)
 
+  packages/ai-anthropic:
+    dependencies:
+      '@richkit/extension-ai':
+        specifier: workspace:*
+        version: link:../extension-ai
+    devDependencies:
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.6
+        version: 2.1.9(@types/node@25.8.0)(jsdom@25.0.1)
+
   packages/ai-openai:
     dependencies:
       '@richkit/extension-ai':
