@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Headless rich text editor core (ProseMirror-based)",
   "license": "MIT",
   "type": "module",

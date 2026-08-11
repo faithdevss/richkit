@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/docx",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "DOCX import and export for @richkitjs/core",
   "license": "MIT",
   "type": "module",

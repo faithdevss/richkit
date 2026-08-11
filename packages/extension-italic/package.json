@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-italic",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Italic mark extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",
