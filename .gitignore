@@ -11,3 +11,9 @@ coverage
 .cache
 .eslintcache
 features.md
+
+# Playwright output
+test-results
+playwright-report
+blob-report
+.playwright
