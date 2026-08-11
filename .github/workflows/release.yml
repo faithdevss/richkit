@@ -33,6 +33,11 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - run: pnpm install --frozen-lockfile
+
+      # Runners ship no browsers; the e2e project needs chromium plus its
+      # system libs before `turbo run test` reaches it.
+      - run: pnpm --filter e2e exec playwright install --with-deps chromium
+
       - run: pnpm turbo run typecheck
       - run: pnpm turbo run lint
       - run: pnpm turbo run build
