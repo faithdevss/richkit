@@ -33,6 +33,8 @@ export type {
   AlertOptions,
 } from './Notifications/notify'
 export { SlashMenu, defaultSlashItems } from './SlashMenu/SlashMenu'
+export { AIPrompt, defaultAIPresets } from './AI/AIPrompt'
+export type { AIPromptProps, AIPreset } from './AI/AIPrompt'
 export type { SlashMenuProps, SlashItem } from './SlashMenu/SlashMenu'
 export { OutlineSidebar, getOutline } from './Outline/OutlineSidebar'
 export type { OutlineSidebarProps, OutlineEntry } from './Outline/OutlineSidebar'

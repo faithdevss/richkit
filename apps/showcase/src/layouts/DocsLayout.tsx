@@ -10,6 +10,7 @@ const NAV: { head: string; items: { label: string; to: string }[] }[] = [
       { label: 'Installation', to: '/docs/installation' },
       { label: 'Core concepts', to: '/docs/core-concepts' },
       { label: 'Styling', to: '/docs/styling' },
+      { label: 'AI', to: '/docs/ai' },
     ],
   },
   {

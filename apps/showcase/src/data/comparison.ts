@@ -71,6 +71,21 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     ],
   },
   {
+    feature: 'AI assistance',
+    detail: 'Prompt the model to write or rewrite inside the document.',
+    cells: [
+      {
+        state: 'open',
+        label: 'MIT',
+        note: '@richkit/extension-ai — bring your own provider; edits arrive as reviewable suggestions.',
+      },
+      { state: 'paid', label: 'Paid', note: 'Content AI bundle.' },
+      { state: 'none', label: 'Not built in' },
+      { state: 'paid', label: 'Premium feature' },
+      { state: 'paid', label: 'Premium add-on' },
+    ],
+  },
+  {
     feature: 'Real-time collaboration',
     detail: 'Multiple cursors on one document.',
     cells: [
@@ -107,7 +122,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Runs with no vendor account',
     detail: 'No API key, license key, or hosted backend to sign up for.',
     cells: [
-      { state: 'open', label: 'Yes', note: 'npm install and ship. Nothing phones home.' },
+      {
+        state: 'open',
+        label: 'Yes',
+        note: 'npm install and ship. The editor never phones home; only the optional AI extension calls out, to a provider you choose.',
+      },
       { state: 'partial', label: 'Editor yes, platform no' },
       { state: 'open', label: 'Yes' },
       { state: 'partial', label: 'License key required' },

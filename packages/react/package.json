@@ -33,6 +33,7 @@
     "@floating-ui/dom": "^1.6.12",
     "@richkit/core": "workspace:*",
     "@richkit/docx": "workspace:*",
+    "@richkit/extension-ai": "workspace:*",
     "@richkit/extension-comments": "workspace:*",
     "@richkit/extension-find-replace": "workspace:*",
     "@richkit/extension-slash-commands": "workspace:*",

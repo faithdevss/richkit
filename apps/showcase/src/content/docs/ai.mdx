@@ -1,0 +1,193 @@
+import { Install } from '../../mdx-components'
+
+<div className="docs-prose">
+
+# AI
+
+`@richkit/extension-ai` streams model output into the document. The extension
+itself has **no provider dependency and makes no network calls** — you hand it a
+function, and it handles document state, streaming, and review.
+
+</div>
+
+<Install packages="@richkit/extension-ai @richkit/ai-openai" />
+
+<div className="docs-prose">
+
+## Setup
+
+```tsx
+import { useEditor, EditorContent, AIPrompt } from '@richkit/react'
+import { StarterKit } from '@richkit/starter-kit'
+import { AI } from '@richkit/extension-ai'
+import { openaiComplete } from '@richkit/ai-openai'
+
+export function Editor() {
+  const editor = useEditor({
+    extensions: [
+      ...StarterKit,
+      AI.configure({
+        complete: openaiComplete({ endpoint: '/api/ai', model: 'gpt-4o' }),
+      }),
+    ],
+  })
+
+  return (
+    <>
+      <EditorContent editor={editor} />
+      <AIPrompt editor={editor} />
+    </>
+  )
+}
+```
+
+Press <code>⌘K</code> / <code>Ctrl+K</code> to open the prompt. With text selected,
+the model rewrites the selection; with a plain cursor, it inserts at that point.
+
+## Where your API key goes
+
+**A key that reaches browser JavaScript is public.** Bundlers inline
+`VITE_*` and `NEXT_PUBLIC_*` env vars into the JavaScript you ship, so anyone can
+read the key in devtools — and leaked keys get scraped and drained, billed to
+whoever owns them. This is true of any browser-side key, not just here.
+
+There are three ways to configure the adapter:
+
+| Option | Key lives | Use when |
+| --- | --- | --- |
+| `endpoint` | Your server | **Default.** Anything with more than one user. |
+| `dangerouslyBrowserApiKey` | The browser | The key belongs to the person who pasted it. |
+| `complete` | Wherever you decide | You are writing your own transport. |
+
+### Recommended: proxy through your own route
+
+Your server holds the key; the browser only ever talks to you. The adapter speaks
+the OpenAI chat-completions SSE format, so a proxy can pipe the response straight
+through without reshaping it:
+
+```ts
+// POST /api/ai — Node / serverless route
+export async function POST(request: Request) {
+  const upstream = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: await request.text(),
+  })
+
+  return new Response(upstream.body, {
+    status: upstream.status,
+    headers: { 'content-type': 'text/event-stream' },
+  })
+}
+```
+
+Add your own auth, rate limiting, and abuse controls to this route — it spends
+your money.
+
+### End-user keys
+
+If the key belongs to the person using the editor — they pasted it into a
+settings panel in a local or single-user tool — calling OpenAI from the browser is
+reasonable. The only key exposed is their own:
+
+```tsx
+AI.configure({
+  complete: openaiComplete({ dangerouslyBrowserApiKey: userSuppliedKey }),
+})
+```
+
+Never wire this to a build-time env var. That is the case the name is warning
+you about.
+
+## Review with track changes
+
+If `@richkit/extension-track-changes` is in your extension list, AI output
+arrives as **suggestions rather than silent edits**. Streamed text is marked as
+an insertion, and a rewritten range keeps its original text under a deletion
+mark, so nothing is lost until someone decides:
+
+```tsx
+import { TrackChangesKit } from '@richkit/extension-track-changes'
+import { SuggestionSidebar } from '@richkit/react'
+
+const editor = useEditor({
+  extensions: [...StarterKit, ...TrackChangesKit, AI.configure({ complete })],
+})
+```
+
+Every AI edit then shows up in `SuggestionSidebar` attributed to the author you
+configure, alongside human suggestions, and resolves through the same
+accept/reject controls. Tracking is restored to whatever it was before the run,
+so an AI request never leaves it switched on behind the user's back.
+
+```tsx
+AI.configure({ complete, attributeAs: 'AI Assistant' })
+```
+
+Set `track: false` to insert plain text instead. Without track changes there is
+nothing to reject back to, so rewrites delete the original outright.
+
+## Commands
+
+| Command | Effect |
+| --- | --- |
+| `aiPrompt({ prompt, range? })` | Start a run. Defaults to the current selection. |
+| `aiCancel()` | Abort the in-flight stream. |
+| `aiRetry()` | Discard the attempt and re-run the same prompt. |
+| `aiAccept()` | Keep the generated text; drop what it replaced. |
+| `aiReject()` | Discard the generated text; restore the original. |
+
+## Presets
+
+`AIPrompt` ships a default preset list — improve, shorten, expand, fix grammar,
+change tone, translate. Presets are plain prompt templates, so replace them
+freely:
+
+```tsx
+import { AIPrompt, type AIPreset } from '@richkit/react'
+
+const presets: AIPreset[] = [
+  { id: 'legal', label: 'Plain English', prompt: 'Rewrite this without legalese.' },
+  { id: 'bullets', label: 'To bullets', prompt: 'Rewrite this as a bulleted list.' },
+]
+
+<AIPrompt editor={editor} presets={presets} />
+```
+
+## Your own transport
+
+`complete` is the only seam the core has. Anything that yields strings works —
+another provider, a local model, or a canned response in a test:
+
+```ts
+import type { AIComplete } from '@richkit/extension-ai'
+
+const complete: AIComplete = async function* (req, { signal }) {
+  // req.prompt, req.selection, req.documentText
+  const response = await fetch('/my/endpoint', {
+    method: 'POST',
+    body: JSON.stringify(req),
+    signal,
+  })
+  const reader = response.body!.getReader()
+  const decoder = new TextDecoder()
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    yield decoder.decode(value, { stream: true })
+  }
+}
+```
+
+Honour the `signal` — that is what makes **Stop** work.
+
+## Styling
+
+`@richkit/react` ships no CSS. `AIPrompt` renders semantic class names —
+`ai-prompt`, `ai-prompt-input`, `ai-prompt-preset`, `ai-prompt-accept`,
+`ai-prompt-reject` — for you to style, or pass your own `className`.
+
+</div>

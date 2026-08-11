@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@richkit/core": "workspace:*",
+    "@richkit/extension-ai": "workspace:*",
     "@richkit/docx": "workspace:*",
     "@richkit/extension-track-changes": "workspace:*",
     "@richkit/extension-word-count": "workspace:*",

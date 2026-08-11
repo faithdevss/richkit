@@ -8,6 +8,7 @@ import Introduction from './content/docs/introduction.mdx'
 import Installation from './content/docs/installation.mdx'
 import CoreConcepts from './content/docs/core-concepts.mdx'
 import Styling from './content/docs/styling.mdx'
+import AIDocs from './content/docs/ai.mdx'
 import AgentWorkflowsUsecase from './content/docs/usecases/agent-workflows.mdx'
 import DocxEditingUsecase from './content/docs/usecases/docx-editing.mdx'
 import NotionBlocksUsecase from './content/docs/usecases/notion-blocks.mdx'
@@ -25,6 +26,7 @@ export function App() {
             <Route path="installation" element={<Installation />} />
             <Route path="core-concepts" element={<CoreConcepts />} />
             <Route path="styling" element={<Styling />} />
+            <Route path="ai" element={<AIDocs />} />
             <Route path="extensions" element={<ExtensionsReference />} />
             <Route path="comparison" element={<Comparison />} />
             <Route path="usecases/agent-workflows" element={<AgentWorkflowsUsecase />} />

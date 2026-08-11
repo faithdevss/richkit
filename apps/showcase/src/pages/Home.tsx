@@ -38,7 +38,6 @@ const METRICS: { value: string; label: string }[] = [
 const FEATURES: { icon: string; badge?: string; title: string; body: string }[] = [
   {
     icon: '✦',
-    badge: 'Add-on',
     title: 'AI Toolkit',
     body: 'Wire agents into the document. Build chatbots, proofreaders, and multi-step edit workflows on top of the editor state.',
   },

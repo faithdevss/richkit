@@ -6,6 +6,7 @@ import {
   FindReplace,
   Icons,
   Menubar,
+  AIPrompt,
   NotificationsHost,
   OutlineSidebar,
   SlashMenu,
@@ -19,12 +20,37 @@ import { importDocxFile } from '@richkit/docx'
 import { getTrackState } from '@richkit/extension-track-changes'
 import { getWordCount } from '@richkit/extension-word-count'
 import { setMarkdownContent } from '@richkit/markdown'
+import { AI, type AIComplete } from '@richkit/extension-ai'
 import { StarterKit } from '@richkit/starter-kit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { StatusBar } from './StatusBar'
 import { Toolbar } from './Toolbar'
 
 const DRAFT_KEY = 'richkit:draft'
+
+declare global {
+  interface Window {
+    /** e2e hook: lets a spec swap in its own transport. */
+    __aiComplete?: AIComplete
+  }
+}
+
+/**
+ * Stub transport for local development — no network, no API key.
+ * Echoes a deterministic transformation so the AI flow can be driven end to end.
+ * Real apps pass `openaiComplete({ endpoint })` from `@richkit/ai-openai`.
+ */
+const stubComplete: AIComplete = async function* (req, { signal }) {
+  const words = (req.selection || `response to "${req.prompt}"`).split(/(\s+)/)
+  for (const word of words) {
+    if (signal.aborted) return
+    await new Promise((r) => setTimeout(r, 10))
+    yield word
+  }
+}
+
+const demoComplete: AIComplete = (req, opts) =>
+  (window.__aiComplete ?? stubComplete)(req, opts)
 
 const INITIAL = `
 <h1>Hello rich editor</h1>
@@ -45,7 +71,7 @@ export function App() {
   const [composerRange, setComposerRange] = useState<{ from: number; to: number } | null>(null)
 
   const editor = useEditor({
-    extensions: StarterKit,
+    extensions: [...StarterKit, AI.configure({ complete: demoComplete })],
     content: typeof window !== 'undefined' ? localStorage.getItem(DRAFT_KEY) || INITIAL : INITIAL,
     onUpdate: ({ editor }) => {
       const next = editor.getHTML()
@@ -215,6 +241,7 @@ export function App() {
       <section className={`editor-shell${(commentsOpen || suggestionsOpen || outlineOpen) ? ' has-comments' : ''}`}>
         <EditorContent editor={editor} className="editor" />
         <SlashMenu editor={editor} />
+        <AIPrompt editor={editor} className="ai-prompt" />
         <BubbleMenu editor={editor} className="bubble-menu">
           {editor && (
             <>

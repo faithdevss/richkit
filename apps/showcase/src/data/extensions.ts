@@ -4,6 +4,7 @@ export type ExtensionCategory =
   | 'Marks'
   | 'Editing behavior'
   | 'Collaboration'
+  | 'AI'
   | 'Conversion'
   | 'Framework bindings'
 
@@ -57,6 +58,9 @@ export const EXTENSIONS: ExtensionEntry[] = [
   { pkg: 'extension-comments', category: 'Collaboration', description: 'Inline comment threads anchored to text ranges.' },
   { pkg: 'extension-track-changes', category: 'Collaboration', description: 'Suggested-edit tracking with accept/reject.' },
 
+  { pkg: 'extension-ai', category: 'AI', description: 'Streams model output into the document; provider-agnostic, output reviewable via track changes.' },
+  { pkg: 'ai-openai', category: 'AI', description: 'OpenAI transport for extension-ai. Proxy through your own endpoint, or use an end-user-supplied key.' },
+
   { pkg: 'docx', category: 'Conversion', description: 'DOCX import and export.' },
   { pkg: 'markdown', category: 'Conversion', description: 'Markdown import and export.' },
   { pkg: 'html', category: 'Conversion', description: 'HTML import and export.' },
@@ -71,6 +75,7 @@ export const CATEGORY_ORDER: ExtensionCategory[] = [
   'Marks',
   'Editing behavior',
   'Collaboration',
+  'AI',
   'Conversion',
   'Framework bindings',
 ]
