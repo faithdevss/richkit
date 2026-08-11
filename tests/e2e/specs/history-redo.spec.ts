@@ -28,6 +28,9 @@ test.describe('history redo shortcuts', () => {
     const editor = await focusEditor(page)
     await page.keyboard.type('original')
     await page.keyboard.press(`${MOD}+z`)
+    // Wait for the undo to land before typing — without this the next
+    // keystrokes can race the undo transaction on a slow runner.
+    await expect(editor).not.toContainText('original')
     await page.keyboard.type('replacement')
     await page.keyboard.press(`${MOD}+Shift+z`)
     await expect(editor).toContainText('replacement')

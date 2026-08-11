@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor } from './_helpers'
+import { MOD, focusEditor } from './_helpers'
 
 test.describe('notifications (toast + dialog)', () => {
   test('toast appears when "Add comment" clicked with empty selection', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('notifications (toast + dialog)', () => {
     await page.goto('/')
     await focusEditor(page)
     await page.keyboard.type('hello')
-    await page.keyboard.press(`Meta+a`)
+    await page.keyboard.press(`${MOD}+a`)
 
     await page.locator('.menubar-trigger:has-text("Insert")').click()
     await page.locator('.menu-item:has-text("Link")').click()
