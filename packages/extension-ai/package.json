@@ -1,0 +1,56 @@
+{
+  "name": "@richkit/extension-ai",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@richkit/core": "workspace:*",
+    "@richkit/extension-track-changes": "workspace:*",
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.37.0"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "directory": "packages/extension-ai"
+  },
+  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "bugs": {
+    "url": "https://github.com/faithdevss/rich_editor/issues"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "rich-text",
+    "editor",
+    "wysiwyg",
+    "prosemirror",
+    "ai"
+  ]
+}
