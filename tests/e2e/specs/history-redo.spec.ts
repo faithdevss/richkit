@@ -9,7 +9,7 @@ test.describe('history redo shortcuts', () => {
     await expect(editor).toContainText('redo me')
     await page.keyboard.press(`${MOD}+z`)
     await expect(editor).not.toContainText('redo me')
-    await page.keyboard.press(`${MOD}+Shift+z`)
+    await page.keyboard.press(`${MOD}+Shift+Z`)
     await expect(editor).toContainText('redo me')
   })
 
@@ -32,7 +32,7 @@ test.describe('history redo shortcuts', () => {
     // keystrokes can race the undo transaction on a slow runner.
     await expect(editor).not.toContainText('original')
     await page.keyboard.type('replacement')
-    await page.keyboard.press(`${MOD}+Shift+z`)
+    await page.keyboard.press(`${MOD}+Shift+Z`)
     await expect(editor).toContainText('replacement')
     await expect(editor).not.toContainText('original')
   })

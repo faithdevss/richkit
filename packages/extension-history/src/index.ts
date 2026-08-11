@@ -26,7 +26,13 @@ export const History = Extension.create<HistoryOptions>({
       undo(state, dispatch ?? undefined, view ?? undefined),
     'Mod-y': ({ state, view, dispatch }) =>
       redo(state, dispatch ?? undefined, view ?? undefined),
+    // Both cases: prosemirror-keymap treats "Mod-Shift-z" and "Mod-Shift-Z" as
+    // distinct entries, and which one a keydown reports varies by platform and
+    // layout. Binding only the lowercase form lets the event fall through to
+    // "Mod-z" and undo instead of redoing.
     'Mod-Shift-z': ({ state, view, dispatch }) =>
+      redo(state, dispatch ?? undefined, view ?? undefined),
+    'Mod-Shift-Z': ({ state, view, dispatch }) =>
       redo(state, dispatch ?? undefined, view ?? undefined),
   }),
 })
