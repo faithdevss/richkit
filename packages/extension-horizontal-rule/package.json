@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-horizontal-rule",
   "version": "0.0.0",
+  "description": "Horizontal rule extension for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

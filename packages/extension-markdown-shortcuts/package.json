@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-markdown-shortcuts",
   "version": "0.0.0",
+  "description": "Markdown input rules for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

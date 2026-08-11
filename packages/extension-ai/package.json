@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-ai",
   "version": "0.0.0",
+  "description": "AI authoring extension for @richkit/core, with track-changes review",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

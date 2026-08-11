@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-placeholder",
   "version": "0.0.0",
+  "description": "Placeholder extension for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

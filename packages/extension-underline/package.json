@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-underline",
   "version": "0.0.0",
+  "description": "Underline mark extension for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

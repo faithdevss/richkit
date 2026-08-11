@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-link",
   "version": "0.0.0",
+  "description": "Link mark extension for @richkit/core, with autolink",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

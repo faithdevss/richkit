@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-code-block",
   "version": "0.0.0",
+  "description": "Code block extension for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

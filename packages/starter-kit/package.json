@@ -1,6 +1,7 @@
 {
   "name": "@richkit/starter-kit",
   "version": "0.0.0",
+  "description": "All standard @richkit/core extensions bundled in one package",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

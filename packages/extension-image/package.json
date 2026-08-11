@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-image",
   "version": "0.0.0",
+  "description": "Image extension for @richkit/core, with resizable NodeView",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,6 +1,7 @@
 {
   "name": "@richkit/extension-italic",
   "version": "0.0.0",
+  "description": "Italic mark extension for @richkit/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
