@@ -1,8 +1,8 @@
-import { Editor } from '@richkit/core'
-import { Paragraph } from '@richkit/extension-paragraph'
+import { Editor } from '@richkitjs/core'
+import { Paragraph } from '@richkitjs/extension-paragraph'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { Table, TableCell, TableHeader, TablePlugins, TableRow } from '@richkit/extension-table'
+import { Table, TableCell, TableHeader, TablePlugins, TableRow } from '@richkitjs/extension-table'
 
 function makeEditor(content = '<p></p>'): Editor {
   const element = document.createElement('div')

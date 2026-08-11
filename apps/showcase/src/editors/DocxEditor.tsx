@@ -15,9 +15,9 @@ import {
   TableMenu,
   ToolbarButton,
   ToolbarGroup,
-} from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
-import { downloadDocx, importDocxFile } from '@richkit/docx'
+} from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
+import { downloadDocx, importDocxFile } from '@richkitjs/docx'
 import { DOCX_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 

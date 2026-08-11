@@ -1,8 +1,8 @@
-import { Editor } from '@richkit/core'
-import { exportToDocx } from '@richkit/docx'
-import { Bold } from '@richkit/extension-bold'
-import { Heading } from '@richkit/extension-heading'
-import { Paragraph } from '@richkit/extension-paragraph'
+import { Editor } from '@richkitjs/core'
+import { exportToDocx } from '@richkitjs/docx'
+import { Bold } from '@richkitjs/extension-bold'
+import { Heading } from '@richkitjs/extension-heading'
+import { Paragraph } from '@richkitjs/extension-paragraph'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 function makeEditor(content = '<p></p>') {

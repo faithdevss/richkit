@@ -1,6 +1,6 @@
 # Publishing
 
-How the 46 `@richkit/*` packages get to npm.
+How the 46 `@richkitjs/*` packages get to npm.
 
 Releases are automated. You never run `npm publish` by hand — you write a changeset, and
 merging two PRs does the rest. The only manual work is the one-time npm account setup in
@@ -42,13 +42,16 @@ These are account-level and only need doing once. **Until all three are done, th
 fails** — though the version PR still opens fine, so you can do this at any point before
 merging it.
 
-### 1. Create the `@richkit` npm organization
+### 1. Create the `@richkitjs` npm organization
 
 All packages are scoped, so the scope must exist and you must own it.
 
 1. Go to <https://www.npmjs.com/org/create>.
-2. Name it `richkit`, pick the **Free** plan — free orgs can publish unlimited _public_
+2. Name it `richkitjs`, pick the **Free** plan — free orgs can publish unlimited _public_
    packages, which is all this repo needs.
+
+The plain `richkit` name was unavailable. npm org names share a namespace with usernames, so
+an account holding the name blocks the org even when no package by that name exists.
 
 `.changeset/config.json` already sets `"access": "public"`, so scoped packages publish
 publicly rather than being rejected as private.
@@ -56,7 +59,7 @@ publicly rather than being rejected as private.
 Verify:
 
 ```bash
-npm org ls richkit
+npm org ls richkitjs
 ```
 
 ### 2. Create an npm token and add it to the repo
@@ -65,8 +68,8 @@ npm org ls richkit
    Token**.
 2. Configure it:
    - **Expiration** — set a calendar reminder; an expired token fails the release with `ENEEDAUTH`.
-   - **Packages and scopes** — `Read and write`, applied to the `@richkit` scope.
-   - **Organizations** — `Read and write` on `richkit`, so the token can create packages that
+   - **Packages and scopes** — `Read and write`, applied to the `@richkitjs` scope.
+   - **Organizations** — `Read and write` on `richkitjs`, so the token can create packages that
      do not exist yet. Without this, the _first_ publish of each package 404s.
 3. Copy the token — npm shows it once.
 4. In GitHub: repo → **Settings** → **Secrets and variables** → **Actions** → **New
@@ -145,8 +148,8 @@ recoverable by re-running the job.
 ### 5. Verify
 
 ```bash
-npm view @richkit/core version
-npm view @richkit/starter-kit dependencies    # workspace:* must be gone
+npm view @richkitjs/core version
+npm view @richkitjs/starter-kit dependencies    # workspace:* must be gone
 ```
 
 Then install from a scratch directory outside the monorepo, so you resolve against the registry
@@ -155,30 +158,30 @@ rather than the workspace:
 ```bash
 mkdir /tmp/richkit-smoke && cd /tmp/richkit-smoke
 npm init -y
-npm i @richkit/core @richkit/react @richkit/starter-kit
-node -e "console.log(Object.keys(require('@richkit/core')))"
+npm i @richkitjs/core @richkitjs/react @richkitjs/starter-kit
+node -e "console.log(Object.keys(require('@richkitjs/core')))"
 ```
 
 Changesets also pushes a git tag per package. Cutting a GitHub Release from
-`@richkit/core@x.y.z` is optional but makes the history readable.
+`@richkitjs/core@x.y.z` is optional but makes the history readable.
 
 ## Never leave a workspace dependency unreleased
 
 The one failure mode that reaches users instead of failing loudly in CI.
 
-Internal dependencies are declared as `"@richkit/core": "workspace:*"`. On publish, `pnpm
+Internal dependencies are declared as `"@richkitjs/core": "workspace:*"`. On publish, `pnpm
 publish` rewrites that to the dependency's real version. If the dependency was never released,
 that rewrite produces a version nobody can install:
 
 ```jsonc
-// what ships if @richkit/extension-ai has no changeset
+// what ships if @richkitjs/extension-ai has no changeset
 "dependencies": {
-  "@richkit/extension-ai": "0.0.0"   // 404 for every consumer
+  "@richkitjs/extension-ai": "0.0.0"   // 404 for every consumer
 }
 ```
 
-`@richkit/react` alone depends on eight workspace packages this way. Publishing it while any
-one of them is unreleased breaks `npm i @richkit/react` outright.
+`@richkitjs/react` alone depends on eight workspace packages this way. Publishing it while any
+one of them is unreleased breaks `npm i @richkitjs/react` outright.
 
 Before merging the version PR:
 
@@ -203,7 +206,7 @@ version PR's branch.
 
 A new `packages/<name>/` needs all of this before its first release:
 
-- `package.json` with `name` (`@richkit/*`), `description`, `license`, `files: ["dist"]`,
+- `package.json` with `name` (`@richkitjs/*`), `description`, `license`, `files: ["dist"]`,
   `main` / `module` / `types` / `exports`, `repository.directory`, `homepage`, `bugs`,
   `sideEffects`, and `keywords`. Copy `packages/core/package.json` as the template.
 - `README.md` and `LICENSE` — npm always includes both regardless of `files`, and a package
@@ -235,21 +238,21 @@ pnpm changeset pre exit         # commit, then the next version PR is the stable
 ```
 
 While in pre mode, published packages get the `next` dist-tag instead of `latest`, so
-`npm i @richkit/core` still resolves to the last stable release.
+`npm i @richkitjs/core` still resolves to the last stable release.
 
 ## Troubleshooting
 
-| Symptom                                   | Cause                                                                         | Fix                                                      |
-| ----------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `404 Not Found - PUT .../@richkit%2fcore` | Scope does not exist, or the token lacks org write access                     | [Setup steps 1 and 2](#first-time-setup)                 |
-| `ENEEDAUTH`                               | `NPM_TOKEN` secret missing, misnamed, or expired                              | Re-issue the token, re-add the secret                    |
-| `EOTP`                                    | Account 2FA requires an OTP on writes                                         | [Setup step 3](#3-check-the-accounts-2fa-mode)           |
-| `E402 Payment Required`                   | npm treats the scoped package as private                                      | Confirm `"access": "public"` in `.changeset/config.json` |
-| `E403 Forbidden`                          | Version already published, or name owned by someone else                      | Versions are immutable — bump and republish              |
-| Version PR never opens                    | No changesets, or `.changeset/*.md` was not committed                         | `pnpm changeset status`                                  |
-| Version PR opens but nothing publishes    | Expected — the publish is the _next_ run, after that PR merges                | Merge it                                                 |
-| Publish stopped partway                   | A package failed mid-run                                                      | Re-run the job; already-published versions are skipped   |
-| A flaky e2e spec failed the release       | `turbo run test` gates publishing, and Playwright has no `retries` configured | Re-run the job                                           |
+| Symptom                                     | Cause                                                                         | Fix                                                      |
+| ------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `404 Not Found - PUT .../@richkitjs%2fcore` | Scope does not exist, or the token lacks org write access                     | [Setup steps 1 and 2](#first-time-setup)                 |
+| `ENEEDAUTH`                                 | `NPM_TOKEN` secret missing, misnamed, or expired                              | Re-issue the token, re-add the secret                    |
+| `EOTP`                                      | Account 2FA requires an OTP on writes                                         | [Setup step 3](#3-check-the-accounts-2fa-mode)           |
+| `E402 Payment Required`                     | npm treats the scoped package as private                                      | Confirm `"access": "public"` in `.changeset/config.json` |
+| `E403 Forbidden`                            | Version already published, or name owned by someone else                      | Versions are immutable — bump and republish              |
+| Version PR never opens                      | No changesets, or `.changeset/*.md` was not committed                         | `pnpm changeset status`                                  |
+| Version PR opens but nothing publishes      | Expected — the publish is the _next_ run, after that PR merges                | Merge it                                                 |
+| Publish stopped partway                     | A package failed mid-run                                                      | Re-run the job; already-published versions are skipped   |
+| A flaky e2e spec failed the release         | `turbo run test` gates publishing, and Playwright has no `retries` configured | Re-run the job                                           |
 
 Nothing was published if the workflow failed before `changeset publish`. If it failed _during_,
 some packages are live and some are not — re-running finishes the rest, since publish is
@@ -261,12 +264,12 @@ You cannot overwrite a published version. The options, worst to best:
 
 - **`npm unpublish`** — only allowed within 72 hours, and only if nothing depends on it.
   Disruptive; it breaks anyone who already installed it.
-- **`npm deprecate @richkit/core@x.y.z "message"`** — leaves the version installable but warns
+- **`npm deprecate @richkitjs/core@x.y.z "message"`** — leaves the version installable but warns
   on install. This is usually the right call.
 - **Publish a fix.** The cheapest option almost every time.
 
 ```bash
-npm deprecate @richkit/core@0.1.0 "Broken dependency range, use 0.1.1"
+npm deprecate @richkitjs/core@0.1.0 "Broken dependency range, use 0.1.1"
 ```
 
 ## Emergency manual publish
@@ -274,7 +277,7 @@ npm deprecate @richkit/core@0.1.0 "Broken dependency range, use 0.1.1"
 Only when Actions itself is down. Prefer fixing the workflow.
 
 ```bash
-npm login                       # an account with @richkit write access
+npm login                       # an account with @richkitjs write access
 git checkout main && git pull
 
 pnpm install --frozen-lockfile

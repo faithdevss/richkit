@@ -1,14 +1,14 @@
-# @richkit/extension-embed
+# @richkitjs/extension-embed
 
-Embed extension for [@richkit/core](https://www.npmjs.com/package/@richkit/core), a headless ProseMirror-based rich text editor.
+Embed extension for [@richkitjs/core](https://www.npmjs.com/package/@richkitjs/core), a headless ProseMirror-based rich text editor.
 
 ## Install
 
 ```sh
-npm install @richkit/extension-embed @richkit/core
+npm install @richkitjs/extension-embed @richkitjs/core
 ```
 
-Most users should install [@richkit/starter-kit](https://www.npmjs.com/package/@richkit/starter-kit) instead, which bundles all extensions.
+Most users should install [@richkitjs/starter-kit](https://www.npmjs.com/package/@richkitjs/starter-kit) instead, which bundles all extensions.
 
 ## Docs
 

@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-markdown-shortcuts",
+  "name": "@richkitjs/extension-markdown-shortcuts",
   "version": "0.0.0",
-  "description": "Markdown input rules for @richkit/core",
+  "description": "Markdown input rules for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-inputrules": "^1.4.0",
     "prosemirror-model": "^1.24.1"
   },

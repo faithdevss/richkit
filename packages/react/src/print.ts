@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 
 export interface PrintOptions {
   title?: string

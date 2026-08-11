@@ -1,19 +1,19 @@
-# @richkit/vue
+# @richkitjs/vue
 
-Vue 3 bindings for [@richkit/core](https://www.npmjs.com/package/@richkit/core).
+Vue 3 bindings for [@richkitjs/core](https://www.npmjs.com/package/@richkitjs/core).
 
 ## Install
 
 ```sh
-npm install @richkit/vue @richkit/core @richkit/starter-kit
+npm install @richkitjs/vue @richkitjs/core @richkitjs/starter-kit
 ```
 
 ## Usage
 
 ```vue
 <script setup lang="ts">
-import { useEditor, EditorContent } from '@richkit/vue'
-import { StarterKit } from '@richkit/starter-kit'
+import { useEditor, EditorContent } from '@richkitjs/vue'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 const editor = useEditor({
   extensions: [...StarterKit],

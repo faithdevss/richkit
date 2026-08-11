@@ -1,5 +1,5 @@
-import { Extension, type Command } from '@richkit/core'
-import { trackKey } from '@richkit/extension-track-changes'
+import { Extension, type Command } from '@richkitjs/core'
+import { trackKey } from '@richkitjs/extension-track-changes'
 import type { EditorState } from 'prosemirror-state'
 import type { EditorView } from 'prosemirror-view'
 import { aiKey, aiPlugin, type AIMeta, type AIRange } from './plugin'
@@ -23,7 +23,7 @@ export interface AICompleteOptions {
  * The transport. Yields text chunks as they arrive.
  *
  * The core never talks to a provider itself — this is the only seam, which is
- * what keeps the extension vendor-neutral. See `@richkit/ai-openai` for one.
+ * what keeps the extension vendor-neutral. See `@richkitjs/ai-openai` for one.
  */
 export type AIComplete = (
   req: AICompletionRequest,
@@ -35,7 +35,7 @@ export interface AIOptions extends Record<string, unknown> {
   /** Author recorded on suggestions this extension produces. */
   attributeAs: string
   /**
-   * Route output through `@richkit/extension-track-changes` so every edit
+   * Route output through `@richkitjs/extension-track-changes` so every edit
    * becomes an accept/reject-able suggestion. Silently inert when that
    * extension is not installed in the editor.
    */

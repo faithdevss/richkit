@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom'
 import { useEffect, useRef, type ReactNode } from 'react'
 

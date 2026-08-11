@@ -1,4 +1,4 @@
-import { Extension } from '@richkit/core'
+import { Extension } from '@richkitjs/core'
 import { InputRule } from 'prosemirror-inputrules'
 
 function literalRule(regex: RegExp, replace: string): InputRule {

@@ -1,4 +1,4 @@
-import { Mark, type Command } from '@richkit/core'
+import { Mark, type Command } from '@richkitjs/core'
 import { commentsKey, commentsPlugin, newId, type Thread } from './store'
 
 export const Comment = Mark.create({

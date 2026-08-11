@@ -12,14 +12,14 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
-    "@richkit/extension-ai": "workspace:*",
-    "@richkit/docx": "workspace:*",
-    "@richkit/extension-track-changes": "workspace:*",
-    "@richkit/extension-word-count": "workspace:*",
-    "@richkit/markdown": "workspace:*",
-    "@richkit/react": "workspace:*",
-    "@richkit/starter-kit": "workspace:*",
+    "@richkitjs/core": "workspace:*",
+    "@richkitjs/extension-ai": "workspace:*",
+    "@richkitjs/docx": "workspace:*",
+    "@richkitjs/extension-track-changes": "workspace:*",
+    "@richkitjs/extension-word-count": "workspace:*",
+    "@richkitjs/markdown": "workspace:*",
+    "@richkitjs/react": "workspace:*",
+    "@richkitjs/starter-kit": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

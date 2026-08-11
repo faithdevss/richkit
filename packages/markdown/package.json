@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/markdown",
+  "name": "@richkitjs/markdown",
   "version": "0.0.0",
-  "description": "Markdown serialization and parsing for @richkit/core",
+  "description": "Markdown serialization and parsing for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-markdown": "^1.13.1",
     "prosemirror-model": "^1.24.1",
     "markdown-it": "^14.1.0"

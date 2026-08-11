@@ -38,28 +38,28 @@ importers:
 
   apps/playground:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@richkit/docx':
+      '@richkitjs/docx':
         specifier: workspace:*
         version: link:../../packages/docx
-      '@richkit/extension-ai':
+      '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../../packages/extension-ai
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../../packages/extension-track-changes
-      '@richkit/extension-word-count':
+      '@richkitjs/extension-word-count':
         specifier: workspace:*
         version: link:../../packages/extension-word-count
-      '@richkit/markdown':
+      '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
-      '@richkit/react':
+      '@richkitjs/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@richkit/starter-kit':
+      '@richkitjs/starter-kit':
         specifier: workspace:*
         version: link:../../packages/starter-kit
       react:
@@ -87,28 +87,28 @@ importers:
 
   apps/showcase:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@richkit/docx':
+      '@richkitjs/docx':
         specifier: workspace:*
         version: link:../../packages/docx
-      '@richkit/extension-slash-commands':
+      '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../../packages/extension-slash-commands
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../../packages/extension-track-changes
-      '@richkit/extension-word-count':
+      '@richkitjs/extension-word-count':
         specifier: workspace:*
         version: link:../../packages/extension-word-count
-      '@richkit/markdown':
+      '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
-      '@richkit/react':
+      '@richkitjs/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@richkit/starter-kit':
+      '@richkitjs/starter-kit':
         specifier: workspace:*
         version: link:../../packages/starter-kit
       react:
@@ -151,7 +151,7 @@ importers:
 
   packages/ai-anthropic:
     dependencies:
-      '@richkit/extension-ai':
+      '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../extension-ai
     devDependencies:
@@ -170,7 +170,7 @@ importers:
 
   packages/ai-openai:
     dependencies:
-      '@richkit/extension-ai':
+      '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../extension-ai
     devDependencies:
@@ -244,7 +244,7 @@ importers:
 
   packages/docx:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       docx:
@@ -263,10 +263,10 @@ importers:
 
   packages/extension-ai:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes
       prosemirror-model:
@@ -294,7 +294,7 @@ importers:
 
   packages/extension-blockquote:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -307,7 +307,7 @@ importers:
 
   packages/extension-bold:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -320,7 +320,7 @@ importers:
 
   packages/extension-bullet-list:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-schema-list:
@@ -336,7 +336,7 @@ importers:
 
   packages/extension-case-change:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -349,7 +349,7 @@ importers:
 
   packages/extension-code:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -362,7 +362,7 @@ importers:
 
   packages/extension-code-block:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       lowlight:
@@ -390,7 +390,7 @@ importers:
 
   packages/extension-comments:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -409,7 +409,7 @@ importers:
 
   packages/extension-embed:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -431,7 +431,7 @@ importers:
 
   packages/extension-find-replace:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -453,7 +453,7 @@ importers:
 
   packages/extension-heading:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -466,7 +466,7 @@ importers:
 
   packages/extension-highlight:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -479,7 +479,7 @@ importers:
 
   packages/extension-history:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-history:
@@ -495,7 +495,7 @@ importers:
 
   packages/extension-horizontal-rule:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -508,7 +508,7 @@ importers:
 
   packages/extension-image:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -530,7 +530,7 @@ importers:
 
   packages/extension-italic:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -543,7 +543,7 @@ importers:
 
   packages/extension-line-height:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -556,7 +556,7 @@ importers:
 
   packages/extension-link:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-inputrules:
@@ -572,7 +572,7 @@ importers:
 
   packages/extension-list-item:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-schema-list:
@@ -588,7 +588,7 @@ importers:
 
   packages/extension-markdown-shortcuts:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-inputrules:
@@ -607,7 +607,7 @@ importers:
 
   packages/extension-ordered-list:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-schema-list:
@@ -623,7 +623,7 @@ importers:
 
   packages/extension-page-break:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -636,7 +636,7 @@ importers:
 
   packages/extension-paragraph:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -649,7 +649,7 @@ importers:
 
   packages/extension-paste-handler:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -671,7 +671,7 @@ importers:
 
   packages/extension-placeholder:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-state:
@@ -690,7 +690,7 @@ importers:
 
   packages/extension-slash-commands:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -712,7 +712,7 @@ importers:
 
   packages/extension-strike:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -725,7 +725,7 @@ importers:
 
   packages/extension-subscript:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -738,7 +738,7 @@ importers:
 
   packages/extension-superscript:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -751,7 +751,7 @@ importers:
 
   packages/extension-table:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-state:
@@ -773,7 +773,7 @@ importers:
 
   packages/extension-task-list:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-schema-list:
@@ -789,7 +789,7 @@ importers:
 
   packages/extension-text-align:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -802,7 +802,7 @@ importers:
 
   packages/extension-text-style:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -818,7 +818,7 @@ importers:
 
   packages/extension-track-changes:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -840,7 +840,7 @@ importers:
 
   packages/extension-typography:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-inputrules:
@@ -856,7 +856,7 @@ importers:
 
   packages/extension-underline:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -869,7 +869,7 @@ importers:
 
   packages/extension-word-count:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       prosemirror-model:
@@ -891,7 +891,7 @@ importers:
 
   packages/html:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -904,7 +904,7 @@ importers:
 
   packages/markdown:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
       markdown-it:
@@ -932,28 +932,28 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.6.12
         version: 1.7.6
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
-      '@richkit/docx':
+      '@richkitjs/docx':
         specifier: workspace:*
         version: link:../docx
-      '@richkit/extension-ai':
+      '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../extension-ai
-      '@richkit/extension-comments':
+      '@richkitjs/extension-comments':
         specifier: workspace:*
         version: link:../extension-comments
-      '@richkit/extension-find-replace':
+      '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
-      '@richkit/extension-slash-commands':
+      '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../extension-slash-commands
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes
-      '@richkit/markdown':
+      '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../markdown
       prosemirror-model:
@@ -987,115 +987,115 @@ importers:
 
   packages/starter-kit:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
-      '@richkit/extension-blockquote':
+      '@richkitjs/extension-blockquote':
         specifier: workspace:*
         version: link:../extension-blockquote
-      '@richkit/extension-bold':
+      '@richkitjs/extension-bold':
         specifier: workspace:*
         version: link:../extension-bold
-      '@richkit/extension-bullet-list':
+      '@richkitjs/extension-bullet-list':
         specifier: workspace:*
         version: link:../extension-bullet-list
-      '@richkit/extension-case-change':
+      '@richkitjs/extension-case-change':
         specifier: workspace:*
         version: link:../extension-case-change
-      '@richkit/extension-code':
+      '@richkitjs/extension-code':
         specifier: workspace:*
         version: link:../extension-code
-      '@richkit/extension-code-block':
+      '@richkitjs/extension-code-block':
         specifier: workspace:*
         version: link:../extension-code-block
-      '@richkit/extension-comments':
+      '@richkitjs/extension-comments':
         specifier: workspace:*
         version: link:../extension-comments
-      '@richkit/extension-embed':
+      '@richkitjs/extension-embed':
         specifier: workspace:*
         version: link:../extension-embed
-      '@richkit/extension-find-replace':
+      '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
-      '@richkit/extension-heading':
+      '@richkitjs/extension-heading':
         specifier: workspace:*
         version: link:../extension-heading
-      '@richkit/extension-highlight':
+      '@richkitjs/extension-highlight':
         specifier: workspace:*
         version: link:../extension-highlight
-      '@richkit/extension-history':
+      '@richkitjs/extension-history':
         specifier: workspace:*
         version: link:../extension-history
-      '@richkit/extension-horizontal-rule':
+      '@richkitjs/extension-horizontal-rule':
         specifier: workspace:*
         version: link:../extension-horizontal-rule
-      '@richkit/extension-image':
+      '@richkitjs/extension-image':
         specifier: workspace:*
         version: link:../extension-image
-      '@richkit/extension-italic':
+      '@richkitjs/extension-italic':
         specifier: workspace:*
         version: link:../extension-italic
-      '@richkit/extension-line-height':
+      '@richkitjs/extension-line-height':
         specifier: workspace:*
         version: link:../extension-line-height
-      '@richkit/extension-link':
+      '@richkitjs/extension-link':
         specifier: workspace:*
         version: link:../extension-link
-      '@richkit/extension-list-item':
+      '@richkitjs/extension-list-item':
         specifier: workspace:*
         version: link:../extension-list-item
-      '@richkit/extension-markdown-shortcuts':
+      '@richkitjs/extension-markdown-shortcuts':
         specifier: workspace:*
         version: link:../extension-markdown-shortcuts
-      '@richkit/extension-ordered-list':
+      '@richkitjs/extension-ordered-list':
         specifier: workspace:*
         version: link:../extension-ordered-list
-      '@richkit/extension-page-break':
+      '@richkitjs/extension-page-break':
         specifier: workspace:*
         version: link:../extension-page-break
-      '@richkit/extension-paragraph':
+      '@richkitjs/extension-paragraph':
         specifier: workspace:*
         version: link:../extension-paragraph
-      '@richkit/extension-paste-handler':
+      '@richkitjs/extension-paste-handler':
         specifier: workspace:*
         version: link:../extension-paste-handler
-      '@richkit/extension-placeholder':
+      '@richkitjs/extension-placeholder':
         specifier: workspace:*
         version: link:../extension-placeholder
-      '@richkit/extension-slash-commands':
+      '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../extension-slash-commands
-      '@richkit/extension-strike':
+      '@richkitjs/extension-strike':
         specifier: workspace:*
         version: link:../extension-strike
-      '@richkit/extension-subscript':
+      '@richkitjs/extension-subscript':
         specifier: workspace:*
         version: link:../extension-subscript
-      '@richkit/extension-superscript':
+      '@richkitjs/extension-superscript':
         specifier: workspace:*
         version: link:../extension-superscript
-      '@richkit/extension-table':
+      '@richkitjs/extension-table':
         specifier: workspace:*
         version: link:../extension-table
-      '@richkit/extension-task-list':
+      '@richkitjs/extension-task-list':
         specifier: workspace:*
         version: link:../extension-task-list
-      '@richkit/extension-text-align':
+      '@richkitjs/extension-text-align':
         specifier: workspace:*
         version: link:../extension-text-align
-      '@richkit/extension-text-style':
+      '@richkitjs/extension-text-style':
         specifier: workspace:*
         version: link:../extension-text-style
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes
-      '@richkit/extension-typography':
+      '@richkitjs/extension-typography':
         specifier: workspace:*
         version: link:../extension-typography
-      '@richkit/extension-underline':
+      '@richkitjs/extension-underline':
         specifier: workspace:*
         version: link:../extension-underline
-      '@richkit/extension-word-count':
+      '@richkitjs/extension-word-count':
         specifier: workspace:*
         version: link:../extension-word-count
     devDependencies:
@@ -1108,7 +1108,7 @@ importers:
 
   packages/vue:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -1142,109 +1142,109 @@ importers:
 
   tests/integration:
     dependencies:
-      '@richkit/core':
+      '@richkitjs/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@richkit/docx':
+      '@richkitjs/docx':
         specifier: workspace:*
         version: link:../../packages/docx
-      '@richkit/extension-blockquote':
+      '@richkitjs/extension-blockquote':
         specifier: workspace:*
         version: link:../../packages/extension-blockquote
-      '@richkit/extension-bold':
+      '@richkitjs/extension-bold':
         specifier: workspace:*
         version: link:../../packages/extension-bold
-      '@richkit/extension-bullet-list':
+      '@richkitjs/extension-bullet-list':
         specifier: workspace:*
         version: link:../../packages/extension-bullet-list
-      '@richkit/extension-case-change':
+      '@richkitjs/extension-case-change':
         specifier: workspace:*
         version: link:../../packages/extension-case-change
-      '@richkit/extension-code':
+      '@richkitjs/extension-code':
         specifier: workspace:*
         version: link:../../packages/extension-code
-      '@richkit/extension-code-block':
+      '@richkitjs/extension-code-block':
         specifier: workspace:*
         version: link:../../packages/extension-code-block
-      '@richkit/extension-comments':
+      '@richkitjs/extension-comments':
         specifier: workspace:*
         version: link:../../packages/extension-comments
-      '@richkit/extension-embed':
+      '@richkitjs/extension-embed':
         specifier: workspace:*
         version: link:../../packages/extension-embed
-      '@richkit/extension-find-replace':
+      '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../../packages/extension-find-replace
-      '@richkit/extension-heading':
+      '@richkitjs/extension-heading':
         specifier: workspace:*
         version: link:../../packages/extension-heading
-      '@richkit/extension-highlight':
+      '@richkitjs/extension-highlight':
         specifier: workspace:*
         version: link:../../packages/extension-highlight
-      '@richkit/extension-horizontal-rule':
+      '@richkitjs/extension-horizontal-rule':
         specifier: workspace:*
         version: link:../../packages/extension-horizontal-rule
-      '@richkit/extension-image':
+      '@richkitjs/extension-image':
         specifier: workspace:*
         version: link:../../packages/extension-image
-      '@richkit/extension-italic':
+      '@richkitjs/extension-italic':
         specifier: workspace:*
         version: link:../../packages/extension-italic
-      '@richkit/extension-line-height':
+      '@richkitjs/extension-line-height':
         specifier: workspace:*
         version: link:../../packages/extension-line-height
-      '@richkit/extension-link':
+      '@richkitjs/extension-link':
         specifier: workspace:*
         version: link:../../packages/extension-link
-      '@richkit/extension-list-item':
+      '@richkitjs/extension-list-item':
         specifier: workspace:*
         version: link:../../packages/extension-list-item
-      '@richkit/extension-ordered-list':
+      '@richkitjs/extension-ordered-list':
         specifier: workspace:*
         version: link:../../packages/extension-ordered-list
-      '@richkit/extension-page-break':
+      '@richkitjs/extension-page-break':
         specifier: workspace:*
         version: link:../../packages/extension-page-break
-      '@richkit/extension-paragraph':
+      '@richkitjs/extension-paragraph':
         specifier: workspace:*
         version: link:../../packages/extension-paragraph
-      '@richkit/extension-paste-handler':
+      '@richkitjs/extension-paste-handler':
         specifier: workspace:*
         version: link:../../packages/extension-paste-handler
-      '@richkit/extension-slash-commands':
+      '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../../packages/extension-slash-commands
-      '@richkit/extension-strike':
+      '@richkitjs/extension-strike':
         specifier: workspace:*
         version: link:../../packages/extension-strike
-      '@richkit/extension-subscript':
+      '@richkitjs/extension-subscript':
         specifier: workspace:*
         version: link:../../packages/extension-subscript
-      '@richkit/extension-superscript':
+      '@richkitjs/extension-superscript':
         specifier: workspace:*
         version: link:../../packages/extension-superscript
-      '@richkit/extension-table':
+      '@richkitjs/extension-table':
         specifier: workspace:*
         version: link:../../packages/extension-table
-      '@richkit/extension-task-list':
+      '@richkitjs/extension-task-list':
         specifier: workspace:*
         version: link:../../packages/extension-task-list
-      '@richkit/extension-text-align':
+      '@richkitjs/extension-text-align':
         specifier: workspace:*
         version: link:../../packages/extension-text-align
-      '@richkit/extension-text-style':
+      '@richkitjs/extension-text-style':
         specifier: workspace:*
         version: link:../../packages/extension-text-style
-      '@richkit/extension-track-changes':
+      '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../../packages/extension-track-changes
-      '@richkit/extension-underline':
+      '@richkitjs/extension-underline':
         specifier: workspace:*
         version: link:../../packages/extension-underline
-      '@richkit/extension-word-count':
+      '@richkitjs/extension-word-count':
         specifier: workspace:*
         version: link:../../packages/extension-word-count
-      '@richkit/markdown':
+      '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
     devDependencies:

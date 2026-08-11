@@ -8,15 +8,15 @@ Install the React binding and the starter kit:
 
 </div>
 
-<Install packages="@richkit/react @richkit/starter-kit" />
+<Install packages="@richkitjs/react @richkitjs/starter-kit" />
 
 <div className="docs-prose">
 
 Render an editor:
 
 ```tsx
-import { useEditor, EditorContent } from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
+import { useEditor, EditorContent } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 export function MyEditor() {
   const editor = useEditor({
@@ -33,11 +33,11 @@ effect) — `EditorContent` handles that automatically.
 
 ## Adding a toolbar
 
-`@richkit/react` ships a default toolbar and the building blocks to compose your own:
+`@richkitjs/react` ships a default toolbar and the building blocks to compose your own:
 
 ```tsx
-import { useEditor, EditorContent, Toolbar, DefaultToolbar } from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
+import { useEditor, EditorContent, Toolbar, DefaultToolbar } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 export function MyEditor() {
   const editor = useEditor({ extensions: StarterKit, content: '<p>Hello world</p>' })
@@ -59,9 +59,9 @@ export function MyEditor() {
 pulling in everything:
 
 ```tsx
-import { Paragraph } from '@richkit/extension-paragraph'
-import { Bold } from '@richkit/extension-bold'
-import { Italic } from '@richkit/extension-italic'
+import { Paragraph } from '@richkitjs/extension-paragraph'
+import { Bold } from '@richkitjs/extension-bold'
+import { Italic } from '@richkitjs/extension-italic'
 
 const extensions = [Paragraph, Bold, Italic]
 ```
@@ -70,6 +70,6 @@ See the full [extensions reference](/docs/extensions) for every available packag
 
 ## Vue
 
-`@richkit/vue` mirrors the React package's API for Vue apps.
+`@richkitjs/vue` mirrors the React package's API for Vue apps.
 
 </div>

@@ -1,5 +1,5 @@
-import type { Editor } from '@richkit/core'
-import { findCommentRange, getCommentsState, type Thread } from '@richkit/extension-comments'
+import type { Editor } from '@richkitjs/core'
+import { findCommentRange, getCommentsState, type Thread } from '@richkitjs/extension-comments'
 import { TextSelection } from 'prosemirror-state'
 import { useEffect, useMemo, useState } from 'react'
 import { notify } from '../Notifications/notify'

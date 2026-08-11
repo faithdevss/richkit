@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/docx",
+  "name": "@richkitjs/docx",
   "version": "0.0.0",
-  "description": "DOCX import and export for @richkit/core",
+  "description": "DOCX import and export for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "docx": "^9.5.1",
     "mammoth": "^1.11.0"
   },

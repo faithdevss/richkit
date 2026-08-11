@@ -1,4 +1,4 @@
-import { NotificationsHost } from '@richkit/react'
+import { NotificationsHost } from '@richkitjs/react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
@@ -101,8 +101,8 @@ export function SiteShell() {
             ))}
           </div>
           <div className="foot-base">
-            Built with <code>@richkit/core</code> · <code>@richkit/react</code> ·{' '}
-            <code>@richkit/starter-kit</code> · MIT licensed
+            Built with <code>@richkitjs/core</code> · <code>@richkitjs/react</code> ·{' '}
+            <code>@richkitjs/starter-kit</code> · MIT licensed
           </div>
         </footer>
       </div>

@@ -1,4 +1,4 @@
-import { Editor, type EditorOptions } from '@richkit/core'
+import { Editor, type EditorOptions } from '@richkitjs/core'
 import { onBeforeUnmount, onMounted, shallowRef, triggerRef, type ShallowRef } from 'vue'
 
 /**

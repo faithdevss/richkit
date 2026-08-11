@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-placeholder",
+  "name": "@richkitjs/extension-placeholder",
   "version": "0.0.0",
-  "description": "Placeholder extension for @richkit/core",
+  "description": "Placeholder extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.37.0"
   },

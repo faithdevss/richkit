@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import { Document, LevelFormat, Packer } from 'docx'
 import { convertDoc } from './convert'
 import type { JSONNode } from './types'

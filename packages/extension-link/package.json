@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-link",
+  "name": "@richkitjs/extension-link",
   "version": "0.0.0",
-  "description": "Link mark extension for @richkit/core, with autolink",
+  "description": "Link mark extension for @richkitjs/core, with autolink",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-inputrules": "^1.4.0"
   },
   "devDependencies": {

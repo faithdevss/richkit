@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-track-changes",
+  "name": "@richkitjs/extension-track-changes",
   "version": "0.0.0",
-  "description": "Track changes extension for @richkit/core, with accept/reject suggestions",
+  "description": "Track changes extension for @richkitjs/core, with accept/reject suggestions",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-model": "^1.24.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-transform": "^1.10.2"

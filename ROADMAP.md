@@ -56,8 +56,8 @@ Verified green: 133 turbo tasks, 126 integration tests, 202/206 e2e (4 table-col
 
 ## Phase 7 — Frameworks + DX (features.md §19–20)
 
-- `@richkit/vue` binding first (mirror react package: useEditor composable, EditorContent, menus), then Svelte
-- SSR/static renderer: `@richkit/static-renderer` — JSON → HTML string without DOM (core `DOMSerializer` needs jsdom shim or manual walk; manual walk preferred for zero deps)
+- `@richkitjs/vue` binding first (mirror react package: useEditor composable, EditorContent, menus), then Svelte
+- SSR/static renderer: `@richkitjs/static-renderer` — JSON → HTML string without DOM (core `DOMSerializer` needs jsdom shim or manual walk; manual walk preferred for zero deps)
 - Plugin generator CLI (`create-richkit-extension` scaffolding from the extension-highlight template)
 - Typedoc site + live playground deploy
 

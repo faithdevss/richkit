@@ -1,4 +1,4 @@
-import { Mark, setMark, unsetMark, type Command } from '@richkit/core'
+import { Mark, setMark, unsetMark, type Command } from '@richkitjs/core'
 import { InputRule } from 'prosemirror-inputrules'
 
 const URL_REGEX = /(?:^|\s)(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)\s$/

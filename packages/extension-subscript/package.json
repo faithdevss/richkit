@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-subscript",
+  "name": "@richkitjs/extension-subscript",
   "version": "0.0.0",
-  "description": "Subscript mark extension for @richkit/core",
+  "description": "Subscript mark extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*"
+    "@richkitjs/core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

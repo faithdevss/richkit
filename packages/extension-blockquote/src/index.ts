@@ -1,4 +1,4 @@
-import { Node, toggleWrap } from '@richkit/core'
+import { Node, toggleWrap } from '@richkitjs/core'
 
 export const Blockquote = Node.create({
   name: 'blockquote',

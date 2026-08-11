@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/ai-openai",
+  "name": "@richkitjs/ai-openai",
   "version": "0.0.0",
-  "description": "OpenAI streaming transport for @richkit/extension-ai",
+  "description": "OpenAI streaming transport for @richkitjs/extension-ai",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -25,7 +25,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/extension-ai": "workspace:*"
+    "@richkitjs/extension-ai": "workspace:*"
   },
   "devDependencies": {
     "jsdom": "^25.0.1",

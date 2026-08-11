@@ -1,8 +1,8 @@
-import { Editor } from '@richkit/core'
-import { Bold } from '@richkit/extension-bold'
-import { Comment, findCommentRange, getCommentsState } from '@richkit/extension-comments'
-import { Heading } from '@richkit/extension-heading'
-import { Paragraph } from '@richkit/extension-paragraph'
+import { Editor } from '@richkitjs/core'
+import { Bold } from '@richkitjs/extension-bold'
+import { Comment, findCommentRange, getCommentsState } from '@richkitjs/extension-comments'
+import { Heading } from '@richkitjs/extension-heading'
+import { Paragraph } from '@richkitjs/extension-paragraph'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

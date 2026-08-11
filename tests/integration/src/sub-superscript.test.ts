@@ -1,7 +1,7 @@
-import { Editor } from '@richkit/core'
-import { Paragraph } from '@richkit/extension-paragraph'
-import { Subscript } from '@richkit/extension-subscript'
-import { Superscript } from '@richkit/extension-superscript'
+import { Editor } from '@richkitjs/core'
+import { Paragraph } from '@richkitjs/extension-paragraph'
+import { Subscript } from '@richkitjs/extension-subscript'
+import { Superscript } from '@richkitjs/extension-superscript'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

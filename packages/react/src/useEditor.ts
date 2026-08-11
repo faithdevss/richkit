@@ -1,4 +1,4 @@
-import { Editor, type EditorOptions } from '@richkit/core'
+import { Editor, type EditorOptions } from '@richkitjs/core'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 interface Store {

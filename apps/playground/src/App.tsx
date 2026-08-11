@@ -15,13 +15,13 @@ import {
   buildMenus,
   notify,
   useEditor,
-} from '@richkit/react'
-import { importDocxFile } from '@richkit/docx'
-import { getTrackState } from '@richkit/extension-track-changes'
-import { getWordCount } from '@richkit/extension-word-count'
-import { setMarkdownContent } from '@richkit/markdown'
-import { AI, type AIComplete } from '@richkit/extension-ai'
-import { StarterKit } from '@richkit/starter-kit'
+} from '@richkitjs/react'
+import { importDocxFile } from '@richkitjs/docx'
+import { getTrackState } from '@richkitjs/extension-track-changes'
+import { getWordCount } from '@richkitjs/extension-word-count'
+import { setMarkdownContent } from '@richkitjs/markdown'
+import { AI, type AIComplete } from '@richkitjs/extension-ai'
+import { StarterKit } from '@richkitjs/starter-kit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { StatusBar } from './StatusBar'
 import { Toolbar } from './Toolbar'
@@ -38,8 +38,8 @@ declare global {
 /**
  * Stub transport for local development — no network, no API key.
  * Echoes a deterministic transformation so the AI flow can be driven end to end.
- * Real apps pass `openaiComplete({ endpoint })` from `@richkit/ai-openai`, or
- * `anthropicComplete({ endpoint })` from `@richkit/ai-anthropic`.
+ * Real apps pass `openaiComplete({ endpoint })` from `@richkitjs/ai-openai`, or
+ * `anthropicComplete({ endpoint })` from `@richkitjs/ai-anthropic`.
  */
 const stubComplete: AIComplete = async function* (req, { signal }) {
   const words = (req.selection || `response to "${req.prompt}"`).split(/(\s+)/)

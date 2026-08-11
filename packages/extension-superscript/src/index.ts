@@ -1,4 +1,4 @@
-import { Mark, toggleMark } from '@richkit/core'
+import { Mark, toggleMark } from '@richkitjs/core'
 
 export const Superscript = Mark.create({
   name: 'superscript',

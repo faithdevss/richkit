@@ -1,6 +1,6 @@
-# @richkit/ai-openai
+# @richkitjs/ai-openai
 
-OpenAI transport for [`@richkit/extension-ai`](../extension-ai). Streams the chat-completions
+OpenAI transport for [`@richkitjs/extension-ai`](../extension-ai). Streams the chat-completions
 SSE response into the editor, one text delta at a time.
 
 Zero runtime dependencies — it speaks the wire format over `fetch`, so a proxy route only has
@@ -9,15 +9,15 @@ to pipe OpenAI's response through unchanged.
 ## Install
 
 ```bash
-pnpm add @richkit/extension-ai @richkit/ai-openai
+pnpm add @richkitjs/extension-ai @richkitjs/ai-openai
 ```
 
 ## Usage
 
 ```ts
-import { AI } from '@richkit/extension-ai'
-import { openaiComplete } from '@richkit/ai-openai'
-import { StarterKit } from '@richkit/starter-kit'
+import { AI } from '@richkitjs/extension-ai'
+import { openaiComplete } from '@richkitjs/ai-openai'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 const editor = new Editor({
   element: document.querySelector('#editor')!,
@@ -72,10 +72,10 @@ For anything user-facing, use `endpoint`.
 ## Errors
 
 Non-2xx responses, missing bodies, and mid-stream failures are thrown, and
-`@richkit/extension-ai` reports them in its plugin state:
+`@richkitjs/extension-ai` reports them in its plugin state:
 
 ```ts
-import { getAIState } from '@richkit/extension-ai'
+import { getAIState } from '@richkitjs/extension-ai'
 
 const { status, error } = getAIState(editor.state)! // status: 'error'
 ```

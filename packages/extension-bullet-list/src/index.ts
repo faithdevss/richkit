@@ -1,4 +1,4 @@
-import { Node, wrapInList } from '@richkit/core'
+import { Node, wrapInList } from '@richkitjs/core'
 
 export const BulletList = Node.create({
   name: 'bulletList',

@@ -1,4 +1,4 @@
-import { Extension } from '@richkit/core'
+import { Extension } from '@richkitjs/core'
 import { slashCommandsPlugin } from './plugin'
 
 export const SlashCommands = Extension.create({

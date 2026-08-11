@@ -9,8 +9,8 @@ import {
   BlockTypeMenu,
   ToolbarButton,
   ToolbarGroup,
-} from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
+} from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 import { AGENT_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 

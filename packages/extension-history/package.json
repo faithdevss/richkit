@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-history",
+  "name": "@richkitjs/extension-history",
   "version": "0.0.0",
-  "description": "Undo/redo history extension for @richkit/core",
+  "description": "Undo/redo history extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-history": "^1.4.1"
   },
   "devDependencies": {

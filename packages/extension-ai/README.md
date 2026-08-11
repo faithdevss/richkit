@@ -1,28 +1,28 @@
-# @richkit/extension-ai
+# @richkitjs/extension-ai
 
 AI authoring for RichKit. Streams a model's output into the document, and — when
-[`@richkit/extension-track-changes`](../extension-track-changes) is installed — lands every
+[`@richkitjs/extension-track-changes`](../extension-track-changes) is installed — lands every
 edit as a suggestion the user can accept or reject.
 
 The extension never talks to a provider itself. You hand it a `complete` transport, which is
 the only vendor-specific seam:
 
-- [`@richkit/ai-openai`](../ai-openai) — OpenAI chat completions
-- [`@richkit/ai-anthropic`](../ai-anthropic) — Anthropic Messages API
+- [`@richkitjs/ai-openai`](../ai-openai) — OpenAI chat completions
+- [`@richkitjs/ai-anthropic`](../ai-anthropic) — Anthropic Messages API
 
 ## Install
 
 ```bash
-pnpm add @richkit/extension-ai @richkit/ai-openai
+pnpm add @richkitjs/extension-ai @richkitjs/ai-openai
 ```
 
 ## Usage
 
 ```ts
-import { Editor } from '@richkit/core'
-import { StarterKit } from '@richkit/starter-kit'
-import { AI } from '@richkit/extension-ai'
-import { openaiComplete } from '@richkit/ai-openai'
+import { Editor } from '@richkitjs/core'
+import { StarterKit } from '@richkitjs/starter-kit'
+import { AI } from '@richkitjs/extension-ai'
+import { openaiComplete } from '@richkitjs/ai-openai'
 
 const editor = new Editor({
   element: document.querySelector('#editor')!,
@@ -66,7 +66,7 @@ is deleted outright.
 ## Plugin state
 
 ```ts
-import { getAIState, isAIStreaming } from '@richkit/extension-ai'
+import { getAIState, isAIStreaming } from '@richkitjs/extension-ai'
 
 const state = getAIState(editor.state)
 // { status: 'idle' | 'streaming' | 'error', prompt, error, range, replaced }
@@ -84,7 +84,7 @@ Transport failures — non-2xx responses, stream errors, refusals — surface as
 Any async generator of text chunks works:
 
 ```ts
-import type { AIComplete } from '@richkit/extension-ai'
+import type { AIComplete } from '@richkitjs/extension-ai'
 
 const complete: AIComplete = async function* (req, { signal }) {
   // req: { prompt, selection, documentText }

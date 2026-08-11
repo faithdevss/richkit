@@ -3,21 +3,21 @@
 # Introduction
 
 RichKit is a headless, transaction-based rich text editor core with a first-class
-React binding. The core (`@richkit/core`) has no framework dependency — it exposes
+React binding. The core (`@richkitjs/core`) has no framework dependency — it exposes
 an `Editor` class built on a schema of `Node` and `Mark` extensions, a command chain for
 mutating document state, and `htmlToDoc`/`docToHtml` for HTML interchange.
 
 Everything else — bold, headings, lists, tables, comments, track changes, docx/markdown
-conversion — ships as a separate extension package. `@richkit/starter-kit` bundles the
+conversion — ships as a separate extension package. `@richkitjs/starter-kit` bundles the
 common ones so you don't have to hand-pick a schema on day one.
 
 ## What's included
 
 - **Nodes & marks** — paragraphs, headings, lists, tables, images, links, and more. See
   the [extensions reference](/docs/extensions).
-- **React bindings** (`@richkit/react`) — `useEditor`, `EditorContent`, toolbar and
+- **React bindings** (`@richkitjs/react`) — `useEditor`, `EditorContent`, toolbar and
   menu components.
-- **Vue bindings** (`@richkit/vue`) — mirrors the React package.
+- **Vue bindings** (`@richkitjs/vue`) — mirrors the React package.
 - **Conversion packages** — `docx`, `markdown`, `html` import/export.
 - **Collaboration primitives** — inline comments and track-changes, usable without a
   network layer.

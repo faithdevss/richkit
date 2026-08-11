@@ -1,7 +1,7 @@
-import { Editor } from '@richkit/core'
-import { Heading } from '@richkit/extension-heading'
-import { Paragraph } from '@richkit/extension-paragraph'
-import { getWordCount, WordCount } from '@richkit/extension-word-count'
+import { Editor } from '@richkitjs/core'
+import { Heading } from '@richkitjs/extension-heading'
+import { Paragraph } from '@richkitjs/extension-paragraph'
+import { getWordCount, WordCount } from '@richkitjs/extension-word-count'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 function makeEditor(content: string) {

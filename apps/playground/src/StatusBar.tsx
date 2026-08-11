@@ -1,5 +1,5 @@
-import type { Editor } from '@richkit/core'
-import { getWordCount, type WordCountStats } from '@richkit/extension-word-count'
+import type { Editor } from '@richkitjs/core'
+import { getWordCount, type WordCountStats } from '@richkitjs/extension-word-count'
 import { useEffect, useState } from 'react'
 
 export function StatusBar({ editor }: { editor: Editor | null }) {

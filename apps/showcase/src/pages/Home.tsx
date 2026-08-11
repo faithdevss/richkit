@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Icons } from '@richkit/react'
+import { Icons } from '@richkitjs/react'
 import { ComparisonTable } from '../components/ComparisonTable'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
@@ -185,7 +185,7 @@ export function Home() {
           <Link to="/docs/installation" className="btn-secondary">
             Read the docs
           </Link>
-          <code className="hero-install">pnpm add @richkit/starter-kit</code>
+          <code className="hero-install">pnpm add @richkitjs/starter-kit</code>
         </div>
 
         <div className="hero-metrics">
@@ -251,7 +251,7 @@ export function Home() {
         </div>
 
         <p className="stage-caption">
-          Every example above is a live editor built with the same <code>@richkit</code> packages.
+          Every example above is a live editor built with the same <code>@richkitjs</code> packages.
           Switch tabs to see how far one core stretches. Want the write-up and code for each? See
           the <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
         </p>

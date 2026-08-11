@@ -4,23 +4,23 @@ import { Install } from '../../mdx-components'
 
 # AI
 
-`@richkit/extension-ai` streams model output into the document. The extension
+`@richkitjs/extension-ai` streams model output into the document. The extension
 itself has **no provider dependency and makes no network calls** — you hand it a
 function, and it handles document state, streaming, and review.
 
 </div>
 
-<Install packages="@richkit/extension-ai @richkit/ai-openai" />
+<Install packages="@richkitjs/extension-ai @richkitjs/ai-openai" />
 
 <div className="docs-prose">
 
 ## Setup
 
 ```tsx
-import { useEditor, EditorContent, AIPrompt } from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
-import { AI } from '@richkit/extension-ai'
-import { openaiComplete } from '@richkit/ai-openai'
+import { useEditor, EditorContent, AIPrompt } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
+import { AI } from '@richkitjs/extension-ai'
+import { openaiComplete } from '@richkitjs/ai-openai'
 
 export function Editor() {
   const editor = useEditor({
@@ -104,14 +104,14 @@ you about.
 
 ## Review with track changes
 
-If `@richkit/extension-track-changes` is in your extension list, AI output
+If `@richkitjs/extension-track-changes` is in your extension list, AI output
 arrives as **suggestions rather than silent edits**. Streamed text is marked as
 an insertion, and a rewritten range keeps its original text under a deletion
 mark, so nothing is lost until someone decides:
 
 ```tsx
-import { TrackChangesKit } from '@richkit/extension-track-changes'
-import { SuggestionSidebar } from '@richkit/react'
+import { TrackChangesKit } from '@richkitjs/extension-track-changes'
+import { SuggestionSidebar } from '@richkitjs/react'
 
 const editor = useEditor({
   extensions: [...StarterKit, ...TrackChangesKit, AI.configure({ complete })],
@@ -147,7 +147,7 @@ change tone, translate. Presets are plain prompt templates, so replace them
 freely:
 
 ```tsx
-import { AIPrompt, type AIPreset } from '@richkit/react'
+import { AIPrompt, type AIPreset } from '@richkitjs/react'
 
 const presets: AIPreset[] = [
   { id: 'legal', label: 'Plain English', prompt: 'Rewrite this without legalese.' },
@@ -163,7 +163,7 @@ const presets: AIPreset[] = [
 another provider, a local model, or a canned response in a test:
 
 ```ts
-import type { AIComplete } from '@richkit/extension-ai'
+import type { AIComplete } from '@richkitjs/extension-ai'
 
 const complete: AIComplete = async function* (req, { signal }) {
   // req.prompt, req.selection, req.documentText
@@ -186,7 +186,7 @@ Honour the `signal` — that is what makes **Stop** work.
 
 ## Styling
 
-`@richkit/react` ships no CSS. `AIPrompt` renders semantic class names —
+`@richkitjs/react` ships no CSS. `AIPrompt` renders semantic class names —
 `ai-prompt`, `ai-prompt-input`, `ai-prompt-preset`, `ai-prompt-accept`,
 `ai-prompt-reject` — for you to style, or pass your own `className`.
 

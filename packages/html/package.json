@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/html",
+  "name": "@richkitjs/html",
   "version": "0.0.0",
-  "description": "HTML serialization and parsing for @richkit/core",
+  "description": "HTML serialization and parsing for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*"
+    "@richkitjs/core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

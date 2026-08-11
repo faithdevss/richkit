@@ -1,4 +1,4 @@
-import { Extension, Mark, type Command } from '@richkit/core'
+import { Extension, Mark, type Command } from '@richkitjs/core'
 import { TextSelection } from 'prosemirror-state'
 import { getSuggestions, newId, trackChangesPlugin, trackKey } from './plugin'
 

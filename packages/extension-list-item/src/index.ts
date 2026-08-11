@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkit/core'
+import { Node, type Command } from '@richkitjs/core'
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
 
 function liCommand(factory: typeof splitListItem): Command {

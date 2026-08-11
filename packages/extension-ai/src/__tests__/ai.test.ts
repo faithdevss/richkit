@@ -1,5 +1,5 @@
-import { Editor, Node } from '@richkit/core'
-import { TrackChangesKit, getSuggestions, getTrackState } from '@richkit/extension-track-changes'
+import { Editor, Node } from '@richkitjs/core'
+import { TrackChangesKit, getSuggestions, getTrackState } from '@richkitjs/extension-track-changes'
 import { TextSelection } from 'prosemirror-state'
 import { describe, expect, it } from 'vitest'
 import { AI, type AIComplete } from '../index'

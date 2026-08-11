@@ -39,7 +39,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'DOCX import / export',
     detail: 'Round-trip Word documents without a conversion service.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkit/docx — runs in the browser, no server call.' },
+      {
+        state: 'open',
+        label: 'MIT',
+        note: '@richkitjs/docx — runs in the browser, no server call.',
+      },
       { state: 'paid', label: 'Paid', note: 'Conversion is a hosted service on a paid plan.' },
       { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature' },
@@ -50,7 +54,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Track changes',
     detail: 'Redlining with accept / reject per change.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkit/extension-track-changes' },
+      { state: 'open', label: 'MIT', note: '@richkitjs/extension-track-changes' },
       { state: 'paid', label: 'Paid add-on' },
       { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature' },
@@ -61,7 +65,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Comments & threads',
     detail: 'Inline threads anchored to a range of text.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkit/extension-comments' },
+      { state: 'open', label: 'MIT', note: '@richkitjs/extension-comments' },
       {
         state: 'paid',
         label: 'Paid',
@@ -79,7 +83,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       {
         state: 'open',
         label: 'MIT',
-        note: '@richkit/extension-ai — bring your own provider; edits arrive as reviewable suggestions.',
+        note: '@richkitjs/extension-ai — bring your own provider; edits arrive as reviewable suggestions.',
       },
       { state: 'paid', label: 'Paid', note: 'Content AI bundle.' },
       { state: 'none', label: 'Not built in' },
@@ -110,7 +114,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Slash commands',
     detail: 'Type / to insert blocks.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkit/extension-slash-commands, menu included.' },
+      { state: 'open', label: 'MIT', note: '@richkitjs/extension-slash-commands, menu included.' },
       {
         state: 'partial',
         label: 'Build it yourself',
@@ -125,7 +129,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Find & replace',
     detail: 'Search across the document, replace one or all.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkit/extension-find-replace' },
+      { state: 'open', label: 'MIT', note: '@richkitjs/extension-find-replace' },
       { state: 'partial', label: 'Community package' },
       { state: 'none', label: 'Not built in' },
       { state: 'open', label: 'Included' },

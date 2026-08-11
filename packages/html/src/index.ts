@@ -1,1 +1,1 @@
-export { htmlToDoc, docToHtml } from '@richkit/core'
+export { htmlToDoc, docToHtml } from '@richkitjs/core'

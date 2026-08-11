@@ -1,13 +1,13 @@
-import { Editor } from '@richkit/core'
-import { Bold } from '@richkit/extension-bold'
-import { Heading } from '@richkit/extension-heading'
-import { Paragraph } from '@richkit/extension-paragraph'
+import { Editor } from '@richkitjs/core'
+import { Bold } from '@richkitjs/extension-bold'
+import { Heading } from '@richkitjs/extension-heading'
+import { Paragraph } from '@richkitjs/extension-paragraph'
 import {
   TrackChangesKit,
   getSuggestions,
   getTrackState,
   trackKey,
-} from '@richkit/extension-track-changes'
+} from '@richkitjs/extension-track-changes'
 import { TextSelection } from 'prosemirror-state'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 

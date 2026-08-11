@@ -17,12 +17,12 @@ Headless, extensible WYSIWYG rich text editor. ProseMirror core, React binding, 
 - **JSON** — `getJSON()` / `setContent(json)`
 - **Autosave** — debounced `onSave` callback on `update`
 - **Keyboard** — Mod-B/I/U/Shift-S/E marks, Mod-Alt-1..6 headings, Mod-Shift-7/8/9 lists, Enter splits list item
-- **BubbleMenu + Toolbar** — Floating UI–positioned selection menu, default toolbar in `@richkit/react`
+- **BubbleMenu + Toolbar** — Floating UI–positioned selection menu, default toolbar in `@richkitjs/react`
 
 ## Install
 
 ```bash
-pnpm add @richkit/core @richkit/react @richkit/starter-kit
+pnpm add @richkitjs/core @richkitjs/react @richkitjs/starter-kit
 ```
 
 ## Usage
@@ -30,8 +30,8 @@ pnpm add @richkit/core @richkit/react @richkit/starter-kit
 ### Headless
 
 ```ts
-import { Editor } from '@richkit/core'
-import { StarterKit } from '@richkit/starter-kit'
+import { Editor } from '@richkitjs/core'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 const editor = new Editor({
   element: document.querySelector('#editor')!,
@@ -49,8 +49,8 @@ editor.destroy()
 ### React
 
 ```tsx
-import { useEditor, EditorContent, BubbleMenu, DefaultToolbar } from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
+import { useEditor, EditorContent, BubbleMenu, DefaultToolbar } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 function App() {
   const editor = useEditor({ extensions: StarterKit, content: '<p>Hello</p>' })
@@ -68,7 +68,7 @@ function App() {
 ### Autosave
 
 ```ts
-import { createAutosave } from '@richkit/core'
+import { createAutosave } from '@richkitjs/core'
 
 createAutosave(editor, {
   debounceMs: 500,
@@ -78,41 +78,41 @@ createAutosave(editor, {
 
 ## Packages
 
-| Package                                 | Purpose                                                                                   |
-| --------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `@richkit/core`                         | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave        |
-| `@richkit/react`                        | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
-| `@richkit/starter-kit`                  | Bundled array of 20 default extensions                                                    |
-| `@richkit/html`                         | Standalone HTML parse/serialize utilities                                                 |
-| `@richkit/extension-paragraph`          | Paragraph node                                                                            |
-| `@richkit/extension-heading`            | H1–H6 with `setHeading(level)` + Mod-Alt-1..6                                             |
-| `@richkit/extension-blockquote`         | Blockquote wrap                                                                           |
-| `@richkit/extension-code-block`         | Fenced code block                                                                         |
-| `@richkit/extension-bullet-list`        | UL via `prosemirror-schema-list`                                                          |
-| `@richkit/extension-ordered-list`       | OL via `prosemirror-schema-list`                                                          |
-| `@richkit/extension-task-list`          | Checkbox list                                                                             |
-| `@richkit/extension-list-item`          | LI with Enter/Tab/Shift-Tab                                                               |
-| `@richkit/extension-table`              | `prosemirror-tables` wrapper (TableKit)                                                   |
-| `@richkit/extension-image`              | Image NodeView with corner resize                                                         |
-| `@richkit/extension-bold`               | Bold mark + Mod-B                                                                         |
-| `@richkit/extension-italic`             | Italic mark + Mod-I                                                                       |
-| `@richkit/extension-underline`          | Underline mark + Mod-U                                                                    |
-| `@richkit/extension-strike`             | Strike mark + Mod-Shift-S                                                                 |
-| `@richkit/extension-code`               | Inline code mark + Mod-E                                                                  |
-| `@richkit/extension-link`               | Link mark + URL autolink input rule                                                       |
-| `@richkit/extension-history`            | Undo/redo (Mod-Z, Mod-Shift-Z)                                                            |
-| `@richkit/extension-placeholder`        | Empty-doc placeholder decoration                                                          |
-| `@richkit/extension-markdown-shortcuts` | Markdown input rules                                                                      |
+| Package                                   | Purpose                                                                                   |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `@richkitjs/core`                         | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave        |
+| `@richkitjs/react`                        | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
+| `@richkitjs/starter-kit`                  | Bundled array of 20 default extensions                                                    |
+| `@richkitjs/html`                         | Standalone HTML parse/serialize utilities                                                 |
+| `@richkitjs/extension-paragraph`          | Paragraph node                                                                            |
+| `@richkitjs/extension-heading`            | H1–H6 with `setHeading(level)` + Mod-Alt-1..6                                             |
+| `@richkitjs/extension-blockquote`         | Blockquote wrap                                                                           |
+| `@richkitjs/extension-code-block`         | Fenced code block                                                                         |
+| `@richkitjs/extension-bullet-list`        | UL via `prosemirror-schema-list`                                                          |
+| `@richkitjs/extension-ordered-list`       | OL via `prosemirror-schema-list`                                                          |
+| `@richkitjs/extension-task-list`          | Checkbox list                                                                             |
+| `@richkitjs/extension-list-item`          | LI with Enter/Tab/Shift-Tab                                                               |
+| `@richkitjs/extension-table`              | `prosemirror-tables` wrapper (TableKit)                                                   |
+| `@richkitjs/extension-image`              | Image NodeView with corner resize                                                         |
+| `@richkitjs/extension-bold`               | Bold mark + Mod-B                                                                         |
+| `@richkitjs/extension-italic`             | Italic mark + Mod-I                                                                       |
+| `@richkitjs/extension-underline`          | Underline mark + Mod-U                                                                    |
+| `@richkitjs/extension-strike`             | Strike mark + Mod-Shift-S                                                                 |
+| `@richkitjs/extension-code`               | Inline code mark + Mod-E                                                                  |
+| `@richkitjs/extension-link`               | Link mark + URL autolink input rule                                                       |
+| `@richkitjs/extension-history`            | Undo/redo (Mod-Z, Mod-Shift-Z)                                                            |
+| `@richkitjs/extension-placeholder`        | Empty-doc placeholder decoration                                                          |
+| `@richkitjs/extension-markdown-shortcuts` | Markdown input rules                                                                      |
 
 ## Monorepo
 
 ```
 rich_editor/
 ├── packages/
-│   ├── core/                          # @richkit/core
-│   ├── react/                         # @richkit/react
-│   ├── starter-kit/                   # @richkit/starter-kit
-│   ├── html/                          # @richkit/html
+│   ├── core/                          # @richkitjs/core
+│   ├── react/                         # @richkitjs/react
+│   ├── starter-kit/                   # @richkitjs/starter-kit
+│   ├── html/                          # @richkitjs/html
 │   └── extension-*/                   # 20 extensions
 ├── apps/
 │   └── playground/                    # Vite + React demo
@@ -126,7 +126,7 @@ rich_editor/
 pnpm install
 pnpm turbo run build typecheck lint test   # all packages
 pnpm --filter playground dev               # demo at :5173
-pnpm --filter @richkit/core docs       # typedoc → packages/core/docs/
+pnpm --filter @richkitjs/core docs       # typedoc → packages/core/docs/
 pnpm --filter e2e exec playwright test     # E2E suite
 ```
 
@@ -167,15 +167,15 @@ Publishing to npm is automated from `main`. See [PUBLISHING.md](./PUBLISHING.md)
 
 **Phase 2 (editor completeness)** — complete:
 
-- Bidirectional Markdown (`@richkit/markdown`: prosemirror-markdown serializer + markdown-it parser, GFM tables & task lists)
-- DOCX import (`@richkit/docx` via mammoth) alongside existing export
-- PDF export / print via hidden iframe (`printEditor` in `@richkit/react`)
+- Bidirectional Markdown (`@richkitjs/markdown`: prosemirror-markdown serializer + markdown-it parser, GFM tables & task lists)
+- DOCX import (`@richkitjs/docx` via mammoth) alongside existing export
+- PDF export / print via hidden iframe (`printEditor` in `@richkitjs/react`)
 - Subscript / superscript marks (Mod-, / Mod-.)
-- Slash-command menu (`@richkit/extension-slash-commands` + `SlashMenu`)
-- Live word count (`@richkit/extension-word-count` + playground status bar)
+- Slash-command menu (`@richkitjs/extension-slash-commands` + `SlashMenu`)
+- Live word count (`@richkitjs/extension-word-count` + playground status bar)
 - Outline / table-of-contents sidebar (`OutlineSidebar`)
-- Embed node — YouTube/Vimeo/video/generic iframe, XSS-allowlisted (`@richkit/extension-embed`)
-- Word / Google Docs paste cleanup + Mod-Shift-V plain paste (`@richkit/extension-paste-handler`)
+- Embed node — YouTube/Vimeo/video/generic iframe, XSS-allowlisted (`@richkitjs/extension-embed`)
+- Word / Google Docs paste cleanup + Mod-Shift-V plain paste (`@richkitjs/extension-paste-handler`)
 - Source-code modal HTML | Markdown tabs
 
 **Phase 3+**: collaboration (Yjs), AI assistant, page-based layout, Vue/Angular/Svelte bindings, mobile UI, SSR renderer, ODT, footnotes, revision history.

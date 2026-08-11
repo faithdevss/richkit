@@ -6,8 +6,8 @@ import {
   Toolbar,
   Icons,
   notify,
-} from '@richkit/react'
-import { StarterKit } from '@richkit/starter-kit'
+} from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 import {
   AlignMenu,
   BlockTypeMenu,
@@ -16,7 +16,7 @@ import {
   LinkMenu,
   ToolbarButton,
   ToolbarGroup,
-} from '@richkit/react'
+} from '@richkitjs/react'
 import { SIMPLE_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 

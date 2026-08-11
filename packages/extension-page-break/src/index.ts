@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkit/core'
+import { Node, type Command } from '@richkitjs/core'
 
 export const PageBreak = Node.create({
   name: 'pageBreak',

@@ -1,4 +1,4 @@
-import type { AIComplete, AICompletionRequest } from '@richkit/extension-ai'
+import type { AIComplete, AICompletionRequest } from '@richkitjs/extension-ai'
 
 /** Thinking depth. `'auto'` omits the field so the model's own default applies. */
 export type AnthropicThinking = 'disabled' | 'adaptive' | 'auto'
@@ -105,7 +105,7 @@ interface StreamEvent {
 }
 
 /**
- * Builds the transport `@richkit/extension-ai` expects.
+ * Builds the transport `@richkitjs/extension-ai` expects.
  *
  * Speaks the Anthropic Messages SSE format, so a proxy route can pipe
  * Anthropic's response straight through without reshaping it.

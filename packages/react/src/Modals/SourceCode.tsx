@@ -1,5 +1,5 @@
-import type { Editor } from '@richkit/core'
-import { docToMarkdown, setMarkdownContent } from '@richkit/markdown'
+import type { Editor } from '@richkitjs/core'
+import { docToMarkdown, setMarkdownContent } from '@richkitjs/markdown'
 import { useEffect, useState } from 'react'
 import { Modal } from './Modal'
 

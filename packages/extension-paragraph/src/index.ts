@@ -1,4 +1,4 @@
-import { Node, setBlockType } from '@richkit/core'
+import { Node, setBlockType } from '@richkitjs/core'
 
 export const Paragraph = Node.create({
   name: 'paragraph',

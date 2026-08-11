@@ -1,14 +1,14 @@
-# @richkit/extension-heading
+# @richkitjs/extension-heading
 
-Heading extension for [@richkit/core](https://www.npmjs.com/package/@richkit/core), a headless ProseMirror-based rich text editor.
+Heading extension for [@richkitjs/core](https://www.npmjs.com/package/@richkitjs/core), a headless ProseMirror-based rich text editor.
 
 ## Install
 
 ```sh
-npm install @richkit/extension-heading @richkit/core
+npm install @richkitjs/extension-heading @richkitjs/core
 ```
 
-Most users should install [@richkit/starter-kit](https://www.npmjs.com/package/@richkit/starter-kit) instead, which bundles all extensions.
+Most users should install [@richkitjs/starter-kit](https://www.npmjs.com/package/@richkitjs/starter-kit) instead, which bundles all extensions.
 
 ## Docs
 

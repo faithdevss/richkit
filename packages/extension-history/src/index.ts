@@ -1,4 +1,4 @@
-import { Extension } from '@richkit/core'
+import { Extension } from '@richkitjs/core'
 import { history, redo, undo } from 'prosemirror-history'
 
 export interface HistoryOptions extends Record<string, unknown> {

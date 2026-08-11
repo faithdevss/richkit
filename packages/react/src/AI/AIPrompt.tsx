@@ -1,5 +1,5 @@
-import type { Editor } from '@richkit/core'
-import { getAIState, type AIState } from '@richkit/extension-ai'
+import type { Editor } from '@richkitjs/core'
+import { getAIState, type AIState } from '@richkitjs/extension-ai'
 import { computePosition, flip, offset, shift } from '@floating-ui/dom'
 import { useCallback, useEffect, useRef, useState } from 'react'
 

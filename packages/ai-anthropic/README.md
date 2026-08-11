@@ -1,6 +1,6 @@
-# @richkit/ai-anthropic
+# @richkitjs/ai-anthropic
 
-Anthropic (Claude) transport for [`@richkit/extension-ai`](../extension-ai). Streams the
+Anthropic (Claude) transport for [`@richkitjs/extension-ai`](../extension-ai). Streams the
 Messages API SSE response into the editor, one text delta at a time.
 
 Zero runtime dependencies — it speaks the wire format over `fetch`, so a proxy route only has
@@ -9,15 +9,15 @@ to pipe Anthropic's response through unchanged.
 ## Install
 
 ```bash
-pnpm add @richkit/extension-ai @richkit/ai-anthropic
+pnpm add @richkitjs/extension-ai @richkitjs/ai-anthropic
 ```
 
 ## Usage
 
 ```ts
-import { AI } from '@richkit/extension-ai'
-import { anthropicComplete } from '@richkit/ai-anthropic'
-import { StarterKit } from '@richkit/starter-kit'
+import { AI } from '@richkitjs/extension-ai'
+import { anthropicComplete } from '@richkitjs/ai-anthropic'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 const editor = useEditor({
   extensions: [
@@ -37,7 +37,7 @@ editor.commands.aiCancel() // abort mid-stream
 ```
 
 With `track: true` (the default on `AI`), output lands as track-changes suggestions, so
-accept/reject go through `@richkit/extension-track-changes`.
+accept/reject go through `@richkitjs/extension-track-changes`.
 
 ## Server proxy (recommended)
 

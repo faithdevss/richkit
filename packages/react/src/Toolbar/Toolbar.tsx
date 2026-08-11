@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import type { Attrs } from 'prosemirror-model'
 import { useState, type ReactNode } from 'react'
 import {

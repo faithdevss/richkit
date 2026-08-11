@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
 
 export const editorInjectionKey: InjectionKey<ShallowRef<Editor | null>> = Symbol('richkit')

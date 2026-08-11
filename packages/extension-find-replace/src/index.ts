@@ -1,4 +1,4 @@
-import { Extension } from '@richkit/core'
+import { Extension } from '@richkitjs/core'
 import { findReplacePlugin } from './plugin'
 
 export const FindReplace = Extension.create({

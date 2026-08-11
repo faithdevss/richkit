@@ -43,7 +43,7 @@ export const SIMPLE_CONTENT = `
 <h1>Getting started</h1>
 <p>Welcome to the <mark>Simple Editor</mark> template! This template integrates <strong>open source</strong> UI components and RichKit extensions licensed under <strong>MIT</strong>.</p>
 <p>Integrate it by following the <a href="#">RichKit UI Components docs</a> or using our CLI tool.</p>
-<pre><code>pnpm add @richkit/starter-kit</code></pre>
+<pre><code>pnpm add @richkitjs/starter-kit</code></pre>
 <h2>Features</h2>
 <blockquote><p>A fully responsive rich text editor with built-in support for common formatting and layout tools. Type markdown <code>**</code> or use keyboard shortcuts <code>⌘+B</code> for <s>most</s> all common markdown marks. 🪄</p></blockquote>
 <ul>

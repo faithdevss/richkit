@@ -1,4 +1,4 @@
-import { Extension } from '@richkit/core'
+import { Extension } from '@richkitjs/core'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 

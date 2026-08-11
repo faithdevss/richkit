@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-list-item",
+  "name": "@richkitjs/extension-list-item",
   "version": "0.0.0",
-  "description": "List item extension for @richkit/core",
+  "description": "List item extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-schema-list": "^1.5.0"
   },
   "devDependencies": {

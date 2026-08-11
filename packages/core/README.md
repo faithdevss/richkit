@@ -1,18 +1,18 @@
-# @richkit/core
+# @richkitjs/core
 
 Headless, framework-agnostic rich text editor core built on [ProseMirror](https://prosemirror.net). No UI included — bring your own toolbar, or use the framework bindings.
 
 ## Install
 
 ```sh
-npm install @richkit/core @richkit/starter-kit
+npm install @richkitjs/core @richkitjs/starter-kit
 ```
 
 ## Usage
 
 ```ts
-import { Editor } from '@richkit/core'
-import { StarterKit } from '@richkit/starter-kit'
+import { Editor } from '@richkitjs/core'
+import { StarterKit } from '@richkitjs/starter-kit'
 
 const editor = new Editor({
   extensions: [...StarterKit],
@@ -24,8 +24,8 @@ document.querySelector('#app').appendChild(editor.view.dom)
 
 ## Framework bindings
 
-- React: [@richkit/react](https://www.npmjs.com/package/@richkit/react)
-- Vue 3: [@richkit/vue](https://www.npmjs.com/package/@richkit/vue)
+- React: [@richkitjs/react](https://www.npmjs.com/package/@richkitjs/react)
+- Vue 3: [@richkitjs/vue](https://www.npmjs.com/package/@richkitjs/vue)
 
 ## Docs
 

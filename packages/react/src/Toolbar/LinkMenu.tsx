@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import { useEffect, useState } from 'react'
 import { LinkIcon } from '../icons'
 import { Popover } from './Popover'

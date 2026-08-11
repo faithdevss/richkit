@@ -1,7 +1,7 @@
 {
-  "name": "@richkit/extension-image",
+  "name": "@richkitjs/extension-image",
   "version": "0.0.0",
-  "description": "Image extension for @richkit/core, with resizable NodeView",
+  "description": "Image extension for @richkitjs/core, with resizable NodeView",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkit/core": "workspace:*",
+    "@richkitjs/core": "workspace:*",
     "prosemirror-model": "^1.24.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.37.0"

@@ -1,4 +1,4 @@
-import type { AIComplete, AICompletionRequest } from '@richkit/extension-ai'
+import type { AIComplete, AICompletionRequest } from '@richkitjs/extension-ai'
 
 export interface OpenAIAdapterOptions {
   /**
@@ -77,7 +77,7 @@ interface ChatChunk {
 }
 
 /**
- * Builds the transport `@richkit/extension-ai` expects.
+ * Builds the transport `@richkitjs/extension-ai` expects.
  *
  * Speaks the OpenAI chat-completions SSE format, so a proxy route can pipe
  * OpenAI's response straight through without reshaping it.

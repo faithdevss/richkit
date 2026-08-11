@@ -1,4 +1,4 @@
-import type { Editor } from '@richkit/core'
+import type { Editor } from '@richkitjs/core'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 export type MenuShortcut = string
