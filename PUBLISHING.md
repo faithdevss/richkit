@@ -68,7 +68,10 @@ npm org ls richkitjs
    Token**.
 2. Configure it:
    - **Expiration** — set a calendar reminder; an expired token fails the release with `ENEEDAUTH`.
-   - **Packages and scopes** — `Read and write`, applied to the `@richkitjs` scope.
+   - **Bypass two-factor authentication (2FA)** — **tick this.** CI cannot answer an OTP
+     prompt, so without it the publish dies with `EOTP`. See the note below on what it costs.
+   - **Packages and scopes** — `Read and write`, applied to the `@richkitjs` scope and nothing
+     wider.
    - **Organizations** — `Read and write` on `richkitjs`, so the token can create packages that
      do not exist yet. Without this, the _first_ publish of each package 404s.
 3. Copy the token — npm shows it once.
@@ -78,18 +81,23 @@ npm org ls richkitjs
 The workflow feeds that secret to both `NPM_TOKEN` and `NODE_AUTH_TOKEN`, because
 `actions/setup-node` writes the `.npmrc` that `pnpm publish` reads from `NODE_AUTH_TOKEN`.
 
-### 3. Check the account's 2FA mode
+### 3. Understand what the 2FA bypass costs
 
-npmjs.com → **Account** → **Two-Factor Authentication**.
+A token with **Bypass two-factor authentication** ticked can publish to `@richkitjs` on its
+own, with no second factor. Whoever holds it can cut a release. Treat it as a production
+credential:
 
-If it is set to **Authorization and writes**, every publish demands an OTP that CI cannot
-supply, and the release dies with `EOTP`. Either:
+- It lives in the `NPM_TOKEN` GitHub secret and nowhere else — not a local `.npmrc`, never
+  committed, never pasted into an issue or a CI log.
+- Scope it to `@richkitjs` only, so a leak cannot touch anything else you own.
+- Give it an expiry rather than "no expiration".
+- If it leaks, revoke it at npmjs.com → **Access Tokens**. Revocation is instant, and the only
+  cost is minting a replacement.
 
-- set it to **Authorization only** — 2FA still guards logins and settings, just not writes; or
-- keep the stricter mode and rely on the granular token, which is exempt from the OTP prompt.
-
-Granular tokens are the better answer: revocable, scope-limited, and they leave login 2FA
-fully intact.
+The alternative is switching the whole account to **Account** → **Two-Factor Authentication** →
+**Authorization only**. Avoid that: it drops the second factor from _every_ write on the
+account, where the token bypass drops it from exactly one credential you can revoke. Leave
+account 2FA on the stricter setting — the token bypass works independently of it.
 
 ## Releasing
 
@@ -242,17 +250,17 @@ While in pre mode, published packages get the `next` dist-tag instead of `latest
 
 ## Troubleshooting
 
-| Symptom                                     | Cause                                                                         | Fix                                                      |
-| ------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `404 Not Found - PUT .../@richkitjs%2fcore` | Scope does not exist, or the token lacks org write access                     | [Setup steps 1 and 2](#first-time-setup)                 |
-| `ENEEDAUTH`                                 | `NPM_TOKEN` secret missing, misnamed, or expired                              | Re-issue the token, re-add the secret                    |
-| `EOTP`                                      | Account 2FA requires an OTP on writes                                         | [Setup step 3](#3-check-the-accounts-2fa-mode)           |
-| `E402 Payment Required`                     | npm treats the scoped package as private                                      | Confirm `"access": "public"` in `.changeset/config.json` |
-| `E403 Forbidden`                            | Version already published, or name owned by someone else                      | Versions are immutable — bump and republish              |
-| Version PR never opens                      | No changesets, or `.changeset/*.md` was not committed                         | `pnpm changeset status`                                  |
-| Version PR opens but nothing publishes      | Expected — the publish is the _next_ run, after that PR merges                | Merge it                                                 |
-| Publish stopped partway                     | A package failed mid-run                                                      | Re-run the job; already-published versions are skipped   |
-| A flaky e2e spec failed the release         | `turbo run test` gates publishing, and Playwright has no `retries` configured | Re-run the job                                           |
+| Symptom                                     | Cause                                                                         | Fix                                                           |
+| ------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `404 Not Found - PUT .../@richkitjs%2fcore` | Scope does not exist, or the token lacks org write access                     | [Setup steps 1 and 2](#first-time-setup)                      |
+| `ENEEDAUTH`                                 | `NPM_TOKEN` secret missing, misnamed, or expired                              | Re-issue the token, re-add the secret                         |
+| `EOTP`                                      | Token was created without the 2FA bypass ticked                               | [Setup step 2](#2-create-an-npm-token-and-add-it-to-the-repo) |
+| `E402 Payment Required`                     | npm treats the scoped package as private                                      | Confirm `"access": "public"` in `.changeset/config.json`      |
+| `E403 Forbidden`                            | Version already published, or name owned by someone else                      | Versions are immutable — bump and republish                   |
+| Version PR never opens                      | No changesets, or `.changeset/*.md` was not committed                         | `pnpm changeset status`                                       |
+| Version PR opens but nothing publishes      | Expected — the publish is the _next_ run, after that PR merges                | Merge it                                                      |
+| Publish stopped partway                     | A package failed mid-run                                                      | Re-run the job; already-published versions are skipped        |
+| A flaky e2e spec failed the release         | `turbo run test` gates publishing, and Playwright has no `retries` configured | Re-run the job                                                |
 
 Nothing was published if the workflow failed before `changeset publish`. If it failed _during_,
 some packages are live and some are not — re-running finishes the rest, since publish is
