@@ -303,7 +303,8 @@ export const TrackChanges = Extension.create({
       } else {
         let reuseId: string | null = null
         let reuseCreated: number | null = null
-        const adjNode = state.doc.nodeAt(from - 1)
+        // from can be 0 on a whole-document selection — nodeAt(-1) throws
+        const adjNode = from > 0 ? state.doc.nodeAt(from - 1) : null
         if (adjNode?.isText) {
           const dm = adjNode.marks.find(
             (m) => m.type === delType && m.attrs.author === ts.author && Date.now() - (m.attrs.createdAt as number) < 5000,
@@ -317,7 +318,7 @@ export const TrackChanges = Extension.create({
         const createdAt = reuseCreated ?? Date.now()
         const mark = delType.create({ id, author: ts.author, createdAt })
         tr = tr.addMark(from, to, mark)
-        tr = tr.setSelection(TextSelection.create(tr.doc, to))
+        tr = tr.setSelection(TextSelection.create(tr.doc, Math.min(to, tr.doc.content.size)))
         tr.setMeta(trackKey, { skip: true })
       }
       if (dispatch) dispatch(tr)

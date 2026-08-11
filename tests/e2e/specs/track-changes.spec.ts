@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { focusEditor } from './_helpers'
+import { focusEditor, MOD } from './_helpers'
 
 async function openSuggestionsPanel(page: Page) {
   await page.locator('.menubar-trigger:has-text("View")').click()
@@ -119,5 +119,27 @@ test.describe('track changes', () => {
     await page.locator('.re-suggestions-bulk button:has-text("Accept all")').click()
     await expect(page.locator('.re-suggestion')).toHaveCount(0)
     await expect(page.locator('.editor .suggestion-insertion')).toHaveCount(0)
+  })
+
+  test('select-all + Delete while tracking marks a deletion instead of erasing', async ({
+    page,
+  }) => {
+    const errors: string[] = []
+    page.on('pageerror', (e) => errors.push(e.message))
+
+    await page.goto('/')
+    const editor = await focusEditor(page)
+    await page.keyboard.type('hello world')
+    await enableTracking(page)
+
+    await editor.click()
+    await page.keyboard.press(`${MOD}+a`)
+    await page.keyboard.press('Delete')
+
+    // regression: nodeAt(from - 1) threw "Position -1 outside of fragment" on a
+    // whole-document selection, so the keymap bailed and the text was erased untracked
+    expect(errors).toEqual([])
+    await expect(page.locator('.editor .suggestion-deletion')).toHaveCount(1)
+    await expect(editor).toContainText('hello world')
   })
 })
