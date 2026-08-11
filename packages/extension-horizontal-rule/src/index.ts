@@ -8,7 +8,8 @@ export const HorizontalRule = Node.create({
   parseHTML: () => [{ tag: 'hr' }],
   renderHTML: () => ['hr'],
   addCommands: () => ({
-    insertHorizontalRule: (): Command =>
+    insertHorizontalRule:
+      (): Command =>
       ({ state, tr, dispatch }) => {
         const type = state.schema.nodes['horizontalRule']
         if (!type) return false

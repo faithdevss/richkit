@@ -25,10 +25,7 @@ export async function importDocxToHtml(data: ArrayBuffer): Promise<DocxImportRes
   }
 }
 
-export async function importDocxFile(
-  editor: Editor,
-  file: File | ArrayBuffer,
-): Promise<string[]> {
+export async function importDocxFile(editor: Editor, file: File | ArrayBuffer): Promise<string[]> {
   const buffer = file instanceof ArrayBuffer ? file : await file.arrayBuffer()
   const { html, warnings } = await importDocxToHtml(buffer)
   editor.setContent(html)

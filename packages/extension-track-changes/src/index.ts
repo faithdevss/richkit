@@ -1,11 +1,6 @@
 import { Extension, Mark, type Command } from '@richkit/core'
 import { TextSelection } from 'prosemirror-state'
-import {
-  getSuggestions,
-  newId,
-  trackChangesPlugin,
-  trackKey,
-} from './plugin'
+import { getSuggestions, newId, trackChangesPlugin, trackKey } from './plugin'
 
 export const Insertion = Mark.create({
   name: 'insertion',
@@ -79,88 +74,85 @@ export const TrackChanges = Extension.create({
   name: 'trackChanges',
   addProseMirrorPlugins: () => [trackChangesPlugin()],
   addCommands: () => ({
-    enableTrackChanges:
-      (...args: unknown[]): Command => {
-        const [author] = args as [string?]
-        return ({ state, dispatch }) => {
-          const meta = author ? { setEnabled: true, setAuthor: author } : { setEnabled: true }
-          if (dispatch) dispatch(state.tr.setMeta(trackKey, meta))
-          return true
-        }
-      },
+    enableTrackChanges: (...args: unknown[]): Command => {
+      const [author] = args as [string?]
+      return ({ state, dispatch }) => {
+        const meta = author ? { setEnabled: true, setAuthor: author } : { setEnabled: true }
+        if (dispatch) dispatch(state.tr.setMeta(trackKey, meta))
+        return true
+      }
+    },
     disableTrackChanges:
       (): Command =>
       ({ state, dispatch }) => {
         if (dispatch) dispatch(state.tr.setMeta(trackKey, { setEnabled: false }))
         return true
       },
-    acceptSuggestion:
-      (...args: unknown[]): Command => {
-        const [id] = args as [string]
-        return ({ state, dispatch }) => {
-          if (!id) return false
-          const insType = state.schema.marks['insertion']
-          const delType = state.schema.marks['deletion']
-          if (!insType || !delType) return false
-          let tr = state.tr
-          const ranges: { from: number; to: number; type: 'insertion' | 'deletion' }[] = []
-          state.doc.descendants((node, pos) => {
-            if (!node.isText) return true
-            const ins = node.marks.find((m) => m.type === insType && m.attrs.id === id)
-            const del = node.marks.find((m) => m.type === delType && m.attrs.id === id)
-            if (ins) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'insertion' })
-            if (del) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'deletion' })
-            return true
-          })
-          if (ranges.length === 0) return false
-          // for accept: insertion → keep text, drop mark; deletion → remove text
-          // process descending so positions remain valid
-          ranges.sort((a, b) => b.from - a.from)
-          for (const r of ranges) {
-            if (r.type === 'insertion') {
-              tr = tr.removeMark(r.from, r.to, insType)
-            } else {
-              tr = tr.delete(r.from, r.to)
-            }
-          }
-          tr.setMeta(trackKey, { skip: true })
-          if (dispatch) dispatch(tr)
+    acceptSuggestion: (...args: unknown[]): Command => {
+      const [id] = args as [string]
+      return ({ state, dispatch }) => {
+        if (!id) return false
+        const insType = state.schema.marks['insertion']
+        const delType = state.schema.marks['deletion']
+        if (!insType || !delType) return false
+        let tr = state.tr
+        const ranges: { from: number; to: number; type: 'insertion' | 'deletion' }[] = []
+        state.doc.descendants((node, pos) => {
+          if (!node.isText) return true
+          const ins = node.marks.find((m) => m.type === insType && m.attrs.id === id)
+          const del = node.marks.find((m) => m.type === delType && m.attrs.id === id)
+          if (ins) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'insertion' })
+          if (del) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'deletion' })
           return true
-        }
-      },
-    rejectSuggestion:
-      (...args: unknown[]): Command => {
-        const [id] = args as [string]
-        return ({ state, dispatch }) => {
-          if (!id) return false
-          const insType = state.schema.marks['insertion']
-          const delType = state.schema.marks['deletion']
-          if (!insType || !delType) return false
-          let tr = state.tr
-          const ranges: { from: number; to: number; type: 'insertion' | 'deletion' }[] = []
-          state.doc.descendants((node, pos) => {
-            if (!node.isText) return true
-            const ins = node.marks.find((m) => m.type === insType && m.attrs.id === id)
-            const del = node.marks.find((m) => m.type === delType && m.attrs.id === id)
-            if (ins) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'insertion' })
-            if (del) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'deletion' })
-            return true
-          })
-          if (ranges.length === 0) return false
-          // reject: insertion → remove text; deletion → keep text, drop mark
-          ranges.sort((a, b) => b.from - a.from)
-          for (const r of ranges) {
-            if (r.type === 'insertion') {
-              tr = tr.delete(r.from, r.to)
-            } else {
-              tr = tr.removeMark(r.from, r.to, delType)
-            }
+        })
+        if (ranges.length === 0) return false
+        // for accept: insertion → keep text, drop mark; deletion → remove text
+        // process descending so positions remain valid
+        ranges.sort((a, b) => b.from - a.from)
+        for (const r of ranges) {
+          if (r.type === 'insertion') {
+            tr = tr.removeMark(r.from, r.to, insType)
+          } else {
+            tr = tr.delete(r.from, r.to)
           }
-          tr.setMeta(trackKey, { skip: true })
-          if (dispatch) dispatch(tr)
-          return true
         }
-      },
+        tr.setMeta(trackKey, { skip: true })
+        if (dispatch) dispatch(tr)
+        return true
+      }
+    },
+    rejectSuggestion: (...args: unknown[]): Command => {
+      const [id] = args as [string]
+      return ({ state, dispatch }) => {
+        if (!id) return false
+        const insType = state.schema.marks['insertion']
+        const delType = state.schema.marks['deletion']
+        if (!insType || !delType) return false
+        let tr = state.tr
+        const ranges: { from: number; to: number; type: 'insertion' | 'deletion' }[] = []
+        state.doc.descendants((node, pos) => {
+          if (!node.isText) return true
+          const ins = node.marks.find((m) => m.type === insType && m.attrs.id === id)
+          const del = node.marks.find((m) => m.type === delType && m.attrs.id === id)
+          if (ins) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'insertion' })
+          if (del) ranges.push({ from: pos, to: pos + node.nodeSize, type: 'deletion' })
+          return true
+        })
+        if (ranges.length === 0) return false
+        // reject: insertion → remove text; deletion → keep text, drop mark
+        ranges.sort((a, b) => b.from - a.from)
+        for (const r of ranges) {
+          if (r.type === 'insertion') {
+            tr = tr.delete(r.from, r.to)
+          } else {
+            tr = tr.removeMark(r.from, r.to, delType)
+          }
+        }
+        tr.setMeta(trackKey, { skip: true })
+        if (dispatch) dispatch(tr)
+        return true
+      }
+    },
     acceptAllSuggestions:
       (): Command =>
       ({ state, dispatch }) => {
@@ -255,7 +247,10 @@ export const TrackChanges = Extension.create({
         const adjNode = state.doc.nodeAt(to)
         if (adjNode?.isText) {
           const dm = adjNode.marks.find(
-            (m) => m.type === delType && m.attrs.author === ts.author && Date.now() - (m.attrs.createdAt as number) < 5000,
+            (m) =>
+              m.type === delType &&
+              m.attrs.author === ts.author &&
+              Date.now() - (m.attrs.createdAt as number) < 5000,
           )
           if (dm) {
             reuseId = dm.attrs.id as string
@@ -307,7 +302,10 @@ export const TrackChanges = Extension.create({
         const adjNode = from > 0 ? state.doc.nodeAt(from - 1) : null
         if (adjNode?.isText) {
           const dm = adjNode.marks.find(
-            (m) => m.type === delType && m.attrs.author === ts.author && Date.now() - (m.attrs.createdAt as number) < 5000,
+            (m) =>
+              m.type === delType &&
+              m.attrs.author === ts.author &&
+              Date.now() - (m.attrs.createdAt as number) < 5000,
           )
           if (dm) {
             reuseId = dm.attrs.id as string

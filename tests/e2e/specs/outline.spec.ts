@@ -6,7 +6,8 @@ test.describe('outline sidebar', () => {
     await page.goto('/')
     await focusEditor(page)
     await page.evaluate(() => {
-      const editor = (window as unknown as { __editor: { setContent: (s: string) => void } }).__editor
+      const editor = (window as unknown as { __editor: { setContent: (s: string) => void } })
+        .__editor
       const filler = `<p>${'lorem ipsum '.repeat(60)}</p>`.repeat(10)
       editor.setContent(`<h1>Top</h1>${filler}<h2>Middle</h2>${filler}<h3>Bottom</h3>`)
     })

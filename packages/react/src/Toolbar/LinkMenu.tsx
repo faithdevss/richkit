@@ -13,11 +13,7 @@ export function LinkMenu({ editor }: LinkMenuProps) {
     <Popover
       className="tb-pop-link"
       trigger={
-        <button
-          type="button"
-          className={`tb-btn ${active ? 'is-active' : ''}`}
-          title="Link"
-        >
+        <button type="button" className={`tb-btn ${active ? 'is-active' : ''}`} title="Link">
           <LinkIcon />
         </button>
       }
@@ -68,10 +64,24 @@ function LinkForm({ editor, onClose }: { editor: Editor; onClose: () => void }) 
         aria-label="Link URL"
       />
       <div className="tb-link-actions">
-        <button type="button" className="tb-btn-primary" onMouseDown={(e) => { e.preventDefault(); apply() }}>
+        <button
+          type="button"
+          className="tb-btn-primary"
+          onMouseDown={(e) => {
+            e.preventDefault()
+            apply()
+          }}
+        >
           Apply
         </button>
-        <button type="button" className="tb-btn-ghost" onMouseDown={(e) => { e.preventDefault(); remove() }}>
+        <button
+          type="button"
+          className="tb-btn-ghost"
+          onMouseDown={(e) => {
+            e.preventDefault()
+            remove()
+          }}
+        >
           Remove
         </button>
       </div>

@@ -139,7 +139,9 @@ function startCornerDrag(view: EditorView, e: MouseEvent, table: HTMLTableElemen
 
   const colgroup = table.querySelector(':scope > colgroup')
   const cols = colgroup ? (Array.from(colgroup.children) as HTMLTableColElement[]) : []
-  const startColWidths = cols.map((c) => parseFloat(c.style.width) || c.getBoundingClientRect().width)
+  const startColWidths = cols.map(
+    (c) => parseFloat(c.style.width) || c.getBoundingClientRect().width,
+  )
 
   const rows = Array.from(table.rows)
   const startRowHeights = rows.map((r) => r.getBoundingClientRect().height)
@@ -148,7 +150,9 @@ function startCornerDrag(view: EditorView, e: MouseEvent, table: HTMLTableElemen
   const wrapper = table.parentElement as HTMLElement | null
   const editorEl = wrapper?.closest<HTMLElement>('.ProseMirror')
   const maxTableWidth = editorEl
-    ? editorEl.clientWidth - (table.getBoundingClientRect().left - editorEl.getBoundingClientRect().left) - 8
+    ? editorEl.clientWidth -
+      (table.getBoundingClientRect().left - editorEl.getBoundingClientRect().left) -
+      8
     : Number.POSITIVE_INFINITY
 
   let lastColWidths: number[] = [...startColWidths]
@@ -182,7 +186,12 @@ function startCornerDrag(view: EditorView, e: MouseEvent, table: HTMLTableElemen
   const onUp = () => {
     document.removeEventListener('mousemove', onMove)
     document.removeEventListener('mouseup', onUp)
-    commitTableDimsExplicit(view, table, lastColWidths.map(Math.round), lastRowHeights.map(Math.round))
+    commitTableDimsExplicit(
+      view,
+      table,
+      lastColWidths.map(Math.round),
+      lastRowHeights.map(Math.round),
+    )
   }
 
   document.addEventListener('mousemove', onMove)

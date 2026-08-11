@@ -42,7 +42,9 @@ test.describe('menubar opens menus', () => {
   test('disabled item present in Tools', async ({ page }) => {
     await page.goto('/')
     await page.locator(`.menubar-trigger:has-text("Tools")`).click()
-    await expect(page.locator('.menu-panel .menu-item[disabled], .menu-panel .menu-item.is-disabled').first()).toBeAttached()
+    await expect(
+      page.locator('.menu-panel .menu-item[disabled], .menu-panel .menu-item.is-disabled').first(),
+    ).toBeAttached()
   })
 })
 

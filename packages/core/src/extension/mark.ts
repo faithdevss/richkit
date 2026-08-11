@@ -1,8 +1,9 @@
 import type { MarkSpec } from 'prosemirror-model'
 import { Extension, type ExtensionConfig, type ExtensionContext } from './extension'
 
-export interface MarkConfig<O extends Record<string, unknown> = Record<string, unknown>>
-  extends ExtensionConfig<O> {
+export interface MarkConfig<
+  O extends Record<string, unknown> = Record<string, unknown>,
+> extends ExtensionConfig<O> {
   inclusive?: boolean
   spanning?: boolean
   excludes?: string
@@ -13,7 +14,9 @@ export interface MarkConfig<O extends Record<string, unknown> = Record<string, u
   renderHTML?: MarkSpec['toDOM']
 }
 
-export class Mark<O extends Record<string, unknown> = Record<string, unknown>> extends Extension<O> {
+export class Mark<
+  O extends Record<string, unknown> = Record<string, unknown>,
+> extends Extension<O> {
   override readonly type = 'mark' as const
   declare readonly config: MarkConfig<O>
 

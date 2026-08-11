@@ -41,7 +41,11 @@ function ImageForm({ editor, onClose }: { editor: Editor; onClose: () => void })
     reader.onload = () => {
       const dataUrl = String(reader.result ?? '')
       if (dataUrl) {
-        editor.chain().call('insertImage', { src: dataUrl, alt: alt.trim() || null }).focus().run()
+        editor
+          .chain()
+          .call('insertImage', { src: dataUrl, alt: alt.trim() || null })
+          .focus()
+          .run()
         onClose()
       }
     }
@@ -68,7 +72,12 @@ function ImageForm({ editor, onClose }: { editor: Editor; onClose: () => void })
       </label>
       <label className="tb-field">
         <span>Alt text</span>
-        <input type="text" value={alt} placeholder="Description" onChange={(e) => setAlt(e.target.value)} />
+        <input
+          type="text"
+          value={alt}
+          placeholder="Description"
+          onChange={(e) => setAlt(e.target.value)}
+        />
       </label>
       <div className="tb-image-actions">
         <label className="tb-btn-ghost tb-file">
@@ -83,7 +92,14 @@ function ImageForm({ editor, onClose }: { editor: Editor; onClose: () => void })
             }}
           />
         </label>
-        <button type="button" className="tb-btn-primary" onMouseDown={(e) => { e.preventDefault(); apply() }}>
+        <button
+          type="button"
+          className="tb-btn-primary"
+          onMouseDown={(e) => {
+            e.preventDefault()
+            apply()
+          }}
+        >
           Insert
         </button>
       </div>

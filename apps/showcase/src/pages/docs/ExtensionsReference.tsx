@@ -5,8 +5,8 @@ export function ExtensionsReference() {
     <div className="docs-prose">
       <h1>Extensions reference</h1>
       <p>
-        Every <code>@richkit/*</code> package, grouped by category. Install only what
-        you need — <code>starter-kit</code> bundles the common ones.
+        Every <code>@richkit/*</code> package, grouped by category. Install only what you need —{' '}
+        <code>starter-kit</code> bundles the common ones.
       </p>
 
       {CATEGORY_ORDER.map((category) => {

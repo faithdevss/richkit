@@ -57,9 +57,7 @@ describe('anthropicComplete', () => {
 
   it('reassembles frames split across network chunks', async () => {
     const full = textDelta('split me')
-    const fetchImpl = mockFetch(() =>
-      sseResponse([full.slice(0, 20), full.slice(20), STOP]),
-    )
+    const fetchImpl = mockFetch(() => sseResponse([full.slice(0, 20), full.slice(20), STOP]))
     const complete = anthropicComplete({ endpoint: '/api/ai', fetch: fetchImpl })
 
     expect(await collect(complete(req, { signal: signal() }))).toEqual(['split me'])
@@ -119,9 +117,7 @@ describe('anthropicComplete', () => {
 
   it('throws on an error event in the stream', async () => {
     const fetchImpl = mockFetch(() =>
-      sseResponse([
-        frame('error', { error: { type: 'overloaded_error', message: 'Overloaded' } }),
-      ]),
+      sseResponse([frame('error', { error: { type: 'overloaded_error', message: 'Overloaded' } })]),
     )
     const complete = anthropicComplete({ endpoint: '/api/ai', fetch: fetchImpl })
 
@@ -221,7 +217,11 @@ describe('anthropicComplete', () => {
     const fetchImpl = mockFetch(() => sseResponse([STOP]))
     await collect(
       anthropicComplete({ endpoint: '/api/ai', fetch: fetchImpl })(
-        { prompt: 'make it shorter', selection: 'the selected sentence', documentText: 'whole doc' },
+        {
+          prompt: 'make it shorter',
+          selection: 'the selected sentence',
+          documentText: 'whole doc',
+        },
         { signal: signal() },
       ),
     )

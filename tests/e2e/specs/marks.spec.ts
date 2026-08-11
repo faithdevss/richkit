@@ -89,7 +89,9 @@ test.describe('inline marks', () => {
     await page.keyboard.press(`${MOD}+i`)
     await page.keyboard.type('combo')
     const html = await page.locator('.editor').innerHTML()
-    expect(html).toMatch(/<strong>.*<em>combo<\/em>.*<\/strong>|<em>.*<strong>combo<\/strong>.*<\/em>/)
+    expect(html).toMatch(
+      /<strong>.*<em>combo<\/em>.*<\/strong>|<em>.*<strong>combo<\/strong>.*<\/em>/,
+    )
   })
 
   test('toggle off bold', async ({ page }) => {

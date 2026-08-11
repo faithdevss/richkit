@@ -1,10 +1,6 @@
 import { Editor } from '@richkit/core'
 import { Bold } from '@richkit/extension-bold'
-import {
-  Comment,
-  findCommentRange,
-  getCommentsState,
-} from '@richkit/extension-comments'
+import { Comment, findCommentRange, getCommentsState } from '@richkit/extension-comments'
 import { Heading } from '@richkit/extension-heading'
 import { Paragraph } from '@richkit/extension-paragraph'
 import { TextSelection } from 'prosemirror-state'
@@ -53,9 +49,7 @@ describe('comments extension', () => {
   })
 
   it('addComment refuses on empty selection', () => {
-    const tr = editor.view.state.tr.setSelection(
-      TextSelection.create(editor.view.state.doc, 2, 2),
-    )
+    const tr = editor.view.state.tr.setSelection(TextSelection.create(editor.view.state.doc, 2, 2))
     editor.view.dispatch(tr)
     const before = Object.keys(getCommentsState(editor.state)?.threads ?? {}).length
     editor.chain().call('addComment', { body: 'x' }).run()

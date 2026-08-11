@@ -117,7 +117,13 @@ function openMenu(
   }
 
   const items: Entry[] = [
-    { label: 'Select table', onClick: () => { selectTable(); closeMenu(state) } },
+    {
+      label: 'Select table',
+      onClick: () => {
+        selectTable()
+        closeMenu(state)
+      },
+    },
     { separator: true },
     { label: 'Cut', onClick: cut },
     { label: 'Copy', onClick: copy },
@@ -183,12 +189,7 @@ function closeMenu(state: MenuState) {
   }
 }
 
-function placeCaretInTable(
-  view: EditorView,
-  tableEl: HTMLTableElement,
-  x: number,
-  y: number,
-) {
+function placeCaretInTable(view: EditorView, tableEl: HTMLTableElement, x: number, y: number) {
   try {
     const posInfo = view.posAtCoords({ left: x, top: y })
     if (!posInfo) return

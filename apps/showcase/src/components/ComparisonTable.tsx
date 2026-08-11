@@ -1,9 +1,4 @@
-import {
-  COMPARISON_COLUMNS,
-  COMPARISON_ROWS,
-  type Cell,
-  type CellState,
-} from '../data/comparison'
+import { COMPARISON_COLUMNS, COMPARISON_ROWS, type Cell, type CellState } from '../data/comparison'
 
 const GLYPH: Record<CellState, string> = {
   open: '✓',

@@ -42,7 +42,9 @@ function makeEditor(complete: AIComplete, content = '<p>hello</p>', track = true
 const settle = () => new Promise((r) => setTimeout(r, 0))
 
 function select(editor: Editor, from: number, to: number) {
-  editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, from, to)))
+  editor.view.dispatch(
+    editor.state.tr.setSelection(TextSelection.create(editor.state.doc, from, to)),
+  )
 }
 
 describe('AI extension', () => {

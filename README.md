@@ -78,31 +78,31 @@ createAutosave(editor, {
 
 ## Packages
 
-| Package | Purpose |
-|---------|---------|
-| `@richkit/core` | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave |
-| `@richkit/react` | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
-| `@richkit/starter-kit` | Bundled array of 20 default extensions |
-| `@richkit/html` | Standalone HTML parse/serialize utilities |
-| `@richkit/extension-paragraph` | Paragraph node |
-| `@richkit/extension-heading` | H1–H6 with `setHeading(level)` + Mod-Alt-1..6 |
-| `@richkit/extension-blockquote` | Blockquote wrap |
-| `@richkit/extension-code-block` | Fenced code block |
-| `@richkit/extension-bullet-list` | UL via `prosemirror-schema-list` |
-| `@richkit/extension-ordered-list` | OL via `prosemirror-schema-list` |
-| `@richkit/extension-task-list` | Checkbox list |
-| `@richkit/extension-list-item` | LI with Enter/Tab/Shift-Tab |
-| `@richkit/extension-table` | `prosemirror-tables` wrapper (TableKit) |
-| `@richkit/extension-image` | Image NodeView with corner resize |
-| `@richkit/extension-bold` | Bold mark + Mod-B |
-| `@richkit/extension-italic` | Italic mark + Mod-I |
-| `@richkit/extension-underline` | Underline mark + Mod-U |
-| `@richkit/extension-strike` | Strike mark + Mod-Shift-S |
-| `@richkit/extension-code` | Inline code mark + Mod-E |
-| `@richkit/extension-link` | Link mark + URL autolink input rule |
-| `@richkit/extension-history` | Undo/redo (Mod-Z, Mod-Shift-Z) |
-| `@richkit/extension-placeholder` | Empty-doc placeholder decoration |
-| `@richkit/extension-markdown-shortcuts` | Markdown input rules |
+| Package                                 | Purpose                                                                                   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `@richkit/core`                         | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave        |
+| `@richkit/react`                        | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
+| `@richkit/starter-kit`                  | Bundled array of 20 default extensions                                                    |
+| `@richkit/html`                         | Standalone HTML parse/serialize utilities                                                 |
+| `@richkit/extension-paragraph`          | Paragraph node                                                                            |
+| `@richkit/extension-heading`            | H1–H6 with `setHeading(level)` + Mod-Alt-1..6                                             |
+| `@richkit/extension-blockquote`         | Blockquote wrap                                                                           |
+| `@richkit/extension-code-block`         | Fenced code block                                                                         |
+| `@richkit/extension-bullet-list`        | UL via `prosemirror-schema-list`                                                          |
+| `@richkit/extension-ordered-list`       | OL via `prosemirror-schema-list`                                                          |
+| `@richkit/extension-task-list`          | Checkbox list                                                                             |
+| `@richkit/extension-list-item`          | LI with Enter/Tab/Shift-Tab                                                               |
+| `@richkit/extension-table`              | `prosemirror-tables` wrapper (TableKit)                                                   |
+| `@richkit/extension-image`              | Image NodeView with corner resize                                                         |
+| `@richkit/extension-bold`               | Bold mark + Mod-B                                                                         |
+| `@richkit/extension-italic`             | Italic mark + Mod-I                                                                       |
+| `@richkit/extension-underline`          | Underline mark + Mod-U                                                                    |
+| `@richkit/extension-strike`             | Strike mark + Mod-Shift-S                                                                 |
+| `@richkit/extension-code`               | Inline code mark + Mod-E                                                                  |
+| `@richkit/extension-link`               | Link mark + URL autolink input rule                                                       |
+| `@richkit/extension-history`            | Undo/redo (Mod-Z, Mod-Shift-Z)                                                            |
+| `@richkit/extension-placeholder`        | Empty-doc placeholder decoration                                                          |
+| `@richkit/extension-markdown-shortcuts` | Markdown input rules                                                                      |
 
 ## Monorepo
 
@@ -132,18 +132,18 @@ pnpm --filter e2e exec playwright test     # E2E suite
 
 ### Stack
 
-| Layer | Choice |
-|-------|--------|
-| Language | TypeScript strict |
-| Pkg mgr / orchestrator | pnpm 10 + Turborepo |
-| Editor core | ProseMirror (state, view, model, transform, commands, history, keymap, schema-list, tables, inputrules, dropcursor, gapcursor) |
-| UI binding | React 18 |
-| Bundler | tsup (ESM + CJS + d.ts) |
-| Unit tests | Vitest + jsdom |
-| E2E | Playwright (chromium) |
-| Bubble menu | `@floating-ui/dom` |
-| Versioning | Changesets |
-| Lint/format | ESLint flat + Prettier |
+| Layer                  | Choice                                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Language               | TypeScript strict                                                                                                              |
+| Pkg mgr / orchestrator | pnpm 10 + Turborepo                                                                                                            |
+| Editor core            | ProseMirror (state, view, model, transform, commands, history, keymap, schema-list, tables, inputrules, dropcursor, gapcursor) |
+| UI binding             | React 18                                                                                                                       |
+| Bundler                | tsup (ESM + CJS + d.ts)                                                                                                        |
+| Unit tests             | Vitest + jsdom                                                                                                                 |
+| E2E                    | Playwright (chromium)                                                                                                          |
+| Bubble menu            | `@floating-ui/dom`                                                                                                             |
+| Versioning             | Changesets                                                                                                                     |
+| Lint/format            | ESLint flat + Prettier                                                                                                         |
 
 ## Tests
 
@@ -156,6 +156,7 @@ pnpm --filter e2e exec playwright test     # E2E suite
 **Phase 1 (v0.1.0)** — complete.
 
 **Phase 2 (editor completeness)** — complete:
+
 - Bidirectional Markdown (`@richkit/markdown`: prosemirror-markdown serializer + markdown-it parser, GFM tables & task lists)
 - DOCX import (`@richkit/docx` via mammoth) alongside existing export
 - PDF export / print via hidden iframe (`printEditor` in `@richkit/react`)

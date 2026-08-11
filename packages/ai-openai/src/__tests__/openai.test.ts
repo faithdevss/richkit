@@ -78,7 +78,9 @@ describe('openaiComplete', () => {
 
   it('sends no Authorization header when proxying through an endpoint', async () => {
     const fetchImpl = mockFetch(() => sseResponse(['data: [DONE]\n\n']))
-    await collect(openaiComplete({ endpoint: '/api/ai', fetch: fetchImpl })(req, { signal: signal() }))
+    await collect(
+      openaiComplete({ endpoint: '/api/ai', fetch: fetchImpl })(req, { signal: signal() }),
+    )
 
     const { url, headers } = callArgs(fetchImpl)
     expect(url).toBe('/api/ai')
@@ -113,7 +115,11 @@ describe('openaiComplete', () => {
     const fetchImpl = mockFetch(() => sseResponse(['data: [DONE]\n\n']))
     await collect(
       openaiComplete({ endpoint: '/api/ai', fetch: fetchImpl })(
-        { prompt: 'make it shorter', selection: 'the selected sentence', documentText: 'whole doc' },
+        {
+          prompt: 'make it shorter',
+          selection: 'the selected sentence',
+          documentText: 'whole doc',
+        },
         { signal: signal() },
       ),
     )
@@ -127,8 +133,8 @@ describe('openaiComplete', () => {
 
   it('refuses ambiguous or missing configuration', () => {
     expect(() => openaiComplete({})).toThrow(/endpoint/)
-    expect(() => openaiComplete({ endpoint: '/api/ai', dangerouslyBrowserApiKey: 'sk-test' })).toThrow(
-      /not both/,
-    )
+    expect(() =>
+      openaiComplete({ endpoint: '/api/ai', dangerouslyBrowserApiKey: 'sk-test' }),
+    ).toThrow(/not both/)
   })
 })

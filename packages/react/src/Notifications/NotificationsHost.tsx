@@ -58,17 +58,32 @@ export function NotificationsHost() {
       prompt(opts) {
         return new Promise<string | null>((resolve) => {
           setDraft(opts.defaultValue ?? '')
-          setDialog({ id: dialogIdRef.current++, kind: 'prompt', prompt: opts, resolve: resolve as (v: unknown) => void })
+          setDialog({
+            id: dialogIdRef.current++,
+            kind: 'prompt',
+            prompt: opts,
+            resolve: resolve as (v: unknown) => void,
+          })
         })
       },
       confirm(opts) {
         return new Promise<boolean>((resolve) => {
-          setDialog({ id: dialogIdRef.current++, kind: 'confirm', confirm: opts, resolve: resolve as (v: unknown) => void })
+          setDialog({
+            id: dialogIdRef.current++,
+            kind: 'confirm',
+            confirm: opts,
+            resolve: resolve as (v: unknown) => void,
+          })
         })
       },
       alert(opts) {
         return new Promise<void>((resolve) => {
-          setDialog({ id: dialogIdRef.current++, kind: 'alert', alert: opts, resolve: resolve as (v: unknown) => void })
+          setDialog({
+            id: dialogIdRef.current++,
+            kind: 'alert',
+            alert: opts,
+            resolve: resolve as (v: unknown) => void,
+          })
         })
       },
     })
@@ -127,7 +142,14 @@ export function NotificationsHost() {
         ))}
       </div>
       {dialog && (
-        <div className="re-dialog-backdrop" onMouseDown={() => closeDialog(dialog.kind === 'confirm' ? false : dialog.kind === 'prompt' ? null : undefined)}>
+        <div
+          className="re-dialog-backdrop"
+          onMouseDown={() =>
+            closeDialog(
+              dialog.kind === 'confirm' ? false : dialog.kind === 'prompt' ? null : undefined,
+            )
+          }
+        >
           <div
             className={`re-dialog re-dialog-${dialog.kind}`}
             role="dialog"
@@ -146,7 +168,9 @@ export function NotificationsHost() {
             <div className="re-dialog-body">
               {dialog.kind === 'prompt' && (
                 <>
-                  {dialog.prompt!.message && <p className="re-dialog-message">{dialog.prompt!.message}</p>}
+                  {dialog.prompt!.message && (
+                    <p className="re-dialog-message">{dialog.prompt!.message}</p>
+                  )}
                   <input
                     autoFocus
                     type="text"

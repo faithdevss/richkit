@@ -11,8 +11,7 @@ type PMCommand = (
 ) => boolean
 
 export function fromPM(pmCmd: PMCommand): Command {
-  return ({ state, dispatch, view }) =>
-    pmCmd(state, dispatch ?? undefined, view ?? undefined)
+  return ({ state, dispatch, view }) => pmCmd(state, dispatch ?? undefined, view ?? undefined)
 }
 
 export function toggleMark(name: string, attrs?: Attrs | null): Command {

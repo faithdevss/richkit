@@ -59,7 +59,12 @@ export function SiteShell() {
             <a href="/#support">Support</a>
           </nav>
           <div className="site-nav-actions">
-            <a href="https://github.com/sponsors/faithdevss" className="site-ghost" target="_blank" rel="noreferrer">
+            <a
+              href="https://github.com/sponsors/faithdevss"
+              className="site-ghost"
+              target="_blank"
+              rel="noreferrer"
+            >
               Sponsor
             </a>
             <Link to="/docs/installation" className="site-cta">
@@ -76,9 +81,7 @@ export function SiteShell() {
               <div className="site-brand">
                 <span className="site-logo">▤</span> RichKit
               </div>
-              <p className="foot-tagline">
-                The open-source rich text editor toolkit for React.
-              </p>
+              <p className="foot-tagline">The open-source rich text editor toolkit for React.</p>
             </div>
             {FOOT_COLS.map((c) => (
               <div className="foot-col" key={c.head}>

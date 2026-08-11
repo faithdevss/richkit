@@ -76,7 +76,9 @@ function roundTrip(html: string): string {
 
 describe('markdown serialize', () => {
   it('serializes headings, bold, italic, links', () => {
-    editor.setContent('<h2>Title</h2><p><strong>bold</strong> <em>it</em> <a href="https://x.com">x</a></p>')
+    editor.setContent(
+      '<h2>Title</h2><p><strong>bold</strong> <em>it</em> <a href="https://x.com">x</a></p>',
+    )
     const md = docToMarkdown(editor.state.doc)
     expect(md).toContain('## Title')
     expect(md).toContain('**bold**')
@@ -85,7 +87,9 @@ describe('markdown serialize', () => {
   })
 
   it('serializes lists and code blocks', () => {
-    editor.setContent('<ul><li><p>one</p></li><li><p>two</p></li></ul><pre><code class="language-js">let a = 1</code></pre>')
+    editor.setContent(
+      '<ul><li><p>one</p></li><li><p>two</p></li></ul><pre><code class="language-js">let a = 1</code></pre>',
+    )
     const md = docToMarkdown(editor.state.doc)
     expect(md).toContain('- one')
     expect(md).toContain('```js')
@@ -152,7 +156,9 @@ describe('markdown parse', () => {
 
 describe('markdown round-trip', () => {
   it('round-trips headings, lists, marks', () => {
-    const html = roundTrip('<h1>T</h1><ul><li><p>a <strong>b</strong></p></li></ul><p><s>gone</s> <code>c</code></p>')
+    const html = roundTrip(
+      '<h1>T</h1><ul><li><p>a <strong>b</strong></p></li></ul><p><s>gone</s> <code>c</code></p>',
+    )
     expect(html).toContain('<h1>T</h1>')
     expect(html).toContain('<strong>b</strong>')
     expect(html).toContain('<s>gone</s>')
@@ -167,9 +173,7 @@ describe('markdown round-trip', () => {
   })
 
   it('round-trips table structure', () => {
-    const html = roundTrip(
-      '<table><tr><th><p>A</p></th></tr><tr><td><p>1</p></td></tr></table>',
-    )
+    const html = roundTrip('<table><tr><th><p>A</p></th></tr><tr><td><p>1</p></td></tr></table>')
     expect(html).toContain('<table')
     expect(html).toContain('1')
   })

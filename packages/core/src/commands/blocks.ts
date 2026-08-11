@@ -7,9 +7,10 @@ import { wrapInList as pmWrapInList } from 'prosemirror-schema-list'
 import type { Attrs, NodeType } from 'prosemirror-model'
 import type { Command } from './chain'
 
-function nodeType(name: string, schema: { nodes: Record<string, NodeType | undefined> }):
-  | NodeType
-  | null {
+function nodeType(
+  name: string,
+  schema: { nodes: Record<string, NodeType | undefined> },
+): NodeType | null {
   return schema.nodes[name] ?? null
 }
 
@@ -30,8 +31,7 @@ export function wrapIn(name: string, attrs?: Attrs | null): Command {
 }
 
 export function lift(): Command {
-  return ({ state, dispatch, view }) =>
-    pmLift(state, dispatch ?? undefined, view ?? undefined)
+  return ({ state, dispatch, view }) => pmLift(state, dispatch ?? undefined, view ?? undefined)
 }
 
 export function wrapInList(name: string, attrs?: Attrs | null): Command {
@@ -56,11 +56,7 @@ export function toggleWrap(name: string, attrs?: Attrs | null): Command {
   }
 }
 
-export function toggleBlockType(
-  name: string,
-  fallbackName: string,
-  attrs?: Attrs | null,
-): Command {
+export function toggleBlockType(name: string, fallbackName: string, attrs?: Attrs | null): Command {
   return ({ state, dispatch, view }) => {
     const type = nodeType(name, state.schema)
     const fallback = nodeType(fallbackName, state.schema)
@@ -68,10 +64,9 @@ export function toggleBlockType(
     const { $from } = state.selection
     const isActive =
       $from.parent.type === type &&
-      (!attrs ||
-        Object.entries(attrs).every(([k, v]) => $from.parent.attrs[k] === v))
+      (!attrs || Object.entries(attrs).every(([k, v]) => $from.parent.attrs[k] === v))
     const target = isActive ? fallback : type
-    return pmSetBlockType(target, isActive ? null : attrs ?? null)(
+    return pmSetBlockType(target, isActive ? null : (attrs ?? null))(
       state,
       dispatch ?? undefined,
       view ?? undefined,

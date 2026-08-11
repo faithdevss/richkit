@@ -68,23 +68,20 @@ export const TextStyle = Mark.create({
     return ['span', { style: parts.join('; ') }, 0]
   },
   addCommands: () => ({
-    setColor:
-      (...args: unknown[]): Command => {
-        const [color] = args as [string | null]
-        return setTextStyleAttrs({ color })
-      },
+    setColor: (...args: unknown[]): Command => {
+      const [color] = args as [string | null]
+      return setTextStyleAttrs({ color })
+    },
     unsetColor: (): Command => setTextStyleAttrs({ color: null }),
-    setFontFamily:
-      (...args: unknown[]): Command => {
-        const [fontFamily] = args as [string | null]
-        return setTextStyleAttrs({ fontFamily })
-      },
+    setFontFamily: (...args: unknown[]): Command => {
+      const [fontFamily] = args as [string | null]
+      return setTextStyleAttrs({ fontFamily })
+    },
     unsetFontFamily: (): Command => setTextStyleAttrs({ fontFamily: null }),
-    setFontSize:
-      (...args: unknown[]): Command => {
-        const [fontSize] = args as [string | null]
-        return setTextStyleAttrs({ fontSize })
-      },
+    setFontSize: (...args: unknown[]): Command => {
+      const [fontSize] = args as [string | null]
+      return setTextStyleAttrs({ fontSize })
+    },
     unsetFontSize: (): Command => setTextStyleAttrs({ fontSize: null }),
   }),
 })

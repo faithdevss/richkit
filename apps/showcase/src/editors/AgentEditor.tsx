@@ -34,7 +34,10 @@ yield modest, often transient effects. This section motivates a multi-modal desi
 }
 
 function escapeHtml(s: string): string {
-  return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c)
+  return s.replace(
+    /[&<>"]/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c,
+  )
 }
 
 export function AgentEditor() {
@@ -69,21 +72,70 @@ export function AgentEditor() {
             <BlockTypeMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
-            <ToolbarButton editor={editor} command="toggleBulletList" isActiveName="bulletList" label={<Icons.BulletListIcon />} title="Bullet list" />
-            <ToolbarButton editor={editor} command="toggleOrderedList" isActiveName="orderedList" label={<Icons.OrderedListIcon />} title="Numbered list" />
+            <ToolbarButton
+              editor={editor}
+              command="toggleBulletList"
+              isActiveName="bulletList"
+              label={<Icons.BulletListIcon />}
+              title="Bullet list"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleOrderedList"
+              isActiveName="orderedList"
+              label={<Icons.OrderedListIcon />}
+              title="Numbered list"
+            />
           </ToolbarGroup>
           <ToolbarGroup>
-            <ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} title="Bold" />
-            <ToolbarButton editor={editor} command="toggleItalic" isActiveName="italic" label={<Icons.ItalicIcon />} title="Italic" />
-            <ToolbarButton editor={editor} command="toggleStrike" isActiveName="strike" label={<Icons.StrikeIcon />} title="Strikethrough" />
-            <ToolbarButton editor={editor} command="toggleUnderline" isActiveName="underline" label={<Icons.UnderlineIcon />} title="Underline" />
-            <ToolbarButton editor={editor} command="clearFormatting" label={<Icons.ClearFormatIcon />} title="Clear formatting" />
+            <ToolbarButton
+              editor={editor}
+              command="toggleBold"
+              isActiveName="bold"
+              label={<Icons.BoldIcon />}
+              title="Bold"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleItalic"
+              isActiveName="italic"
+              label={<Icons.ItalicIcon />}
+              title="Italic"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleStrike"
+              isActiveName="strike"
+              label={<Icons.StrikeIcon />}
+              title="Strikethrough"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleUnderline"
+              isActiveName="underline"
+              label={<Icons.UnderlineIcon />}
+              title="Underline"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="clearFormatting"
+              label={<Icons.ClearFormatIcon />}
+              title="Clear formatting"
+            />
           </ToolbarGroup>
           <ToolbarGroup>
             <AlignMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
-            <button type="button" className={`tb-btn demo-ai-toggle${open ? ' is-active' : ''}`} title="Ask the agent" onMouseDown={(e) => { e.preventDefault(); setOpen((v) => !v) }}>
+            <button
+              type="button"
+              className={`tb-btn demo-ai-toggle${open ? ' is-active' : ''}`}
+              title="Ask the agent"
+              onMouseDown={(e) => {
+                e.preventDefault()
+                setOpen((v) => !v)
+              }}
+            >
               <Icons.CommentIcon />
             </button>
           </ToolbarGroup>
@@ -95,16 +147,39 @@ export function AgentEditor() {
           <BubbleMenu editor={editor} className="bubble-menu">
             {editor && (
               <>
-                <ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} title="Bold" />
-                <ToolbarButton editor={editor} command="toggleItalic" isActiveName="italic" label={<Icons.ItalicIcon />} title="Italic" />
-                <ToolbarButton editor={editor} command="toggleStrike" isActiveName="strike" label={<Icons.StrikeIcon />} title="Strikethrough" />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleBold"
+                  isActiveName="bold"
+                  label={<Icons.BoldIcon />}
+                  title="Bold"
+                />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleItalic"
+                  isActiveName="italic"
+                  label={<Icons.ItalicIcon />}
+                  title="Italic"
+                />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleStrike"
+                  isActiveName="strike"
+                  label={<Icons.StrikeIcon />}
+                  title="Strikethrough"
+                />
               </>
             )}
           </BubbleMenu>
         </div>
       </div>
 
-      <button type="button" className="agent-fab" title="Ask the agent" onClick={() => setOpen((v) => !v)}>
+      <button
+        type="button"
+        className="agent-fab"
+        title="Ask the agent"
+        onClick={() => setOpen((v) => !v)}
+      >
         ✦
       </button>
 
@@ -112,15 +187,21 @@ export function AgentEditor() {
         <div className="agent-dock">
           <div className="agent-dock-head">
             <span>✦ Agent</span>
-            <button type="button" className="agent-dock-close" onClick={() => setOpen(false)}>×</button>
+            <button type="button" className="agent-dock-close" onClick={() => setOpen(false)}>
+              ×
+            </button>
           </div>
-          <p className="agent-dock-hint">Describe a section. The agent drafts it and writes into the document.</p>
+          <p className="agent-dock-hint">
+            Describe a section. The agent drafts it and writes into the document.
+          </p>
           <textarea
             className="agent-dock-input"
             placeholder="e.g. Background & Significance"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) run() }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) run()
+            }}
           />
           <button type="button" className="agent-dock-run" disabled={busy} onClick={run}>
             {busy ? 'Drafting…' : 'Draft section'}

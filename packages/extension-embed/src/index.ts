@@ -85,19 +85,18 @@ export const Embed = Node.create({
     embed: (node) => new EmbedNodeView(node),
   }),
   addCommands: () => ({
-    insertEmbed:
-      (...args: unknown[]): Command => {
-        const [url] = args as [string]
-        return ({ state, dispatch }) => {
-          const type = state.schema.nodes['embed']
-          if (!type) return false
-          const normalized = normalizeEmbedUrl(url)
-          if (!normalized) return false
-          const node = type.create(normalized)
-          if (dispatch) dispatch(state.tr.replaceSelectionWith(node).scrollIntoView())
-          return true
-        }
-      },
+    insertEmbed: (...args: unknown[]): Command => {
+      const [url] = args as [string]
+      return ({ state, dispatch }) => {
+        const type = state.schema.nodes['embed']
+        if (!type) return false
+        const normalized = normalizeEmbedUrl(url)
+        if (!normalized) return false
+        const node = type.create(normalized)
+        if (dispatch) dispatch(state.tr.replaceSelectionWith(node).scrollIntoView())
+        return true
+      }
+    },
   }),
 })
 

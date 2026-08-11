@@ -3,14 +3,34 @@ import { ChevronDownIcon, HighlightIcon, TextColorIcon } from '../icons'
 import { Popover } from './Popover'
 
 const TEXT_COLORS = [
-  '#000000', '#374151', '#6b7280', '#9ca3af', '#d1d5db',
-  '#dc2626', '#ea580c', '#d97706', '#16a34a', '#0891b2',
-  '#2563eb', '#7c3aed', '#c026d3', '#db2777', '#be123c',
+  '#000000',
+  '#374151',
+  '#6b7280',
+  '#9ca3af',
+  '#d1d5db',
+  '#dc2626',
+  '#ea580c',
+  '#d97706',
+  '#16a34a',
+  '#0891b2',
+  '#2563eb',
+  '#7c3aed',
+  '#c026d3',
+  '#db2777',
+  '#be123c',
 ]
 
 const HIGHLIGHT_COLORS = [
-  '#fff59d', '#fde68a', '#fed7aa', '#fecaca', '#fbcfe8',
-  '#e9d5ff', '#bfdbfe', '#a7f3d0', '#bbf7d0', '#fef3c7',
+  '#fff59d',
+  '#fde68a',
+  '#fed7aa',
+  '#fecaca',
+  '#fbcfe8',
+  '#e9d5ff',
+  '#bfdbfe',
+  '#a7f3d0',
+  '#bbf7d0',
+  '#fef3c7',
 ]
 
 export function TextColorMenu({ editor }: { editor: Editor }) {

@@ -31,9 +31,9 @@ Then drive it with the usual commands:
 
 ```ts
 editor.commands.aiPrompt({ prompt: 'Make this more concise' })
-editor.commands.aiAccept()   // keep the AI text
-editor.commands.aiReject()   // restore what it replaced
-editor.commands.aiCancel()   // abort mid-stream
+editor.commands.aiAccept() // keep the AI text
+editor.commands.aiReject() // restore what it replaced
+editor.commands.aiCancel() // abort mid-stream
 ```
 
 With `track: true` (the default on `AI`), output lands as track-changes suggestions, so
@@ -82,17 +82,17 @@ anthropicComplete({ dangerouslyBrowserApiKey: userSuppliedKey })
 
 ## Options
 
-| Option | Default | Notes |
-|---|---|---|
-| `endpoint` | — | Your proxy route. Mutually exclusive with `dangerouslyBrowserApiKey`. |
-| `dangerouslyBrowserApiKey` | — | Direct browser call. See above. |
-| `model` | `claude-sonnet-5` | The speed/quality balance an inline editor wants. Use `claude-opus-5` for harder rewrites. |
-| `maxTokens` | `4096` | Upper bound on the reply. |
-| `systemPrompt` | editing instructions | Replaces the built-in prompt entirely. |
-| `thinking` | `'disabled'` | `'adaptive'` for instruction-heavy prompts, `'auto'` to omit the field. |
-| `effort` | `'low'` | `output_config.effort`; `null` omits the field. |
-| `headers` | `{}` | Extra headers, e.g. auth for your own endpoint. |
-| `fetch` | `globalThis.fetch` | Injectable for tests. |
+| Option                     | Default              | Notes                                                                                      |
+| -------------------------- | -------------------- | ------------------------------------------------------------------------------------------ |
+| `endpoint`                 | —                    | Your proxy route. Mutually exclusive with `dangerouslyBrowserApiKey`.                      |
+| `dangerouslyBrowserApiKey` | —                    | Direct browser call. See above.                                                            |
+| `model`                    | `claude-sonnet-5`    | The speed/quality balance an inline editor wants. Use `claude-opus-5` for harder rewrites. |
+| `maxTokens`                | `4096`               | Upper bound on the reply.                                                                  |
+| `systemPrompt`             | editing instructions | Replaces the built-in prompt entirely.                                                     |
+| `thinking`                 | `'disabled'`         | `'adaptive'` for instruction-heavy prompts, `'auto'` to omit the field.                    |
+| `effort`                   | `'low'`              | `output_config.effort`; `null` omits the field.                                            |
+| `headers`                  | `{}`                 | Extra headers, e.g. auth for your own endpoint.                                            |
+| `fetch`                    | `globalThis.fetch`   | Injectable for tests.                                                                      |
 
 ### Why thinking is off by default
 

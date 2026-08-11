@@ -152,7 +152,11 @@ test.describe('ai assistant', () => {
     const external: string[] = []
     page.on('request', (r) => {
       const url = r.url()
-      if (!url.startsWith('http://localhost') && !url.startsWith('data:') && !url.startsWith('blob:')) {
+      if (
+        !url.startsWith('http://localhost') &&
+        !url.startsWith('data:') &&
+        !url.startsWith('blob:')
+      ) {
         external.push(url)
       }
     })

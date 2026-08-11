@@ -93,9 +93,7 @@ export function openaiComplete(options: OpenAIAdapterOptions): AIComplete {
   } = options
 
   if (!endpoint && !dangerouslyBrowserApiKey) {
-    throw new Error(
-      'openaiComplete: set `endpoint` (recommended) or `dangerouslyBrowserApiKey`.',
-    )
+    throw new Error('openaiComplete: set `endpoint` (recommended) or `dangerouslyBrowserApiKey`.')
   }
   if (endpoint && dangerouslyBrowserApiKey) {
     throw new Error('openaiComplete: set `endpoint` or `dangerouslyBrowserApiKey`, not both.')

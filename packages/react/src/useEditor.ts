@@ -24,7 +24,10 @@ function createStore(editor: Editor): Store {
   }
 }
 
-export function useEditor(options: EditorOptions, deps: ReadonlyArray<unknown> = []): Editor | null {
+export function useEditor(
+  options: EditorOptions,
+  deps: ReadonlyArray<unknown> = [],
+): Editor | null {
   const [editor, setEditor] = useState<Editor | null>(null)
   const optionsRef = useRef(options)
   optionsRef.current = options

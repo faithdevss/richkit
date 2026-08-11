@@ -48,7 +48,7 @@ export function SuggestionSidebar({ editor, onClose }: SuggestionSidebarProps) {
     return getSuggestions(editor.state)
   }, [editor, tick])
 
-  const enabled = editor ? getTrackState(editor.state)?.enabled ?? false : false
+  const enabled = editor ? (getTrackState(editor.state)?.enabled ?? false) : false
 
   if (!editor) return null
 
@@ -98,14 +98,13 @@ export function SuggestionSidebar({ editor, onClose }: SuggestionSidebarProps) {
       <div className="re-suggestions-list">
         {suggestions.length === 0 && (
           <p className="re-suggestions-empty">
-            {enabled ? 'No suggestions yet. Type or delete to create some.' : 'Enable tracking to record suggestions.'}
+            {enabled
+              ? 'No suggestions yet. Type or delete to create some.'
+              : 'Enable tracking to record suggestions.'}
           </p>
         )}
         {suggestions.map((s) => (
-          <article
-            key={s.id}
-            className={`re-suggestion re-suggestion-${s.type}`}
-          >
+          <article key={s.id} className={`re-suggestion re-suggestion-${s.type}`}>
             <div className="re-suggestion-meta">
               <span className={`re-suggestion-badge re-suggestion-badge-${s.type}`}>
                 {s.type === 'insertion' ? '+ Insertion' : '− Deletion'}
@@ -118,7 +117,8 @@ export function SuggestionSidebar({ editor, onClose }: SuggestionSidebarProps) {
               onClick={() => focusSuggestion(editor, s)}
               title="Click to scroll"
             >
-              “{s.text.slice(0, 120)}{s.text.length > 120 ? '…' : ''}”
+              “{s.text.slice(0, 120)}
+              {s.text.length > 120 ? '…' : ''}”
             </p>
             <div className="re-suggestion-actions">
               <button

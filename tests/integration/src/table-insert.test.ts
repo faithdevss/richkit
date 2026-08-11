@@ -133,9 +133,7 @@ describe('insertTable command', () => {
 
   it('handles cursor in middle of paragraph', () => {
     editor.setContent('<p>Hello</p>')
-    const tr = editor.view.state.tr.setSelection(
-      TextSelection.create(editor.view.state.doc, 3),
-    )
+    const tr = editor.view.state.tr.setSelection(TextSelection.create(editor.view.state.doc, 3))
     editor.view.dispatch(tr)
     editor.command('insertTable', { rows: 2, cols: 2 })
     let tableFound = false
@@ -208,8 +206,6 @@ function placeCursorInFirstCell(ed: Editor) {
     return true
   })
   if (pos == null) return
-  const tr = ed.view.state.tr.setSelection(
-    TextSelection.create(ed.view.state.doc, pos),
-  )
+  const tr = ed.view.state.tr.setSelection(TextSelection.create(ed.view.state.doc, pos))
   ed.view.dispatch(tr)
 }

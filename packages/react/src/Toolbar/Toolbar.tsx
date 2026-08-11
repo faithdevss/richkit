@@ -62,7 +62,11 @@ export function ToolbarButton({
       aria-pressed={active}
       onMouseDown={(e) => {
         e.preventDefault()
-        editor.chain().call(command, ...args).focus().run()
+        editor
+          .chain()
+          .call(command, ...args)
+          .focus()
+          .run()
       }}
     >
       {label}
@@ -95,7 +99,12 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
       <div className="tb-row">
         <ToolbarGroup>
           <ToolbarButton editor={editor} command="undo" label={<UndoIcon />} title="Undo (Mod+Z)" />
-          <ToolbarButton editor={editor} command="redo" label={<RedoIcon />} title="Redo (Mod+Shift+Z)" />
+          <ToolbarButton
+            editor={editor}
+            command="redo"
+            label={<RedoIcon />}
+            title="Redo (Mod+Shift+Z)"
+          />
         </ToolbarGroup>
         <ToolbarGroup>
           <LinkMenu editor={editor} />
@@ -145,13 +154,55 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
           <FontSizeMenu editor={editor} />
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<BoldIcon />} title="Bold (Mod+B)" />
-          <ToolbarButton editor={editor} command="toggleItalic" isActiveName="italic" label={<ItalicIcon />} title="Italic (Mod+I)" />
-          <ToolbarButton editor={editor} command="toggleUnderline" isActiveName="underline" label={<UnderlineIcon />} title="Underline (Mod+U)" />
-          <ToolbarButton editor={editor} command="toggleStrike" isActiveName="strike" label={<StrikeIcon />} title="Strikethrough" />
-          <ToolbarButton editor={editor} command="toggleCode" isActiveName="code" label={<CodeIcon />} title="Inline code" />
-          <ToolbarButton editor={editor} command="toggleSubscript" isActiveName="subscript" label={<SubscriptIcon />} title="Subscript (Mod+,)" />
-          <ToolbarButton editor={editor} command="toggleSuperscript" isActiveName="superscript" label={<SuperscriptIcon />} title="Superscript (Mod+.)" />
+          <ToolbarButton
+            editor={editor}
+            command="toggleBold"
+            isActiveName="bold"
+            label={<BoldIcon />}
+            title="Bold (Mod+B)"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleItalic"
+            isActiveName="italic"
+            label={<ItalicIcon />}
+            title="Italic (Mod+I)"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleUnderline"
+            isActiveName="underline"
+            label={<UnderlineIcon />}
+            title="Underline (Mod+U)"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleStrike"
+            isActiveName="strike"
+            label={<StrikeIcon />}
+            title="Strikethrough"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleCode"
+            isActiveName="code"
+            label={<CodeIcon />}
+            title="Inline code"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleSubscript"
+            isActiveName="subscript"
+            label={<SubscriptIcon />}
+            title="Subscript (Mod+,)"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleSuperscript"
+            isActiveName="superscript"
+            label={<SuperscriptIcon />}
+            title="Superscript (Mod+.)"
+          />
         </ToolbarGroup>
         <ToolbarGroup>
           <TextColorMenu editor={editor} />
@@ -162,12 +213,34 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
           <LineHeightMenu editor={editor} />
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarButton editor={editor} command="toggleBulletList" isActiveName="bulletList" label={<BulletListIcon />} title="Bullet list" />
-          <ToolbarButton editor={editor} command="toggleOrderedList" isActiveName="orderedList" label={<OrderedListIcon />} title="Numbered list" />
+          <ToolbarButton
+            editor={editor}
+            command="toggleBulletList"
+            isActiveName="bulletList"
+            label={<BulletListIcon />}
+            title="Bullet list"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleOrderedList"
+            isActiveName="orderedList"
+            label={<OrderedListIcon />}
+            title="Numbered list"
+          />
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarButton editor={editor} command="liftListItem" label={<IndentOutIcon />} title="Decrease indent" />
-          <ToolbarButton editor={editor} command="sinkListItem" label={<IndentInIcon />} title="Increase indent" />
+          <ToolbarButton
+            editor={editor}
+            command="liftListItem"
+            label={<IndentOutIcon />}
+            title="Decrease indent"
+          />
+          <ToolbarButton
+            editor={editor}
+            command="sinkListItem"
+            label={<IndentInIcon />}
+            title="Increase indent"
+          />
         </ToolbarGroup>
       </div>
     </>
@@ -188,9 +261,15 @@ function FullscreenButton() {
       onMouseDown={(e) => {
         e.preventDefault()
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().then(() => setOn(true)).catch(() => {})
+          document.documentElement
+            .requestFullscreen()
+            .then(() => setOn(true))
+            .catch(() => {})
         } else {
-          document.exitFullscreen().then(() => setOn(false)).catch(() => {})
+          document
+            .exitFullscreen()
+            .then(() => setOn(false))
+            .catch(() => {})
         }
       }}
     >

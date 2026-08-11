@@ -109,7 +109,17 @@ function initialTab(): TabId {
 
 function CopyIcon() {
   return (
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <rect x="9" y="9" width="13" height="13" rx="2" />
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
@@ -118,7 +128,17 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   )
@@ -150,16 +170,21 @@ export function Home() {
         <div className="hero-eyebrow">The rich text editor toolkit for React</div>
         <h1 className="hero-title">
           Build <em>AI-native</em> editors <em>faster</em> 🚀
-          <br />with production-ready <em>tools</em>
+          <br />
+          with production-ready <em>tools</em>
         </h1>
         <p className="hero-sub">
-          A headless, extensible, framework-agnostic editor core with React bindings.
-          Ship agent editors, docx editors, Notion-like editors, and simple editors —
-          all from one MIT-licensed toolkit.
+          A headless, extensible, framework-agnostic editor core with React bindings. Ship agent
+          editors, docx editors, Notion-like editors, and simple editors — all from one MIT-licensed
+          toolkit.
         </p>
         <div className="hero-actions">
-          <a href="#examples" className="btn-primary">Explore examples</a>
-          <Link to="/docs/installation" className="btn-secondary">Read the docs</Link>
+          <a href="#examples" className="btn-primary">
+            Explore examples
+          </a>
+          <Link to="/docs/installation" className="btn-secondary">
+            Read the docs
+          </Link>
           <code className="hero-install">pnpm add @richkit/starter-kit</code>
         </div>
 
@@ -226,10 +251,9 @@ export function Home() {
         </div>
 
         <p className="stage-caption">
-          Every example above is a live editor built with the same{' '}
-          <code>@richkit</code> packages. Switch tabs to see how far one core
-          stretches. Want the write-up and code for each? See the{' '}
-          <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
+          Every example above is a live editor built with the same <code>@richkit</code> packages.
+          Switch tabs to see how far one core stretches. Want the write-up and code for each? See
+          the <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
         </p>
       </section>
 
@@ -266,9 +290,7 @@ export function Home() {
               key={t.title}
               onClick={() => {
                 selectTab(t.tab)
-                document
-                  .getElementById('examples')
-                  ?.scrollIntoView({ behavior: 'smooth' })
+                document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })
               }}
             >
               <div className="template-preview" aria-hidden />
@@ -287,8 +309,8 @@ export function Home() {
           The paid features, <em>open sourced</em>
         </h2>
         <p className="section-sub">
-          Track changes, comments, and DOCX round-tripping sit behind a plan almost
-          everywhere else. Here they are MIT packages on npm.
+          Track changes, comments, and DOCX round-tripping sit behind a plan almost everywhere else.
+          Here they are MIT packages on npm.
         </p>
 
         <ComparisonTable notes={false} />
@@ -307,8 +329,7 @@ export function Home() {
           Support the <em>project</em>
         </h2>
         <p className="section-sub">
-          RichKit is free and MIT-licensed. Sponsorship funds maintenance and new
-          extensions.
+          RichKit is free and MIT-licensed. Sponsorship funds maintenance and new extensions.
         </p>
         <div className="support-grid">
           {SUPPORT_LINKS.map((s) => (

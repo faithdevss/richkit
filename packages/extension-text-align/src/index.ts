@@ -25,11 +25,10 @@ export const TextAlign = Extension.create<TextAlignOptions>({
   name: 'textAlign',
   addOptions: () => ({ types: ['paragraph', 'heading'] }),
   addCommands: (ctx) => ({
-    setTextAlign:
-      (...args: unknown[]): Command => {
-        const [align] = args as [TextAlign]
-        return setTextAlignCmd(align, ctx.options.types)
-      },
+    setTextAlign: (...args: unknown[]): Command => {
+      const [align] = args as [TextAlign]
+      return setTextAlignCmd(align, ctx.options.types)
+    },
     unsetTextAlign: (): Command => setTextAlignCmd(null, ctx.options.types),
   }),
   addKeyboardShortcuts: (ctx) => ({

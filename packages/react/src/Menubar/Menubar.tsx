@@ -71,11 +71,7 @@ export function Menubar({ editor, menus, className }: MenubarProps) {
             {menu.label}
           </button>
           {openIdx === i && (
-            <MenuPanel
-              editor={editor}
-              items={menu.items}
-              onClose={() => setOpenIdx(null)}
-            />
+            <MenuPanel editor={editor} items={menu.items} onClose={() => setOpenIdx(null)} />
           )}
         </div>
       ))}
@@ -98,9 +94,7 @@ function MenuPanel({ editor, items, onClose, level = 0 }: MenuPanelProps) {
           return <div key={`sep-${i}`} className="menu-sep" />
         }
         const item = entry as MenuItemDef
-        return (
-          <MenuItem key={item.label} editor={editor} item={item} onClose={onClose} />
-        )
+        return <MenuItem key={item.label} editor={editor} item={item} onClose={onClose} />
       })}
     </div>
   )

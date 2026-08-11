@@ -92,7 +92,12 @@ export function FindReplace({ editor, open, onClose }: FindReplaceProps) {
           <button type="button" className="tb-btn-ghost" onClick={replaceOne} disabled={!count}>
             Replace
           </button>
-          <button type="button" className="tb-btn-primary" onClick={replaceAllClick} disabled={!count}>
+          <button
+            type="button"
+            className="tb-btn-primary"
+            onClick={replaceAllClick}
+            disabled={!count}
+          >
             Replace all
           </button>
         </>
@@ -125,7 +130,11 @@ export function FindReplace({ editor, open, onClose }: FindReplaceProps) {
         </label>
         <div className="re-fr-flags">
           <label className="re-fr-check">
-            <input type="checkbox" checked={caseSensitive} onChange={(e) => setCaseSensitive(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={caseSensitive}
+              onChange={(e) => setCaseSensitive(e.target.checked)}
+            />
             <span>Match case</span>
           </label>
           <label className="re-fr-check">

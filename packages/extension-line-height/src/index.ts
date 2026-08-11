@@ -23,11 +23,10 @@ export const LineHeight = Extension.create<LineHeightOptions>({
   name: 'lineHeight',
   addOptions: () => ({ types: ['paragraph', 'heading'] }),
   addCommands: (ctx) => ({
-    setLineHeight:
-      (...args: unknown[]): Command => {
-        const [value] = args as [string | null]
-        return setLineHeightCmd(value, ctx.options.types)
-      },
+    setLineHeight: (...args: unknown[]): Command => {
+      const [value] = args as [string | null]
+      return setLineHeightCmd(value, ctx.options.types)
+    },
     unsetLineHeight: (): Command => setLineHeightCmd(null, ctx.options.types),
   }),
 })

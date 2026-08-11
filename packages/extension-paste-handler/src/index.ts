@@ -17,11 +17,7 @@ export function pasteHandlerPlugin(options: PasteHandlerOptions): Plugin {
         return cleanPastedHTML(html, options)
       },
       handleKeyDown(_view, event) {
-        if (
-          (event.metaKey || event.ctrlKey) &&
-          event.shiftKey &&
-          event.key.toLowerCase() === 'v'
-        ) {
+        if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.key.toLowerCase() === 'v') {
           plainNext = true
           // let the native paste event fire; handlePaste consumes the flag
         }

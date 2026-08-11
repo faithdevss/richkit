@@ -1,7 +1,12 @@
 import { MarkdownSerializer, type MarkdownSerializerState } from 'prosemirror-markdown'
 import type { Node as PMNode } from 'prosemirror-model'
 
-type NodeSerializer = (state: MarkdownSerializerState, node: PMNode, parent: PMNode, index: number) => void
+type NodeSerializer = (
+  state: MarkdownSerializerState,
+  node: PMNode,
+  parent: PMNode,
+  index: number,
+) => void
 
 function backticksFor(node: PMNode, side: -1 | 1): string {
   const ticks = /`+/g
@@ -20,7 +25,10 @@ function serializeInlineCell(cell: PMNode): string {
   // flatten cell blocks to single-line inline markdown via a nested serializer run
   const doc = cell.type.schema.topNodeType.create(null, cell.content)
   const md = serializer.serialize(doc, { tightLists: true })
-  return md.replace(/\|/g, '\\|').replace(/\s*\n+\s*/g, ' ').trim()
+  return md
+    .replace(/\|/g, '\\|')
+    .replace(/\s*\n+\s*/g, ' ')
+    .trim()
 }
 
 const tableSerializer: NodeSerializer = (state, node) => {
@@ -107,7 +115,9 @@ export const serializer = new MarkdownSerializer(
     image: (state, node) => {
       const alt = state.esc((node.attrs['alt'] as string) || '')
       const src = (node.attrs['src'] as string) || ''
-      const title = node.attrs['title'] ? ` "${String(node.attrs['title']).replace(/"/g, '\\"')}"` : ''
+      const title = node.attrs['title']
+        ? ` "${String(node.attrs['title']).replace(/"/g, '\\"')}"`
+        : ''
       state.write(`![${alt}](${src}${title})`)
     },
     embed: (state, node) => {
@@ -141,7 +151,9 @@ export const serializer = new MarkdownSerializer(
       open: '[',
       close: (_state, mark) => {
         const href = (mark.attrs['href'] as string) || ''
-        const title = mark.attrs['title'] ? ` "${String(mark.attrs['title']).replace(/"/g, '\\"')}"` : ''
+        const title = mark.attrs['title']
+          ? ` "${String(mark.attrs['title']).replace(/"/g, '\\"')}"`
+          : ''
         return `](${href}${title})`
       },
       mixable: false,

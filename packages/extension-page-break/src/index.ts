@@ -26,7 +26,8 @@ export const PageBreak = Node.create({
     },
   ],
   addCommands: () => ({
-    insertPageBreak: (): Command =>
+    insertPageBreak:
+      (): Command =>
       ({ state, tr, dispatch }) => {
         const type = state.schema.nodes['pageBreak']
         if (!type) return false

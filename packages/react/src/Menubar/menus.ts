@@ -65,7 +65,11 @@ export interface MenuActions {
 }
 
 function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
-  editor.chain().call(cmd, ...args).focus().run()
+  editor
+    .chain()
+    .call(cmd, ...args)
+    .focus()
+    .run()
 }
 
 async function promptLink(editor: Editor) {
@@ -94,7 +98,11 @@ async function promptImage(editor: Editor) {
 async function promptTable(editor: Editor) {
   const rowsStr = await notify.prompt({ title: 'Table rows', defaultValue: '3', okLabel: 'Next' })
   if (rowsStr === null) return
-  const colsStr = await notify.prompt({ title: 'Table columns', defaultValue: '3', okLabel: 'Insert' })
+  const colsStr = await notify.prompt({
+    title: 'Table columns',
+    defaultValue: '3',
+    okLabel: 'Insert',
+  })
   if (colsStr === null) return
   const rows = parseInt(rowsStr || '0', 10)
   const cols = parseInt(colsStr || '0', 10)
@@ -202,7 +210,30 @@ async function insertMedia(editor: Editor) {
 }
 
 const EMOJI = ['😀', '😂', '😍', '😎', '🤔', '👍', '🎉', '❤️', '🔥', '🚀', '✨', '⭐']
-const SPECIAL = ['©', '®', '™', '§', '¶', '†', '‡', '°', '±', '×', '÷', '≈', '≠', '≤', '≥', '→', '←', '↑', '↓', '—', '–', '…']
+const SPECIAL = [
+  '©',
+  '®',
+  '™',
+  '§',
+  '¶',
+  '†',
+  '‡',
+  '°',
+  '±',
+  '×',
+  '÷',
+  '≈',
+  '≠',
+  '≤',
+  '≥',
+  '→',
+  '←',
+  '↑',
+  '↓',
+  '—',
+  '–',
+  '…',
+]
 
 function icon(C: (props: object) => unknown) {
   return createElement(C as never, { width: 16, height: 16 })
@@ -213,28 +244,65 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
     {
       label: 'File',
       items: [
-        { label: 'New document', icon: icon(ParagraphIcon), onSelect: (e) => e.setContent('<p></p>') },
-        { label: 'Restore last draft', icon: icon(UndoIcon), disabled: !actions.restoreDraft, onSelect: () => actions.restoreDraft?.() },
+        {
+          label: 'New document',
+          icon: icon(ParagraphIcon),
+          onSelect: (e) => e.setContent('<p></p>'),
+        },
+        {
+          label: 'Restore last draft',
+          icon: icon(UndoIcon),
+          disabled: !actions.restoreDraft,
+          onSelect: () => actions.restoreDraft?.(),
+        },
         { separator: true },
         { label: 'Preview', icon: icon(FontIcon), onSelect: previewHtml },
         { separator: true },
-        { label: 'Import file…', icon: icon(LinkIcon), disabled: !actions.importFile, onSelect: () => actions.importFile?.() },
+        {
+          label: 'Import file…',
+          icon: icon(LinkIcon),
+          disabled: !actions.importFile,
+          onSelect: () => actions.importFile?.(),
+        },
         { label: 'Export to HTML…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'html') },
         { label: 'Export to JSON…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'json') },
-        { label: 'Export to Markdown…', icon: icon(CodeIcon), onSelect: (e) => exportFile(e, 'md') },
+        {
+          label: 'Export to Markdown…',
+          icon: icon(CodeIcon),
+          onSelect: (e) => exportFile(e, 'md'),
+        },
         { label: 'Export to PDF…', icon: icon(FontIcon), onSelect: exportPdf },
         { label: 'Export to Word…', icon: icon(FontIcon), onSelect: exportWord },
         { separator: true },
-        { label: 'Print…', icon: icon(FontIcon), shortcut: `${MOD}P`, onSelect: (e) => printEditor(e) },
+        {
+          label: 'Print…',
+          icon: icon(FontIcon),
+          shortcut: `${MOD}P`,
+          onSelect: (e) => printEditor(e),
+        },
         { separator: true },
-        { label: 'Clear document', icon: icon(ClearFormatIcon), onSelect: (e) => e.setContent('<p></p>') },
+        {
+          label: 'Clear document',
+          icon: icon(ClearFormatIcon),
+          onSelect: (e) => e.setContent('<p></p>'),
+        },
       ],
     },
     {
       label: 'Edit',
       items: [
-        { label: 'Undo', icon: icon(UndoIcon), shortcut: `${MOD}Z`, onSelect: (e) => runCmd(e, 'undo') },
-        { label: 'Redo', icon: icon(RedoIcon), shortcut: `${MOD}⇧Z`, onSelect: (e) => runCmd(e, 'redo') },
+        {
+          label: 'Undo',
+          icon: icon(UndoIcon),
+          shortcut: `${MOD}Z`,
+          onSelect: (e) => runCmd(e, 'undo'),
+        },
+        {
+          label: 'Redo',
+          icon: icon(RedoIcon),
+          shortcut: `${MOD}⇧Z`,
+          onSelect: (e) => runCmd(e, 'redo'),
+        },
         { separator: true },
         { label: 'Cut', shortcut: `${MOD}X`, onSelect: () => document.execCommand('cut') },
         { label: 'Copy', shortcut: `${MOD}C`, onSelect: () => document.execCommand('copy') },
@@ -242,18 +310,54 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
         { label: 'Paste as text', onSelect: pasteAsText },
         { separator: true },
         { label: 'Select all', shortcut: `${MOD}A`, onSelect: (e) => runCmd(e, 'selectAll') },
-        { label: 'Find and replace…', shortcut: `${MOD}F`, disabled: !actions.findReplace, onSelect: () => actions.findReplace?.() },
+        {
+          label: 'Find and replace…',
+          shortcut: `${MOD}F`,
+          disabled: !actions.findReplace,
+          onSelect: () => actions.findReplace?.(),
+        },
       ],
     },
     {
       label: 'View',
       items: [
-        { label: 'Fullscreen', icon: icon(FullscreenIcon), shortcut: 'F11', onSelect: toggleFullscreen },
-        { label: 'Source code', icon: icon(CodeIcon), disabled: !actions.sourceCode, onSelect: () => actions.sourceCode?.() },
-        { label: 'Outline panel', icon: icon(ListTreeIcon), checked: actions.outlineOpen, disabled: !actions.toggleOutline, onSelect: () => actions.toggleOutline?.() },
-        { label: 'Comments panel', checked: actions.commentsOpen, disabled: !actions.toggleComments, onSelect: () => actions.toggleComments?.() },
-        { label: 'Track changes', checked: actions.trackChangesOn, disabled: !actions.toggleTrackChanges, onSelect: () => actions.toggleTrackChanges?.() },
-        { label: 'Suggestions panel', checked: actions.suggestionsOpen, disabled: !actions.toggleSuggestions, onSelect: () => actions.toggleSuggestions?.() },
+        {
+          label: 'Fullscreen',
+          icon: icon(FullscreenIcon),
+          shortcut: 'F11',
+          onSelect: toggleFullscreen,
+        },
+        {
+          label: 'Source code',
+          icon: icon(CodeIcon),
+          disabled: !actions.sourceCode,
+          onSelect: () => actions.sourceCode?.(),
+        },
+        {
+          label: 'Outline panel',
+          icon: icon(ListTreeIcon),
+          checked: actions.outlineOpen,
+          disabled: !actions.toggleOutline,
+          onSelect: () => actions.toggleOutline?.(),
+        },
+        {
+          label: 'Comments panel',
+          checked: actions.commentsOpen,
+          disabled: !actions.toggleComments,
+          onSelect: () => actions.toggleComments?.(),
+        },
+        {
+          label: 'Track changes',
+          checked: actions.trackChangesOn,
+          disabled: !actions.toggleTrackChanges,
+          onSelect: () => actions.toggleTrackChanges?.(),
+        },
+        {
+          label: 'Suggestions panel',
+          checked: actions.suggestionsOpen,
+          disabled: !actions.toggleSuggestions,
+          onSelect: () => actions.toggleSuggestions?.(),
+        },
       ],
     },
     {
@@ -276,14 +380,40 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
           icon: icon(OmegaIcon),
           submenu: SPECIAL.map((c) => ({ label: c, onSelect: (ed) => insertText(ed, c) })),
         },
-        { label: 'Block quote', icon: icon(BlockquoteIcon), onSelect: (e) => runCmd(e, 'toggleBlockquote') },
-        { label: 'Code block', icon: icon(CodeBlockIcon), onSelect: (e) => runCmd(e, 'toggleCodeBlock') },
+        {
+          label: 'Block quote',
+          icon: icon(BlockquoteIcon),
+          onSelect: (e) => runCmd(e, 'toggleBlockquote'),
+        },
+        {
+          label: 'Code block',
+          icon: icon(CodeBlockIcon),
+          onSelect: (e) => runCmd(e, 'toggleCodeBlock'),
+        },
         { separator: true },
-        { label: 'Horizontal line', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertHorizontalRule') },
-        { label: 'Page break', icon: icon(HorizontalRuleIcon), onSelect: (e) => runCmd(e, 'insertPageBreak') },
-        { label: 'Table of contents', icon: icon(ListTreeIcon), disabled: !actions.toggleOutline, onSelect: () => actions.toggleOutline?.() },
+        {
+          label: 'Horizontal line',
+          icon: icon(HorizontalRuleIcon),
+          onSelect: (e) => runCmd(e, 'insertHorizontalRule'),
+        },
+        {
+          label: 'Page break',
+          icon: icon(HorizontalRuleIcon),
+          onSelect: (e) => runCmd(e, 'insertPageBreak'),
+        },
+        {
+          label: 'Table of contents',
+          icon: icon(ListTreeIcon),
+          disabled: !actions.toggleOutline,
+          onSelect: () => actions.toggleOutline?.(),
+        },
         { separator: true },
-        { label: 'Comment', shortcut: `${MOD}⌥M`, disabled: !actions.addComment, onSelect: () => actions.addComment?.() },
+        {
+          label: 'Comment',
+          shortcut: `${MOD}⌥M`,
+          disabled: !actions.addComment,
+          onSelect: () => actions.addComment?.(),
+        },
       ],
     },
     {
@@ -293,15 +423,57 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
           label: 'Text',
           icon: icon(BoldIcon),
           submenu: [
-            { label: 'Bold', icon: icon(BoldIcon), shortcut: `${MOD}B`, onSelect: (e) => runCmd(e, 'toggleBold') },
-            { label: 'Italic', icon: icon(ItalicIcon), shortcut: `${MOD}I`, onSelect: (e) => runCmd(e, 'toggleItalic') },
-            { label: 'Underline', icon: icon(UnderlineIcon), shortcut: `${MOD}U`, onSelect: (e) => runCmd(e, 'toggleUnderline') },
-            { label: 'Strikethrough', icon: icon(StrikeIcon), onSelect: (e) => runCmd(e, 'toggleStrike') },
-            { label: 'Inline code', icon: icon(CodeIcon), onSelect: (e) => runCmd(e, 'toggleCode') },
-            { label: 'Subscript', icon: icon(SubscriptIcon), shortcut: `${MOD},`, onSelect: (e) => runCmd(e, 'toggleSubscript') },
-            { label: 'Superscript', icon: icon(SuperscriptIcon), shortcut: `${MOD}.`, onSelect: (e) => runCmd(e, 'toggleSuperscript') },
-            { label: 'Highlight', icon: icon(HighlightIcon), shortcut: `${MOD}⇧H`, onSelect: (e) => runCmd(e, 'setHighlight', '#fff59d') },
-            { label: 'Text color (red)', icon: icon(TextColorIcon), onSelect: (e) => runCmd(e, 'setColor', '#dc2626') },
+            {
+              label: 'Bold',
+              icon: icon(BoldIcon),
+              shortcut: `${MOD}B`,
+              onSelect: (e) => runCmd(e, 'toggleBold'),
+            },
+            {
+              label: 'Italic',
+              icon: icon(ItalicIcon),
+              shortcut: `${MOD}I`,
+              onSelect: (e) => runCmd(e, 'toggleItalic'),
+            },
+            {
+              label: 'Underline',
+              icon: icon(UnderlineIcon),
+              shortcut: `${MOD}U`,
+              onSelect: (e) => runCmd(e, 'toggleUnderline'),
+            },
+            {
+              label: 'Strikethrough',
+              icon: icon(StrikeIcon),
+              onSelect: (e) => runCmd(e, 'toggleStrike'),
+            },
+            {
+              label: 'Inline code',
+              icon: icon(CodeIcon),
+              onSelect: (e) => runCmd(e, 'toggleCode'),
+            },
+            {
+              label: 'Subscript',
+              icon: icon(SubscriptIcon),
+              shortcut: `${MOD},`,
+              onSelect: (e) => runCmd(e, 'toggleSubscript'),
+            },
+            {
+              label: 'Superscript',
+              icon: icon(SuperscriptIcon),
+              shortcut: `${MOD}.`,
+              onSelect: (e) => runCmd(e, 'toggleSuperscript'),
+            },
+            {
+              label: 'Highlight',
+              icon: icon(HighlightIcon),
+              shortcut: `${MOD}⇧H`,
+              onSelect: (e) => runCmd(e, 'setHighlight', '#fff59d'),
+            },
+            {
+              label: 'Text color (red)',
+              icon: icon(TextColorIcon),
+              onSelect: (e) => runCmd(e, 'setColor', '#dc2626'),
+            },
           ],
         },
         {
@@ -309,16 +481,26 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
           icon: icon(FontIcon),
           submenu: [
             { label: 'Default', onSelect: (e) => runCmd(e, 'setFontFamily', null) },
-            { label: 'Sans-serif', onSelect: (e) => runCmd(e, 'setFontFamily', 'ui-sans-serif, system-ui, sans-serif') },
+            {
+              label: 'Sans-serif',
+              onSelect: (e) => runCmd(e, 'setFontFamily', 'ui-sans-serif, system-ui, sans-serif'),
+            },
             { label: 'Serif', onSelect: (e) => runCmd(e, 'setFontFamily', 'Georgia, serif') },
-            { label: 'Monospace', onSelect: (e) => runCmd(e, 'setFontFamily', 'ui-monospace, Menlo, monospace') },
+            {
+              label: 'Monospace',
+              onSelect: (e) => runCmd(e, 'setFontFamily', 'ui-monospace, Menlo, monospace'),
+            },
           ],
         },
         {
           label: 'Heading',
           icon: icon(HeadingIcon),
           submenu: [
-            { label: 'Paragraph', icon: icon(ParagraphIcon), onSelect: (e) => runCmd(e, 'setParagraph') },
+            {
+              label: 'Paragraph',
+              icon: icon(ParagraphIcon),
+              onSelect: (e) => runCmd(e, 'setParagraph'),
+            },
             { label: 'Heading 1', onSelect: (e) => runCmd(e, 'setHeading', { level: 1 }) },
             { label: 'Heading 2', onSelect: (e) => runCmd(e, 'setHeading', { level: 2 }) },
             { label: 'Heading 3', onSelect: (e) => runCmd(e, 'setHeading', { level: 3 }) },
@@ -328,18 +510,46 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
           ],
         },
         { separator: true },
-        { label: 'Bulleted List', icon: icon(BulletListIcon), onSelect: (e) => runCmd(e, 'toggleBulletList') },
-        { label: 'Numbered List', icon: icon(OrderedListIcon), onSelect: (e) => runCmd(e, 'toggleOrderedList') },
+        {
+          label: 'Bulleted List',
+          icon: icon(BulletListIcon),
+          onSelect: (e) => runCmd(e, 'toggleBulletList'),
+        },
+        {
+          label: 'Numbered List',
+          icon: icon(OrderedListIcon),
+          onSelect: (e) => runCmd(e, 'toggleOrderedList'),
+        },
         { label: 'To-do List', onSelect: (e) => runCmd(e, 'toggleTaskList') },
         { separator: true },
         {
           label: 'Text alignment',
           icon: icon(AlignLeftIcon),
           submenu: [
-            { label: 'Left', icon: icon(AlignLeftIcon), shortcut: `${MOD}⇧L`, onSelect: (e) => runCmd(e, 'setTextAlign', null) },
-            { label: 'Center', icon: icon(AlignCenterIcon), shortcut: `${MOD}⇧E`, onSelect: (e) => runCmd(e, 'setTextAlign', 'center') },
-            { label: 'Right', icon: icon(AlignRightIcon), shortcut: `${MOD}⇧R`, onSelect: (e) => runCmd(e, 'setTextAlign', 'right') },
-            { label: 'Justify', icon: icon(AlignJustifyIcon), shortcut: `${MOD}⇧J`, onSelect: (e) => runCmd(e, 'setTextAlign', 'justify') },
+            {
+              label: 'Left',
+              icon: icon(AlignLeftIcon),
+              shortcut: `${MOD}⇧L`,
+              onSelect: (e) => runCmd(e, 'setTextAlign', null),
+            },
+            {
+              label: 'Center',
+              icon: icon(AlignCenterIcon),
+              shortcut: `${MOD}⇧E`,
+              onSelect: (e) => runCmd(e, 'setTextAlign', 'center'),
+            },
+            {
+              label: 'Right',
+              icon: icon(AlignRightIcon),
+              shortcut: `${MOD}⇧R`,
+              onSelect: (e) => runCmd(e, 'setTextAlign', 'right'),
+            },
+            {
+              label: 'Justify',
+              icon: icon(AlignJustifyIcon),
+              shortcut: `${MOD}⇧J`,
+              onSelect: (e) => runCmd(e, 'setTextAlign', 'justify'),
+            },
           ],
         },
         {
@@ -354,8 +564,16 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
             { label: '2.5', onSelect: (e) => runCmd(e, 'setLineHeight', '2.5') },
           ],
         },
-        { label: 'Increase indent', icon: icon(IndentInIcon), onSelect: (e) => runCmd(e, 'sinkListItem') },
-        { label: 'Decrease indent', icon: icon(IndentOutIcon), onSelect: (e) => runCmd(e, 'liftListItem') },
+        {
+          label: 'Increase indent',
+          icon: icon(IndentInIcon),
+          onSelect: (e) => runCmd(e, 'sinkListItem'),
+        },
+        {
+          label: 'Decrease indent',
+          icon: icon(IndentOutIcon),
+          onSelect: (e) => runCmd(e, 'liftListItem'),
+        },
         { separator: true },
         {
           label: 'Case change',
@@ -368,16 +586,34 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
             { label: 'tOGGLE cASE', onSelect: (e) => runCmd(e, 'changeCase', 'toggle') },
           ],
         },
-        { label: 'Remove Format', icon: icon(ClearFormatIcon), onSelect: (e) => runCmd(e, 'clearFormatting') },
+        {
+          label: 'Remove Format',
+          icon: icon(ClearFormatIcon),
+          onSelect: (e) => runCmd(e, 'clearFormatting'),
+        },
       ],
     },
     {
       label: 'Tools',
       items: [
-        { label: 'Spellcheck', checked: actions.spellcheckOn, disabled: !actions.toggleSpellcheck, onSelect: () => actions.toggleSpellcheck?.() },
+        {
+          label: 'Spellcheck',
+          checked: actions.spellcheckOn,
+          disabled: !actions.toggleSpellcheck,
+          onSelect: () => actions.toggleSpellcheck?.(),
+        },
         { separator: true },
-        { label: 'Source code', icon: icon(CodeIcon), disabled: !actions.sourceCode, onSelect: () => actions.sourceCode?.() },
-        { label: 'Word count', disabled: !actions.wordCount, onSelect: () => actions.wordCount?.() },
+        {
+          label: 'Source code',
+          icon: icon(CodeIcon),
+          disabled: !actions.sourceCode,
+          onSelect: () => actions.sourceCode?.(),
+        },
+        {
+          label: 'Word count',
+          disabled: !actions.wordCount,
+          onSelect: () => actions.wordCount?.(),
+        },
         { separator: true },
         { label: 'Typography (smart quotes)', checked: true, disabled: true },
       ],
@@ -406,8 +642,15 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
     {
       label: 'Help',
       items: [
-        { label: 'Keyboard shortcuts', disabled: !actions.shortcuts, onSelect: () => actions.shortcuts?.() },
-        { label: 'About RichKit', onSelect: () => notify.alert({ title: 'About', message: 'RichKit v0.1.0' }) },
+        {
+          label: 'Keyboard shortcuts',
+          disabled: !actions.shortcuts,
+          onSelect: () => actions.shortcuts?.(),
+        },
+        {
+          label: 'About RichKit',
+          onSelect: () => notify.alert({ title: 'About', message: 'RichKit v0.1.0' }),
+        },
       ],
     },
   ]

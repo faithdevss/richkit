@@ -35,11 +35,10 @@ export const Link = Mark.create<LinkOptions>({
   ],
   renderHTML: (mark) => ['a', mark.attrs, 0],
   addCommands: () => ({
-    setLink:
-      (...args: unknown[]): Command => {
-        const [attrs] = args as [{ href: string; target?: string; rel?: string }]
-        return setMark('link', attrs)
-      },
+    setLink: (...args: unknown[]): Command => {
+      const [attrs] = args as [{ href: string; target?: string; rel?: string }]
+      return setMark('link', attrs)
+    },
     unsetLink: (): Command => unsetMark('link'),
   }),
   addInputRules: (ctx) => {

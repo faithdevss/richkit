@@ -47,9 +47,7 @@ function TableGrid({ maxRows, maxCols, onPick }: GridProps) {
 
   return (
     <div className="tb-table-menu">
-      <div className="tb-table-label">
-        {hover.r > 0 ? `${hover.r} × ${hover.c}` : 'Pick size'}
-      </div>
+      <div className="tb-table-label">{hover.r > 0 ? `${hover.r} × ${hover.c}` : 'Pick size'}</div>
       <div
         className="tb-table-grid"
         style={{ gridTemplateColumns: `repeat(${maxCols}, 18px)` }}

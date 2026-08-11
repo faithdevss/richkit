@@ -33,9 +33,7 @@ function typeText(text: string) {
 
 function placeCursorEnd() {
   const end = editor.state.doc.content.size - 1
-  editor.view.dispatch(
-    editor.state.tr.setSelection(TextSelection.create(editor.state.doc, end)),
-  )
+  editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, end)))
 }
 
 describe('slash commands plugin', () => {

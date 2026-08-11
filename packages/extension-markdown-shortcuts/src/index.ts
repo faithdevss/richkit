@@ -1,9 +1,5 @@
 import { Extension } from '@richkit/core'
-import {
-  InputRule,
-  textblockTypeInputRule,
-  wrappingInputRule,
-} from 'prosemirror-inputrules'
+import { InputRule, textblockTypeInputRule, wrappingInputRule } from 'prosemirror-inputrules'
 import type { MarkType, NodeType } from 'prosemirror-model'
 
 function markInputRule(regex: RegExp, markType: MarkType): InputRule {
@@ -13,7 +9,7 @@ function markInputRule(regex: RegExp, markType: MarkType): InputRule {
     if (!full || !inner) return null
     const fullStart = match[0].indexOf(full)
     const matchStart = start + fullStart
-    const innerStart = matchStart + (full.indexOf(inner))
+    const innerStart = matchStart + full.indexOf(inner)
     const innerEnd = innerStart + inner.length
     const tr = state.tr
     tr.delete(innerEnd, end)

@@ -50,8 +50,7 @@ const stubComplete: AIComplete = async function* (req, { signal }) {
   }
 }
 
-const demoComplete: AIComplete = (req, opts) =>
-  (window.__aiComplete ?? stubComplete)(req, opts)
+const demoComplete: AIComplete = (req, opts) => (window.__aiComplete ?? stubComplete)(req, opts)
 
 const INITIAL = `
 <h1>Hello rich editor</h1>
@@ -228,7 +227,20 @@ export function App() {
             outlineOpen,
           })
         : [],
-    [editor, restoreDraft, importFile, wordCount, shortcuts, spellcheck, addComment, commentsOpen, toggleTrackChanges, trackOn, suggestionsOpen, outlineOpen],
+    [
+      editor,
+      restoreDraft,
+      importFile,
+      wordCount,
+      shortcuts,
+      spellcheck,
+      addComment,
+      commentsOpen,
+      toggleTrackChanges,
+      trackOn,
+      suggestionsOpen,
+      outlineOpen,
+    ],
   )
 
   return (
@@ -239,7 +251,9 @@ export function App() {
       </header>
       {editor && <Menubar editor={editor} menus={menus} />}
       <Toolbar editor={editor} />
-      <section className={`editor-shell${(commentsOpen || suggestionsOpen || outlineOpen) ? ' has-comments' : ''}`}>
+      <section
+        className={`editor-shell${commentsOpen || suggestionsOpen || outlineOpen ? ' has-comments' : ''}`}
+      >
         <EditorContent editor={editor} className="editor" />
         <SlashMenu editor={editor} />
         <AIPrompt editor={editor} className="ai-prompt" />
@@ -342,7 +356,11 @@ export function App() {
       </section>
       {editor && (
         <>
-          <FindReplace editor={editor} open={showFindReplace} onClose={() => setShowFindReplace(false)} />
+          <FindReplace
+            editor={editor}
+            open={showFindReplace}
+            onClose={() => setShowFindReplace(false)}
+          />
           <SourceCode editor={editor} open={showSource} onClose={() => setShowSource(false)} />
         </>
       )}

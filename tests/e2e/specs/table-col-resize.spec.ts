@@ -97,7 +97,9 @@ test.describe('table column resize (horizontal)', () => {
     })
     await page.waitForTimeout(50)
     const hasCls = await page.evaluate(() => {
-      return document.querySelector('.editor .ProseMirror')?.classList.contains('resize-cursor') ?? false
+      return (
+        document.querySelector('.editor .ProseMirror')?.classList.contains('resize-cursor') ?? false
+      )
     })
     expect(hasCls).toBe(true)
   })

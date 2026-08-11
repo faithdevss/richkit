@@ -16,7 +16,12 @@ function taskListRule(state: StateCore): void {
     if (!open || open.type !== 'list_item_open') continue
     // find first inline token inside this list item
     let j = i + 1
-    while (j < tokens.length && tokens[j]?.type !== 'inline' && tokens[j]?.type !== 'list_item_close') j++
+    while (
+      j < tokens.length &&
+      tokens[j]?.type !== 'inline' &&
+      tokens[j]?.type !== 'list_item_close'
+    )
+      j++
     const inline = tokens[j]
     if (!inline || inline.type !== 'inline') continue
     const m = TASK_RE.exec(inline.content)

@@ -27,12 +27,11 @@ export const Highlight = Mark.create({
     return ['mark', attrs, 0]
   },
   addCommands: () => ({
-    setHighlight:
-      (...args: unknown[]): Command => {
-        const [color] = args as [string | null]
-        if (!color) return unsetMark('highlight')
-        return setMark('highlight', { color })
-      },
+    setHighlight: (...args: unknown[]): Command => {
+      const [color] = args as [string | null]
+      if (!color) return unsetMark('highlight')
+      return setMark('highlight', { color })
+    },
     unsetHighlight: (): Command => unsetMark('highlight'),
   }),
   addKeyboardShortcuts: () => ({

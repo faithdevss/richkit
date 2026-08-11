@@ -5,23 +5,19 @@ import { COMPARISON_CHECKED, COMPARISON_SOURCES } from '../../data/comparison'
 const TIPTAP_POINTS: { title: string; body: string }[] = [
   {
     title: 'The editor is open source. The document features are the product.',
-    body:
-      'Tiptap ships an MIT core and, since June 2025, eight more formerly-Pro extensions under MIT too — that part is genuinely open. What sits behind a plan is the layer most document apps actually need: DOCX conversion, comments, document history, AI, and managed collaboration.',
+    body: 'Tiptap ships an MIT core and, since June 2025, eight more formerly-Pro extensions under MIT too — that part is genuinely open. What sits behind a plan is the layer most document apps actually need: DOCX conversion, comments, document history, AI, and managed collaboration.',
   },
   {
     title: 'RichKit puts those same features in npm, under MIT.',
-    body:
-      'Track changes, comments, and DOCX import/export are ordinary packages in this repo. Read the source, fork them, ship them in a closed-source product. No plan, no seat count, no conversion endpoint.',
+    body: 'Track changes, comments, and DOCX import/export are ordinary packages in this repo. Read the source, fork them, ship them in a closed-source product. No plan, no seat count, no conversion endpoint.',
   },
   {
     title: 'Nothing calls home.',
-    body:
-      'DOCX conversion runs in the browser. There is no API key to provision and no document that has to live in someone else’s cloud for a feature to switch on.',
+    body: 'DOCX conversion runs in the browser. There is no API key to provision and no document that has to live in someone else’s cloud for a feature to switch on.',
   },
   {
     title: 'Where Tiptap is still ahead — plainly.',
-    body:
-      'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. If you want someone to page at 3am, pay them.',
+    body: 'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. If you want someone to page at 3am, pay them.',
   },
 ]
 
@@ -30,18 +26,17 @@ export function Comparison() {
     <div className="docs-prose cmp-page">
       <h1>How RichKit compares</h1>
       <p>
-        Every rich text editor calls itself open source. The question worth asking is
-        narrower: <em>which parts</em> are open, and what does the rest cost once you
-        need it? This page answers that for RichKit and the editors teams usually
-        weigh it against.
+        Every rich text editor calls itself open source. The question worth asking is narrower:{' '}
+        <em>which parts</em> are open, and what does the rest cost once you need it? This page
+        answers that for RichKit and the editors teams usually weigh it against.
       </p>
 
       <div className="cmp-claim">
         <span className="cmp-claim-head">The short version</span>
         <p>
-          RichKit is MIT end to end. Track changes, comments, and DOCX round-tripping
-          are the features other editors put on a paid plan — here they are packages
-          you install, read, and fork.
+          RichKit is MIT end to end. Track changes, comments, and DOCX round-tripping are the
+          features other editors put on a paid plan — here they are packages you install, read, and
+          fork.
         </p>
       </div>
 
@@ -57,9 +52,9 @@ export function Comparison() {
 
       <h2>On Tiptap specifically</h2>
       <p>
-        Tiptap is the closest comparison, and the fairest one — RichKit and Tiptap are
-        both headless, extension-driven, ProseMirror-shaped toolkits. The difference
-        is where the line between free and paid falls.
+        Tiptap is the closest comparison, and the fairest one — RichKit and Tiptap are both
+        headless, extension-driven, ProseMirror-shaped toolkits. The difference is where the line
+        between free and paid falls.
       </p>
 
       {TIPTAP_POINTS.map((p) => (
@@ -85,16 +80,14 @@ export function Comparison() {
       </ul>
 
       <p>
-        If the first list is yours, start at{' '}
-        <Link to="/docs/installation">Installation</Link> or browse the{' '}
-        <Link to="/docs/extensions">extensions reference</Link>.
+        If the first list is yours, start at <Link to="/docs/installation">Installation</Link> or
+        browse the <Link to="/docs/extensions">extensions reference</Link>.
       </p>
 
       <h2>Sources</h2>
       <p className="cmp-sources-note">
-        Competitor claims come from vendor documentation, last checked{' '}
-        {COMPARISON_CHECKED}. Pricing and licensing change — if something here is out
-        of date, please open an issue.
+        Competitor claims come from vendor documentation, last checked {COMPARISON_CHECKED}. Pricing
+        and licensing change — if something here is out of date, please open an issue.
       </p>
       <ul>
         {COMPARISON_SOURCES.map((s) => (

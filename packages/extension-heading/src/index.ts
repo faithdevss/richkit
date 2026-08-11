@@ -35,11 +35,10 @@ export const Heading = Node.create<HeadingOptions>({
     return [`h${node.attrs.level}`, attrs, 0]
   },
   addCommands: () => ({
-    setHeading:
-      (...args: unknown[]): Command => {
-        const [opts] = args as [{ level: number }]
-        return setBlockType('heading', { level: opts.level })
-      },
+    setHeading: (...args: unknown[]): Command => {
+      const [opts] = args as [{ level: number }]
+      return setBlockType('heading', { level: opts.level })
+    },
   }),
   addKeyboardShortcuts: (ctx) => {
     const out: Record<string, Command> = {}

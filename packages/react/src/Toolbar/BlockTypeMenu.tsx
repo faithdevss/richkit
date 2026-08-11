@@ -6,12 +6,47 @@ export interface BlockTypeMenuProps {
   editor: Editor
 }
 
-const ITEMS: { label: string; cmd: string; args?: unknown[]; active: string; attrs?: Record<string, unknown>; preview: string }[] = [
+const ITEMS: {
+  label: string
+  cmd: string
+  args?: unknown[]
+  active: string
+  attrs?: Record<string, unknown>
+  preview: string
+}[] = [
   { label: 'Paragraph', cmd: 'setParagraph', active: 'paragraph', preview: 'Normal text' },
-  { label: 'Heading 1', cmd: 'setHeading', args: [{ level: 1 }], active: 'heading', attrs: { level: 1 }, preview: 'H1' },
-  { label: 'Heading 2', cmd: 'setHeading', args: [{ level: 2 }], active: 'heading', attrs: { level: 2 }, preview: 'H2' },
-  { label: 'Heading 3', cmd: 'setHeading', args: [{ level: 3 }], active: 'heading', attrs: { level: 3 }, preview: 'H3' },
-  { label: 'Heading 4', cmd: 'setHeading', args: [{ level: 4 }], active: 'heading', attrs: { level: 4 }, preview: 'H4' },
+  {
+    label: 'Heading 1',
+    cmd: 'setHeading',
+    args: [{ level: 1 }],
+    active: 'heading',
+    attrs: { level: 1 },
+    preview: 'H1',
+  },
+  {
+    label: 'Heading 2',
+    cmd: 'setHeading',
+    args: [{ level: 2 }],
+    active: 'heading',
+    attrs: { level: 2 },
+    preview: 'H2',
+  },
+  {
+    label: 'Heading 3',
+    cmd: 'setHeading',
+    args: [{ level: 3 }],
+    active: 'heading',
+    attrs: { level: 3 },
+    preview: 'H3',
+  },
+  {
+    label: 'Heading 4',
+    cmd: 'setHeading',
+    args: [{ level: 4 }],
+    active: 'heading',
+    attrs: { level: 4 },
+    preview: 'H4',
+  },
 ]
 
 function currentLabel(editor: Editor): string {
@@ -44,7 +79,11 @@ export function BlockTypeMenu({ editor }: BlockTypeMenuProps) {
                 className={`tb-menu-item ${active ? 'is-active' : ''}`}
                 onMouseDown={(e) => {
                   e.preventDefault()
-                  editor.chain().call(item.cmd, ...(item.args ?? [])).focus().run()
+                  editor
+                    .chain()
+                    .call(item.cmd, ...(item.args ?? []))
+                    .focus()
+                    .run()
                   close()
                 }}
               >

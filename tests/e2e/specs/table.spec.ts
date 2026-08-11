@@ -12,10 +12,7 @@ async function focusEditor(page: Page) {
 }
 
 async function openTableMenu(page: Page) {
-  await page
-    .locator('.toolbar .tb-btn[title="Insert table"]')
-    .first()
-    .click()
+  await page.locator('.toolbar .tb-btn[title="Insert table"]').first().click()
 }
 
 async function insertViaGrid(page: Page, rows: number, cols: number) {
@@ -54,13 +51,7 @@ async function waitForCorner(page: Page) {
   })
 }
 
-async function dragElement(
-  page: Page,
-  selector: string,
-  dx: number,
-  dy: number,
-  steps = 12,
-) {
+async function dragElement(page: Page, selector: string, dx: number, dy: number, steps = 12) {
   await page.evaluate(
     ({ selector, dx, dy, steps }) => {
       const target = document.querySelector(selector) as HTMLElement | null

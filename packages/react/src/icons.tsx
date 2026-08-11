@@ -114,9 +114,15 @@ export function OrderedListIcon(props: SVGProps<SVGSVGElement>) {
       <line x1="10" y1="6" x2="20" y2="6" />
       <line x1="10" y1="12" x2="20" y2="12" />
       <line x1="10" y1="18" x2="20" y2="18" />
-      <text x="3" y="8" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">1.</text>
-      <text x="3" y="14" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">2.</text>
-      <text x="3" y="20" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">3.</text>
+      <text x="3" y="8" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">
+        1.
+      </text>
+      <text x="3" y="14" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">
+        2.
+      </text>
+      <text x="3" y="20" fontSize="7" stroke="none" fill="currentColor" fontWeight="700">
+        3.
+      </text>
     </svg>
   )
 }

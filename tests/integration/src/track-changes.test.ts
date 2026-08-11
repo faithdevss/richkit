@@ -120,7 +120,11 @@ describe('track changes', () => {
 
   it('acceptSuggestion on deletion removes text', () => {
     const delType = editor.schema.marks['deletion']!
-    const tr = editor.view.state.tr.addMark(7, 12, delType.create({ id: 'd1', author: 'A', createdAt: 0 }))
+    const tr = editor.view.state.tr.addMark(
+      7,
+      12,
+      delType.create({ id: 'd1', author: 'A', createdAt: 0 }),
+    )
     editor.view.dispatch(tr)
     expect(editor.getText()).toContain('world')
     editor.chain().call('acceptSuggestion', 'd1').run()
@@ -129,7 +133,11 @@ describe('track changes', () => {
 
   it('rejectSuggestion on deletion keeps text and removes mark', () => {
     const delType = editor.schema.marks['deletion']!
-    const tr = editor.view.state.tr.addMark(7, 12, delType.create({ id: 'd1', author: 'A', createdAt: 0 }))
+    const tr = editor.view.state.tr.addMark(
+      7,
+      12,
+      delType.create({ id: 'd1', author: 'A', createdAt: 0 }),
+    )
     editor.view.dispatch(tr)
     editor.chain().call('rejectSuggestion', 'd1').run()
     expect(editor.getText()).toContain('world')

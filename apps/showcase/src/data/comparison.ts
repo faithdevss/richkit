@@ -17,13 +17,7 @@ export type ComparisonRow = {
  * Competitor claims are sourced from the vendors' own pricing/licensing
  * pages — see COMPARISON_SOURCES. Keep them checkable, not editorial.
  */
-export const COMPARISON_COLUMNS = [
-  'RichKit',
-  'Tiptap',
-  'Lexical',
-  'CKEditor 5',
-  'TinyMCE',
-] as const
+export const COMPARISON_COLUMNS = ['RichKit', 'Tiptap', 'Lexical', 'CKEditor 5', 'TinyMCE'] as const
 
 export const COMPARISON_ROWS: ComparisonRow[] = [
   {
@@ -33,7 +27,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       { state: 'open', label: 'MIT' },
       { state: 'open', label: 'MIT' },
       { state: 'open', label: 'MIT' },
-      { state: 'partial', label: 'GPL-2.0+ / commercial', note: 'Closed-source products need the commercial license.' },
+      {
+        state: 'partial',
+        label: 'GPL-2.0+ / commercial',
+        note: 'Closed-source products need the commercial license.',
+      },
       { state: 'partial', label: 'GPL-2.0+ / commercial', note: 'v7 moved from MIT to GPL-2.0+.' },
     ],
   },
@@ -64,7 +62,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     detail: 'Inline threads anchored to a range of text.',
     cells: [
       { state: 'open', label: 'MIT', note: '@richkit/extension-comments' },
-      { state: 'paid', label: 'Paid', note: 'Part of the Documents bundle; needs cloud-stored docs.' },
+      {
+        state: 'paid',
+        label: 'Paid',
+        note: 'Part of the Documents bundle; needs cloud-stored docs.',
+      },
       { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature' },
       { state: 'paid', label: 'Premium add-on' },
@@ -89,8 +91,16 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Real-time collaboration',
     detail: 'Multiple cursors on one document.',
     cells: [
-      { state: 'none', label: 'On the roadmap', note: 'Not shipped yet. The core is transaction-based and ready for it.' },
-      { state: 'partial', label: 'Free self-host / paid cloud', note: 'Hocuspocus is MIT; the managed backend is on a paid plan.' },
+      {
+        state: 'none',
+        label: 'On the roadmap',
+        note: 'Not shipped yet. The core is transaction-based and ready for it.',
+      },
+      {
+        state: 'partial',
+        label: 'Free self-host / paid cloud',
+        note: 'Hocuspocus is MIT; the managed backend is on a paid plan.',
+      },
       { state: 'partial', label: 'Bring your own Yjs' },
       { state: 'paid', label: 'Premium feature' },
       { state: 'paid', label: 'Premium add-on' },
@@ -101,7 +111,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     detail: 'Type / to insert blocks.',
     cells: [
       { state: 'open', label: 'MIT', note: '@richkit/extension-slash-commands, menu included.' },
-      { state: 'partial', label: 'Build it yourself', note: 'MIT Suggestion utility, no ready-made menu.' },
+      {
+        state: 'partial',
+        label: 'Build it yourself',
+        note: 'MIT Suggestion utility, no ready-made menu.',
+      },
       { state: 'partial', label: 'Build it yourself' },
       { state: 'open', label: 'Included' },
       { state: 'open', label: 'Included' },
@@ -152,8 +166,14 @@ export const COMPARISON_SOURCES: { label: string; href: string }[] = [
     label: 'Tiptap: open-sourcing more of Tiptap',
     href: 'https://tiptap.dev/blog/release-notes/were-open-sourcing-more-of-tiptap',
   },
-  { label: 'CKEditor licensing options', href: 'https://ckeditor.com/legal/ckeditor-licensing-options/' },
-  { label: 'TinyMCE licensing', href: 'https://www.tiny.cloud/blog/opensource-rich-text-editor-licences/' },
+  {
+    label: 'CKEditor licensing options',
+    href: 'https://ckeditor.com/legal/ckeditor-licensing-options/',
+  },
+  {
+    label: 'TinyMCE licensing',
+    href: 'https://www.tiny.cloud/blog/opensource-rich-text-editor-licences/',
+  },
   { label: 'Lexical', href: 'https://lexical.dev' },
 ]
 

@@ -110,11 +110,7 @@ function convertBlock(
   }
 }
 
-function convertList(
-  node: JSONNode,
-  kind: 'bullet' | 'number' | 'task',
-  level = 0,
-): Paragraph[] {
+function convertList(node: JSONNode, kind: 'bullet' | 'number' | 'task', level = 0): Paragraph[] {
   const out: Paragraph[] = []
   for (const item of node.content ?? []) {
     if (item.type !== 'listItem' && item.type !== 'taskItem') continue

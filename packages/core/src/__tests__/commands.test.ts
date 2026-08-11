@@ -26,11 +26,10 @@ const Heading = Node.create({
   ],
   renderHTML: (node) => [`h${node.attrs.level}`, 0],
   addCommands: () => ({
-    setHeading:
-      (...args: unknown[]) => {
-        const [opts] = args as [{ level: number }]
-        return setBlockTypeCmd('heading', { level: opts.level })
-      },
+    setHeading: (...args: unknown[]) => {
+      const [opts] = args as [{ level: number }]
+      return setBlockTypeCmd('heading', { level: opts.level })
+    },
   }),
 })
 

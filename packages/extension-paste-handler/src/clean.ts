@@ -91,7 +91,10 @@ export function cleanPastedHTML(html: string, opts: CleanOptions): string {
 
   let input = html
   if (word) {
-    input = input.replace(WORD_COMMENT_RE, '').replace(XML_BLOCK_RE, '').replace(HTML_COMMENT_RE, '')
+    input = input
+      .replace(WORD_COMMENT_RE, '')
+      .replace(XML_BLOCK_RE, '')
+      .replace(HTML_COMMENT_RE, '')
   }
 
   const doc = new DOMParser().parseFromString(input, 'text/html')

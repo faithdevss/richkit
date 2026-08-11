@@ -48,16 +48,15 @@ export const Image = Node.create<ImageOptions>({
     image: (node, view, getPos) => new ImageNodeView(node, view, getPos),
   }),
   addCommands: () => ({
-    insertImage:
-      (...args: unknown[]): Command => {
-        const [attrs] = args as [ImageAttrs]
-        return ({ state, dispatch }) => {
-          const type = state.schema.nodes['image']
-          if (!type) return false
-          const node = type.create(attrs)
-          if (dispatch) dispatch(state.tr.replaceSelectionWith(node).scrollIntoView())
-          return true
-        }
-      },
+    insertImage: (...args: unknown[]): Command => {
+      const [attrs] = args as [ImageAttrs]
+      return ({ state, dispatch }) => {
+        const type = state.schema.nodes['image']
+        if (!type) return false
+        const node = type.create(attrs)
+        if (dispatch) dispatch(state.tr.replaceSelectionWith(node).scrollIntoView())
+        return true
+      }
+    },
   }),
 })

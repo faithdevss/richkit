@@ -1,8 +1,9 @@
 import type { NodeSpec } from 'prosemirror-model'
 import { Extension, type ExtensionConfig, type ExtensionContext } from './extension'
 
-export interface NodeConfig<O extends Record<string, unknown> = Record<string, unknown>>
-  extends ExtensionConfig<O> {
+export interface NodeConfig<
+  O extends Record<string, unknown> = Record<string, unknown>,
+> extends ExtensionConfig<O> {
   group?: string
   content?: string
   marks?: string
@@ -20,7 +21,9 @@ export interface NodeConfig<O extends Record<string, unknown> = Record<string, u
   renderHTML?: NodeSpec['toDOM']
 }
 
-export class Node<O extends Record<string, unknown> = Record<string, unknown>> extends Extension<O> {
+export class Node<
+  O extends Record<string, unknown> = Record<string, unknown>,
+> extends Extension<O> {
   override readonly type = 'node' as const
   declare readonly config: NodeConfig<O>
 

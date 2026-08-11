@@ -1,9 +1,7 @@
 import { Node, type Command } from '@richkit/core'
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
 
-function liCommand(
-  factory: typeof splitListItem,
-): Command {
+function liCommand(factory: typeof splitListItem): Command {
   return ({ state, dispatch, view }) => {
     const type = state.schema.nodes['listItem']
     if (!type) return false

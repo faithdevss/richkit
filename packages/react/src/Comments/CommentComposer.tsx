@@ -126,12 +126,7 @@ export function CommentComposer({
         <button type="button" className="tb-btn-ghost" onClick={onClose}>
           Cancel
         </button>
-        <button
-          type="button"
-          className="tb-btn-primary"
-          onClick={submit}
-          disabled={!body.trim()}
-        >
+        <button type="button" className="tb-btn-primary" onClick={submit} disabled={!body.trim()}>
           Comment
         </button>
       </div>

@@ -36,7 +36,11 @@ function cmdItem(
     keywords,
     run: (editor, range) => {
       deleteRange(editor, range)
-      editor.chain().call(command, ...args).focus().run()
+      editor
+        .chain()
+        .call(command, ...args)
+        .focus()
+        .run()
     },
   }
 }

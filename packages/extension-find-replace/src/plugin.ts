@@ -117,7 +117,10 @@ export function findReplacePlugin(): Plugin<FindReplaceState> {
             decorations: DecorationSet.empty,
           }
         }
-        if (meta && (meta.query !== undefined || meta.regex !== undefined || meta.caseSensitive !== undefined)) {
+        if (
+          meta &&
+          (meta.query !== undefined || meta.regex !== undefined || meta.caseSensitive !== undefined)
+        ) {
           const query = meta.query ?? prev.query
           const regex = meta.regex ?? prev.regex
           const caseSensitive = meta.caseSensitive ?? prev.caseSensitive
@@ -223,4 +226,3 @@ export function replaceAll(view: EditorView, replacement: string): number {
 export function getFindState(state: EditorState): FindReplaceState | undefined {
   return findReplaceKey.getState(state)
 }
-

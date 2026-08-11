@@ -64,26 +64,77 @@ export function DocxEditor() {
             <FontSizeMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
-            <ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} title="Bold" />
-            <ToolbarButton editor={editor} command="toggleItalic" isActiveName="italic" label={<Icons.ItalicIcon />} title="Italic" />
-            <ToolbarButton editor={editor} command="toggleStrike" isActiveName="strike" label={<Icons.StrikeIcon />} title="Strikethrough" />
-            <ToolbarButton editor={editor} command="toggleCode" isActiveName="code" label={<Icons.CodeIcon />} title="Inline code" />
+            <ToolbarButton
+              editor={editor}
+              command="toggleBold"
+              isActiveName="bold"
+              label={<Icons.BoldIcon />}
+              title="Bold"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleItalic"
+              isActiveName="italic"
+              label={<Icons.ItalicIcon />}
+              title="Italic"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleStrike"
+              isActiveName="strike"
+              label={<Icons.StrikeIcon />}
+              title="Strikethrough"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleCode"
+              isActiveName="code"
+              label={<Icons.CodeIcon />}
+              title="Inline code"
+            />
           </ToolbarGroup>
           <ToolbarGroup>
             <LinkMenu editor={editor} />
             <ImageMenu editor={editor} />
-            <ToolbarButton editor={editor} command="toggleBulletList" isActiveName="bulletList" label={<Icons.BulletListIcon />} title="Bullet list" />
-            <ToolbarButton editor={editor} command="toggleOrderedList" isActiveName="orderedList" label={<Icons.OrderedListIcon />} title="Numbered list" />
+            <ToolbarButton
+              editor={editor}
+              command="toggleBulletList"
+              isActiveName="bulletList"
+              label={<Icons.BulletListIcon />}
+              title="Bullet list"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleOrderedList"
+              isActiveName="orderedList"
+              label={<Icons.OrderedListIcon />}
+              title="Numbered list"
+            />
           </ToolbarGroup>
           <ToolbarGroup>
             <AlignMenu editor={editor} />
             <TableMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
-            <button type="button" className="tb-btn" title="Import .docx" onMouseDown={(e) => { e.preventDefault(); onImport() }}>
+            <button
+              type="button"
+              className="tb-btn"
+              title="Import .docx"
+              onMouseDown={(e) => {
+                e.preventDefault()
+                onImport()
+              }}
+            >
               <Icons.UndoIcon />
             </button>
-            <button type="button" className="demo-export-btn" onMouseDown={(e) => { e.preventDefault(); onExport() }}>
+            <button
+              type="button"
+              className="demo-export-btn"
+              onMouseDown={(e) => {
+                e.preventDefault()
+                onExport()
+              }}
+            >
               Export .docx
             </button>
           </ToolbarGroup>
@@ -93,15 +144,35 @@ export function DocxEditor() {
         <div className="demo-page demo-page-docx">
           <div className="docx-page-header">
             <span className="docx-page-title">Non-disclosure agreement</span>
-            <span className="docx-brand">▤ RichKit <em>DOCX EDITOR</em></span>
+            <span className="docx-brand">
+              ▤ RichKit <em>DOCX EDITOR</em>
+            </span>
           </div>
           <EditorContent editor={editor} className="editor" />
           <BubbleMenu editor={editor} className="bubble-menu">
             {editor && (
               <>
-                <ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} title="Bold" />
-                <ToolbarButton editor={editor} command="toggleItalic" isActiveName="italic" label={<Icons.ItalicIcon />} title="Italic" />
-                <ToolbarButton editor={editor} command="toggleUnderline" isActiveName="underline" label={<Icons.UnderlineIcon />} title="Underline" />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleBold"
+                  isActiveName="bold"
+                  label={<Icons.BoldIcon />}
+                  title="Bold"
+                />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleItalic"
+                  isActiveName="italic"
+                  label={<Icons.ItalicIcon />}
+                  title="Italic"
+                />
+                <ToolbarButton
+                  editor={editor}
+                  command="toggleUnderline"
+                  isActiveName="underline"
+                  label={<Icons.UnderlineIcon />}
+                  title="Underline"
+                />
               </>
             )}
           </BubbleMenu>

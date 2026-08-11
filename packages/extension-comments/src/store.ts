@@ -48,7 +48,8 @@ export function commentsPlugin(): Plugin<CommentsState> {
         }
         if (meta.addReply) {
           const t = next.threads[meta.addReply.id]
-          if (t) next.threads[meta.addReply.id] = { ...t, replies: [...t.replies, meta.addReply.reply] }
+          if (t)
+            next.threads[meta.addReply.id] = { ...t, replies: [...t.replies, meta.addReply.reply] }
         }
         if (meta.resolve) {
           const t = next.threads[meta.resolve]

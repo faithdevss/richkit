@@ -77,8 +77,7 @@ export function codeBlockHighlightPlugin(nodeTypeName = 'codeBlock'): Plugin {
       apply(tr, oldDeco, oldState, newState) {
         const oldType = oldState.selection.$head.parent.type
         const newType = newState.selection.$head.parent.type
-        const inCodeBlockChange =
-          oldType.name === nodeTypeName || newType.name === nodeTypeName
+        const inCodeBlockChange = oldType.name === nodeTypeName || newType.name === nodeTypeName
         if (!tr.docChanged && !inCodeBlockChange) {
           return oldDeco.map(tr.mapping, tr.doc)
         }

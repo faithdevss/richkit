@@ -11,10 +11,7 @@ function transform(text: string, mode: CaseMode): string {
     case 'title':
       return text.replace(/\b\w/g, (c) => c.toUpperCase())
     case 'sentence':
-      return text.replace(
-        /(^\s*|[.!?]\s+)([a-z])/g,
-        (_m, p, c) => p + (c as string).toUpperCase(),
-      )
+      return text.replace(/(^\s*|[.!?]\s+)([a-z])/g, (_m, p, c) => p + (c as string).toUpperCase())
     case 'toggle':
       return text
         .split('')
@@ -49,10 +46,9 @@ function changeCaseCmd(mode: CaseMode): Command {
 export const CaseChange = Extension.create({
   name: 'caseChange',
   addCommands: () => ({
-    changeCase:
-      (...args: unknown[]): Command => {
-        const [mode] = args as [CaseMode]
-        return changeCaseCmd(mode)
-      },
+    changeCase: (...args: unknown[]): Command => {
+      const [mode] = args as [CaseMode]
+      return changeCaseCmd(mode)
+    },
   }),
 })

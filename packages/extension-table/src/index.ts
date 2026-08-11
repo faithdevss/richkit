@@ -47,63 +47,94 @@ export const Table = Node.create({
   isolating: true,
   addNodeSpec: () => specs.table,
   addCommands: () => ({
-    insertTable:
-      (...args: unknown[]): Command => {
-        const [opts] = args as [
-          { rows?: number; cols?: number; withHeaderRow?: boolean; colWidth?: number }?,
-        ]
-        const rows = Math.max(1, opts?.rows ?? 3)
-        const cols = Math.max(1, opts?.cols ?? 3)
-        const withHeader = opts?.withHeaderRow ?? true
-        const colWidth = opts?.colWidth ?? 120
-        return ({ state, dispatch }) => {
-          const tableType = state.schema.nodes['table']
-          const rowType = state.schema.nodes['table_row']
-          const cellType = state.schema.nodes['table_cell']
-          const headerType = state.schema.nodes['table_header']
-          if (!tableType || !rowType || !cellType || !headerType) return false
-          const buildCell = (header: boolean) =>
-            (header ? headerType : cellType).createAndFill({ colwidth: [colWidth] })!
-          const buildRow = (isHeader: boolean) =>
-            rowType.create(
-              null,
-              Array.from({ length: cols }, () => buildCell(isHeader)),
-            )
-          const tableRows = []
-          for (let r = 0; r < rows; r++) tableRows.push(buildRow(r === 0 && withHeader))
-          const tableNode = tableType.create(null, tableRows)
+    insertTable: (...args: unknown[]): Command => {
+      const [opts] = args as [
+        { rows?: number; cols?: number; withHeaderRow?: boolean; colWidth?: number }?,
+      ]
+      const rows = Math.max(1, opts?.rows ?? 3)
+      const cols = Math.max(1, opts?.cols ?? 3)
+      const withHeader = opts?.withHeaderRow ?? true
+      const colWidth = opts?.colWidth ?? 120
+      return ({ state, dispatch }) => {
+        const tableType = state.schema.nodes['table']
+        const rowType = state.schema.nodes['table_row']
+        const cellType = state.schema.nodes['table_cell']
+        const headerType = state.schema.nodes['table_header']
+        if (!tableType || !rowType || !cellType || !headerType) return false
+        const buildCell = (header: boolean) =>
+          (header ? headerType : cellType).createAndFill({ colwidth: [colWidth] })!
+        const buildRow = (isHeader: boolean) =>
+          rowType.create(
+            null,
+            Array.from({ length: cols }, () => buildCell(isHeader)),
+          )
+        const tableRows = []
+        for (let r = 0; r < rows; r++) tableRows.push(buildRow(r === 0 && withHeader))
+        const tableNode = tableType.create(null, tableRows)
 
-          let tr = state.tr
-          const { $from, empty } = state.selection
-          if (empty && $from.parent.isTextblock && $from.parent.content.size === 0) {
-            const insertPos = $from.before($from.depth)
-            tr = tr.replaceWith(insertPos, insertPos + $from.parent.nodeSize, tableNode)
-          } else if (empty && $from.parent.isTextblock) {
-            const insertPos = $from.after($from.depth)
-            tr = tr.insert(insertPos, tableNode)
-          } else {
-            tr = tr.replaceSelectionWith(tableNode)
-          }
-          if (dispatch) dispatch(tr.scrollIntoView())
-          return true
+        let tr = state.tr
+        const { $from, empty } = state.selection
+        if (empty && $from.parent.isTextblock && $from.parent.content.size === 0) {
+          const insertPos = $from.before($from.depth)
+          tr = tr.replaceWith(insertPos, insertPos + $from.parent.nodeSize, tableNode)
+        } else if (empty && $from.parent.isTextblock) {
+          const insertPos = $from.after($from.depth)
+          tr = tr.insert(insertPos, tableNode)
+        } else {
+          tr = tr.replaceSelectionWith(tableNode)
         }
-      },
-    addColumnBefore: () =>
-      ({ state, dispatch }) => addColumnBefore(state, dispatch ?? undefined),
-    addColumnAfter: () =>
-      ({ state, dispatch }) => addColumnAfter(state, dispatch ?? undefined),
-    addRowBefore: () => ({ state, dispatch }) => addRowBefore(state, dispatch ?? undefined),
-    addRowAfter: () => ({ state, dispatch }) => addRowAfter(state, dispatch ?? undefined),
-    deleteColumn: () => ({ state, dispatch }) => deleteColumn(state, dispatch ?? undefined),
-    deleteRow: () => ({ state, dispatch }) => deleteRow(state, dispatch ?? undefined),
-    deleteTable: () => ({ state, dispatch }) => deleteTable(state, dispatch ?? undefined),
-    mergeCells: () => ({ state, dispatch }) => mergeCells(state, dispatch ?? undefined),
-    splitCell: () => ({ state, dispatch }) => splitCell(state, dispatch ?? undefined),
-    toggleHeaderRow: () => ({ state, dispatch }) => toggleHeaderRow(state, dispatch ?? undefined),
+        if (dispatch) dispatch(tr.scrollIntoView())
+        return true
+      }
+    },
+    addColumnBefore:
+      () =>
+      ({ state, dispatch }) =>
+        addColumnBefore(state, dispatch ?? undefined),
+    addColumnAfter:
+      () =>
+      ({ state, dispatch }) =>
+        addColumnAfter(state, dispatch ?? undefined),
+    addRowBefore:
+      () =>
+      ({ state, dispatch }) =>
+        addRowBefore(state, dispatch ?? undefined),
+    addRowAfter:
+      () =>
+      ({ state, dispatch }) =>
+        addRowAfter(state, dispatch ?? undefined),
+    deleteColumn:
+      () =>
+      ({ state, dispatch }) =>
+        deleteColumn(state, dispatch ?? undefined),
+    deleteRow:
+      () =>
+      ({ state, dispatch }) =>
+        deleteRow(state, dispatch ?? undefined),
+    deleteTable:
+      () =>
+      ({ state, dispatch }) =>
+        deleteTable(state, dispatch ?? undefined),
+    mergeCells:
+      () =>
+      ({ state, dispatch }) =>
+        mergeCells(state, dispatch ?? undefined),
+    splitCell:
+      () =>
+      ({ state, dispatch }) =>
+        splitCell(state, dispatch ?? undefined),
+    toggleHeaderRow:
+      () =>
+      ({ state, dispatch }) =>
+        toggleHeaderRow(state, dispatch ?? undefined),
     toggleHeaderColumn:
-      () => ({ state, dispatch }) => toggleHeaderColumn(state, dispatch ?? undefined),
+      () =>
+      ({ state, dispatch }) =>
+        toggleHeaderColumn(state, dispatch ?? undefined),
     toggleHeaderCell:
-      () => ({ state, dispatch }) => toggleHeaderCell(state, dispatch ?? undefined),
+      () =>
+      ({ state, dispatch }) =>
+        toggleHeaderCell(state, dispatch ?? undefined),
     selectTable:
       (): Command =>
       ({ state, dispatch }) => {
@@ -143,7 +174,12 @@ export const TableHeader = Node.create({
 
 export const TablePlugins = Extension.create({
   name: 'tablePlugins',
-  addProseMirrorPlugins: () => [columnResizing(), tableEditing(), tableResize(), tableContextMenu()],
+  addProseMirrorPlugins: () => [
+    columnResizing(),
+    tableEditing(),
+    tableResize(),
+    tableContextMenu(),
+  ],
 })
 
 export const TableKit = [Table, TableRow, TableCell, TableHeader, TablePlugins]

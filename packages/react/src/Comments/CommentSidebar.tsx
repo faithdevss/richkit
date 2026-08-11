@@ -1,9 +1,5 @@
 import type { Editor } from '@richkit/core'
-import {
-  findCommentRange,
-  getCommentsState,
-  type Thread,
-} from '@richkit/extension-comments'
+import { findCommentRange, getCommentsState, type Thread } from '@richkit/extension-comments'
 import { TextSelection } from 'prosemirror-state'
 import { useEffect, useMemo, useState } from 'react'
 import { notify } from '../Notifications/notify'
@@ -17,7 +13,12 @@ export interface CommentSidebarProps {
 
 function formatTime(ts: number): string {
   const d = new Date(ts)
-  return d.toLocaleString(undefined, { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' })
+  return d.toLocaleString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    month: 'short',
+    day: 'numeric',
+  })
 }
 
 function getThreadSnippet(editor: Editor, id: string): string {
@@ -36,7 +37,12 @@ function focusThread(editor: Editor, id: string) {
   editor.view.focus()
 }
 
-export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onClose }: CommentSidebarProps) {
+export function CommentSidebar({
+  editor,
+  currentUser = 'You',
+  onAddRequest,
+  onClose,
+}: CommentSidebarProps) {
   const [tick, setTick] = useState(0)
   const [filter, setFilter] = useState<'open' | 'resolved' | 'all'>('open')
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({})
@@ -101,13 +107,25 @@ export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onCl
           )}
         </div>
         <div className="re-comments-filter">
-          <button type="button" className={filter === 'open' ? 'is-active' : ''} onClick={() => setFilter('open')}>
+          <button
+            type="button"
+            className={filter === 'open' ? 'is-active' : ''}
+            onClick={() => setFilter('open')}
+          >
             Open
           </button>
-          <button type="button" className={filter === 'resolved' ? 'is-active' : ''} onClick={() => setFilter('resolved')}>
+          <button
+            type="button"
+            className={filter === 'resolved' ? 'is-active' : ''}
+            onClick={() => setFilter('resolved')}
+          >
             Resolved
           </button>
-          <button type="button" className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>
+          <button
+            type="button"
+            className={filter === 'all' ? 'is-active' : ''}
+            onClick={() => setFilter('all')}
+          >
             All
           </button>
         </div>
@@ -116,14 +134,18 @@ export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onCl
         </button>
       </header>
       <div className="re-comments-list">
-        {threads.length === 0 && <p className="re-comments-empty">No {filter === 'all' ? '' : filter} comments.</p>}
+        {threads.length === 0 && (
+          <p className="re-comments-empty">No {filter === 'all' ? '' : filter} comments.</p>
+        )}
         {threads.map((t) => {
           const snippet = getThreadSnippet(editor, t.id)
           const draft = replyDrafts[t.id] ?? ''
           return (
             <article key={t.id} className={`re-comment-thread${t.resolved ? ' is-resolved' : ''}`}>
               <div className="re-comment-anchor" onClick={() => focusThread(editor, t.id)}>
-                {snippet ? `“${snippet.slice(0, 80)}${snippet.length > 80 ? '…' : ''}”` : '(no text)'}
+                {snippet
+                  ? `“${snippet.slice(0, 80)}${snippet.length > 80 ? '…' : ''}”`
+                  : '(no text)'}
               </div>
               <div className="re-comment-meta">
                 <strong>{t.author}</strong> · <span>{formatTime(t.createdAt)}</span>
@@ -149,7 +171,14 @@ export function CommentSidebar({ editor, currentUser = 'You', onAddRequest, onCl
                   onChange={(e) => setReplyDrafts((d) => ({ ...d, [t.id]: e.target.value }))}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && draft.trim()) {
-                      editor.chain().call('addCommentReply', { id: t.id, body: draft.trim(), author: currentUser }).run()
+                      editor
+                        .chain()
+                        .call('addCommentReply', {
+                          id: t.id,
+                          body: draft.trim(),
+                          author: currentUser,
+                        })
+                        .run()
                       setReplyDrafts((d) => ({ ...d, [t.id]: '' }))
                     }
                   }}

@@ -38,7 +38,11 @@ export function AlignMenu({ editor }: AlignMenuProps) {
             aria-pressed={active}
             onMouseDown={(e) => {
               e.preventDefault()
-              editor.chain().call('setTextAlign', value === 'left' ? null : value).focus().run()
+              editor
+                .chain()
+                .call('setTextAlign', value === 'left' ? null : value)
+                .focus()
+                .run()
             }}
           >
             <Icon />

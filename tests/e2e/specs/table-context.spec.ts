@@ -51,7 +51,20 @@ test.describe('table context menu', () => {
     await page.waitForTimeout(100)
 
     const info = await page.evaluate(() => {
-      const w = window as unknown as { __editor?: { state: { selection: { from: number; to: number; empty: boolean; $anchorCell?: unknown; $headCell?: unknown }; doc: { nodeAt: (n: number) => unknown } } } }
+      const w = window as unknown as {
+        __editor?: {
+          state: {
+            selection: {
+              from: number
+              to: number
+              empty: boolean
+              $anchorCell?: unknown
+              $headCell?: unknown
+            }
+            doc: { nodeAt: (n: number) => unknown }
+          }
+        }
+      }
       const sel = w.__editor?.state.selection
       if (!sel) return null
       return {

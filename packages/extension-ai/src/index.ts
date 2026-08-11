@@ -51,7 +51,11 @@ function setMeta(view: EditorView, meta: AIMeta): void {
 }
 
 /** Suggestion ids carried by `markName` marks inside `range`. */
-function collectSuggestionIds(state: EditorState, range: AIRange | null, markName: string): string[] {
+function collectSuggestionIds(
+  state: EditorState,
+  range: AIRange | null,
+  markName: string,
+): string[] {
   if (!range || range.to <= range.from) return []
   const type = state.schema.marks[markName]
   if (!type) return []
@@ -73,7 +77,10 @@ interface RunContext {
   range: AIRange
 }
 
-async function runCompletion({ view, options, prompt, range }: RunContext, controller: AbortController) {
+async function runCompletion(
+  { view, options, prompt, range }: RunContext,
+  controller: AbortController,
+) {
   const complete = options.complete
   if (!complete) return
 
@@ -128,7 +135,10 @@ async function runCompletion({ view, options, prompt, range }: RunContext, contr
   })
 
   try {
-    for await (const chunk of complete({ prompt, selection, documentText }, { signal: controller.signal })) {
+    for await (const chunk of complete(
+      { prompt, selection, documentText },
+      { signal: controller.signal },
+    )) {
       if (controller.signal.aborted) break
       if (!chunk) continue
       const at = aiKey.getState(view.state)?.range?.to ?? insertAt
@@ -214,7 +224,10 @@ export const AI = Extension.create<AIOptions>({
           if (range && range.to > range.from) {
             view.dispatch(view.state.tr.delete(range.from, range.to))
           }
-          const target = s.replaced ?? { from: view.state.selection.from, to: view.state.selection.to }
+          const target = s.replaced ?? {
+            from: view.state.selection.from,
+            to: view.state.selection.to,
+          }
           return start(view, s.prompt, target)
         },
 
