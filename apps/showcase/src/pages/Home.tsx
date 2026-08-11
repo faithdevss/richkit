@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icons } from '@richkit/react'
+import { ComparisonTable } from '../components/ComparisonTable'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
 import { NotionEditor } from '../editors/NotionEditor'
@@ -160,7 +161,7 @@ export function Home() {
         <div className="hero-actions">
           <a href="#examples" className="btn-primary">Explore examples</a>
           <Link to="/docs/installation" className="btn-secondary">Read the docs</Link>
-          <code className="hero-install">npm i @richkit/starter-kit</code>
+          <code className="hero-install">pnpm add @richkit/starter-kit</code>
         </div>
 
         <div className="hero-metrics">
@@ -280,6 +281,26 @@ export function Home() {
             </button>
           ))}
         </div>
+      </section>
+
+      <section id="compare" className="compare">
+        <h2 className="section-title">
+          The paid features, <em>open sourced</em>
+        </h2>
+        <p className="section-sub">
+          Track changes, comments, and DOCX round-tripping sit behind a plan almost
+          everywhere else. Here they are MIT packages on npm.
+        </p>
+
+        <ComparisonTable notes={false} />
+
+        <p className="stage-caption">
+          <span className="cmp-mark is-open">✓</span> open source ·{' '}
+          <span className="cmp-mark is-paid">$</span> paid plan ·{' '}
+          <span className="cmp-mark is-partial">~</span> partial ·{' '}
+          <span className="cmp-mark is-none">–</span> unavailable — see the{' '}
+          <Link to="/docs/comparison">full comparison</Link> for the caveats and sources.
+        </p>
       </section>
 
       <section id="support" className="support">

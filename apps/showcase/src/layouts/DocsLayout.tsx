@@ -14,7 +14,10 @@ const NAV: { head: string; items: { label: string; to: string }[] }[] = [
   },
   {
     head: 'Reference',
-    items: [{ label: 'Extensions', to: '/docs/extensions' }],
+    items: [
+      { label: 'Extensions', to: '/docs/extensions' },
+      { label: 'Comparison', to: '/docs/comparison' },
+    ],
   },
   {
     head: 'Usecases',

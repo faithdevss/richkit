@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DocsLayout } from './layouts/DocsLayout'
 import { SiteShell } from './layouts/SiteShell'
 import { Home } from './pages/Home'
+import { Comparison } from './pages/docs/Comparison'
 import { ExtensionsReference } from './pages/docs/ExtensionsReference'
 import Introduction from './content/docs/introduction.mdx'
 import Installation from './content/docs/installation.mdx'
@@ -25,6 +26,7 @@ export function App() {
             <Route path="core-concepts" element={<CoreConcepts />} />
             <Route path="styling" element={<Styling />} />
             <Route path="extensions" element={<ExtensionsReference />} />
+            <Route path="comparison" element={<Comparison />} />
             <Route path="usecases/agent-workflows" element={<AgentWorkflowsUsecase />} />
             <Route path="usecases/docx-editing" element={<DocxEditingUsecase />} />
             <Route path="usecases/notion-blocks" element={<NotionBlocksUsecase />} />

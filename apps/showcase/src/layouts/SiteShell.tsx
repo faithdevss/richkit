@@ -27,7 +27,7 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'Installation', to: '/docs/installation' },
       { label: 'Core concepts', to: '/docs/core-concepts' },
       { label: 'Styling', to: '/docs/styling' },
-      { label: 'Extensions', to: '/docs/extensions' },
+      { label: 'Comparison', to: '/docs/comparison' },
     ],
   },
   {
@@ -52,6 +52,7 @@ export function SiteShell() {
           <nav className="site-links">
             <a href="/#features">Platform</a>
             <a href="/#examples">Examples</a>
+            <a href="/#compare">Compare</a>
             <NavLink to="/docs" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
               Docs
             </NavLink>

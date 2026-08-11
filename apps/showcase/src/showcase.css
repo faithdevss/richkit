@@ -983,6 +983,42 @@ body {
   color: #d9d9e4;
 }
 
+/* ---------- package-manager install tabs ---------- */
+.pm-install {
+  margin: 0 0 20px;
+}
+.pm-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+.pm-tab {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #8f8fa2;
+  padding: 7px 16px;
+  border-radius: 8px 8px 0 0;
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+.pm-tab:hover {
+  color: #d9d9e4;
+}
+.pm-tab.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.09);
+  border-bottom-color: transparent;
+}
+.pm-code {
+  margin: 0;
+  border-top-left-radius: 0;
+}
+
 /* ---------- extensions reference table ---------- */
 .ext-table {
   width: 100%;
@@ -1030,6 +1066,159 @@ body {
 }
 .usecase-demo-stage {
   min-height: 560px;
+}
+
+/* ---------- comparison table ---------- */
+.compare {
+  margin-top: 100px;
+}
+.cmp-scroll {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+}
+/* the table needs more room than the prose measure — widen the page,
+   keep the running text at a readable width */
+.cmp-page {
+  max-width: 1040px;
+}
+.cmp-page > p,
+.cmp-page > ul,
+.cmp-page > .cmp-claim,
+.cmp-page > .cmp-point {
+  max-width: 760px;
+}
+.cmp-table {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.cmp-table thead th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #cfcfe0;
+  background: rgba(18, 18, 26, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+.cmp-table thead th.is-us {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(124, 92, 255, 0.28), rgba(18, 18, 26, 0.96));
+}
+.cmp-table tbody th {
+  text-align: left;
+  padding: 14px 16px;
+  font-weight: 600;
+  color: #e6e6f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  vertical-align: top;
+  max-width: 280px;
+}
+.cmp-feature {
+  display: block;
+}
+.cmp-detail {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #86869a;
+}
+.cmp-cell {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #b6b6c6;
+  vertical-align: top;
+}
+.cmp-cell.is-us {
+  background: rgba(124, 92, 255, 0.07);
+  box-shadow: inset 1px 0 0 rgba(124, 92, 255, 0.25), inset -1px 0 0 rgba(124, 92, 255, 0.25);
+}
+.cmp-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  vertical-align: -3px;
+}
+.cmp-mark.is-open {
+  color: #45e0c8;
+  background: rgba(69, 224, 200, 0.14);
+}
+.cmp-mark.is-paid {
+  color: #ffb45a;
+  background: rgba(255, 180, 90, 0.14);
+}
+.cmp-mark.is-partial {
+  color: #8fb4ff;
+  background: rgba(143, 180, 255, 0.14);
+}
+.cmp-mark.is-none {
+  color: #7c7c8d;
+  background: rgba(255, 255, 255, 0.07);
+}
+.cmp-cell.is-open .cmp-label {
+  color: #e6e6f0;
+  font-weight: 600;
+}
+.cmp-note {
+  display: block;
+  margin: 5px 0 0 26px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #86869a;
+}
+.cmp-legend {
+  font-size: 0.85rem;
+  color: #86869a;
+}
+.cmp-claim {
+  border: 1px solid rgba(124, 92, 255, 0.3);
+  border-radius: 16px;
+  background: rgba(124, 92, 255, 0.08);
+  padding: 16px 20px;
+  margin: 24px 0 36px;
+}
+.cmp-claim-head {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a48bff;
+  margin-bottom: 6px;
+}
+.cmp-claim p {
+  margin: 0;
+}
+.cmp-point {
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+  padding-left: 18px;
+  margin: 22px 0;
+}
+.cmp-point h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+.cmp-point p {
+  margin: 0;
+}
+.cmp-sources-note {
+  font-size: 0.85rem;
+  color: #86869a;
 }
 
 @media (max-width: 860px) {
