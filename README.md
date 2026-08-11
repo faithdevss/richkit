@@ -130,6 +130,16 @@ pnpm --filter @richkit/core docs       # typedoc → packages/core/docs/
 pnpm --filter e2e exec playwright test     # E2E suite
 ```
 
+### Releasing
+
+Changes that ship need a changeset:
+
+```bash
+pnpm changeset
+```
+
+Publishing to npm is automated from `main`. See [PUBLISHING.md](./PUBLISHING.md).
+
 ### Stack
 
 | Layer                  | Choice                                                                                                                         |
