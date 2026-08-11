@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-horizontal-rule",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Horizontal rule extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-page-break",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Page break extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",

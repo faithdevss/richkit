@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/ai-openai",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "OpenAI streaming transport for @richkitjs/extension-ai",
   "license": "MIT",
   "type": "module",

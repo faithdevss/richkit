@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-ai",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "AI authoring extension for @richkitjs/core, with track-changes review",
   "license": "MIT",
   "type": "module",

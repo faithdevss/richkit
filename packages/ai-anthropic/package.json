@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/ai-anthropic",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Anthropic (Claude) streaming transport for @richkitjs/extension-ai",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-list-item",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "List item extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",

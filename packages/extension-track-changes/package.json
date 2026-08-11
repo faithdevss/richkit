@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-track-changes",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Track changes extension for @richkitjs/core, with accept/reject suggestions",
   "license": "MIT",
   "type": "module",
