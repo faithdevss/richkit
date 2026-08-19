@@ -19,8 +19,7 @@ body {
   background:
     radial-gradient(70% 55% at 50% -8%, rgba(124, 92, 255, 0.28), rgba(124, 92, 255, 0) 60%),
     radial-gradient(60% 50% at 88% 4%, rgba(56, 132, 255, 0.24), rgba(56, 132, 255, 0) 55%),
-    radial-gradient(50% 45% at 8% 2%, rgba(0, 214, 200, 0.16), rgba(0, 214, 200, 0) 55%),
-    #08080b;
+    radial-gradient(50% 45% at 8% 2%, rgba(0, 214, 200, 0.16), rgba(0, 214, 200, 0) 55%), #08080b;
 }
 .site-inner {
   max-width: 1180px;
@@ -231,7 +230,10 @@ body {
   backdrop-filter: blur(6px);
   color: #c9c9d6;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease;
 }
 .code-icon-btn:hover {
   color: #fff;
@@ -265,7 +267,9 @@ body {
   color: #9a9aab;
   cursor: pointer;
   font-family: inherit;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 .tab:hover {
   color: #fff;
@@ -336,7 +340,9 @@ body {
   border-radius: 18px;
   padding: 26px 24px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 .feature-card:hover {
   border-color: rgba(139, 92, 255, 0.5);
@@ -400,7 +406,9 @@ body {
   cursor: pointer;
   font: inherit;
   color: inherit;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 .template-card:hover {
   border-color: rgba(56, 132, 255, 0.5);
@@ -823,7 +831,9 @@ body {
   font-size: 0.98rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.04);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 .btn-secondary:hover {
   color: #fff;
@@ -848,7 +858,9 @@ body {
   border-radius: 18px;
   padding: 22px 24px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 .support-card:hover {
   border-color: rgba(69, 224, 200, 0.5);
@@ -902,7 +914,9 @@ body {
   font-size: 0.92rem;
   padding: 6px 10px;
   border-radius: 8px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 .docs-nav-link:hover {
   color: #fff;
@@ -1151,7 +1165,9 @@ body {
 }
 .cmp-cell.is-us {
   background: rgba(124, 92, 255, 0.07);
-  box-shadow: inset 1px 0 0 rgba(124, 92, 255, 0.25), inset -1px 0 0 rgba(124, 92, 255, 0.25);
+  box-shadow:
+    inset 1px 0 0 rgba(124, 92, 255, 0.25),
+    inset -1px 0 0 rgba(124, 92, 255, 0.25);
 }
 .cmp-mark {
   display: inline-flex;
