@@ -1,0 +1,160 @@
+<div className="docs-prose">
+
+# API: StarterKit & extension options
+
+## `StarterKit`
+
+`@richkitjs/starter-kit` exports an **array of extension instances**, not a single
+configurable extension:
+
+```ts
+import { StarterKit } from '@richkitjs/starter-kit'
+
+useEditor({ extensions: StarterKit }) // fine
+useEditor({ extensions: [...StarterKit, AI] }) // adding your own
+useEditor({ extensions: [StarterKit] }) // ✗ throws — nested array
+```
+
+There is no `StarterKit.configure({ heading: false })`. To change the set, spread it and
+filter, or skip it and list extensions yourself.
+
+### What's in it
+
+| Group    | Extensions                                                                                                    |
+| -------- | ------------------------------------------------------------------------------------------------------------- |
+| Blocks   | `Paragraph`, `Heading`, `Blockquote`, `CodeBlock`, `HorizontalRule`, `PageBreak`                              |
+| Lists    | `BulletList`, `OrderedList`, `ListItem`, `TaskList`, `TaskItem`                                               |
+| Tables   | `TableKit` (spread — table, row, cell, header)                                                                |
+| Media    | `Image`, `Embed`                                                                                              |
+| Marks    | `TextStyle`, `Bold`, `Italic`, `Underline`, `Strike`, `Code`, `Highlight`, `Subscript`, `Superscript`, `Link` |
+| Layout   | `TextAlign`, `LineHeight`, `CaseChange`                                                                       |
+| Behavior | `History`, `Placeholder`, `Typography`, `MarkdownShortcuts`, `PasteHandler`, `SlashCommands`                  |
+| Review   | `FindReplace`, `Comment`, `TrackChangesKit` (spread)                                                          |
+| Metrics  | `WordCount`                                                                                                   |
+
+Every one is also a named export of the same package, so you can pull single pieces:
+
+```ts
+import { Bold, Heading, Paragraph } from '@richkitjs/starter-kit'
+```
+
+### Removing or replacing one
+
+```ts
+// drop an extension
+const extensions = StarterKit.filter((e) => e.name !== 'placeholder')
+
+// replace one with a configured copy
+const extensions = [
+  ...StarterKit.filter((e) => e.name !== 'heading'),
+  Heading.configure({ levels: [1, 2, 3] }),
+]
+```
+
+## `configure()`
+
+Every extension instance has `configure(options)`, which shallow-merges into the defaults
+and returns the instance.
+
+```ts
+Placeholder.configure({ placeholder: 'Start typing…' })
+```
+
+Two things to watch: `configure` **mutates the shared instance** rather than cloning, so
+two editors importing the same extension share options; and it merges one level deep —
+passing `HTMLAttributes` to `Link` replaces the whole object, defaults included.
+
+## Extensions that take options
+
+Only these nine accept options. Everything else in `StarterKit` has no configuration.
+
+### `Heading` — `extension-heading`
+
+| Option   | Type       | Default              |
+| -------- | ---------- | -------------------- |
+| `levels` | `number[]` | `[1, 2, 3, 4, 5, 6]` |
+
+### `History` — `extension-history`
+
+| Option          | Type     | Default | Description                                  |
+| --------------- | -------- | ------- | -------------------------------------------- |
+| `depth`         | `number` | `100`   | Undo steps retained.                         |
+| `newGroupDelay` | `number` | `500`   | Idle ms before edits start a new undo group. |
+
+### `Placeholder` — `extension-placeholder`
+
+| Option        | Type     | Default              | Description                                                     |
+| ------------- | -------- | -------------------- | --------------------------------------------------------------- |
+| `placeholder` | `string` | `'Write something…'` | Text shown in an empty document.                                |
+| `className`   | `string` | `'is-empty'`         | Class applied to the empty node — hook for your CSS `::before`. |
+
+### `Link` — `extension-link`
+
+| Option           | Type                     | Default                                            | Description                                                                        |
+| ---------------- | ------------------------ | -------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `openOnClick`    | `boolean`                | `true`                                             | Follow links on click inside the editor.                                           |
+| `HTMLAttributes` | `Record<string, string>` | `{ rel: 'noopener noreferrer', target: '_blank' }` | Attributes on rendered `<a>`. Replaced wholesale — re-state `rel` if you override. |
+
+### `Image` — `extension-image`
+
+| Option        | Type      | Default | Description                                  |
+| ------------- | --------- | ------- | -------------------------------------------- |
+| `inline`      | `boolean` | `false` | Render as an inline node instead of a block. |
+| `allowBase64` | `boolean` | `true`  | Permit `data:` URLs in `src`.                |
+
+### `TextAlign` — `extension-text-align`
+
+| Option  | Type       | Default                    | Description                                    |
+| ------- | ---------- | -------------------------- | ---------------------------------------------- |
+| `types` | `string[]` | `['paragraph', 'heading']` | Node types that carry a `textAlign` attribute. |
+
+### `LineHeight` — `extension-line-height`
+
+| Option  | Type       | Default                    | Description                                     |
+| ------- | ---------- | -------------------------- | ----------------------------------------------- |
+| `types` | `string[]` | `['paragraph', 'heading']` | Node types that carry a `lineHeight` attribute. |
+
+### `PasteHandler` — `extension-paste-handler`
+
+| Option            | Type      | Default | Description                           |
+| ----------------- | --------- | ------- | ------------------------------------- |
+| `cleanWord`       | `boolean` | `true`  | Strip Microsoft Word markup on paste. |
+| `cleanGoogleDocs` | `boolean` | `true`  | Strip Google Docs markup on paste.    |
+
+### `AI` — `extension-ai`
+
+Not in `StarterKit`; install and add it separately. See [AI](/docs/ai).
+
+| Option        | Type                 | Default          | Description                                                     |
+| ------------- | -------------------- | ---------------- | --------------------------------------------------------------- |
+| `complete`    | `AIComplete \| null` | `null`           | Completion adapter. Without one the extension does nothing.     |
+| `attributeAs` | `string`             | `'AI Assistant'` | Author name recorded on AI edits.                               |
+| `track`       | `boolean`            | `true`           | Route output through track-changes so every edit is reviewable. |
+
+## Writing an extension
+
+`Extension` (behavior), `Node` (block/inline element), `Mark` (inline formatting) share
+one config shape:
+
+| Field                   | Type                                            | Description                                    |
+| ----------------------- | ----------------------------------------------- | ---------------------------------------------- |
+| `name`                  | `string`                                        | **Required.** Schema and command-registry key. |
+| `addOptions`            | `() => O`                                       | Defaults, later merged by `configure()`.       |
+| `addCommands`           | `(ctx) => Record<string, (...args) => Command>` | See [Commands](/docs/api/commands).            |
+| `addKeyboardShortcuts`  | `(ctx) => Record<string, Command>`              | Keys like `'Mod-b'`.                           |
+| `addInputRules`         | `(ctx) => InputRule[]`                          | Typing-triggered transforms.                   |
+| `addProseMirrorPlugins` | `(ctx) => Plugin[]`                             | Raw plugins.                                   |
+| `addNodeViews`          | `(ctx) => Record<string, NodeViewConstructor>`  | Custom rendering.                              |
+
+`ctx` is `{ name, options, editor }`.
+
+`Node` additionally accepts `group`, `content`, `marks`, `inline`, `atom`, `selectable`,
+`draggable`, `defining`, `isolating`, `code`, `whitespace`, `attrs`, `addNodeSpec`,
+`parseHTML`, `renderHTML`.
+
+`Mark` additionally accepts `inclusive`, `spanning`, `excludes`, `group`, `attrs`,
+`addMarkSpec`, `parseHTML`, `renderHTML`.
+
+These map onto ProseMirror's `NodeSpec` / `MarkSpec`.
+
+</div>

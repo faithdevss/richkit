@@ -1,0 +1,131 @@
+<div className="docs-prose">
+
+# API: Editor (`@richkitjs/core`)
+
+`Editor` owns document state. Everything else — React bindings, toolbars, extensions —
+talks to this object.
+
+```ts
+import { Editor } from '@richkitjs/core'
+import { StarterKit } from '@richkitjs/starter-kit'
+
+const editor = new Editor({
+  element: document.querySelector('#host')!,
+  extensions: [...StarterKit],
+  content: '<p>Hello</p>',
+})
+```
+
+`StarterKit` is an **array**, not a single extension. Spread it, or pass it directly as
+`extensions`. Wrapping it (`[StarterKit]`) throws `No node type or group 'block' found`.
+
+## `EditorOptions`
+
+Every option the constructor — and therefore `useEditor` — accepts.
+
+| Prop                | Type                                             | Default     | Description                                                                                                      |
+| ------------------- | ------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------- |
+| `extensions`        | `AnyExtension[]`                                 | —           | **Required.** The extension list _is_ your schema. Nodes and marks not listed here cannot exist in the document. |
+| `element`           | `HTMLElement`                                    | `undefined` | Container the editor mounts into. Omit it in React — `EditorContent` attaches the view itself.                   |
+| `content`           | `string \| PMNode \| Record<string, unknown>`    | empty doc   | Initial content: an HTML string, a ProseMirror node, or a JSON doc.                                              |
+| `editable`          | `boolean`                                        | `true`      | Start read-only when `false`.                                                                                    |
+| `autofocus`         | `boolean`                                        | `false`     | Focus the editor on create.                                                                                      |
+| `onCreate`          | `(props: { editor }) => void`                    | —           | Fires once the view is mounted.                                                                                  |
+| `onUpdate`          | `(props: { editor, transaction }) => void`       | —           | Fires on any transaction that changed the document.                                                              |
+| `onSelectionUpdate` | `(props: { editor }) => void`                    | —           | Fires when the selection moves.                                                                                  |
+| `onFocus`           | `(props: { editor, event: FocusEvent }) => void` | —           | —                                                                                                                |
+| `onBlur`            | `(props: { editor, event: FocusEvent }) => void` | —           | —                                                                                                                |
+| `onDestroy`         | `() => void`                                     | —           | Fires after the view is torn down.                                                                               |
+
+## Methods
+
+| Member         | Signature                                                        | Description                                                                                                                             |
+| -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `chain()`      | `() => CommandChainBuilder`                                      | Starts a command chain. See [Commands](/docs/api/commands).                                                                             |
+| `command()`    | `(name: string, ...args: unknown[]) => boolean`                  | Runs one command by name. Returns `false` if no such command is registered.                                                             |
+| `commands`     | `Record<string, (...args) => boolean>`                           | Getter. Every registered command as a callable, e.g. `editor.commands.toggleBold()`.                                                    |
+| `isActive()`   | `(name: string, attrs?: Attrs \| null) => boolean`               | Whether a mark or node is active at the selection. Pass `attrs` to match specific attributes, e.g. `isActive('heading', { level: 2 })`. |
+| `getHTML()`    | `() => string`                                                   | Document serialized to HTML.                                                                                                            |
+| `getJSON()`    | `() => Record<string, unknown>`                                  | Document as a ProseMirror JSON doc.                                                                                                     |
+| `getText()`    | `() => string`                                                   | Plain text content.                                                                                                                     |
+| `setContent()` | `(content: string \| PMNode \| Record<string, unknown>) => void` | Replaces the whole document. Same accepted types as the `content` option.                                                               |
+| `focus()`      | `() => void`                                                     | Focuses the editable surface.                                                                                                           |
+| `destroy()`    | `() => void`                                                     | Tears down the view. Safe to call twice.                                                                                                |
+| `on()`         | `<K>(event: K, handler) => () => void`                           | Subscribes to an event. **Returns an unsubscribe function.**                                                                            |
+
+## Getters
+
+| Getter        | Type             | Description                                                                                 |
+| ------------- | ---------------- | ------------------------------------------------------------------------------------------- |
+| `state`       | `EditorState`    | Live ProseMirror state.                                                                     |
+| `schema`      | `Schema`         | Schema built from your extension list. Needed by `markdownToDoc`, `htmlToDoc`, `docToHtml`. |
+| `view`        | `EditorView`     | The ProseMirror view. Escape hatch for anything the wrapper doesn't cover.                  |
+| `extensions`  | `AnyExtension[]` | The list as passed in.                                                                      |
+| `isEditable`  | `boolean`        | —                                                                                           |
+| `isDestroyed` | `boolean`        | —                                                                                           |
+
+## Events
+
+Payloads for `editor.on(name, handler)` and the `on*` options.
+
+| Event             | Payload                                                                      |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `create`          | `{ editor }`                                                                 |
+| `transaction`     | `{ editor, transaction }` — every transaction, including selection-only ones |
+| `update`          | `{ editor, transaction }` — document actually changed                        |
+| `selectionUpdate` | `{ editor }`                                                                 |
+| `focus`           | `{ editor, event: FocusEvent }`                                              |
+| `blur`            | `{ editor, event: FocusEvent }`                                              |
+| `destroy`         | `void`                                                                       |
+
+`transaction` fires far more often than `update`. For "did the document change", use `update`.
+
+### There is no `onChange`
+
+The document-change callback is **`onUpdate`**. It fires only when `tr.docChanged` is
+true, so it tracks real content edits — not selection moves, and not transactions that
+only set stored marks:
+
+```ts
+// cursor collapsed, nothing selected → sets a stored mark, no doc change → no onUpdate
+editor.commands.toggleBold()
+
+// text actually selected → marks applied → onUpdate fires
+editor.chain().call('selectAll').call('toggleBold').run()
+```
+
+Use `onSelectionUpdate` for cursor movement, and `transaction` if you genuinely need every
+state change.
+
+## Autosave
+
+```ts
+import { createAutosave } from '@richkitjs/core'
+
+const stop = createAutosave(editor, {
+  onSave: (html, editor) => fetch('/api/doc', { method: 'PUT', body: html }),
+  debounceMs: 1000,
+})
+```
+
+| Option       | Type                                                      | Default | Description                                                          |
+| ------------ | --------------------------------------------------------- | ------- | -------------------------------------------------------------------- |
+| `onSave`     | `(html: string, editor: Editor) => void \| Promise<void>` | —       | **Required.** Called with serialized HTML after the debounce window. |
+| `debounceMs` | `number`                                                  | `500`   | Idle time before saving.                                             |
+
+Returns a cleanup function — call it on unmount.
+
+## HTML conversion
+
+```ts
+import { htmlToDoc, docToHtml } from '@richkitjs/core' // also re-exported from @richkitjs/html
+```
+
+| Function    | Signature                                  |
+| ----------- | ------------------------------------------ |
+| `htmlToDoc` | `(html: string, schema: Schema) => PMNode` |
+| `docToHtml` | `(doc: PMNode, schema: Schema) => string`  |
+
+Both need the schema, so pass `editor.schema`.
+
+</div>

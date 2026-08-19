@@ -50,7 +50,11 @@ export const mdxComponents = {
   h3: (props: ComponentPropsWithoutRef<'h3'>) => <h3 {...props} />,
   code: (props: ComponentPropsWithoutRef<'code'>) => <code {...props} />,
   pre: (props: ComponentPropsWithoutRef<'pre'>) => <pre className="docs-pre" {...props} />,
-  table: (props: ComponentPropsWithoutRef<'table'>) => <table className="ext-table" {...props} />,
+  table: (props: ComponentPropsWithoutRef<'table'>) => (
+    <div className="docs-table-scroll">
+      <table className="ext-table" {...props} />
+    </div>
+  ),
   a: (props: ComponentPropsWithoutRef<'a'>) => <a {...props} />,
   Demo,
   Install,

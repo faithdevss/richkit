@@ -1,0 +1,265 @@
+<div className="docs-prose">
+
+# API: React components (`@richkitjs/react`)
+
+Every exported component and its props. All of them take `editor` — most tolerate
+`Editor | null` so you can render before the hook resolves, but a few require a live
+editor and must be guarded.
+
+## `useEditor`
+
+```tsx
+const editor = useEditor(options, deps)
+```
+
+| Param     | Type                     | Default | Description                                                                                 |
+| --------- | ------------------------ | ------- | ------------------------------------------------------------------------------------------- |
+| `options` | `EditorOptions`          | —       | Same object the [`Editor` constructor](/docs/api/editor) takes. Omit `element`.             |
+| `deps`    | `ReadonlyArray<unknown>` | `[]`    | Recreates the editor when these change. Leave empty unless you truly want a fresh instance. |
+
+Returns `Editor | null` — **`null` on the first render**, since the instance is created in
+an effect. Guard before use:
+
+```tsx
+const editor = useEditor({ extensions: StarterKit, content: '<p>Hi</p>' })
+if (!editor) return null
+```
+
+Options are read from a ref, so changing them after mount does **not** rebuild the editor;
+only `deps` does. The hook re-renders on `update` and `selectionUpdate`, which is what
+keeps toolbar active-states in sync.
+
+Event handlers are re-pointed at each render, so `onUpdate` and friends always see current
+props and state — no stale closures, and no need to list state in `deps`:
+
+```tsx
+const [docId, setDocId] = useState('a')
+const editor = useEditor({
+  extensions: StarterKit,
+  onUpdate: ({ editor }) => save(docId, editor.getHTML()), // always the current docId
+})
+```
+
+Putting state in `deps` would destroy and rebuild the editor on every change, losing
+content, selection, and undo history. Reserve `deps` for genuinely switching documents.
+
+## `EditorContent`
+
+The editable surface. Props extend `HTMLAttributes<HTMLDivElement>`, so `className`,
+`style`, `onKeyDown` and friends all pass through to the wrapper div.
+
+| Prop      | Type                             | Description                                        |
+| --------- | -------------------------------- | -------------------------------------------------- |
+| `editor`  | `Editor \| null`                 | The instance. Nothing renders until it's non-null. |
+| `...rest` | `HTMLAttributes<HTMLDivElement>` | Forwarded to the container.                        |
+
+## `EditorProvider` / `useEditorContext`
+
+| Prop       | Type             | Description               |
+| ---------- | ---------------- | ------------------------- |
+| `editor`   | `Editor \| null` | Value put on the context. |
+| `children` | `ReactNode`      | —                         |
+
+`useEditorContext()` returns `Editor | null`. Useful for deep toolbars that would
+otherwise thread `editor` through every level.
+
+## Toolbar
+
+### `Toolbar`
+
+| Prop        | Type             | Description              |
+| ----------- | ---------------- | ------------------------ |
+| `editor`    | `Editor \| null` | —                        |
+| `children`  | `ReactNode`      | Your buttons and groups. |
+| `className` | `string`         | —                        |
+
+### `ToolbarGroup`
+
+Layout wrapper for visually grouping buttons. Takes `children` only.
+
+### `ToolbarButton`
+
+| Prop            | Type             | Default | Description                                                                                                         |
+| --------------- | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| `editor`        | `Editor \| null` | —       | —                                                                                                                   |
+| `command`       | `string`         | —       | **Required.** Name of the command to run, e.g. `'toggleBold'`.                                                      |
+| `args`          | `unknown[]`      | `[]`    | Arguments passed to the command, e.g. `[{ level: 2 }]`.                                                             |
+| `label`         | `ReactNode`      | —       | **Required.** Button content — text or an icon.                                                                     |
+| `isActiveName`  | `string`         | —       | Mark/node name used for the active state. Often differs from the command: command `toggleBold`, active name `bold`. |
+| `isActiveAttrs` | `Attrs \| null`  | —       | Attribute match for the active state, e.g. `{ level: 2 }`.                                                          |
+| `title`         | `string`         | —       | Tooltip / accessible name.                                                                                          |
+| `className`     | `string`         | —       | —                                                                                                                   |
+
+```tsx
+<ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} title="Bold" />
+<ToolbarButton editor={editor} command="setHeading" args={[{ level: 2 }]} isActiveName="heading" isActiveAttrs={{ level: 2 }} label="H2" />
+```
+
+### `DefaultToolbar`
+
+| Prop     | Type     | Description                                           |
+| -------- | -------- | ----------------------------------------------------- |
+| `editor` | `Editor` | **Non-nullable.** Guard on `editor` before rendering. |
+
+A prebuilt toolbar covering the StarterKit commands — no other props, no slots. For a
+custom set, compose `Toolbar` + `ToolbarButton` yourself.
+
+## Menus
+
+All take a non-nullable `editor`.
+
+| Component        | Props                                                    |
+| ---------------- | -------------------------------------------------------- |
+| `BlockTypeMenu`  | `editor: Editor`                                         |
+| `LinkMenu`       | `editor: Editor`                                         |
+| `ImageMenu`      | `editor: Editor`                                         |
+| `AlignMenu`      | `editor: Editor`                                         |
+| `TextColorMenu`  | `editor: Editor`                                         |
+| `HighlightMenu`  | `editor: Editor`                                         |
+| `FontFamilyMenu` | `editor: Editor`                                         |
+| `FontSizeMenu`   | `editor: Editor`                                         |
+| `TableMenu`      | `editor: Editor`, `maxRows?: number`, `maxCols?: number` |
+
+### `Popover`
+
+| Prop        | Type                               | Default   | Description                                    |
+| ----------- | ---------------------------------- | --------- | ---------------------------------------------- |
+| `trigger`   | `ReactNode`                        | —         | Element that opens the popover.                |
+| `children`  | `(close: () => void) => ReactNode` | —         | **Render prop** — receives a `close` callback. |
+| `align`     | `'start' \| 'end'`                 | `'start'` | Edge alignment.                                |
+| `className` | `string`                           | —         | —                                              |
+
+## `BubbleMenu`
+
+Floating menu positioned over the current selection; hidden when the selection is empty.
+
+| Prop        | Type             | Description    |
+| ----------- | ---------------- | -------------- |
+| `editor`    | `Editor \| null` | —              |
+| `children`  | `ReactNode`      | Menu contents. |
+| `className` | `string`         | —              |
+
+## `Menubar`
+
+| Prop        | Type        | Description                                                     |
+| ----------- | ----------- | --------------------------------------------------------------- |
+| `editor`    | `Editor`    | —                                                               |
+| `menus`     | `MenuDef[]` | Menu structure. Build a default set with `buildMenus(actions)`. |
+| `className` | `string`    | —                                                               |
+
+`MenuDef` is `{ label: string; items: MenuEntry[] }`, where `MenuEntry` is either a
+`MenuItemDef` or `{ separator: true }`.
+
+| `MenuItemDef` field | Type                       | Description          |
+| ------------------- | -------------------------- | -------------------- |
+| `label`             | `string`                   | —                    |
+| `icon`              | `ReactNode`                | —                    |
+| `shortcut`          | `MenuShortcut`             | Displayed hint.      |
+| `disabled`          | `boolean`                  | —                    |
+| `checked`           | `boolean`                  | Renders a checkmark. |
+| `onSelect`          | `(editor: Editor) => void` | —                    |
+| `submenu`           | `MenuItemDef[]`            | Nested menu.         |
+
+## `SlashMenu`
+
+| Prop        | Type             | Default             | Description                        |
+| ----------- | ---------------- | ------------------- | ---------------------------------- |
+| `editor`    | `Editor \| null` | —                   | —                                  |
+| `items`     | `SlashItem[]`    | `defaultSlashItems` | Replaces the default command list. |
+| `className` | `string`         | —                   | —                                  |
+
+| `SlashItem` field | Type                                          | Description                                                      |
+| ----------------- | --------------------------------------------- | ---------------------------------------------------------------- |
+| `id`              | `string`                                      | Unique key.                                                      |
+| `label`           | `string`                                      | Displayed name.                                                  |
+| `keywords`        | `string`                                      | Extra search terms.                                              |
+| `icon`            | `ReactNode`                                   | —                                                                |
+| `isAvailable`     | `(editor: Editor) => boolean`                 | Hide the item conditionally.                                     |
+| `run`             | `(editor: Editor, range: SlashRange) => void` | Action. `range` covers the typed `/query` so you can replace it. |
+
+Requires the `SlashCommands` extension (already in `StarterKit`).
+
+## `AIPrompt`
+
+| Prop           | Type                      | Default            | Description                                                                                                   |
+| -------------- | ------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `editor`       | `Editor \| null`          | —                  | —                                                                                                             |
+| `presets`      | `AIPreset[]`              | `defaultAIPresets` | Quick instructions. `AIPreset` is `{ id, label, prompt }`; `prompt` is sent verbatim.                         |
+| `placeholder`  | `string`                  | —                  | Input placeholder.                                                                                            |
+| `open`         | `boolean`                 | —                  | Controlled mode. Omit both `open` and `onOpenChange` to let the component manage itself via <kbd>Mod+K</kbd>. |
+| `onOpenChange` | `(open: boolean) => void` | —                  | —                                                                                                             |
+| `className`    | `string`                  | —                  | —                                                                                                             |
+
+## Sidebars
+
+| Component           | Prop           | Type             | Description                                                          |
+| ------------------- | -------------- | ---------------- | -------------------------------------------------------------------- |
+| `CommentSidebar`    | `editor`       | `Editor \| null` | —                                                                    |
+|                     | `currentUser`  | `string`         | Author name attached to new replies.                                 |
+|                     | `onAddRequest` | `() => void`     | Fires when the user asks to add a comment — open your composer here. |
+|                     | `onClose`      | `() => void`     | —                                                                    |
+| `SuggestionSidebar` | `editor`       | `Editor \| null` | Track-changes suggestions.                                           |
+|                     | `onClose`      | `() => void`     | —                                                                    |
+| `OutlineSidebar`    | `editor`       | `Editor \| null` | Heading outline.                                                     |
+|                     | `onClose`      | `() => void`     | —                                                                    |
+
+`getOutline(doc)` returns `OutlineEntry[]` (`{ level, text, pos }`) if you want to render
+your own.
+
+### `CommentComposer`
+
+| Prop       | Type                                   | Description                                  |
+| ---------- | -------------------------------------- | -------------------------------------------- |
+| `editor`   | `Editor \| null`                       | —                                            |
+| `range`    | `{ from: number; to: number } \| null` | Non-null means open. You control open/close. |
+| `onClose`  | `() => void`                           | **Required.**                                |
+| `onSubmit` | `(body: string) => void`               | **Required.**                                |
+| `author`   | `string`                               | —                                            |
+
+## Modals
+
+| Component     | Props                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `Modal`       | `open: boolean`, `title: string`, `onClose: () => void`, `children: ReactNode`, `footer?: ReactNode`, `width?: number \| string` |
+| `FindReplace` | `editor: Editor`, `open: boolean`, `onClose: () => void`                                                                         |
+| `SourceCode`  | `editor: Editor`, `open: boolean`, `onClose: () => void`                                                                         |
+
+## Notifications
+
+Mount `<NotificationsHost />` once near your app root — it takes no props. Then call
+`notify` from anywhere:
+
+```tsx
+notify.toast.success('Saved')
+const id = notify.toast.info('Uploading…', { durationMs: 10_000 })
+notify.toast.dismiss(id)
+
+const name = await notify.prompt({ title: 'Rename', defaultValue: 'Untitled' })
+const ok = await notify.confirm({ title: 'Delete this?', destructive: true })
+await notify.alert({ title: 'Export finished' })
+```
+
+Toasts live under `notify.toast` (`info`, `success`, `warn`, `error`, `dismiss`); dialogs
+are on `notify` directly.
+
+| Dialog           | Options                                                                                       | Resolves to      |
+| ---------------- | --------------------------------------------------------------------------------------------- | ---------------- |
+| `notify.prompt`  | `title`, `message?`, `placeholder?`, `defaultValue?`, `okLabel?`, `cancelLabel?`, `required?` | `string \| null` |
+| `notify.confirm` | `title`, `message?`, `okLabel?`, `cancelLabel?`, `destructive?`                               | `boolean`        |
+| `notify.alert`   | `title`, `message?`, `okLabel?`                                                               | `void`           |
+
+Without a mounted `NotificationsHost`, toasts fall back to `console` and dialogs resolve
+to their default (`prompt` → `defaultValue ?? null`, `confirm` → `false`).
+
+## `printEditor`
+
+```ts
+printEditor(editor, { title: 'My document', extraCss: '@page { margin: 2cm }' })
+```
+
+| Option     | Type     | Description                         |
+| ---------- | -------- | ----------------------------------- |
+| `title`    | `string` | Document title in the print dialog. |
+| `extraCss` | `string` | CSS injected into the print window. |
+
+</div>

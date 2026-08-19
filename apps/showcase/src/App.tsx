@@ -9,6 +9,10 @@ import Installation from './content/docs/installation.mdx'
 import CoreConcepts from './content/docs/core-concepts.mdx'
 import Styling from './content/docs/styling.mdx'
 import AIDocs from './content/docs/ai.mdx'
+import EditorApi from './content/docs/api/editor.mdx'
+import ReactApi from './content/docs/api/react.mdx'
+import CommandsApi from './content/docs/api/commands.mdx'
+import StarterKitApi from './content/docs/api/starter-kit.mdx'
 import AgentWorkflowsUsecase from './content/docs/usecases/agent-workflows.mdx'
 import DocxEditingUsecase from './content/docs/usecases/docx-editing.mdx'
 import NotionBlocksUsecase from './content/docs/usecases/notion-blocks.mdx'
@@ -27,6 +31,10 @@ export function App() {
             <Route path="core-concepts" element={<CoreConcepts />} />
             <Route path="styling" element={<Styling />} />
             <Route path="ai" element={<AIDocs />} />
+            <Route path="api/editor" element={<EditorApi />} />
+            <Route path="api/react" element={<ReactApi />} />
+            <Route path="api/commands" element={<CommandsApi />} />
+            <Route path="api/starter-kit" element={<StarterKitApi />} />
             <Route path="extensions" element={<ExtensionsReference />} />
             <Route path="comparison" element={<Comparison />} />
             <Route path="usecases/agent-workflows" element={<AgentWorkflowsUsecase />} />

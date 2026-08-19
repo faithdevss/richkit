@@ -14,8 +14,12 @@ const NAV: { head: string; items: { label: string; to: string }[] }[] = [
     ],
   },
   {
-    head: 'Reference',
+    head: 'API reference',
     items: [
+      { label: 'Editor (core)', to: '/docs/api/editor' },
+      { label: 'StarterKit & options', to: '/docs/api/starter-kit' },
+      { label: 'React components', to: '/docs/api/react' },
+      { label: 'Commands', to: '/docs/api/commands' },
       { label: 'Extensions', to: '/docs/extensions' },
       { label: 'Comparison', to: '/docs/comparison' },
     ],

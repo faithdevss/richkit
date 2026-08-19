@@ -1,0 +1,167 @@
+<div className="docs-prose">
+
+# API: Commands
+
+Commands are how the document changes. Toolbar buttons, keyboard shortcuts, slash items
+and programmatic edits all go through the same registry.
+
+## Three ways to call one
+
+```ts
+// 1. single command
+editor.commands.toggleBold()
+editor.commands.setHeading({ level: 2 })
+
+// 2. by name
+editor.command('toggleBold')
+editor.command('setHeading', { level: 2 })
+
+// 3. chained
+editor.chain().call('selectAll').call('toggleBold').focus().run()
+```
+
+All three return `boolean` — `false` when the command doesn't apply (or the name isn't
+registered).
+
+## The chain builder
+
+`editor.chain()` returns a `CommandChainBuilder` with exactly three methods. It does
+**not** proxy command names as methods, so `editor.chain().toggleBold()` is not a
+function — use `.call('toggleBold')`.
+
+| Method  | Signature                                    | Description                                                                               |
+| ------- | -------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `call`  | `(name: string, ...args: unknown[]) => this` | Queues a command. Unknown names are silently skipped.                                     |
+| `focus` | `() => this`                                 | Queues a focus step.                                                                      |
+| `run`   | `() => boolean`                              | Executes the queue. **Stops at the first step that returns `false`** and returns `false`. |
+
+Which command a button runs and which name it highlights on are separate: `toggleBold` is
+the command, `bold` is the mark. That's why `ToolbarButton` has both `command` and
+`isActiveName`.
+
+## Built into core
+
+Registered on every editor, no extension needed.
+
+| Command           | Args | Description                      |
+| ----------------- | ---- | -------------------------------- |
+| `selectAll`       | —    | Selects the whole document.      |
+| `clearFormatting` | —    | Strips marks from the selection. |
+
+## Marks
+
+| Command                             | Args                                                | From                    |
+| ----------------------------------- | --------------------------------------------------- | ----------------------- |
+| `toggleBold`                        | —                                                   | `extension-bold`        |
+| `toggleItalic`                      | —                                                   | `extension-italic`      |
+| `toggleUnderline`                   | —                                                   | `extension-underline`   |
+| `toggleStrike`                      | —                                                   | `extension-strike`      |
+| `toggleCode`                        | —                                                   | `extension-code`        |
+| `toggleSubscript`                   | —                                                   | `extension-subscript`   |
+| `toggleSuperscript`                 | —                                                   | `extension-superscript` |
+| `setHighlight`                      | `(color: string \| null)`                           | `extension-highlight`   |
+| `unsetHighlight`                    | —                                                   | `extension-highlight`   |
+| `setLink`                           | `({ href: string, target?: string, rel?: string })` | `extension-link`        |
+| `unsetLink`                         | —                                                   | `extension-link`        |
+| `setColor` / `unsetColor`           | `(color: string \| null)` / —                       | `extension-text-style`  |
+| `setFontFamily` / `unsetFontFamily` | `(family: string \| null)` / —                      | `extension-text-style`  |
+| `setFontSize` / `unsetFontSize`     | `(size: string \| null)` / —                        | `extension-text-style`  |
+
+## Blocks
+
+| Command                | Args                                                        | From                        |
+| ---------------------- | ----------------------------------------------------------- | --------------------------- |
+| `setParagraph`         | —                                                           | `extension-paragraph`       |
+| `setHeading`           | `({ level: number })`                                       | `extension-heading`         |
+| `toggleBlockquote`     | —                                                           | `extension-blockquote`      |
+| `toggleCodeBlock`      | —                                                           | `extension-code-block`      |
+| `insertHorizontalRule` | —                                                           | `extension-horizontal-rule` |
+| `insertPageBreak`      | —                                                           | `extension-page-break`      |
+| `setTextAlign`         | `('left' \| 'center' \| 'right' \| 'justify' \| null)`      | `extension-text-align`      |
+| `unsetTextAlign`       | —                                                           | `extension-text-align`      |
+| `setLineHeight`        | `(value: string \| null)`                                   | `extension-line-height`     |
+| `unsetLineHeight`      | —                                                           | `extension-line-height`     |
+| `changeCase`           | `('upper' \| 'lower' \| 'title' \| 'sentence' \| 'toggle')` | `extension-case-change`     |
+
+## Lists
+
+| Command             | Args | From                     |
+| ------------------- | ---- | ------------------------ |
+| `toggleBulletList`  | —    | `extension-bullet-list`  |
+| `toggleOrderedList` | —    | `extension-ordered-list` |
+| `toggleTaskList`    | —    | `extension-task-list`    |
+| `splitListItem`     | —    | `extension-list-item`    |
+| `sinkListItem`      | —    | `extension-list-item`    |
+| `liftListItem`      | —    | `extension-list-item`    |
+
+## Media
+
+| Command       | Args                                               | From              |
+| ------------- | -------------------------------------------------- | ----------------- |
+| `insertImage` | `({ src: string, alt?, title?, width?, height? })` | `extension-image` |
+| `insertEmbed` | `(url: string)`                                    | `extension-embed` |
+
+## Tables
+
+`insertTable` takes `({ rows?: number, cols?: number, withHeaderRow?: boolean, colWidth?: number })`,
+defaulting to `3 × 3`, header row on, `colWidth: 120`. The rest take no arguments.
+
+`addRowBefore`, `addRowAfter`, `deleteRow`, `addColumnBefore`, `addColumnAfter`,
+`deleteColumn`, `mergeCells`, `splitCell`, `toggleHeaderRow`, `toggleHeaderColumn`,
+`toggleHeaderCell`, `selectTable`, `deleteTable` — all from `extension-table`.
+
+## History
+
+| Command | Args | From                |
+| ------- | ---- | ------------------- |
+| `undo`  | —    | `extension-history` |
+| `redo`  | —    | `extension-history` |
+
+## Comments
+
+| Command           | Args                                                                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `addComment`      | `({ body: string, author?: string, id?: string, from?: number, to?: number })` — `body` required; defaults to the current selection and author `'You'` |
+| `addCommentReply` | `({ id: string, body: string, author?: string })`                                                                                                      |
+| `resolveComment`  | `(id: string)`                                                                                                                                         |
+| `reopenComment`   | `(id: string)`                                                                                                                                         |
+| `removeComment`   | `(id: string)`                                                                                                                                         |
+
+## Track changes
+
+| Command                | Args                |
+| ---------------------- | ------------------- |
+| `enableTrackChanges`   | `(author?: string)` |
+| `disableTrackChanges`  | —                   |
+| `acceptSuggestion`     | `(id: string)`      |
+| `rejectSuggestion`     | `(id: string)`      |
+| `acceptAllSuggestions` | —                   |
+| `rejectAllSuggestions` | —                   |
+
+## Writing your own
+
+`addCommands` receives `{ name, options, editor }` and returns factories. Each factory
+takes your arguments and returns a `Command` — a function of `{ state, tr, view, dispatch }`
+returning `boolean`.
+
+```ts
+import { Extension, type Command } from '@richkitjs/core'
+
+const Clear = Extension.create({
+  name: 'clearDoc',
+  addCommands: () => ({
+    clearDoc:
+      (): Command =>
+      ({ state, dispatch }) => {
+        if (dispatch) dispatch(state.tr.delete(0, state.doc.content.size))
+        return true
+      },
+  }),
+})
+```
+
+Return `false` when the command doesn't apply — that's what stops a chain and greys out a
+toolbar button. Only mutate when `dispatch` is present; ProseMirror calls commands with a
+null `dispatch` to test applicability.
+
+</div>
