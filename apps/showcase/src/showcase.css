@@ -1075,6 +1075,10 @@ body {
   color: #b6b6c6;
   vertical-align: top;
 }
+/* anchored rows land flush against the viewport edge otherwise */
+.ext-table tr[id] {
+  scroll-margin-top: 24px;
+}
 .ext-table td:first-child {
   white-space: nowrap;
   color: #cfcfe0;

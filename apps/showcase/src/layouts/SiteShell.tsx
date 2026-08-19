@@ -6,6 +6,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 const HOME = import.meta.env.BASE_URL
 
 import { LogoMark } from '../components/LogoMark'
+import { ScrollManager } from '../components/ScrollManager'
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
   {
@@ -50,6 +51,7 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
 export function SiteShell() {
   return (
     <div className="site">
+      <ScrollManager />
       <div className="site-inner">
         <header className="site-nav">
           <Link to="/" className="site-brand">
