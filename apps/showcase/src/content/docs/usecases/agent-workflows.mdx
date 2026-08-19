@@ -5,16 +5,25 @@ import { Demo } from '../../../mdx-components'
 
 # Usecase: agent workflows
 
-An AI agent shouldn't need a side channel into the document — it should drive the editor
-through the same command chain a toolbar button uses. This demo simulates that: type an
-instruction, the "agent" drafts a section as HTML and inserts it at the cursor via the
-editor's normal `chain()` API, no special-cased path.
+An AI agent shouldn't need a side channel into the document — it drives the editor through
+the same public API a toolbar button uses. This demo simulates that: type an instruction,
+the "agent" drafts a section as HTML and appends it to the document, no special-cased path.
 
 ```tsx
 const editor = useEditor({ extensions: StarterKit, content: AGENT_CONTENT })
 
-// agent drafts HTML, then inserts it exactly like a user action would
-editor.chain().insertContent(draftedHtml).focus().run()
+// agent drafts HTML, then writes it back through the editor's public API
+editor.setContent(editor.getHTML() + draftedHtml)
+```
+
+Commands go through the same chain a toolbar button uses. The chain builder exposes
+`call(name, ...args)`, `focus()`, and `run()`:
+
+```tsx
+editor.chain().call('selectAll').call('toggleBold').focus().run()
+
+// or, for a single command
+editor.commands.toggleBold()
 ```
 
 </div>
