@@ -33,7 +33,20 @@ export function useEditor(
   optionsRef.current = options
 
   useEffect(() => {
-    const instance = new Editor(optionsRef.current)
+    // The Editor subscribes the handler functions it is constructed with, once.
+    // Passing options.onUpdate straight through would therefore freeze the
+    // mount-time closure and hand every callback stale props and state. These
+    // trampolines are stable for the editor's lifetime but always dispatch to
+    // the current render's handlers.
+    const instance = new Editor({
+      ...optionsRef.current,
+      onCreate: (props) => optionsRef.current.onCreate?.(props),
+      onUpdate: (props) => optionsRef.current.onUpdate?.(props),
+      onSelectionUpdate: (props) => optionsRef.current.onSelectionUpdate?.(props),
+      onFocus: (props) => optionsRef.current.onFocus?.(props),
+      onBlur: (props) => optionsRef.current.onBlur?.(props),
+      onDestroy: () => optionsRef.current.onDestroy?.(),
+    })
     setEditor(instance)
     return () => {
       instance.destroy()
