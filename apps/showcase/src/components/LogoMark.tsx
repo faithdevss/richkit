@@ -2,16 +2,18 @@ export function LogoMark() {
   return (
     <svg
       className="site-logo-mark"
-      viewBox="0 0 32 32"
-      width="17"
+      viewBox="19 14 28 36"
+      width="13"
       height="17"
-      fill="currentColor"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="6.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
     >
-      <rect x="7" y="8.5" width="16" height="2.75" rx="1.375" opacity="0.85" />
-      <rect x="7" y="14.625" width="11" height="2.75" rx="1.375" opacity="0.85" />
-      <rect x="7" y="20.75" width="14" height="2.75" rx="1.375" opacity="0.85" />
-      <rect x="19.75" y="12" width="2.5" height="10" rx="1.25" />
+      <path d="M24 45V19h9.5a7.75 7.75 0 0 1 0 15.5H24" />
+      <path d="M33 34.5L41.5 45" />
     </svg>
   )
 }
