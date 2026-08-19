@@ -95,11 +95,6 @@ const SUPPORT_LINKS: { label: string; href: string; body: string }[] = [
     href: 'https://github.com/sponsors/faithdevss',
     body: 'Recurring or one-time sponsorship through GitHub.',
   },
-  {
-    label: 'Ko-fi',
-    href: 'https://ko-fi.com/faithdevss',
-    body: 'Buy the maintainers a coffee — one-off or monthly.',
-  },
 ]
 
 function initialTab(): TabId {
