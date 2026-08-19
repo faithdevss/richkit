@@ -1,6 +1,8 @@
 import { NotificationsHost } from '@richkitjs/react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
+import { LogoMark } from '../components/LogoMark'
+
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
   {
     head: 'Product',
@@ -47,7 +49,10 @@ export function SiteShell() {
       <div className="site-inner">
         <header className="site-nav">
           <Link to="/" className="site-brand">
-            <span className="site-logo">▤</span> RichKit
+            <span className="site-logo">
+              <LogoMark />
+            </span>{' '}
+            RichKit
           </Link>
           <nav className="site-links">
             <a href="/#features">Platform</a>
@@ -79,7 +84,10 @@ export function SiteShell() {
           <div className="foot-cols">
             <div className="foot-brand-col">
               <div className="site-brand">
-                <span className="site-logo">▤</span> RichKit
+                <span className="site-logo">
+                  <LogoMark />
+                </span>{' '}
+                RichKit
               </div>
               <p className="foot-tagline">The open-source rich text editor toolkit for React.</p>
             </div>
