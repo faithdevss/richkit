@@ -10,6 +10,7 @@ import agentSource from '../editors/AgentEditor.tsx?raw'
 import docxSource from '../editors/DocxEditor.tsx?raw'
 import notionSource from '../editors/NotionEditor.tsx?raw'
 import simpleSource from '../editors/SimpleEditor.tsx?raw'
+import { TemplatePreview } from '../components/TemplatePreview'
 
 type TabId = 'agent' | 'docx' | 'notion' | 'simple'
 
@@ -288,7 +289,9 @@ export function Home() {
                 document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })
               }}
             >
-              <div className="template-preview" aria-hidden />
+              <div className="template-preview">
+                <TemplatePreview variant={t.tab} />
+              </div>
               <div className="template-meta">
                 <span className="template-name">{t.title}</span>
                 <span className="template-tag">{t.tag}</span>

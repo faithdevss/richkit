@@ -410,12 +410,19 @@ body {
     border-color 0.2s ease,
     transform 0.2s ease;
 }
+.template-preview-art {
+  width: 100%;
+  height: 100%;
+}
 .template-card:hover {
   border-color: rgba(56, 132, 255, 0.5);
   transform: translateY(-3px);
 }
 .template-preview {
   height: 150px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
   border-radius: 12px;
   margin-bottom: 14px;
   background:
