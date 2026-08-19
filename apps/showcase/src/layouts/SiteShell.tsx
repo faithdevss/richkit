@@ -1,6 +1,10 @@
 import { NotificationsHost } from '@richkitjs/react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
+// Always ends in a slash, so `${HOME}#features` is a valid absolute URL under
+// any deploy base. A bare "/#features" would jump to the domain root instead.
+const HOME = import.meta.env.BASE_URL
+
 import { LogoMark } from '../components/LogoMark'
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
@@ -55,13 +59,13 @@ export function SiteShell() {
             RichKit
           </Link>
           <nav className="site-links">
-            <a href="/#features">Platform</a>
-            <a href="/#examples">Examples</a>
-            <a href="/#compare">Compare</a>
+            <a href={`${HOME}#features`}>Platform</a>
+            <a href={`${HOME}#examples`}>Examples</a>
+            <a href={`${HOME}#compare`}>Compare</a>
             <NavLink to="/docs" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
               Docs
             </NavLink>
-            <a href="/#support">Support</a>
+            <a href={`${HOME}#support`}>Support</a>
           </nav>
           <div className="site-nav-actions">
             <a

@@ -20,7 +20,9 @@ import SimpleEditorUsecase from './content/docs/usecases/simple-editor.mdx'
 
 export function App() {
   return (
-    <BrowserRouter>
+    // BASE_URL is whatever vite was built with, so the router resolves paths
+    // correctly whether the site is at a domain root or under /<repo>/.
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<SiteShell />}>
           <Route path="/" element={<Home />} />

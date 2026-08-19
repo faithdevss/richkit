@@ -1,0 +1,60 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages deploys are a single shared resource; queue them instead of racing.
+# In-progress runs are left alone so a half-uploaded artifact never publishes.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No `version:` — action-setup reads packageManager from package.json,
+      # and errors out if both are set.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      # A project site lives at /<repo>/, so the bundle has to be built with
+      # that prefix. Taking it from GITHUB_REPOSITORY means renaming the repo
+      # does not silently break every asset URL. configure-pages reports the
+      # real origin, so a CNAME (custom domain, served from /) wins over it.
+      - name: Build showcase
+        env:
+          VITE_BASE: ${{ steps.pages.outputs.base_path || format('/{0}/', github.event.repository.name) }}
+        run: pnpm turbo run build --filter=showcase
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/showcase/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
