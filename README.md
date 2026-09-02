@@ -1,5 +1,12 @@
 # richkit
 
+[![npm](https://img.shields.io/npm/v/@richkitjs/core)](https://www.npmjs.com/package/@richkitjs/core)
+[![downloads](https://img.shields.io/npm/dm/@richkitjs/core)](https://www.npmjs.com/package/@richkitjs/core)
+[![license](https://img.shields.io/npm/l/@richkitjs/core)](./LICENSE)
+[![GitHub](https://img.shields.io/badge/github-faithdevss%2Frichkit-blue)](https://github.com/faithdevss/richkit)
+
+[Docs](https://faithdevss.github.io/richkit/) · [npm org](https://www.npmjs.com/org/richkitjs) · [Changelog](https://github.com/faithdevss/richkit/releases)
+
 Headless, extensible WYSIWYG rich text editor. ProseMirror core, React binding, 20 extensions. Phase 1 MVP — v0.1.0.
 
 ## Features
@@ -21,8 +28,18 @@ Headless, extensible WYSIWYG rich text editor. ProseMirror core, React binding, 
 
 ## Install
 
+Published to the public npm registry under the [`@richkitjs`](https://www.npmjs.com/org/richkitjs) scope — no extra registry config needed.
+
 ```bash
 pnpm add @richkitjs/core @richkitjs/react @richkitjs/starter-kit
+```
+
+```bash
+npm install @richkitjs/core @richkitjs/react @richkitjs/starter-kit
+```
+
+```bash
+yarn add @richkitjs/core @richkitjs/react @richkitjs/starter-kit
 ```
 
 ## Usage
@@ -78,36 +95,36 @@ createAutosave(editor, {
 
 ## Packages
 
-| Package                                   | Purpose                                                                                   |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `@richkitjs/core`                         | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave        |
-| `@richkitjs/react`                        | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
-| `@richkitjs/starter-kit`                  | Bundled array of 20 default extensions                                                    |
-| `@richkitjs/html`                         | Standalone HTML parse/serialize utilities                                                 |
-| `@richkitjs/extension-paragraph`          | Paragraph node                                                                            |
-| `@richkitjs/extension-heading`            | H1–H6 with `setHeading(level)` + Mod-Alt-1..6                                             |
-| `@richkitjs/extension-blockquote`         | Blockquote wrap                                                                           |
-| `@richkitjs/extension-code-block`         | Fenced code block                                                                         |
-| `@richkitjs/extension-bullet-list`        | UL via `prosemirror-schema-list`                                                          |
-| `@richkitjs/extension-ordered-list`       | OL via `prosemirror-schema-list`                                                          |
-| `@richkitjs/extension-task-list`          | Checkbox list                                                                             |
-| `@richkitjs/extension-list-item`          | LI with Enter/Tab/Shift-Tab                                                               |
-| `@richkitjs/extension-table`              | `prosemirror-tables` wrapper (TableKit)                                                   |
-| `@richkitjs/extension-image`              | Image NodeView with corner resize                                                         |
-| `@richkitjs/extension-bold`               | Bold mark + Mod-B                                                                         |
-| `@richkitjs/extension-italic`             | Italic mark + Mod-I                                                                       |
-| `@richkitjs/extension-underline`          | Underline mark + Mod-U                                                                    |
-| `@richkitjs/extension-strike`             | Strike mark + Mod-Shift-S                                                                 |
-| `@richkitjs/extension-code`               | Inline code mark + Mod-E                                                                  |
-| `@richkitjs/extension-link`               | Link mark + URL autolink input rule                                                       |
-| `@richkitjs/extension-history`            | Undo/redo (Mod-Z, Mod-Shift-Z)                                                            |
-| `@richkitjs/extension-placeholder`        | Empty-doc placeholder decoration                                                          |
-| `@richkitjs/extension-markdown-shortcuts` | Markdown input rules                                                                      |
+| Package                                                                                                            | Purpose                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| [`@richkitjs/core`](https://www.npmjs.com/package/@richkitjs/core)                                                 | Headless editor, extension API, schema builder, commands chain, HTML I/O, autosave        |
+| [`@richkitjs/react`](https://www.npmjs.com/package/@richkitjs/react)                                               | `useEditor`, `EditorContent`, `BubbleMenu`, `Toolbar`, `DefaultToolbar`, `EditorProvider` |
+| [`@richkitjs/starter-kit`](https://www.npmjs.com/package/@richkitjs/starter-kit)                                   | Bundled array of 20 default extensions                                                    |
+| [`@richkitjs/html`](https://www.npmjs.com/package/@richkitjs/html)                                                 | Standalone HTML parse/serialize utilities                                                 |
+| [`@richkitjs/extension-paragraph`](https://www.npmjs.com/package/@richkitjs/extension-paragraph)                   | Paragraph node                                                                            |
+| [`@richkitjs/extension-heading`](https://www.npmjs.com/package/@richkitjs/extension-heading)                       | H1–H6 with `setHeading(level)` + Mod-Alt-1..6                                             |
+| [`@richkitjs/extension-blockquote`](https://www.npmjs.com/package/@richkitjs/extension-blockquote)                 | Blockquote wrap                                                                           |
+| [`@richkitjs/extension-code-block`](https://www.npmjs.com/package/@richkitjs/extension-code-block)                 | Fenced code block                                                                         |
+| [`@richkitjs/extension-bullet-list`](https://www.npmjs.com/package/@richkitjs/extension-bullet-list)               | UL via `prosemirror-schema-list`                                                          |
+| [`@richkitjs/extension-ordered-list`](https://www.npmjs.com/package/@richkitjs/extension-ordered-list)             | OL via `prosemirror-schema-list`                                                          |
+| [`@richkitjs/extension-task-list`](https://www.npmjs.com/package/@richkitjs/extension-task-list)                   | Checkbox list                                                                             |
+| [`@richkitjs/extension-list-item`](https://www.npmjs.com/package/@richkitjs/extension-list-item)                   | LI with Enter/Tab/Shift-Tab                                                               |
+| [`@richkitjs/extension-table`](https://www.npmjs.com/package/@richkitjs/extension-table)                           | `prosemirror-tables` wrapper (TableKit)                                                   |
+| [`@richkitjs/extension-image`](https://www.npmjs.com/package/@richkitjs/extension-image)                           | Image NodeView with corner resize                                                         |
+| [`@richkitjs/extension-bold`](https://www.npmjs.com/package/@richkitjs/extension-bold)                             | Bold mark + Mod-B                                                                         |
+| [`@richkitjs/extension-italic`](https://www.npmjs.com/package/@richkitjs/extension-italic)                         | Italic mark + Mod-I                                                                       |
+| [`@richkitjs/extension-underline`](https://www.npmjs.com/package/@richkitjs/extension-underline)                   | Underline mark + Mod-U                                                                    |
+| [`@richkitjs/extension-strike`](https://www.npmjs.com/package/@richkitjs/extension-strike)                         | Strike mark + Mod-Shift-S                                                                 |
+| [`@richkitjs/extension-code`](https://www.npmjs.com/package/@richkitjs/extension-code)                             | Inline code mark + Mod-E                                                                  |
+| [`@richkitjs/extension-link`](https://www.npmjs.com/package/@richkitjs/extension-link)                             | Link mark + URL autolink input rule                                                       |
+| [`@richkitjs/extension-history`](https://www.npmjs.com/package/@richkitjs/extension-history)                       | Undo/redo (Mod-Z, Mod-Shift-Z)                                                            |
+| [`@richkitjs/extension-placeholder`](https://www.npmjs.com/package/@richkitjs/extension-placeholder)               | Empty-doc placeholder decoration                                                          |
+| [`@richkitjs/extension-markdown-shortcuts`](https://www.npmjs.com/package/@richkitjs/extension-markdown-shortcuts) | Markdown input rules                                                                      |
 
 ## Monorepo
 
 ```
-rich_editor/
+richkit/
 ├── packages/
 │   ├── core/                          # @richkitjs/core
 │   ├── react/                         # @richkitjs/react

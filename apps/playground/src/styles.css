@@ -24,7 +24,13 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -198,6 +204,51 @@ body {
   border-top: 1px solid var(--border);
 }
 
+/* An overflow row stays on one line: whatever does not fit is rendered inside
+   the trailing "more" popover instead of wrapping to a second line.
+   `data-measuring` marks the single frame in which every child is rendered so
+   its width can be read — clipping keeps that pass from spilling out. */
+.tb-row.tb-overflow {
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.tb-row.tb-overflow[data-measuring] {
+  overflow: hidden;
+}
+/* the trigger sits in the popover's own wrapper, so the wrapper is what gets
+   pushed to the end of the row */
+.tb-row.tb-overflow > .tb-pop {
+  flex: none;
+  margin-left: auto;
+}
+.tb-more-btn {
+  flex: none;
+}
+/* max-content keeps the groups on one line until the clamp kicks in, so the
+   buttons wrap into rows instead of stacking one per line */
+.tb-more-panel {
+  width: max-content;
+  min-width: 0;
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 6px;
+}
+.tb-more-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+/* stacked groups swap the vertical divider for a horizontal one */
+.tb-more-items .tb-group {
+  flex-wrap: wrap;
+  padding: 4px 2px;
+  border-right: 0;
+  border-bottom: 1px solid var(--border);
+}
+.tb-more-items .tb-group:last-child {
+  border-bottom: 0;
+}
+
 .tb-group {
   display: flex;
   align-items: center;
@@ -223,7 +274,10 @@ body {
   cursor: pointer;
   color: var(--text);
   font: inherit;
-  transition: background 0.12s ease, color 0.12s ease, transform 0.06s ease;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease,
+    transform 0.06s ease;
 }
 .tb-btn svg {
   display: block;
@@ -276,6 +330,101 @@ body {
   font-weight: 500;
 }
 
+/* icon-only variant: no value to size the button around */
+.tb-blocktype-trigger.is-icon,
+.tb-font-trigger.is-icon,
+.tb-fontsize-trigger.is-icon {
+  min-width: 0;
+  gap: 2px;
+  padding: 0 4px;
+}
+
+/* table actions panel: grouping rules and the destructive entry */
+.tb-menu-item.has-separator {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  padding-top: 8px;
+}
+.tb-menu-item.is-danger {
+  color: #dc2626;
+}
+
+/* ============ LIST SPLIT BUTTON + STYLE PICKER ============ */
+/* left half toggles the list, right half opens the marker picker; they read as
+   one control, so the divider is internal and the halves share hover state */
+.tb-split {
+  display: inline-flex;
+  align-items: center;
+}
+.tb-split-main {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 2px;
+}
+.tb-split-caret {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 0;
+  width: 18px;
+  min-width: 18px;
+}
+.tb-list-styles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 8px;
+}
+.tb-list-style {
+  min-width: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.tb-list-style:hover {
+  background: var(--surface-2);
+}
+.tb-list-style.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.tb-list-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tb-list-marker {
+  font-size: 0.7rem;
+  min-width: 18px;
+  text-align: right;
+  color: var(--text);
+}
+.tb-list-line {
+  display: block;
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border-strong);
+}
+.tb-list-caption {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+/* the align dropdown stacks its four icon buttons */
+.tb-align-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 2px;
+}
+
 /* ============ COLOR PICKER ============ */
 .tb-color-panel {
   display: flex;
@@ -302,7 +451,9 @@ body {
   border-radius: 4px;
   cursor: pointer;
   padding: 0;
-  transition: transform 0.08s ease, border-color 0.08s ease;
+  transition:
+    transform 0.08s ease,
+    border-color 0.08s ease;
 }
 .tb-swatch:hover {
   transform: scale(1.1);
@@ -691,8 +842,14 @@ body {
   right: 0;
 }
 @keyframes tb-pop-in {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============ BLOCK-TYPE MENU ============ */
@@ -731,10 +888,18 @@ body {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
-.tb-preview-h1 { font-size: 1.05rem; }
-.tb-preview-h2 { font-size: 0.95rem; }
-.tb-preview-h3 { font-size: 0.85rem; }
-.tb-preview-h4 { font-size: 0.78rem; }
+.tb-preview-h1 {
+  font-size: 1.05rem;
+}
+.tb-preview-h2 {
+  font-size: 0.95rem;
+}
+.tb-preview-h3 {
+  font-size: 0.85rem;
+}
+.tb-preview-h4 {
+  font-size: 0.78rem;
+}
 
 /* ============ TABLE MENU ============ */
 .tb-table-menu {
@@ -761,7 +926,9 @@ body {
   border-radius: 3px;
   background: var(--surface);
   cursor: pointer;
-  transition: background 0.05s, border-color 0.05s;
+  transition:
+    background 0.05s,
+    border-color 0.05s;
 }
 .tb-cell.is-active {
   background: var(--accent-soft);
@@ -825,8 +992,8 @@ body {
   font-weight: 500;
 }
 .tb-link-form input,
-.tb-image-form input[type="url"],
-.tb-image-form input[type="text"] {
+.tb-image-form input[type='url'],
+.tb-image-form input[type='text'] {
   padding: 7px 10px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
@@ -911,11 +1078,31 @@ body {
   position: absolute;
 }
 
-.editor h1 { font-size: 2rem; font-weight: 700; margin: 1rem 0 0.5rem; letter-spacing: -0.015em; }
-.editor h2 { font-size: 1.5rem; font-weight: 700; margin: 0.875rem 0 0.4rem; letter-spacing: -0.01em; }
-.editor h3 { font-size: 1.25rem; font-weight: 600; margin: 0.75rem 0 0.3rem; }
-.editor h4 { font-size: 1.1rem; font-weight: 600; margin: 0.65rem 0 0.25rem; }
-.editor p { margin: 0.45rem 0; }
+.editor h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+  letter-spacing: -0.015em;
+}
+.editor h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.875rem 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+.editor h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.3rem;
+}
+.editor h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.65rem 0 0.25rem;
+}
+.editor p {
+  margin: 0.45rem 0;
+}
 .editor blockquote {
   border-left: 3px solid var(--accent);
   margin: 0.75rem 0;
@@ -1004,21 +1191,32 @@ body {
 
 /* ============ HIGHLIGHT.JS — Atom One Dark ============ */
 .editor pre code .hljs-comment,
-.editor pre code .hljs-quote { color: #5c6370; font-style: italic; }
+.editor pre code .hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
 .editor pre code .hljs-doctag,
 .editor pre code .hljs-keyword,
-.editor pre code .hljs-formula { color: #c678dd; }
+.editor pre code .hljs-formula {
+  color: #c678dd;
+}
 .editor pre code .hljs-section,
 .editor pre code .hljs-name,
 .editor pre code .hljs-selector-tag,
 .editor pre code .hljs-deletion,
-.editor pre code .hljs-subst { color: #e06c75; }
-.editor pre code .hljs-literal { color: #56b6c2; }
+.editor pre code .hljs-subst {
+  color: #e06c75;
+}
+.editor pre code .hljs-literal {
+  color: #56b6c2;
+}
 .editor pre code .hljs-string,
 .editor pre code .hljs-regexp,
 .editor pre code .hljs-addition,
 .editor pre code .hljs-attribute,
-.editor pre code .hljs-meta .hljs-string { color: #98c379; }
+.editor pre code .hljs-meta .hljs-string {
+  color: #98c379;
+}
 .editor pre code .hljs-attr,
 .editor pre code .hljs-variable,
 .editor pre code .hljs-template-variable,
@@ -1026,22 +1224,44 @@ body {
 .editor pre code .hljs-selector-class,
 .editor pre code .hljs-selector-attr,
 .editor pre code .hljs-selector-pseudo,
-.editor pre code .hljs-number { color: #d19a66; }
+.editor pre code .hljs-number {
+  color: #d19a66;
+}
 .editor pre code .hljs-symbol,
 .editor pre code .hljs-bullet,
 .editor pre code .hljs-link,
 .editor pre code .hljs-meta,
 .editor pre code .hljs-selector-id,
-.editor pre code .hljs-title { color: #61aeee; }
+.editor pre code .hljs-title {
+  color: #61aeee;
+}
 .editor pre code .hljs-built_in,
 .editor pre code .hljs-title.class_,
-.editor pre code .hljs-class .hljs-title { color: #e6c07b; }
-.editor pre code .hljs-emphasis { font-style: italic; }
-.editor pre code .hljs-strong { font-weight: 700; }
-.editor pre code .hljs-link { text-decoration: underline; }
-.editor ul, .editor ol { margin: 0.4rem 0; padding-left: 1.5rem; }
-.editor ul[data-type="task-list"] { list-style: none; padding-left: 0.5rem; }
-.editor li[data-type="task-item"][data-checked="true"] > p { text-decoration: line-through; color: var(--text-muted); }
+.editor pre code .hljs-class .hljs-title {
+  color: #e6c07b;
+}
+.editor pre code .hljs-emphasis {
+  font-style: italic;
+}
+.editor pre code .hljs-strong {
+  font-weight: 700;
+}
+.editor pre code .hljs-link {
+  text-decoration: underline;
+}
+.editor ul,
+.editor ol {
+  margin: 0.4rem 0;
+  padding-left: 1.5rem;
+}
+.editor ul[data-type='task-list'] {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+.editor li[data-type='task-item'][data-checked='true'] > p {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
 .editor table {
   border-collapse: collapse;
   table-layout: fixed;
@@ -1101,7 +1321,10 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0.85;
-  transition: opacity 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
   box-shadow: var(--shadow-sm);
 }
 .richkit-table-corner:hover,
@@ -1139,7 +1362,8 @@ body {
 .richkit-table-row-handle:hover {
   background: rgba(37, 99, 235, 0.08);
 }
-.editor th, .editor td {
+.editor th,
+.editor td {
   border: 1px solid var(--border-strong);
   padding: 8px 10px;
   vertical-align: top;
@@ -1151,9 +1375,19 @@ body {
   font-weight: 600;
   text-align: left;
 }
-.editor img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
-.editor a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.editor a:hover { color: var(--accent-hover); }
+.editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+.editor a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.editor a:hover {
+  color: var(--accent-hover);
+}
 
 /* ============ BUBBLE MENU ============ */
 .bubble-menu {
@@ -1164,11 +1398,20 @@ body {
   padding: 4px;
   box-shadow: var(--shadow-lg);
 }
-.bubble-menu .tb-btn { color: #e2e8f0; }
-.bubble-menu .tb-btn:hover { background: rgba(255, 255, 255, 0.1); }
-.bubble-menu .tb-btn.is-active { background: var(--accent); color: white; }
+.bubble-menu .tb-btn {
+  color: #e2e8f0;
+}
+.bubble-menu .tb-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.bubble-menu .tb-btn.is-active {
+  background: var(--accent);
+  color: white;
+}
 
-.richkit-image-resize:hover { background: var(--accent-hover) !important; }
+.richkit-image-resize:hover {
+  background: var(--accent-hover) !important;
+}
 
 .ProseMirror-gapcursor {
   display: none;
@@ -1176,13 +1419,15 @@ body {
   position: absolute;
 }
 .ProseMirror-gapcursor:after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   border-top: 1px solid var(--text);
   width: 20px;
 }
-.ProseMirror-focused .ProseMirror-gapcursor { display: block; }
+.ProseMirror-focused .ProseMirror-gapcursor {
+  display: block;
+}
 
 /* ============ OUTPUT ============ */
 .output h2 {
@@ -1751,12 +1996,22 @@ kbd {
   background: #b91c1c;
 }
 @keyframes re-dialog-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes re-dialog-pop {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ---- Phase 2: slash menu ---- */
@@ -1828,8 +2083,12 @@ kbd {
 .re-outline-item:hover {
   background: var(--accent-soft, rgba(31, 111, 235, 0.12));
 }
-.re-outline-level-1 { font-weight: 600; }
-.re-outline-level-2 { font-weight: 500; }
+.re-outline-level-1 {
+  font-weight: 600;
+}
+.re-outline-level-2 {
+  font-weight: 500;
+}
 
 /* ---- Phase 2: status bar ---- */
 .status-bar {
@@ -1877,4 +2136,65 @@ kbd {
   background: var(--accent-soft, rgba(31, 111, 235, 0.12));
   border-color: var(--border-strong);
   font-weight: 600;
+}
+
+/* ============ MOBILE ============ */
+/* Toolbars collapse into the "more" popover on their own; the rest is chrome
+   that has to give back horizontal space on a phone. */
+@media (max-width: 640px) {
+  .playground {
+    padding: 1.25rem 0.75rem 2.5rem;
+  }
+  .menubar {
+    padding: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .menubar::-webkit-scrollbar {
+    display: none;
+  }
+  .menubar-trigger {
+    padding: 5px 8px;
+    white-space: nowrap;
+  }
+  .toolbar {
+    padding: 4px;
+    top: 32px;
+  }
+  .tb-group {
+    padding: 0 2px;
+  }
+  .tb-btn {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 5px;
+  }
+  .tb-blocktype-trigger {
+    min-width: 92px;
+  }
+  .tb-font-trigger {
+    max-width: 120px;
+  }
+  /* panels are anchored to a button that can sit anywhere in the row, so cap
+     them to the viewport rather than letting one push the page sideways */
+  .tb-pop-panel,
+  .menu-panel {
+    max-width: calc(100vw - 20px);
+    min-width: 0;
+  }
+  .tb-menu,
+  .tb-list-styles {
+    min-width: 0;
+  }
+  .editor-shell {
+    padding: 1rem 0.9rem;
+    border-radius: 0;
+  }
+  .editor {
+    font-size: 15px;
+    min-height: 260px;
+  }
+  .re-modal {
+    width: calc(100vw - 24px);
+  }
 }

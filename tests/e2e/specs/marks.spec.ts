@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor, MOD } from './_helpers'
+import { MOD, clickToolbar, focusEditor } from './_helpers'
 
 test.describe('inline marks', () => {
   test('bold via shortcut', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('inline marks', () => {
   test('bold toolbar button toggles', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title^="Bold"]').first().click()
+    await clickToolbar(page, 'title^="Bold"')
     await page.keyboard.type('viaToolbar')
     await expect(page.locator('.editor strong').first()).toHaveText('viaToolbar')
   })
@@ -45,7 +45,7 @@ test.describe('inline marks', () => {
   test('italic toolbar button toggles', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title^="Italic"]').first().click()
+    await clickToolbar(page, 'title^="Italic"')
     await page.keyboard.type('italicTb')
     await expect(page.locator('.editor em').first()).toHaveText('italicTb')
   })
@@ -53,7 +53,7 @@ test.describe('inline marks', () => {
   test('strikethrough toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title^="Strikethrough"]').first().click()
+    await clickToolbar(page, 'title^="Strikethrough"')
     await page.keyboard.type('struck')
     await expect(page.locator('.editor s').first()).toHaveText('struck')
   })
@@ -69,7 +69,7 @@ test.describe('inline marks', () => {
   test('inline code toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Inline code"]').first().click()
+    await clickToolbar(page, 'title="Inline code"')
     await page.keyboard.type('codey')
     await expect(page.locator('.editor code').first()).toHaveText('codey')
   })

@@ -1,8 +1,17 @@
 import type { Editor } from '@richkitjs/core'
-import { AlignCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon } from '../icons'
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+  ChevronDownIcon,
+} from '../icons'
+import { Popover } from './Popover'
 
 export interface AlignMenuProps {
   editor: Editor
+  /** Collapse the four buttons into one dropdown — for compact toolbars. */
+  dropdown?: boolean
 }
 
 function activeBlockAlign(editor: Editor): string | null {
@@ -23,8 +32,51 @@ const ITEMS = [
   { value: 'justify', Icon: AlignJustifyIcon, label: 'Justify' },
 ] as const
 
-export function AlignMenu({ editor }: AlignMenuProps) {
+export function AlignMenu({ editor, dropdown = false }: AlignMenuProps) {
   const current = activeBlockAlign(editor)
+  const apply = (value: string) =>
+    editor
+      .chain()
+      .call('setTextAlign', value === 'left' ? null : value)
+      .focus()
+      .run()
+
+  if (dropdown) {
+    const active = ITEMS.find((i) => i.value === current) ?? ITEMS[0]
+    return (
+      <Popover
+        className="tb-pop-align"
+        trigger={
+          <button type="button" className="tb-btn tb-btn-split" title={active.label}>
+            <active.Icon />
+            <ChevronDownIcon className="tb-caret" />
+          </button>
+        }
+      >
+        {(close) => (
+          <div className="tb-menu tb-align-menu" role="menu">
+            {ITEMS.map(({ value, Icon, label }) => (
+              <button
+                key={value}
+                type="button"
+                role="menuitem"
+                className={`tb-btn ${current === value ? 'is-active' : ''}`}
+                title={label}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  apply(value)
+                  close()
+                }}
+              >
+                <Icon />
+              </button>
+            ))}
+          </div>
+        )}
+      </Popover>
+    )
+  }
+
   return (
     <>
       {ITEMS.map(({ value, Icon, label }) => {
@@ -38,11 +90,7 @@ export function AlignMenu({ editor }: AlignMenuProps) {
             aria-pressed={active}
             onMouseDown={(e) => {
               e.preventDefault()
-              editor
-                .chain()
-                .call('setTextAlign', value === 'left' ? null : value)
-                .focus()
-                .run()
+              apply(value)
             }}
           >
             <Icon />

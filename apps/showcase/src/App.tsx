@@ -17,6 +17,7 @@ import AgentWorkflowsUsecase from './content/docs/usecases/agent-workflows.mdx'
 import DocxEditingUsecase from './content/docs/usecases/docx-editing.mdx'
 import NotionBlocksUsecase from './content/docs/usecases/notion-blocks.mdx'
 import SimpleEditorUsecase from './content/docs/usecases/simple-editor.mdx'
+import ClassicEditorUsecase from './content/docs/usecases/classic-editor.mdx'
 
 export function App() {
   return (
@@ -43,6 +44,7 @@ export function App() {
             <Route path="usecases/docx-editing" element={<DocxEditingUsecase />} />
             <Route path="usecases/notion-blocks" element={<NotionBlocksUsecase />} />
             <Route path="usecases/simple-editor" element={<SimpleEditorUsecase />} />
+            <Route path="usecases/classic-editor" element={<ClassicEditorUsecase />} />
           </Route>
         </Route>
       </Routes>

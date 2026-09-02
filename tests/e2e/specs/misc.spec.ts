@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor, MOD } from './_helpers'
+import { MOD, clickToolbar, focusEditor } from './_helpers'
 
 test.describe('bubble menu', () => {
   test('appears on selection', async ({ page }) => {
@@ -36,7 +36,7 @@ test.describe('clear formatting', () => {
     await page.keyboard.press(`${MOD}+b`)
     await page.keyboard.type('was bold')
     await page.keyboard.press(`${MOD}+a`)
-    await page.locator('.toolbar .tb-btn[title="Clear formatting"]').click()
+    await clickToolbar(page, 'title="Clear formatting"')
     await expect(page.locator('.editor strong')).toHaveCount(0)
   })
 
@@ -91,7 +91,7 @@ test.describe('image insert', () => {
   test('insert via popover URL', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Insert image"]').click()
+    await clickToolbar(page, 'title="Insert image"')
     await page.locator('.tb-image-form input[type="url"]').fill('https://placehold.co/100x100.png')
     await page.locator('.tb-image-form .tb-btn-primary').click()
     await expect(page.locator('.editor img')).toBeVisible()
@@ -104,7 +104,7 @@ test.describe('link', () => {
     await focusEditor(page)
     await page.keyboard.type('click here')
     await page.keyboard.press(`${MOD}+a`)
-    await page.locator('.toolbar .tb-btn[title="Link"]').first().click()
+    await clickToolbar(page, 'title="Link"')
     await page.locator('.tb-link-form input[type="url"]').fill('https://example.com')
     await page.locator('.tb-link-form .tb-btn-primary').click()
     await expect(page.locator('.editor a[href="https://example.com"]')).toContainText('click here')
@@ -115,11 +115,11 @@ test.describe('link', () => {
     await focusEditor(page)
     await page.keyboard.type('to unlink')
     await page.keyboard.press(`${MOD}+a`)
-    await page.locator('.toolbar .tb-btn[title="Link"]').first().click()
+    await clickToolbar(page, 'title="Link"')
     await page.locator('.tb-link-form input[type="url"]').fill('https://x.com')
     await page.locator('.tb-link-form .tb-btn-primary').click()
     await page.keyboard.press(`${MOD}+a`)
-    await page.locator('.toolbar .tb-btn[title="Link"]').first().click()
+    await clickToolbar(page, 'title="Link"')
     await page.locator('.tb-link-form .tb-btn-ghost').click()
     await expect(page.locator('.editor a')).toHaveCount(0)
   })
@@ -166,7 +166,7 @@ test.describe('insert misc', () => {
   test('emoji popover inserts', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Insert emoji"]').click()
+    await clickToolbar(page, 'title="Insert emoji"')
     await page.locator('.tb-emoji-grid .tb-emoji-btn').first().click()
     await expect(page.locator('.editor')).toContainText('😀')
   })
@@ -174,7 +174,7 @@ test.describe('insert misc', () => {
   test('special char popover inserts', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Special characters"]').click()
+    await clickToolbar(page, 'title="Special characters"')
     await page.locator('.tb-char-grid .tb-char-btn').first().click()
     await expect(page.locator('.editor')).toContainText('©')
   })
@@ -186,7 +186,7 @@ test.describe('select all', () => {
     await focusEditor(page)
     await page.keyboard.type('aaa bbb ccc')
     await page.keyboard.press(`${MOD}+a`)
-    await page.locator('.toolbar .tb-btn[title^="Bold"]').click()
+    await clickToolbar(page, 'title^="Bold"')
     await expect(page.locator('.editor strong')).toContainText('aaa bbb ccc')
   })
 })

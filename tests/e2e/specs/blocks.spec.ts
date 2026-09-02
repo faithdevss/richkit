@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor, MOD } from './_helpers'
+import { MOD, clickToolbar, focusEditor } from './_helpers'
 
 test.describe('block types', () => {
   test('H1 via Mod+Alt+1', async ({ page }) => {
@@ -49,7 +49,7 @@ test.describe('block types', () => {
   test('Blockquote toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Blockquote"]').click()
+    await clickToolbar(page, 'title="Blockquote"')
     await page.keyboard.type('quoted')
     await expect(page.locator('.editor blockquote')).toContainText('quoted')
   })
@@ -57,7 +57,7 @@ test.describe('block types', () => {
   test('Code block toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Code block"]').click()
+    await clickToolbar(page, 'title="Code block"')
     await page.keyboard.type('const x = 1')
     await expect(page.locator('.editor pre code')).toHaveText('const x = 1')
   })
@@ -65,7 +65,7 @@ test.describe('block types', () => {
   test('Horizontal rule via toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Horizontal line"]').click()
+    await clickToolbar(page, 'title="Horizontal line"')
     await expect(page.locator('.editor hr')).toBeVisible()
   })
 

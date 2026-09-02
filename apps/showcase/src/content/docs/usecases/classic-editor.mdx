@@ -1,0 +1,331 @@
+import { FormFieldEditor } from '../../../editors/FormFieldEditor'
+import { Demo } from '../../../mdx-components'
+
+<div className="docs-prose">
+
+# Usecase: classic editor
+
+The desktop-word-processor arrangement — a menubar over a full toolbar — wired into a
+labelled, validated form control. It emits HTML for storage and plain text for validation,
+which is what a description or article field in a real app actually needs.
+
+</div>
+
+<Demo title="Classic editor">
+  <FormFieldEditor />
+</Demo>
+
+<div className="docs-prose">
+
+## The component
+
+```tsx
+import { forwardRef, useImperativeHandle, useMemo } from 'react'
+import {
+  AlignMenu,
+  BlockTypeMenu,
+  BulletListMenu,
+  EditorContent,
+  FontFamilyMenu,
+  FontSizeMenu,
+  HighlightMenu,
+  Icons,
+  ImageMenu,
+  Menubar,
+  OrderedListMenu,
+  TableMenu,
+  TextColorMenu,
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  buildMenus,
+  useEditor,
+} from '@richkitjs/react'
+import { Placeholder } from '@richkitjs/extension-placeholder'
+import { StarterKit } from '@richkitjs/starter-kit'
+
+import FormHelperText from '@material-ui/core/FormHelperText'
+import { FieldWraper, FormLabel } from './elements'
+
+// File / View / Tools belong to a full editor app, not to one form control.
+const FIELD_MENUS = ['Edit', 'Insert', 'Format', 'Help']
+
+const RichEditor = forwardRef(function RichEditor(props, ref) {
+  const { value, label, placeholder, helperText, error, required, disabled } = props
+  const { onChange, setContentText } = props
+
+  // StarterKit already carries a Placeholder — swap in a configured copy rather
+  // than appending a second one, which would register the plugin twice.
+  const extensions = useMemo(
+    () => [
+      ...StarterKit.filter((e) => e.name !== 'placeholder'),
+      Placeholder.configure({ placeholder }),
+    ],
+    [placeholder],
+  )
+
+  const editor = useEditor(
+    {
+      extensions,
+      content: value,
+      editable: !disabled,
+      onUpdate: ({ editor }) => {
+        const text = editor.getText().trim()
+        setContentText(text)
+        // An empty doc still serializes to "<p></p>" — forms want "".
+        onChange(text ? editor.getHTML() : '')
+      },
+    },
+    [disabled],
+  )
+
+  const menus = useMemo(
+    () => (editor ? buildMenus(editor).filter((m) => FIELD_MENUS.includes(m.label)) : []),
+    [editor],
+  )
+
+  useImperativeHandle(ref, () => ({ editor }), [editor])
+
+  return (
+    <FieldWraper>
+      <FormLabel required={required}>{label}</FormLabel>
+      {editor && <Menubar editor={editor} menus={menus} />}
+      <Toolbar editor={editor}>
+        <ToolbarGroup>
+          <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
+          <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <BlockTypeMenu editor={editor} iconOnly />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <FontSizeMenu editor={editor} iconOnly />
+          <FontFamilyMenu editor={editor} iconOnly />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <ToolbarButton
+            editor={editor}
+            command="toggleBold"
+            isActiveName="bold"
+            label={<Icons.BoldIcon />}
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleItalic"
+            isActiveName="italic"
+            label={<Icons.ItalicIcon />}
+          />
+          <ToolbarButton
+            editor={editor}
+            command="toggleUnderline"
+            isActiveName="underline"
+            label={<Icons.UnderlineIcon />}
+          />
+          <TextColorMenu editor={editor} />
+          <HighlightMenu editor={editor} />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <ToolbarButton
+            editor={editor}
+            command="clearFormatting"
+            label={<Icons.ClearFormatIcon />}
+          />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <ImageMenu editor={editor} />
+          <TableMenu editor={editor} />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <AlignMenu editor={editor} dropdown />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <ToolbarButton
+          <BulletListMenu editor={editor} />
+          <OrderedListMenu editor={editor} />
+          <ToolbarButton editor={editor} command="sinkListItem" label={<Icons.IndentInIcon />} />
+          <ToolbarButton editor={editor} command="liftListItem" label={<Icons.IndentOutIcon />} />
+        </ToolbarGroup>
+      </Toolbar>
+      <EditorContent editor={editor} className="editor" />
+      {Boolean(helperText) && <FormHelperText error={error}>{helperText}</FormHelperText>}
+    </FieldWraper>
+  )
+})
+```
+
+`useEditor` returns `null` on the first render, and both `Toolbar` and `EditorContent`
+accept that — no `dataLoaded` guard needed.
+
+## Toolbar items
+
+The toolbar is JSX, not a config array. Each control is either a `ToolbarButton` bound to a
+command, or a dropdown component that owns its own popover:
+
+| Control                   | Component                                                                                                       | Extensions it needs                                    |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Undo / redo               | `undo`, `redo`                                                                                                  | `extension-history`                                    |
+| Heading / block type      | `<BlockTypeMenu />`                                                                                             | `extension-heading`, `extension-paragraph`             |
+| Font size / family        | `<FontSizeMenu />`, `<FontFamilyMenu />`                                                                        | `extension-text-style`                                 |
+| Bold / italic / underline | `toggleBold`, `toggleItalic`, `toggleUnderline`                                                                 | `extension-bold`, `-italic`, `-underline`              |
+| Strike / inline code      | `toggleStrike`, `toggleCode`                                                                                    | `extension-strike`, `extension-code`                   |
+| Text color                | `<TextColorMenu />`                                                                                             | `extension-text-style`                                 |
+| Highlight                 | `<HighlightMenu />`                                                                                             | `extension-highlight`                                  |
+| Clear formatting          | `clearFormatting` — strips every mark in the selection                                                          | built into core                                        |
+| Link                      | `<LinkMenu />` — prompts for the URL, then runs `setLink`                                                       | `extension-link`                                       |
+| Image                     | `<ImageMenu />` — URL or file, inserts a resizable node                                                         | `extension-image`                                      |
+| Table                     | `<TableMenu />` — size grid outside a table, row/column/delete actions inside one                               | `extension-table`                                      |
+| Alignment                 | `<AlignMenu />` — four buttons, or one dropdown with `dropdown`                                                 | `extension-text-align`                                 |
+| Bullet / numbered list    | `<BulletListMenu />`, `<OrderedListMenu />` — split buttons: toggle on the left half, marker style on the caret | `extension-bullet-list`, `-ordered-list`, `-list-item` |
+| Indent / outdent          | `sinkListItem`, `liftListItem`                                                                                  | `extension-list-item`                                  |
+
+`StarterKit` bundles every extension in that list, so this toolbar needs no extra installs.
+`isActiveName` is what lights a button up when the cursor sits inside that mark or node, and
+one `ToolbarGroup` is one separator-delimited cluster. Full props for each menu are in the
+[React components reference](/docs/api/react).
+
+## Menubar
+
+The **Edit / Insert / Format / Help** row comes from `buildMenus`, which returns the full
+`File · Edit · View · Insert · Format · Tools · Table · Help` set. A form control wants a
+subset, so filter it:
+
+```tsx
+const FIELD_MENUS = ['Edit', 'Insert', 'Format', 'Help']
+
+const menus = useMemo(
+  () => (editor ? buildMenus(editor).filter((m) => FIELD_MENUS.includes(m.label)) : []),
+  [editor],
+)
+
+<Menubar editor={editor} menus={menus} />
+```
+
+`buildMenus` takes a second argument for the entries it cannot implement on its own —
+`findReplace`, `sourceCode`, `importFile`, `wordCount` — and disables the ones you omit.
+
+## Placeholder
+
+The empty-document hint comes from the `Placeholder` extension. `StarterKit` already includes
+one, so replace it rather than appending a second copy — two instances register the plugin
+twice:
+
+```tsx
+import { Placeholder } from '@richkitjs/extension-placeholder'
+
+const extensions = [
+  ...StarterKit.filter((e) => e.name !== 'placeholder'),
+  Placeholder.configure({ placeholder: 'Type or paste your content here!' }),
+]
+```
+
+The decoration puts `data-placeholder` on the empty first block; your stylesheet draws it:
+
+```css
+.editor [data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: #9aa0a6;
+  position: absolute;
+  pointer-events: none;
+}
+```
+
+## Setting the initial value
+
+The editor takes its initial document as `content`, so whatever is in the prop at mount is
+what it starts with — no `onReady` hook and no "did I already load it" flag:
+
+```tsx
+useEditor({ extensions: StarterKit, content: value })
+```
+
+For a value that arrives later (a fetch resolving after mount), push it once it lands
+rather than on every render — writing on each render would fight the user's typing:
+
+```tsx
+useEffect(() => {
+  if (!editor || value == null) return
+  if (value !== editor.getHTML()) editor.setContent(value)
+}, [editor, value])
+```
+
+Compare against `getHTML()`, not against a previous prop: after your own `onChange`
+round-trips through form state, the incoming `value` and the editor already agree, and the
+comparison keeps `setContent` (which resets the selection) from firing.
+
+## Disabled
+
+`editable` is read from the options the editor was constructed with, so flipping the prop
+alone changes nothing. Pass it in the dependency array and let `useEditor` rebuild:
+
+```tsx
+const editor = useEditor({ extensions: StarterKit, content: value, editable: !disabled }, [
+  disabled,
+])
+```
+
+Rebuilding drops undo history and selection. If you toggle `disabled` often — a row that
+switches between read and edit mode — set it on the live view instead:
+
+```tsx
+useEffect(() => {
+  editor?.view.setProps({ editable: () => !disabled })
+}, [editor, disabled])
+```
+
+## Sanitizing
+
+No sanitizer runs here, because there is nothing left for one to do: content is parsed into
+the ProseMirror schema, and anything the schema does not define — `<script>`, event-handler
+attributes, unknown tags — is dropped on the way in. `getHTML()` serializes back out of that
+document, so what leaves is always schema-shaped.
+
+That covers content that goes _through_ the editor. HTML you render elsewhere on the page
+still needs escaping at the render site, and if you want the same normalization without
+mounting an editor, run the round-trip directly:
+
+```ts
+import { htmlToDoc, docToHtml } from '@richkitjs/html'
+
+const clean = docToHtml(htmlToDoc(untrusted, editor.schema), editor.schema)
+```
+
+Paste is handled separately: `@richkitjs/extension-paste-handler` strips Word and Google
+Docs wrapper markup, and `Mod-Shift-V` pastes as plain text.
+
+## Plain text and counts
+
+`editor.getText()` replaces `convertHtmlToText`. For validation on length, the word-count
+extension gives the numbers without a string round-trip:
+
+```ts
+import { getWordCount } from '@richkitjs/extension-word-count'
+
+const { words, characters, readingTimeMinutes } = getWordCount(editor.view.state.doc)
+```
+
+## Validating in a form library
+
+`onChange` hands you an HTML string, so the field is an ordinary controlled input. With
+react-hook-form:
+
+```tsx
+<Controller
+  name="description"
+  control={control}
+  rules={{ validate: () => text.length >= 20 || 'Too short' }}
+  render={({ field, fieldState }) => (
+    <RichEditor
+      {...field}
+      label="Job description"
+      required
+      error={Boolean(fieldState.error)}
+      helperText={fieldState.error?.message}
+      setContentText={setText}
+    />
+  )}
+/>
+```
+
+Validate against the plain text, not the HTML — `"<p></p>"` is 7 characters of nothing.
+
+</div>

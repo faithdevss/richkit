@@ -1,5 +1,5 @@
 import type { Editor } from '@richkitjs/core'
-import { ChevronDownIcon } from '../icons'
+import { ChevronDownIcon, FontIcon, FontSizeIcon } from '../icons'
 import { Popover } from './Popover'
 
 const FONT_FAMILIES = [
@@ -36,15 +36,25 @@ function currentMarkAttr(editor: Editor, key: string): string | null {
   return (m?.attrs[key] as string | null) ?? null
 }
 
-export function FontFamilyMenu({ editor }: { editor: Editor }) {
+export interface FontMenuProps {
+  editor: Editor
+  /** Show an icon instead of the current value — for compact toolbars. */
+  iconOnly?: boolean
+}
+
+export function FontFamilyMenu({ editor, iconOnly = false }: FontMenuProps) {
   const current = currentMarkAttr(editor, 'fontFamily')
   const label = FONT_FAMILIES.find((f) => f.value === current)?.label ?? 'Custom'
   return (
     <Popover
       className="tb-pop-font"
       trigger={
-        <button type="button" className="tb-btn tb-font-trigger" title="Font family">
-          <span className="tb-font-label">{label}</span>
+        <button
+          type="button"
+          className={`tb-btn tb-font-trigger${iconOnly ? ' is-icon' : ''}`}
+          title={`Font family — ${label}`}
+        >
+          {iconOnly ? <FontIcon /> : <span className="tb-font-label">{label}</span>}
           <ChevronDownIcon className="tb-caret" />
         </button>
       }
@@ -73,15 +83,19 @@ export function FontFamilyMenu({ editor }: { editor: Editor }) {
   )
 }
 
-export function FontSizeMenu({ editor }: { editor: Editor }) {
+export function FontSizeMenu({ editor, iconOnly = false }: FontMenuProps) {
   const current = currentMarkAttr(editor, 'fontSize')
   const label = FONT_SIZES.find((f) => f.value === current)?.label ?? current ?? '–'
   return (
     <Popover
       className="tb-pop-fontsize"
       trigger={
-        <button type="button" className="tb-btn tb-fontsize-trigger" title="Font size">
-          <span>{label}</span>
+        <button
+          type="button"
+          className={`tb-btn tb-fontsize-trigger${iconOnly ? ' is-icon' : ''}`}
+          title={`Font size — ${label}`}
+        >
+          {iconOnly ? <FontSizeIcon /> : <span>{label}</span>}
           <ChevronDownIcon className="tb-caret" />
         </button>
       }

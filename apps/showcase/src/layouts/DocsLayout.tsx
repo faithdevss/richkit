@@ -31,6 +31,7 @@ const NAV: { head: string; items: { label: string; to: string }[] }[] = [
       { label: 'Docx editing', to: '/docs/usecases/docx-editing' },
       { label: 'Notion-like blocks', to: '/docs/usecases/notion-blocks' },
       { label: 'Simple editor', to: '/docs/usecases/simple-editor' },
+      { label: 'Classic editor', to: '/docs/usecases/classic-editor' },
     ],
   },
 ]

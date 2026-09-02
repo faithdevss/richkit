@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import * as os from 'node:os'
+import { clickToolbar } from './_helpers'
 
 const MOD = os.platform() === 'darwin' ? 'Meta' : 'Control'
 
@@ -50,7 +51,7 @@ test.describe('playground smoke', () => {
   test('toolbar bold button toggles mark', async ({ page }) => {
     await page.goto('/')
     await clearAndFocus(page)
-    await page.locator('.toolbar .tb-btn[title^="Bold"]').first().click()
+    await clickToolbar(page, 'title^="Bold"')
     await page.keyboard.type('via-toolbar')
     await expect(page.locator('.editor strong').first()).toHaveText('via-toolbar')
   })

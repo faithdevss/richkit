@@ -1,9 +1,11 @@
 import type { Editor } from '@richkitjs/core'
-import { ChevronDownIcon } from '../icons'
+import { ChevronDownIcon, HeadingIcon, ParagraphIcon } from '../icons'
 import { Popover } from './Popover'
 
 export interface BlockTypeMenuProps {
   editor: Editor
+  /** Show an icon instead of the current block type — for compact toolbars. */
+  iconOnly?: boolean
 }
 
 const ITEMS: {
@@ -56,13 +58,26 @@ function currentLabel(editor: Editor): string {
   return 'Paragraph'
 }
 
-export function BlockTypeMenu({ editor }: BlockTypeMenuProps) {
+export function BlockTypeMenu({ editor, iconOnly = false }: BlockTypeMenuProps) {
+  const label = currentLabel(editor)
   return (
     <Popover
       className="tb-pop-blocktype"
       trigger={
-        <button type="button" className="tb-btn tb-blocktype-trigger" title="Block type">
-          <span>{currentLabel(editor)}</span>
+        <button
+          type="button"
+          className={`tb-btn tb-blocktype-trigger${iconOnly ? ' is-icon' : ''}`}
+          title={`Block type — ${label}`}
+        >
+          {iconOnly ? (
+            label === 'Paragraph' ? (
+              <ParagraphIcon />
+            ) : (
+              <HeadingIcon />
+            )
+          ) : (
+            <span>{label}</span>
+          )}
           <ChevronDownIcon className="tb-caret" />
         </button>
       }

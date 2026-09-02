@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor, MOD } from './_helpers'
+import { MOD, clickToolbar, focusEditor } from './_helpers'
 
 test.describe('menubar opens menus', () => {
   for (const label of ['File', 'Edit', 'View', 'Insert', 'Format', 'Tools', 'Table', 'Help']) {
@@ -115,7 +115,7 @@ test.describe('history (undo/redo)', () => {
     await page.goto('/')
     await focusEditor(page)
     await page.keyboard.type('typed text')
-    await page.locator('.toolbar .tb-btn[title^="Undo"]').click()
+    await clickToolbar(page, 'title^="Undo"')
     await expect(page.locator('.editor')).not.toContainText('typed text')
   })
 
@@ -132,7 +132,7 @@ test.describe('history (undo/redo)', () => {
     await focusEditor(page)
     await page.keyboard.type('content')
     await page.keyboard.press(`${MOD}+z`)
-    await page.locator('.toolbar .tb-btn[title^="Redo"]').click()
+    await clickToolbar(page, 'title^="Redo"')
     await expect(page.locator('.editor')).toContainText('content')
   })
 })

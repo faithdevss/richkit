@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
-import { focusEditor } from './_helpers'
+import { clickToolbar, focusEditor } from './_helpers'
 
 async function insertTable(page: Page, rows = 2, cols = 2) {
-  await page.locator('.toolbar .tb-btn[title="Insert table"]').first().click()
+  await clickToolbar(page, 'title="Insert table"')
   const panel = page.locator('.tb-table-menu')
   await expect(panel).toBeVisible()
   const idx = (rows - 1) * 10 + (cols - 1)

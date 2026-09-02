@@ -52,3 +52,42 @@ export const SIMPLE_CONTENT = `
   <li><strong>Slash commands</strong>, bubble menus, and keyboard shortcuts.</li>
 </ul>
 `
+
+export const CLASSIC_CONTENT = `
+<h1>Q3 Business Review</h1>
+<p><span style="color: rgb(107, 114, 128);">Prepared by the Revenue team · 30 September</span></p>
+<p>Growth held through the quarter, with <strong>September the strongest month on record</strong>. The chart below tracks recognised revenue; the table breaks the same period out by region.</p>
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNjQwIDIwMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJRdWFydGVybHkgcmV2ZW51ZSBiYXJzIj4gPGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjEiIHgyPSIwIiB5Mj0iMCI+IDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzdjNWNmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwZDZjOCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPiA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjIwMCIgcng9IjEyIiBmaWxsPSIjMGYxMDIwIi8+IDxnIGZpbGw9InVybCgjZykiPiA8cmVjdCB4PSI1NiIgeT0iMTIwIiB3aWR0aD0iNTQiIGhlaWdodD0iNTIiIHJ4PSI2Ii8+IDxyZWN0IHg9IjE1MCIgeT0iOTIiIHdpZHRoPSI1NCIgaGVpZ2h0PSI4MCIgcng9IjYiLz4gPHJlY3QgeD0iMjQ0IiB5PSI2NiIgd2lkdGg9IjU0IiBoZWlnaHQ9IjEwNiIgcng9IjYiLz4gPHJlY3QgeD0iMzM4IiB5PSI0NCIgd2lkdGg9IjU0IiBoZWlnaHQ9IjEyOCIgcng9IjYiLz4gPHJlY3QgeD0iNDMyIiB5PSI3OCIgd2lkdGg9IjU0IiBoZWlnaHQ9Ijk0IiByeD0iNiIvPiA8cmVjdCB4PSI1MjYiIHk9IjMwIiB3aWR0aD0iNTQiIGhlaWdodD0iMTQyIiByeD0iNiIvPiA8L2c+IDxnIGZpbGw9IiM4YThhYTMiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiPiA8dGV4dCB4PSI3MCIgeT0iMTkwIj5BcHI8L3RleHQ+PHRleHQgeD0iMTY0IiB5PSIxOTAiPk1heTwvdGV4dD48dGV4dCB4PSIyNTYiIHk9IjE5MCI+SnVuPC90ZXh0PiA8dGV4dCB4PSIzNTIiIHk9IjE5MCI+SnVsPC90ZXh0Pjx0ZXh0IHg9IjQ0NCIgeT0iMTkwIj5BdWc8L3RleHQ+PHRleHQgeD0iNTM2IiB5PSIxOTAiPlNlcDwvdGV4dD4gPC9nPiA8dGV4dCB4PSIyNCIgeT0iMzQiIGZpbGw9IiNmMmYyZjciIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI2MDAiPlJldmVudWUgYnkgbW9udGg8L3RleHQ+IDwvc3ZnPg==" alt="Bar chart of revenue by month, April through September" width="640" />
+<h2>Regional breakdown</h2>
+<table><tbody>
+  <tr>
+    <th data-colwidth="150"><p>Region</p></th>
+    <th data-colwidth="120"><p>Q2</p></th>
+    <th data-colwidth="120"><p>Q3</p></th>
+    <th data-colwidth="120"><p>Change</p></th>
+  </tr>
+  <tr>
+    <td data-colwidth="150"><p>North America</p></td>
+    <td data-colwidth="120"><p>$1.82M</p></td>
+    <td data-colwidth="120"><p>$2.14M</p></td>
+    <td data-colwidth="120"><p><mark style="background-color: rgb(187, 247, 208);">+17.6%</mark></p></td>
+  </tr>
+  <tr>
+    <td data-colwidth="150"><p>EMEA</p></td>
+    <td data-colwidth="120"><p>$1.05M</p></td>
+    <td data-colwidth="120"><p>$1.31M</p></td>
+    <td data-colwidth="120"><p><mark style="background-color: rgb(187, 247, 208);">+24.8%</mark></p></td>
+  </tr>
+  <tr>
+    <td data-colwidth="150"><p>APAC</p></td>
+    <td data-colwidth="120"><p>$0.74M</p></td>
+    <td data-colwidth="120"><p>$0.69M</p></td>
+    <td data-colwidth="120"><p><span style="color: rgb(220, 38, 38);">−6.8%</span></p></td>
+  </tr>
+</tbody></table>
+<h2>What moved the number</h2>
+<ol style="list-style-type: lower-alpha"><li><p>Enterprise renewals landed two weeks earlier than planned.</p></li><li><p>Self-serve conversion rose after the onboarding rewrite.</p></li><li><p>APAC softened on one delayed public-sector contract.</p></li></ol>
+<h2>Next quarter</h2>
+<ul style="list-style-type: square"><li><p>Re-run the pricing test in EMEA.</p></li><li><p>Ship usage-based billing to the top 20 accounts.</p></li></ul>
+<p style="text-align: center"><em>Select any of the above and try the toolbar — every control edits this document live.</em></p>
+`

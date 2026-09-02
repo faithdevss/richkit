@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { focusEditor } from './_helpers'
+import { clickToolbar, focusEditor } from './_helpers'
 
 test.describe('lists', () => {
   test('bullet list via toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.type('one')
     await page.keyboard.press('Enter')
     await page.keyboard.type('two')
@@ -18,7 +18,7 @@ test.describe('lists', () => {
   test('ordered list via toolbar', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Numbered list"]').click()
+    await clickToolbar(page, 'title="Numbered list"')
     await page.keyboard.type('alpha')
     await page.keyboard.press('Enter')
     await page.keyboard.type('beta')
@@ -29,7 +29,7 @@ test.describe('lists', () => {
   test('nest list with Tab', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.type('outer')
     await page.keyboard.press('Enter')
     await page.keyboard.press('Tab')
@@ -40,7 +40,7 @@ test.describe('lists', () => {
   test('unnest with Shift+Tab', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.type('outer')
     await page.keyboard.press('Enter')
     await page.keyboard.press('Tab')
@@ -55,9 +55,9 @@ test.describe('lists', () => {
   test('toggle off bullet list', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.type('item')
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.press('End')
     await page.keyboard.type(' plain')
     const html = await page.locator('.editor').innerHTML()
@@ -76,11 +76,11 @@ test.describe('lists', () => {
   test('increase indent button (sinkListItem)', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)
-    await page.locator('.toolbar .tb-btn[title="Bullet list"]').click()
+    await clickToolbar(page, 'title="Bullet list"')
     await page.keyboard.type('a')
     await page.keyboard.press('Enter')
     await page.keyboard.type('b')
-    await page.locator('.toolbar .tb-btn[title="Increase indent"]').click()
+    await clickToolbar(page, 'title="Increase indent"')
     await expect(page.locator('.editor ul ul')).toBeAttached()
   })
 })

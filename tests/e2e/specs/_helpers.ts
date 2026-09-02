@@ -38,3 +38,27 @@ export async function clickSubMenu(page: Page, parentLabel: string, label: strin
   await page.locator(`.menu-item:has-text("${parentLabel}")`).first().hover()
   await page.locator(`.menu-submenu .menu-item:has-text("${label}")`).first().click()
 }
+
+/**
+ * Click a toolbar button by attribute selector (e.g. `title="Bullet list"`).
+ * A narrow window parks the trailing groups in the "more" popover, so fall
+ * back to opening those before giving up.
+ */
+export async function clickToolbar(page: Page, attr: string) {
+  const direct = page.locator(`.toolbar .tb-btn[${attr}]`).first()
+  if (await direct.isVisible()) {
+    await direct.click()
+    return
+  }
+  const more = page.locator('.toolbar .tb-more-btn')
+  for (let i = 0; i < (await more.count()); i++) {
+    await more.nth(i).click()
+    const inPanel = page.locator(`.tb-more-panel .tb-btn[${attr}]`).first()
+    if (await inPanel.isVisible()) {
+      await inPanel.click()
+      return
+    }
+    await more.nth(i).click()
+  }
+  throw new Error(`toolbar button not found: ${attr}`)
+}

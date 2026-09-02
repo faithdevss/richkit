@@ -93,6 +93,9 @@ importers:
       '@richkitjs/docx':
         specifier: workspace:*
         version: link:../../packages/docx
+      '@richkitjs/extension-placeholder':
+        specifier: workspace:*
+        version: link:../../packages/extension-placeholder
       '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../../packages/extension-slash-commands

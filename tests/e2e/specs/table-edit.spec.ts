@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
-import { focusEditor } from './_helpers'
+import { clickToolbar, focusEditor } from './_helpers'
 
 async function insertTable(page: Page, rows = 3, cols = 3) {
-  await page.locator('.toolbar .tb-btn[title="Insert table"]').first().click()
+  await clickToolbar(page, 'title="Insert table"')
   const idx = (rows - 1) * 10 + (cols - 1)
   await page.locator('.tb-table-menu .tb-cell').nth(idx).click()
   await page.waitForSelector('.editor table')

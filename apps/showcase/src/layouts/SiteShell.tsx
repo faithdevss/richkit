@@ -25,6 +25,7 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'Docx', to: '/docs/usecases/docx-editing' },
       { label: 'Notion-like', to: '/docs/usecases/notion-blocks' },
       { label: 'Simple', to: '/docs/usecases/simple-editor' },
+      { label: 'Classic', to: '/docs/usecases/classic-editor' },
     ],
   },
   {
@@ -44,6 +45,15 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'react', to: '/docs/extensions#pkg-react' },
       { label: 'starter-kit', to: '/docs/extensions#pkg-starter-kit' },
       { label: 'docx', to: '/docs/extensions#pkg-docx' },
+    ],
+  },
+  {
+    head: 'Community',
+    links: [
+      { label: 'GitHub', to: 'https://github.com/faithdevss/richkit' },
+      { label: 'npm', to: 'https://www.npmjs.com/org/richkitjs' },
+      { label: 'Releases', to: 'https://github.com/faithdevss/richkit/releases' },
+      { label: 'Issues', to: 'https://github.com/faithdevss/richkit/issues' },
     ],
   },
 ]
@@ -70,6 +80,14 @@ export function SiteShell() {
             <a href={`${HOME}#support`}>Support</a>
           </nav>
           <div className="site-nav-actions">
+            <a
+              href="https://github.com/faithdevss/richkit"
+              className="site-ghost"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
             <a
               href="https://github.com/sponsors/faithdevss"
               className="site-ghost"
@@ -106,7 +124,13 @@ export function SiteShell() {
                       {l.label}
                     </Link>
                   ) : (
-                    <a href={l.to} key={l.label}>
+                    <a
+                      href={l.to}
+                      key={l.label}
+                      {...(l.to.startsWith('http')
+                        ? { target: '_blank', rel: 'noreferrer' }
+                        : null)}
+                    >
                       {l.label}
                     </a>
                   ),

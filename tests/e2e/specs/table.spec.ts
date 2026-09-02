@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import * as os from 'node:os'
+import { clickToolbar } from './_helpers'
 
 const MOD = os.platform() === 'darwin' ? 'Meta' : 'Control'
 
@@ -12,7 +13,7 @@ async function focusEditor(page: Page) {
 }
 
 async function openTableMenu(page: Page) {
-  await page.locator('.toolbar .tb-btn[title="Insert table"]').first().click()
+  await clickToolbar(page, 'title="Insert table"')
 }
 
 async function insertViaGrid(page: Page, rows: number, cols: number) {

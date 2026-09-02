@@ -4,21 +4,27 @@ import { Icons } from '@richkitjs/react'
 import { ComparisonTable } from '../components/ComparisonTable'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
+import { ClassicEditor } from '../editors/FormFieldEditor'
 import { NotionEditor } from '../editors/NotionEditor'
 import { SimpleEditor } from '../editors/SimpleEditor'
 import agentSource from '../editors/AgentEditor.tsx?raw'
 import docxSource from '../editors/DocxEditor.tsx?raw'
+import classicSource from '../editors/FormFieldEditor.tsx?raw'
 import notionSource from '../editors/NotionEditor.tsx?raw'
 import simpleSource from '../editors/SimpleEditor.tsx?raw'
 import { TemplatePreview } from '../components/TemplatePreview'
 
-type TabId = 'agent' | 'docx' | 'notion' | 'simple'
+type TabId = 'agent' | 'docx' | 'notion' | 'simple' | 'classic'
+// The template cards below only have wireframe art for the four document-style
+// editors, so they take the narrower union.
+type TemplateTab = Exclude<TabId, 'classic'>
 
 const SOURCES: Record<TabId, string> = {
   agent: agentSource,
   docx: docxSource,
   notion: notionSource,
   simple: simpleSource,
+  classic: classicSource,
 }
 
 const TABS: { id: TabId; label: string }[] = [
@@ -26,9 +32,10 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'docx', label: 'Docx editor' },
   { id: 'notion', label: 'Notion-like editor' },
   { id: 'simple', label: 'Simple editor' },
+  { id: 'classic', label: 'Classic editor' },
 ]
 
-const TAB_IDS = new Set<string>(['agent', 'docx', 'notion', 'simple'])
+const TAB_IDS = new Set<string>(['agent', 'docx', 'notion', 'simple', 'classic'])
 
 const METRICS: { value: string; label: string }[] = [
   { value: '40+', label: 'extensions' },
@@ -69,7 +76,7 @@ const FEATURES: { icon: string; badge?: string; title: string; body: string }[] 
   },
 ]
 
-const TEMPLATES: { title: string; tag: string; body: string; tab: TabId }[] = [
+const TEMPLATES: { title: string; tag: string; body: string; tab: TemplateTab }[] = [
   {
     title: 'Simple editor',
     tag: 'Free',
@@ -242,6 +249,7 @@ export function Home() {
               {tab === 'docx' && <DocxEditor />}
               {tab === 'notion' && <NotionEditor />}
               {tab === 'simple' && <SimpleEditor />}
+              {tab === 'classic' && <ClassicEditor />}
             </div>
           )}
         </div>

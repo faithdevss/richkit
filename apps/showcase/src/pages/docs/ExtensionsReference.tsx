@@ -6,7 +6,11 @@ export function ExtensionsReference() {
       <h1>Extensions reference</h1>
       <p>
         Every <code>@richkitjs/*</code> package, grouped by category. Install only what you need —{' '}
-        <code>starter-kit</code> bundles the common ones.
+        <code>starter-kit</code> bundles the common ones. Each name links to its page on{' '}
+        <a href="https://www.npmjs.com/org/richkitjs" target="_blank" rel="noreferrer">
+          npm
+        </a>
+        .
       </p>
 
       {CATEGORY_ORDER.map((category) => {
@@ -26,7 +30,14 @@ export function ExtensionsReference() {
                 {rows.map((r) => (
                   <tr id={`pkg-${r.pkg}`} key={r.pkg}>
                     <td>
-                      <code>@richkitjs/{r.pkg}</code>
+                      <a
+                        className="pkg-npm-link"
+                        href={`https://www.npmjs.com/package/@richkitjs/${r.pkg}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <code>@richkitjs/{r.pkg}</code>
+                      </a>
                     </td>
                     <td>{r.description}</td>
                   </tr>

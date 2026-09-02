@@ -4,6 +4,12 @@
   "private": true,
   "type": "module",
   "description": "Modern, extensible, AI-native WYSIWYG rich text editor",
+  "homepage": "https://faithdevss.github.io/richkit/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/faithdevss/richkit.git"
+  },
+  "bugs": "https://github.com/faithdevss/richkit/issues",
   "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": ">=20"

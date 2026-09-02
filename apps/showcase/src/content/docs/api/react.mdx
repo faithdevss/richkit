@@ -67,11 +67,16 @@ otherwise thread `editor` through every level.
 
 ### `Toolbar`
 
-| Prop        | Type             | Description              |
-| ----------- | ---------------- | ------------------------ |
-| `editor`    | `Editor \| null` | —                        |
-| `children`  | `ReactNode`      | Your buttons and groups. |
-| `className` | `string`         | —                        |
+| Prop        | Type             | Default | Description                                                                   |
+| ----------- | ---------------- | ------- | ----------------------------------------------------------------------------- |
+| `editor`    | `Editor \| null` | —       | —                                                                             |
+| `children`  | `ReactNode`      | —       | Your buttons and groups.                                                      |
+| `className` | `string`         | —       | —                                                                             |
+| `overflow`  | `boolean`        | `true`  | Keep the row on one line, moving whatever does not fit into a "more" popover. |
+
+The row re-measures on resize, so buttons come back as soon as there is room —
+this is what keeps the toolbar to a single line on a phone. Pass
+`overflow={false}` to wrap instead.
 
 ### `ToolbarGroup`
 
@@ -97,9 +102,10 @@ Layout wrapper for visually grouping buttons. Takes `children` only.
 
 ### `DefaultToolbar`
 
-| Prop     | Type     | Description                                           |
-| -------- | -------- | ----------------------------------------------------- |
-| `editor` | `Editor` | **Non-nullable.** Guard on `editor` before rendering. |
+| Prop       | Type      | Default | Description                                             |
+| ---------- | --------- | ------- | ------------------------------------------------------- |
+| `editor`   | `Editor`  | —       | **Non-nullable.** Guard on `editor` before rendering.   |
+| `overflow` | `boolean` | `true`  | Same collapsing behaviour, applied to each of its rows. |
 
 A prebuilt toolbar covering the StarterKit commands — no other props, no slots. For a
 custom set, compose `Toolbar` + `ToolbarButton` yourself.
@@ -108,17 +114,19 @@ custom set, compose `Toolbar` + `ToolbarButton` yourself.
 
 All take a non-nullable `editor`.
 
-| Component        | Props                                                    |
-| ---------------- | -------------------------------------------------------- |
-| `BlockTypeMenu`  | `editor: Editor`                                         |
-| `LinkMenu`       | `editor: Editor`                                         |
-| `ImageMenu`      | `editor: Editor`                                         |
-| `AlignMenu`      | `editor: Editor`                                         |
-| `TextColorMenu`  | `editor: Editor`                                         |
-| `HighlightMenu`  | `editor: Editor`                                         |
-| `FontFamilyMenu` | `editor: Editor`                                         |
-| `FontSizeMenu`   | `editor: Editor`                                         |
-| `TableMenu`      | `editor: Editor`, `maxRows?: number`, `maxCols?: number` |
+| Component         | Props                                                    |
+| ----------------- | -------------------------------------------------------- |
+| `BlockTypeMenu`   | `editor: Editor`, `iconOnly?: boolean`                   |
+| `LinkMenu`        | `editor: Editor`                                         |
+| `ImageMenu`       | `editor: Editor`                                         |
+| `AlignMenu`       | `editor: Editor`, `dropdown?: boolean`                   |
+| `BulletListMenu`  | `editor: Editor`                                         |
+| `OrderedListMenu` | `editor: Editor`                                         |
+| `TextColorMenu`   | `editor: Editor`                                         |
+| `HighlightMenu`   | `editor: Editor`                                         |
+| `FontFamilyMenu`  | `editor: Editor`, `iconOnly?: boolean`                   |
+| `FontSizeMenu`    | `editor: Editor`, `iconOnly?: boolean`                   |
+| `TableMenu`       | `editor: Editor`, `maxRows?: number`, `maxCols?: number` |
 
 ### `Popover`
 

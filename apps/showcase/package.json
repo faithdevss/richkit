@@ -14,6 +14,7 @@
   "dependencies": {
     "@richkitjs/core": "workspace:*",
     "@richkitjs/docx": "workspace:*",
+    "@richkitjs/extension-placeholder": "workspace:*",
     "@richkitjs/extension-slash-commands": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",

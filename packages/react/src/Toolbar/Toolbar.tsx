@@ -1,6 +1,6 @@
 import type { Editor } from '@richkitjs/core'
 import type { Attrs } from 'prosemirror-model'
-import { useState, type ReactNode } from 'react'
+import { Children, isValidElement, useState, type ReactNode } from 'react'
 import {
   BlockquoteIcon,
   BoldIcon,
@@ -29,6 +29,7 @@ import { ImageMenu } from './ImageMenu'
 import { LinkMenu } from './LinkMenu'
 import { EmojiMenu, LineHeightMenu, SpecialCharsMenu } from './MiscMenus'
 import { TableMenu } from './TableMenu'
+import { ToolbarOverflow } from './ToolbarOverflow'
 
 export interface ToolbarButtonProps {
   editor: Editor | null
@@ -78,25 +79,50 @@ export interface ToolbarProps {
   editor: Editor | null
   children?: ReactNode
   className?: string
+  /** Collapse anything that does not fit into a "more" popover. Default true. */
+  overflow?: boolean
 }
 
-export function Toolbar({ editor, children, className }: ToolbarProps) {
+/** Children that already lay out their own rows must not be wrapped in one. */
+function hasOwnRows(children: ReactNode) {
+  return Children.toArray(children).some((child) => {
+    if (!isValidElement(child)) return false
+    if (child.type === DefaultToolbar || child.type === ToolbarOverflow) return true
+    const cls = (child.props as { className?: unknown }).className
+    return typeof cls === 'string' && cls.split(/\s+/).includes('tb-row')
+  })
+}
+
+export function Toolbar({ editor, children, className, overflow = true }: ToolbarProps) {
   if (!editor) return null
+  // Custom children are one row of groups, so the row wrapper goes here; the
+  // default toolbar owns two rows and wraps each of them itself.
+  const body = children ? (
+    overflow && !hasOwnRows(children) ? (
+      <ToolbarOverflow>{children}</ToolbarOverflow>
+    ) : (
+      children
+    )
+  ) : (
+    <DefaultToolbar editor={editor} overflow={overflow} />
+  )
   return (
     <div className={className ?? 'toolbar'} role="toolbar" aria-label="Editor toolbar">
-      {children ?? <DefaultToolbar editor={editor} />}
+      {body}
     </div>
   )
 }
 
 export interface DefaultToolbarProps {
   editor: Editor
+  overflow?: boolean
 }
 
-export function DefaultToolbar({ editor }: DefaultToolbarProps) {
+export function DefaultToolbar({ editor, overflow = true }: DefaultToolbarProps) {
+  const Row = overflow ? ToolbarOverflow : PlainRow
   return (
     <>
-      <div className="tb-row">
+      <Row>
         <ToolbarGroup>
           <ToolbarButton editor={editor} command="undo" label={<UndoIcon />} title="Undo (Mod+Z)" />
           <ToolbarButton
@@ -144,8 +170,8 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
           />
           <FullscreenButton />
         </ToolbarGroup>
-      </div>
-      <div className="tb-row">
+      </Row>
+      <Row>
         <ToolbarGroup>
           <BlockTypeMenu editor={editor} />
         </ToolbarGroup>
@@ -242,9 +268,13 @@ export function DefaultToolbar({ editor }: DefaultToolbarProps) {
             title="Increase indent"
           />
         </ToolbarGroup>
-      </div>
+      </Row>
     </>
   )
+}
+
+function PlainRow({ children }: { children: ReactNode }) {
+  return <div className="tb-row">{children}</div>
 }
 
 export function ToolbarGroup({ children }: { children: ReactNode }) {

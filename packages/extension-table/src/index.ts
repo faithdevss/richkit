@@ -1,5 +1,5 @@
 import { Extension, Node, type Command } from '@richkitjs/core'
-import { NodeSelection } from 'prosemirror-state'
+import { NodeSelection, TextSelection } from 'prosemirror-state'
 import {
   addColumnAfter,
   addColumnBefore,
@@ -73,16 +73,23 @@ export const Table = Node.create({
         const tableNode = tableType.create(null, tableRows)
 
         let tr = state.tr
+        let insertPos: number
         const { $from, empty } = state.selection
         if (empty && $from.parent.isTextblock && $from.parent.content.size === 0) {
-          const insertPos = $from.before($from.depth)
+          insertPos = $from.before($from.depth)
           tr = tr.replaceWith(insertPos, insertPos + $from.parent.nodeSize, tableNode)
         } else if (empty && $from.parent.isTextblock) {
-          const insertPos = $from.after($from.depth)
+          insertPos = $from.after($from.depth)
           tr = tr.insert(insertPos, tableNode)
         } else {
+          insertPos = state.selection.from
           tr = tr.replaceSelectionWith(tableNode)
         }
+        // Land the cursor in the first cell. Without this the selection stays
+        // wherever it was, outside the new table, and every table command —
+        // deleteTable included — reports false until the user clicks a cell.
+        const firstCell = tr.doc.resolve(Math.min(insertPos + 3, tr.doc.content.size))
+        tr = tr.setSelection(TextSelection.near(firstCell))
         if (dispatch) dispatch(tr.scrollIntoView())
         return true
       }
