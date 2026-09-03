@@ -7,6 +7,7 @@ export class CodeBlockNodeView implements NodeView {
   contentDOM: HTMLElement
   private node: PMNode
   private select: HTMLSelectElement
+  private gutter!: HTMLElement
 
   constructor(
     node: PMNode,
@@ -63,9 +64,21 @@ export class CodeBlockNodeView implements NodeView {
 
     const pre = document.createElement('pre')
     pre.className = 'code-block-pre'
+
+    // The gutter sits beside the code rather than inside it, so selecting and
+    // copying the block never picks the numbers up.
+    const gutter = document.createElement('div')
+    gutter.className = 'code-block-gutter'
+    gutter.setAttribute('contenteditable', 'false')
+    gutter.setAttribute('aria-hidden', 'true')
+    // clicking a line number should put the caret in the code, not nowhere
+    gutter.style.pointerEvents = 'none'
+    gutter.style.userSelect = 'none'
+
     const code = document.createElement('code')
     const lang = (node.attrs.language as string | null) ?? null
     if (lang) code.className = `language-${lang}`
+    pre.appendChild(gutter)
     pre.appendChild(code)
 
     wrapper.appendChild(header)
@@ -73,6 +86,21 @@ export class CodeBlockNodeView implements NodeView {
 
     this.dom = wrapper
     this.contentDOM = code
+    this.gutter = gutter
+    this.paintGutter(node)
+  }
+
+  private paintGutter(node: PMNode): void {
+    const lines = node.textContent.split('\n').length
+    if (this.gutter.childElementCount === lines) return
+    this.gutter.replaceChildren()
+    for (let i = 1; i <= lines; i++) {
+      const el = document.createElement('span')
+      el.className = 'code-block-line-number'
+      el.setAttribute('data-line', String(i))
+      el.textContent = String(i)
+      this.gutter.appendChild(el)
+    }
   }
 
   update(node: PMNode): boolean {
@@ -83,10 +111,11 @@ export class CodeBlockNodeView implements NodeView {
     const code = this.contentDOM as HTMLElement
     const expected = lang ? `language-${lang}` : ''
     if (code.className !== expected) code.className = expected
+    this.paintGutter(node)
     return true
   }
 
-  ignoreMutation(): boolean {
-    return false
+  ignoreMutation(mutation: MutationRecord | { type: 'selection'; target: Node }): boolean {
+    return this.gutter.contains(mutation.target)
   }
 }

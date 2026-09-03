@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 /**
@@ -14,8 +14,12 @@ export function ScrollManager() {
   // return to the top the way a real anchor would, and pathname alone is
   // unchanged there.
   const { pathname, hash, key } = useLocation()
+  const lastPath = useRef(pathname)
 
   useLayoutEffect(() => {
+    const samePage = lastPath.current === pathname
+    lastPath.current = pathname
+
     if (hash) {
       let target: HTMLElement | null = null
       try {
@@ -27,6 +31,11 @@ export function ScrollManager() {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' })
         return
       }
+      // On the page already open, a hash naming no element is state, not an
+      // anchor -- the home page keeps the selected editor tab there. Yanking
+      // the reader to the top every time they switch tabs is worse than
+      // leaving them put. Arriving from another page still starts at the top.
+      if (samePage) return
     }
     window.scrollTo(0, 0)
   }, [pathname, hash, key])

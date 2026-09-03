@@ -1,5 +1,6 @@
 import { NotificationsHost } from '@richkitjs/react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
 // Always ends in a slash, so `${HOME}#features` is a valid absolute URL under
 // any deploy base. A bare "/#features" would jump to the domain root instead.
@@ -7,6 +8,18 @@ const HOME = import.meta.env.BASE_URL
 
 import { LogoMark } from '../components/LogoMark'
 import { ScrollManager } from '../components/ScrollManager'
+import { GitHubIcon, Icon, type IconName } from '../components/SiteIcons'
+
+const GITHUB = 'https://github.com/faithdevss/richkit'
+const SPONSOR = 'https://github.com/sponsors/faithdevss'
+
+const NAV: { label: string; to: string; icon: IconName }[] = [
+  { label: 'Platform', to: `${HOME}#platform`, icon: 'platform' },
+  { label: 'Templates', to: '/templates', icon: 'book' },
+  { label: 'Compare', to: '/docs/comparison', icon: 'compare' },
+  { label: 'Docs', to: '/docs', icon: 'docs' },
+  { label: 'Support', to: SPONSOR, icon: 'plus' },
+]
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
   {
@@ -50,55 +63,124 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
   {
     head: 'Community',
     links: [
-      { label: 'GitHub', to: 'https://github.com/faithdevss/richkit' },
+      { label: 'GitHub', to: GITHUB },
       { label: 'npm', to: 'https://www.npmjs.com/org/richkitjs' },
-      { label: 'Releases', to: 'https://github.com/faithdevss/richkit/releases' },
-      { label: 'Issues', to: 'https://github.com/faithdevss/richkit/issues' },
+      { label: 'Releases', to: `${GITHUB}/releases` },
+      { label: 'Issues', to: `${GITHUB}/issues` },
     ],
   },
 ]
 
+function FootLink({ to, label }: { to: string; label: string }) {
+  if (to.startsWith('http')) {
+    return (
+      <a href={to} target="_blank" rel="noreferrer">
+        {label}
+      </a>
+    )
+  }
+  return <Link to={to}>{label}</Link>
+}
+
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      {open ? (
+        <>
+          <path d="M6 6l12 12" />
+          <path d="M18 6 6 18" />
+        </>
+      ) : (
+        <>
+          <path d="M4 7h16" />
+          <path d="M4 12h16" />
+          <path d="M4 17h16" />
+        </>
+      )}
+    </svg>
+  )
+}
+
+function Brand() {
+  return (
+    <>
+      <span className="site-logo">
+        <LogoMark />
+      </span>
+      RichKit
+    </>
+  )
+}
+
 export function SiteShell() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname, hash } = useLocation()
+
+  // the drawer covers the page, so any navigation out of it has to close it --
+  // including a hash link back to a section of the page already open
+  useEffect(() => setMenuOpen(false), [pathname, hash])
+
   return (
     <div className="site">
       <ScrollManager />
       <div className="site-inner">
         <header className="site-nav">
-          <Link to="/" className="site-brand">
-            <span className="site-logo">
-              <LogoMark />
-            </span>{' '}
-            RichKit
-          </Link>
-          <nav className="site-links">
-            <a href={`${HOME}#features`}>Platform</a>
-            <a href={`${HOME}#examples`}>Examples</a>
-            <a href={`${HOME}#compare`}>Compare</a>
-            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-              Docs
-            </NavLink>
-            <a href={`${HOME}#support`}>Support</a>
-          </nav>
-          <div className="site-nav-actions">
-            <a
-              href="https://github.com/faithdevss/richkit"
-              className="site-ghost"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://github.com/sponsors/faithdevss"
-              className="site-ghost"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Sponsor
-            </a>
-            <Link to="/docs/installation" className="site-cta">
-              Get started
+          <div className="site-nav-inner">
+            <Link to="/" className="site-brand">
+              <Brand />
             </Link>
+            <nav className={`site-links${menuOpen ? ' is-open' : ''}`}>
+              {NAV.map((item) =>
+                item.to.startsWith('http') || item.to.includes('#') ? (
+                  <a
+                    key={item.label}
+                    href={item.to}
+                    {...(item.to.startsWith('http')
+                      ? { target: '_blank', rel: 'noreferrer' }
+                      : null)}
+                  >
+                    <Icon name={item.icon} />
+                    <span>{item.label}</span>
+                  </a>
+                ) : (
+                  <NavLink
+                    key={item.label}
+                    to={item.to}
+                    className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+                  >
+                    <Icon name={item.icon} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                ),
+              )}
+            </nav>
+            <div className="site-nav-actions">
+              <a href={GITHUB} className="site-ghost" target="_blank" rel="noreferrer">
+                <GitHubIcon />
+                GitHub
+              </a>
+              <Link to="/docs/installation" className="site-cta">
+                Get started
+              </Link>
+              <button
+                type="button"
+                className="site-menu-btn"
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                <MenuIcon open={menuOpen} />
+              </button>
+            </div>
           </div>
         </header>
 
@@ -108,33 +190,16 @@ export function SiteShell() {
           <div className="foot-cols">
             <div className="foot-brand-col">
               <div className="site-brand">
-                <span className="site-logo">
-                  <LogoMark />
-                </span>{' '}
-                RichKit
+                <Brand />
               </div>
               <p className="foot-tagline">The open-source rich text editor toolkit for React.</p>
             </div>
             {FOOT_COLS.map((c) => (
               <div className="foot-col" key={c.head}>
                 <span className="foot-head">{c.head}</span>
-                {c.links.map((l) =>
-                  l.to.startsWith('/docs') ? (
-                    <Link to={l.to} key={l.label}>
-                      {l.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={l.to}
-                      key={l.label}
-                      {...(l.to.startsWith('http')
-                        ? { target: '_blank', rel: 'noreferrer' }
-                        : null)}
-                    >
-                      {l.label}
-                    </a>
-                  ),
-                )}
+                {c.links.map((l) => (
+                  <FootLink key={l.label} to={l.to} label={l.label} />
+                ))}
               </div>
             ))}
           </div>

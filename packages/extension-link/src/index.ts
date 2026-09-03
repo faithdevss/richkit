@@ -1,4 +1,4 @@
-import { Mark, setMark, unsetMark, type Command } from '@richkitjs/core'
+import { Mark, setMark, unsetMark, type Command, type Editor } from '@richkitjs/core'
 import { InputRule } from 'prosemirror-inputrules'
 
 const URL_REGEX = /(?:^|\s)(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)\s$/
@@ -6,6 +6,12 @@ const URL_REGEX = /(?:^|\s)(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)\s$/
 export interface LinkOptions extends Record<string, unknown> {
   openOnClick: boolean
   HTMLAttributes: Record<string, string>
+  /**
+   * What `Mod-K` should do. The extension has no UI of its own, so the host
+   * app supplies the prompt; without one the shortcut stays unclaimed and
+   * falls through to the browser.
+   */
+  onEditLink?: (editor: Editor) => void
 }
 
 export const Link = Mark.create<LinkOptions>({
@@ -41,6 +47,17 @@ export const Link = Mark.create<LinkOptions>({
     },
     unsetLink: (): Command => unsetMark('link'),
   }),
+  addKeyboardShortcuts: (ctx) => {
+    const onEditLink = ctx.options.onEditLink
+    const out: Record<string, Command> = {}
+    if (!onEditLink) return out
+    out['Mod-k'] = ({ state }) => {
+      if (state.selection.empty) return false
+      onEditLink(ctx.editor)
+      return true
+    }
+    return out
+  },
   addInputRules: (ctx) => {
     const linkMark = ctx.editor.schema.marks['link']
     if (!linkMark) return []

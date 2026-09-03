@@ -5,14 +5,31 @@ import { Demo } from '../../../mdx-components'
 
 # Usecase: Notion-like blocks
 
-A clean, block-based writing surface driven by `extension-slash-commands` — type `/` to
-open a menu and insert headings, lists, quotes, and more without touching a toolbar.
-Markdown shortcuts (`#`, `-`, `>`) work too, via `extension-markdown-shortcuts`.
+A block-based writing surface for documentation and long-form posts. Every top-level
+block has a gutter: hover it for the drag handle, drag to reorder, or open the block menu
+to turn it into something else. Type `/` for the command menu — grouped, with an AI
+section — and select text for the formatting bubble. Markdown shortcuts (`#`, `-`, `>`)
+work too, via `extension-markdown-shortcuts`.
 
 ```tsx
-import { SlashMenu } from '@richkitjs/react'
+import { BlockHandle, SlashMenu } from '@richkitjs/react'
 
+<BlockHandle editor={editor} container={scrollEl} />
 <SlashMenu editor={editor} />
+```
+
+The gutter comes from `extension-drag-handle`, the menu from
+`extension-slash-commands`; both ship in `StarterKit`.
+
+Beyond the basics, `/` also reaches callouts, collapsible toggles, tables, images,
+video, audio, file attachments, and bookmark cards. `@` opens the mention list,
+`⌘K` edits a link, and `⌘F` opens find and replace.
+
+```tsx
+import { MentionMenu } from '@richkitjs/react'
+
+// who can be mentioned is your list — the extension fetches nothing
+<MentionMenu editor={editor} items={people} />
 ```
 
 </div>
@@ -24,6 +41,11 @@ import { SlashMenu } from '@richkitjs/react'
 <div className="docs-prose">
 
 The same `StarterKit` schema powers this and the other examples — it's the surrounding
-UI (slash menu instead of a fixed toolbar) that gives it a different feel.
+UI (block gutter and slash menu instead of a fixed toolbar) that gives it a different
+feel. Reordering a block is one transaction, so a drag is a single undo step.
+
+Two of these need something only the host app has, so they take a callback rather
+than shipping a dialog: `Link.onEditLink` for `⌘K`, and `Image.editText` for the
+caption and alt text. This demo routes both through `notify.prompt`.
 
 </div>

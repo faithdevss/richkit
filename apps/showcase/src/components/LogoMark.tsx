@@ -2,18 +2,19 @@ export function LogoMark() {
   return (
     <svg
       className="site-logo-mark"
-      viewBox="19 14 28 36"
-      width="13"
+      viewBox="0 0 24 24"
+      width="17"
       height="17"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="6.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <path d="M24 45V19h9.5a7.75 7.75 0 0 1 0 15.5H24" />
-      <path d="M33 34.5L41.5 45" />
+      <path d="M6 19V5h5.6a4.4 4.4 0 0 1 0 8.8H6" stroke="#fff" strokeWidth="2.6" />
+      <path d="M11.2 13.8 15.8 19" stroke="#fff" strokeWidth="2.6" />
+      {/* the teal tick is the only non-white stroke — it reads as a caret next
+          to the R at nav size */}
+      <path d="M18.6 9.8v4.6" stroke="#45e0c8" strokeWidth="1.8" />
     </svg>
   )
 }

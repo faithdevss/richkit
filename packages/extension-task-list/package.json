@@ -25,7 +25,9 @@
   },
   "dependencies": {
     "@richkitjs/core": "workspace:*",
-    "prosemirror-schema-list": "^1.5.0"
+    "prosemirror-schema-list": "^1.5.0",
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-view": "^1.37.0"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

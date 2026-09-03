@@ -93,6 +93,12 @@ importers:
       '@richkitjs/docx':
         specifier: workspace:*
         version: link:../../packages/docx
+      '@richkitjs/extension-ai':
+        specifier: workspace:*
+        version: link:../../packages/extension-ai
+      '@richkitjs/extension-drag-handle':
+        specifier: workspace:*
+        version: link:../../packages/extension-drag-handle
       '@richkitjs/extension-placeholder':
         specifier: workspace:*
         version: link:../../packages/extension-placeholder
@@ -321,6 +327,19 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/extension-bookmark:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/extension-bullet-list:
     dependencies:
       '@richkitjs/core':
@@ -329,6 +348,25 @@ importers:
       prosemirror-schema-list:
         specifier: ^1.5.0
         version: 1.5.1
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-callout:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -410,6 +448,28 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/extension-drag-handle:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   packages/extension-embed:
     dependencies:
       '@richkitjs/core':
@@ -446,6 +506,19 @@ importers:
       prosemirror-view:
         specifier: ^1.37.0
         version: 1.41.8
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-hard-break:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -600,6 +673,44 @@ importers:
       prosemirror-model:
         specifier: ^1.24.1
         version: 1.25.5
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+      prosemirror-transform:
+        specifier: ^1.10.2
+        version: 1.12.0
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-media:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-mention:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -655,6 +766,9 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
+      '@richkitjs/markdown':
+        specifier: workspace:*
+        version: link:../markdown
       prosemirror-model:
         specifier: ^1.24.1
         version: 1.25.5
@@ -779,9 +893,15 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
       prosemirror-schema-list:
         specifier: ^1.5.0
         version: 1.5.1
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -811,6 +931,28 @@ importers:
       prosemirror-model:
         specifier: ^1.24.1
         version: 1.25.5
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-toggle:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.4
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -947,9 +1089,15 @@ importers:
       '@richkitjs/extension-comments':
         specifier: workspace:*
         version: link:../extension-comments
+      '@richkitjs/extension-drag-handle':
+        specifier: workspace:*
+        version: link:../extension-drag-handle
       '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
+      '@richkitjs/extension-mention':
+        specifier: workspace:*
+        version: link:../extension-mention
       '@richkitjs/extension-slash-commands':
         specifier: workspace:*
         version: link:../extension-slash-commands
@@ -999,9 +1147,15 @@ importers:
       '@richkitjs/extension-bold':
         specifier: workspace:*
         version: link:../extension-bold
+      '@richkitjs/extension-bookmark':
+        specifier: workspace:*
+        version: link:../extension-bookmark
       '@richkitjs/extension-bullet-list':
         specifier: workspace:*
         version: link:../extension-bullet-list
+      '@richkitjs/extension-callout':
+        specifier: workspace:*
+        version: link:../extension-callout
       '@richkitjs/extension-case-change':
         specifier: workspace:*
         version: link:../extension-case-change
@@ -1014,12 +1168,18 @@ importers:
       '@richkitjs/extension-comments':
         specifier: workspace:*
         version: link:../extension-comments
+      '@richkitjs/extension-drag-handle':
+        specifier: workspace:*
+        version: link:../extension-drag-handle
       '@richkitjs/extension-embed':
         specifier: workspace:*
         version: link:../extension-embed
       '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
+      '@richkitjs/extension-hard-break':
+        specifier: workspace:*
+        version: link:../extension-hard-break
       '@richkitjs/extension-heading':
         specifier: workspace:*
         version: link:../extension-heading
@@ -1050,6 +1210,12 @@ importers:
       '@richkitjs/extension-markdown-shortcuts':
         specifier: workspace:*
         version: link:../extension-markdown-shortcuts
+      '@richkitjs/extension-media':
+        specifier: workspace:*
+        version: link:../extension-media
+      '@richkitjs/extension-mention':
+        specifier: workspace:*
+        version: link:../extension-mention
       '@richkitjs/extension-ordered-list':
         specifier: workspace:*
         version: link:../extension-ordered-list
@@ -1089,6 +1255,9 @@ importers:
       '@richkitjs/extension-text-style':
         specifier: workspace:*
         version: link:../extension-text-style
+      '@richkitjs/extension-toggle':
+        specifier: workspace:*
+        version: link:../extension-toggle
       '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes

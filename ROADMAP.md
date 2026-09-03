@@ -49,7 +49,6 @@ Verified green: 133 turbo tasks, 126 integration tests, 202/206 e2e (4 table-col
 
 - Footnotes (`extension-footnotes`: inline ref node + doc-end list, renumber on update)
 - Multi-column layout (`extension-columns`: wrapper node + CSS columns)
-- Drag-handle block reordering (plugin + handle decoration; ProseMirror `dropPoint`)
 - Image: caption (figure/figcaption nodeView extension), crop (canvas modal), upload pipeline (`uploadImage(file) => Promise<url>` option + drop/paste handler)
 - Excel paste normalization (extend `extension-paste-handler/src/clean.ts`)
 - ODT import/export (low priority — evaluate `odt.js` landscape first, may cut)

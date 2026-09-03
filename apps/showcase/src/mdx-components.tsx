@@ -44,10 +44,29 @@ export function Install({ packages }: { packages: string }) {
   )
 }
 
+/** Anchor id for a heading, so the on-this-page rail has something to link to. */
+function slug(node: ReactNode): string | undefined {
+  const text =
+    typeof node === 'string'
+      ? node
+      : Array.isArray(node)
+        ? node.filter((n) => typeof n === 'string').join('')
+        : ''
+  const id = text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  return id || undefined
+}
+
 export const mdxComponents = {
   h1: (props: ComponentPropsWithoutRef<'h1'>) => <h1 {...props} />,
-  h2: (props: ComponentPropsWithoutRef<'h2'>) => <h2 {...props} />,
-  h3: (props: ComponentPropsWithoutRef<'h3'>) => <h3 {...props} />,
+  h2: ({ id, ...props }: ComponentPropsWithoutRef<'h2'>) => (
+    <h2 id={id ?? slug(props.children)} {...props} />
+  ),
+  h3: ({ id, ...props }: ComponentPropsWithoutRef<'h3'>) => (
+    <h3 id={id ?? slug(props.children)} {...props} />
+  ),
   code: (props: ComponentPropsWithoutRef<'code'>) => <code {...props} />,
   pre: (props: ComponentPropsWithoutRef<'pre'>) => <pre className="docs-pre" {...props} />,
   table: (props: ComponentPropsWithoutRef<'table'>) => (

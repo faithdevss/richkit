@@ -29,6 +29,36 @@ export const EXTENSIONS: ExtensionEntry[] = [
   { pkg: 'extension-paragraph', category: 'Nodes', description: 'The paragraph block node.' },
   { pkg: 'extension-heading', category: 'Nodes', description: 'H1–H6 heading nodes.' },
   { pkg: 'extension-blockquote', category: 'Nodes', description: 'Blockquote node.' },
+  {
+    pkg: 'extension-callout',
+    category: 'Nodes',
+    description: 'Callout block with tip, info, warning, important, and success variants.',
+  },
+  {
+    pkg: 'extension-toggle',
+    category: 'Nodes',
+    description: 'Collapsible toggle block: a summary line over a body that holds any block.',
+  },
+  {
+    pkg: 'extension-hard-break',
+    category: 'Nodes',
+    description: 'Soft line break inside a block, bound to Shift+Enter.',
+  },
+  {
+    pkg: 'extension-media',
+    category: 'Nodes',
+    description: 'Self-hosted video, audio, and file attachment blocks.',
+  },
+  {
+    pkg: 'extension-bookmark',
+    category: 'Nodes',
+    description: 'Link rendered as a card, with title, description, and thumbnail.',
+  },
+  {
+    pkg: 'extension-mention',
+    category: 'Nodes',
+    description: 'Inline @ mentions for people and pages, with a suggestion plugin.',
+  },
   { pkg: 'extension-code-block', category: 'Nodes', description: 'Fenced code block node.' },
   {
     pkg: 'extension-horizontal-rule',
@@ -112,6 +142,11 @@ export const EXTENSIONS: ExtensionEntry[] = [
     pkg: 'extension-slash-commands',
     category: 'Editing behavior',
     description: '"/" command menu for inserting blocks.',
+  },
+  {
+    pkg: 'extension-drag-handle',
+    category: 'Editing behavior',
+    description: 'Block gutter: drag to reorder, plus duplicate/copy/delete block actions.',
   },
   {
     pkg: 'extension-typography',

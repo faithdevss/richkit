@@ -181,11 +181,34 @@ Floating menu positioned over the current selection; hidden when the selection i
 | `id`              | `string`                                      | Unique key.                                                      |
 | `label`           | `string`                                      | Displayed name.                                                  |
 | `keywords`        | `string`                                      | Extra search terms.                                              |
+| `group`           | `string`                                      | Section heading the item is listed under.                        |
 | `icon`            | `ReactNode`                                   | —                                                                |
 | `isAvailable`     | `(editor: Editor) => boolean`                 | Hide the item conditionally.                                     |
 | `run`             | `(editor: Editor, range: SlashRange) => void` | Action. `range` covers the typed `/query` so you can replace it. |
 
 Requires the `SlashCommands` extension (already in `StarterKit`).
+
+## `BlockHandle`
+
+The Notion-style gutter: hovering a top-level block reveals an insert button and a drag
+handle, and the handle opens a block menu (Turn Into, Duplicate, Copy to clipboard, Copy
+anchor link, Delete).
+
+| Prop            | Type                  | Default                 | Description                                                                        |
+| --------------- | --------------------- | ----------------------- | ---------------------------------------------------------------------------------- |
+| `editor`        | `Editor \| null`      | —                       | —                                                                                  |
+| `container`     | `HTMLElement \| null` | editor DOM              | Element hover is tracked in — pass the scroll container so the gutter counts.       |
+| `turnIntoItems` | `TurnIntoItem[]`      | `defaultTurnIntoItems`  | Replaces the "Turn Into" list. `TurnIntoItem` is `{ id, label, icon?, requires?, command, args? }`. |
+| `className`     | `string`              | —                       | —                                                                                  |
+
+```tsx
+import { BlockHandle } from '@richkitjs/react'
+
+<BlockHandle editor={editor} container={scrollEl} />
+```
+
+Requires the `DragHandle` extension (already in `StarterKit`), which also binds
+<kbd>Mod+D</kbd> to duplicate the current block.
 
 ## `AIPrompt`
 

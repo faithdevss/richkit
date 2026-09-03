@@ -44,10 +44,14 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'MIT',
         note: '@richkitjs/docx — runs in the browser, no server call.',
       },
-      { state: 'paid', label: 'Paid', note: 'Conversion is a hosted service on a paid plan.' },
+      {
+        state: 'paid',
+        label: 'Paid',
+        note: 'Conversion is a hosted service, from the Start plan.',
+      },
       { state: 'none', label: 'Not built in' },
-      { state: 'paid', label: 'Premium feature' },
-      { state: 'paid', label: 'Premium add-on', note: 'Export to Word.' },
+      { state: 'paid', label: 'Premium feature', note: 'Import from Word and export to Word.' },
+      { state: 'paid', label: 'Paid add-on', note: 'Export to Word; included only on Enterprise.' },
     ],
   },
   {
@@ -55,10 +59,18 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     detail: 'Redlining with accept / reject per change.',
     cells: [
       { state: 'open', label: 'MIT', note: '@richkitjs/extension-track-changes' },
-      { state: 'paid', label: 'Paid add-on' },
+      {
+        state: 'paid',
+        label: 'Paid add-on',
+        note: 'An add-on on every plan, Start to Enterprise.',
+      },
       { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature' },
-      { state: 'paid', label: 'Premium add-on' },
+      {
+        state: 'paid',
+        label: 'Paid add-on',
+        note: 'Revision History — add-on on Professional, included on Enterprise.',
+      },
     ],
   },
   {
@@ -71,9 +83,13 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Paid',
         note: 'Part of the Documents bundle; needs cloud-stored docs.',
       },
-      { state: 'none', label: 'Not built in' },
+      {
+        state: 'none',
+        label: 'Not built in',
+        note: 'The playground has one; no published package.',
+      },
       { state: 'paid', label: 'Premium feature' },
-      { state: 'paid', label: 'Premium add-on' },
+      { state: 'paid', label: 'Professional plan', note: 'Not on Free or Essential.' },
     ],
   },
   {
@@ -87,8 +103,12 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       },
       { state: 'paid', label: 'Paid', note: 'Content AI bundle.' },
       { state: 'none', label: 'Not built in' },
-      { state: 'paid', label: 'Premium feature' },
-      { state: 'paid', label: 'Premium add-on' },
+      { state: 'paid', label: 'Premium feature', note: 'AI Assistant.' },
+      {
+        state: 'paid',
+        label: 'Paid add-on',
+        note: 'AI Assistant add-on, $133 – $300 / mo on top of the plan.',
+      },
     ],
   },
   {
@@ -105,9 +125,13 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Free self-host / paid cloud',
         note: 'Hocuspocus is MIT; the managed backend is on a paid plan.',
       },
-      { state: 'partial', label: 'Bring your own Yjs' },
+      { state: 'partial', label: 'Bring your own Yjs', note: '@lexical/yjs is MIT; you host it.' },
       { state: 'paid', label: 'Premium feature' },
-      { state: 'paid', label: 'Premium add-on' },
+      {
+        state: 'paid',
+        label: 'Paid plan',
+        note: 'Mentions only on Essential; full collab higher up.',
+      },
     ],
   },
   {
@@ -116,13 +140,21 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     cells: [
       { state: 'open', label: 'MIT', note: '@richkitjs/extension-slash-commands, menu included.' },
       {
+        state: 'open',
+        label: 'MIT component',
+        note: 'Slash Dropdown Menu — copied into your repo by the CLI, not an npm package.',
+      },
+      {
         state: 'partial',
         label: 'Build it yourself',
-        note: 'MIT Suggestion utility, no ready-made menu.',
+        note: 'Typeahead menu plugin, no ready-made command list.',
       },
-      { state: 'partial', label: 'Build it yourself' },
-      { state: 'open', label: 'Included' },
-      { state: 'open', label: 'Included' },
+      { state: 'paid', label: 'Premium feature', note: 'Needs a commercial license key.' },
+      {
+        state: 'partial',
+        label: 'Build it yourself',
+        note: 'Wire up the open-source Autocompleter API.',
+      },
     ],
   },
   {
@@ -130,10 +162,10 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     detail: 'Search across the document, replace one or all.',
     cells: [
       { state: 'open', label: 'MIT', note: '@richkitjs/extension-find-replace' },
-      { state: 'partial', label: 'Community package' },
+      { state: 'open', label: 'MIT', note: '@tiptap/extension-find-and-replace, headless UI.' },
       { state: 'none', label: 'Not built in' },
       { state: 'open', label: 'Included' },
-      { state: 'open', label: 'Included' },
+      { state: 'open', label: 'Included', note: 'searchreplace, an open-source plugin.' },
     ],
   },
   {
@@ -147,19 +179,39 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       },
       { state: 'partial', label: 'Editor yes, platform no' },
       { state: 'open', label: 'Yes' },
-      { state: 'partial', label: 'License key required' },
-      { state: 'partial', label: 'API key for cloud' },
+      {
+        state: 'partial',
+        label: 'License key required',
+        note: "licenseKey: 'GPL' works self-hosted and shows a Powered by CKEditor badge; the CDN build and every premium feature need a real key.",
+      },
+      {
+        state: 'partial',
+        label: 'License key required',
+        note: "license_key: 'gpl' for self-hosting; without a key the editor disables itself.",
+      },
     ],
   },
   {
     feature: 'Cost of the full feature set',
-    detail: 'Everything above, for one product, per month.',
+    detail: 'Everything above, for one product, per month. List price, before volume.',
     cells: [
       { state: 'open', label: '$0' },
-      { state: 'paid', label: '$49 – $999 / mo', note: 'Per-seat dev licenses billed on top.' },
+      {
+        state: 'paid',
+        label: '$59 – $1,199 / mo',
+        note: '$49 – $999 on annual billing, plus $49 / dev / mo past the seats included.',
+      },
       { state: 'open', label: '$0', note: 'You build the missing pieces.' },
-      { state: 'paid', label: 'Quote' },
-      { state: 'paid', label: 'Quote' },
+      {
+        state: 'paid',
+        label: 'from ~$700 / mo',
+        note: 'Professional $319 plus the Collaboration add-on $249 and AI from $133. 20,000 editor loads included, then $30 per 1,000.',
+      },
+      {
+        state: 'paid',
+        label: 'from ~$514 / mo',
+        note: 'Professional $145 plus Word import $39, Word export $39, Revision History $79, Suggested Edits $79 and AI from $133. 20,000 editor loads included, then $40 per 1,000.',
+      },
     ],
   },
 ]
@@ -171,14 +223,32 @@ export const COMPARISON_SOURCES: { label: string; href: string }[] = [
     href: 'https://tiptap.dev/blog/release-notes/were-open-sourcing-more-of-tiptap',
   },
   {
+    label: 'Tiptap find and replace',
+    href: 'https://tiptap.dev/docs/editor/extensions/functionality/find-and-replace',
+  },
+  {
+    label: 'Tiptap slash dropdown menu',
+    href: 'https://tiptap.dev/docs/ui-components/components/slash-dropdown-menu',
+  },
+  { label: 'CKEditor pricing', href: 'https://ckeditor.com/pricing/' },
+  {
     label: 'CKEditor licensing options',
     href: 'https://ckeditor.com/legal/ckeditor-licensing-options/',
   },
   {
-    label: 'TinyMCE licensing',
-    href: 'https://www.tiny.cloud/blog/opensource-rich-text-editor-licences/',
+    label: 'CKEditor license key and activation',
+    href: 'https://ckeditor.com/docs/ckeditor5/latest/getting-started/licensing/license-key-and-activation.html',
   },
-  { label: 'Lexical', href: 'https://lexical.dev' },
+  {
+    label: 'CKEditor slash commands',
+    href: 'https://ckeditor.com/docs/ckeditor5/latest/features/slash-commands.html',
+  },
+  { label: 'TinyMCE pricing', href: 'https://www.tiny.cloud/pricing/' },
+  {
+    label: 'TinyMCE license key',
+    href: 'https://www.tiny.cloud/docs/tinymce/latest/license-key/',
+  },
+  { label: 'Lexical on GitHub', href: 'https://github.com/facebook/lexical' },
 ]
 
-export const COMPARISON_CHECKED = 'August 2026'
+export const COMPARISON_CHECKED = 'September 2026'

@@ -104,6 +104,39 @@ function convertBlock(
       return convertList(node, 'task')
     case 'table':
       return [convertTable(node)]
+    case 'callout': {
+      // Word has no callout, so it lands as a shaded, left-bordered quote
+      const calloutExtra: Record<string, unknown> = {
+        ...extra,
+        indent: { left: 360 },
+        shading: { type: ShadingType.SOLID, color: 'F4F4F8', fill: 'F4F4F8' },
+        border: { left: { style: BorderStyle.SINGLE, size: 18, color: '6366F1', space: 12 } },
+      }
+      const inner: (Paragraph | Table)[] = []
+      for (const child of node.content ?? []) {
+        inner.push(...convertBlock(child, listCtx, calloutExtra))
+      }
+      return inner.length ? inner : [new Paragraph(calloutExtra as unknown as IParagraphOptions)]
+    }
+    case 'toggleSummary':
+      // the twisty is interactive chrome; in Word the summary is just a heading
+      return [paragraph(node, { ...baseParaOpts(node, listCtx), ...extra, bold: true })]
+    case 'bookmark':
+    case 'media': {
+      const href = (node.attrs?.[node.type === 'bookmark' ? 'href' : 'src'] as string) ?? ''
+      const label = (node.attrs?.[node.type === 'bookmark' ? 'title' : 'name'] as string) || href
+      if (!href) return []
+      return [
+        new Paragraph({
+          children: [
+            new ExternalHyperlink({
+              link: href,
+              children: [new TextRun({ text: label, style: 'Hyperlink' })],
+            }),
+          ],
+        }),
+      ]
+    }
     default:
       if (node.content) return (node.content ?? []).flatMap((c) => convertBlock(c, listCtx, extra))
       return []
@@ -203,6 +236,10 @@ function convertInline(node: JSONNode): (TextRun | ExternalHyperlink)[] {
   }
   if (node.type === 'hardBreak') {
     return [new TextRun({ text: '', break: 1 })]
+  }
+  if (node.type === 'mention') {
+    const label = (node.attrs?.['label'] as string) ?? (node.attrs?.['id'] as string) ?? ''
+    return [new TextRun({ text: `@${label}`, bold: true })]
   }
   return []
 }

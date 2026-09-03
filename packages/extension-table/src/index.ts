@@ -9,6 +9,7 @@ import {
   deleteColumn,
   deleteRow,
   deleteTable,
+  goToNextCell,
   mergeCells,
   splitCell,
   tableEditing,
@@ -179,8 +180,18 @@ export const TableHeader = Node.create({
   addNodeSpec: () => specs.table_header,
 })
 
+function nextCell(direction: 1 | -1): Command {
+  return ({ state, dispatch }) => goToNextCell(direction)(state, dispatch ?? undefined)
+}
+
 export const TablePlugins = Extension.create({
   name: 'tablePlugins',
+  // Tab is the spreadsheet-style cell walk. It only claims the key inside a
+  // table, so list indentation keeps it everywhere else.
+  addKeyboardShortcuts: () => ({
+    Tab: nextCell(1),
+    'Shift-Tab': nextCell(-1),
+  }),
   addProseMirrorPlugins: () => [
     columnResizing(),
     tableEditing(),

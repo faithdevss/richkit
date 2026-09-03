@@ -18,7 +18,7 @@ test.describe('slash command menu', () => {
     await focusEditor(page)
     await page.keyboard.type('/task')
     await expect(page.locator('.slash-menu-item')).toHaveCount(1)
-    await expect(page.locator('.slash-menu-item').first()).toContainText('Task list')
+    await expect(page.locator('.slash-menu-item').first()).toContainText('To-do List')
   })
 
   test('arrow keys move selection', async ({ page }) => {

@@ -17,3 +17,9 @@ test-results
 playwright-report
 blob-report
 .playwright
+
+# Design canvases and ad-hoc e2e probes
+docs/design
+tests/e2e/probe*.mjs
+tests/e2e/shots*.mjs
+tests/e2e/verify.mjs

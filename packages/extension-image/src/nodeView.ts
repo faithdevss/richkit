@@ -1,18 +1,35 @@
 import type { Node as PMNode } from 'prosemirror-model'
 import type { EditorView, NodeView } from 'prosemirror-view'
 
+type EditText = (opts: { title: string; value: string }) => Promise<string | null>
+
+const ALIGNMENTS: { align: 'left' | 'center' | 'right'; label: string }[] = [
+  { align: 'left', label: 'Align left' },
+  { align: 'center', label: 'Align centre' },
+  { align: 'right', label: 'Align right' },
+]
+
 export class ImageNodeView implements NodeView {
   readonly dom: HTMLElement
   private readonly img: HTMLImageElement
   private readonly handle: HTMLSpanElement
+  private readonly caption: HTMLElement
+  private readonly toolbar: HTMLElement
   private node: PMNode
   private readonly view: EditorView
   private readonly getPos: () => number | undefined
+  private readonly editText: EditText
 
-  constructor(node: PMNode, view: EditorView, getPos: () => number | undefined) {
+  constructor(
+    node: PMNode,
+    view: EditorView,
+    getPos: () => number | undefined,
+    editText?: EditText,
+  ) {
     this.node = node
     this.view = view
     this.getPos = getPos
+    this.editText = editText ?? (({ title, value }) => Promise.resolve(window.prompt(title, value)))
 
     this.dom = document.createElement('figure')
     this.dom.className = 'richkit-image'
@@ -39,6 +56,94 @@ export class ImageNodeView implements NodeView {
     } as CSSStyleDeclaration)
     this.handle.addEventListener('pointerdown', this.onResizeStart)
     this.dom.appendChild(this.handle)
+
+    this.caption = document.createElement('figcaption')
+    this.caption.className = 'richkit-image-caption'
+    this.dom.appendChild(this.caption)
+
+    this.toolbar = this.buildToolbar()
+    this.dom.appendChild(this.toolbar)
+
+    this.paint(node)
+  }
+
+  /** Alignment, caption and alt text, shown while the image is selected. */
+  private buildToolbar(): HTMLElement {
+    const bar = document.createElement('div')
+    bar.className = 'richkit-image-toolbar'
+    bar.setAttribute('contenteditable', 'false')
+    bar.hidden = true
+
+    const button = (label: string, onPress: () => void) => {
+      const btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'richkit-image-btn'
+      btn.title = label
+      btn.textContent = label
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onPress()
+      })
+      bar.appendChild(btn)
+      return btn
+    }
+
+    for (const { align, label } of ALIGNMENTS) {
+      button(label, () => {
+        this.setAttr('align', this.node.attrs.align === align ? null : align)
+      })
+    }
+    button('Caption', () => {
+      void this.editText({
+        title: 'Caption',
+        value: (this.node.attrs.caption as string | null) ?? '',
+      }).then((value) => {
+        if (value === null) return
+        this.setAttr('caption', value || null)
+      })
+    })
+    button('Alt text', () => {
+      void this.editText({
+        title: 'Alt text',
+        value: (this.node.attrs.alt as string | null) ?? '',
+      }).then((value) => {
+        if (value === null) return
+        this.setAttr('alt', value || null)
+      })
+    })
+    return bar
+  }
+
+  private setAttr(name: string, value: unknown): void {
+    const pos = this.getPos()
+    if (pos == null) return
+    this.view.dispatch(this.view.state.tr.setNodeAttribute(pos, name, value))
+  }
+
+  private paint(node: PMNode): void {
+    const align = node.attrs.align as string | null
+    const caption = node.attrs.caption as string | null
+    this.dom.setAttribute('data-image', '')
+    if (align) this.dom.setAttribute('data-align', align)
+    else this.dom.removeAttribute('data-align')
+    this.caption.textContent = caption ?? ''
+    this.caption.hidden = !caption
+  }
+
+  selectNode(): void {
+    this.dom.classList.add('is-selected')
+    this.toolbar.hidden = false
+  }
+
+  deselectNode(): void {
+    this.dom.classList.remove('is-selected')
+    this.toolbar.hidden = true
+  }
+
+  stopEvent(event: Event): boolean {
+    const target = event.target as Node | null
+    return Boolean(target && this.toolbar.contains(target))
   }
 
   private applyAttrs(node: PMNode): void {
@@ -95,6 +200,7 @@ export class ImageNodeView implements NodeView {
     if (node.type !== this.node.type) return false
     this.node = node
     this.applyAttrs(node)
+    this.paint(node)
     return true
   }
 

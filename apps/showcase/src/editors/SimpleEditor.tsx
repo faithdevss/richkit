@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   useEditor,
   EditorContent,
@@ -6,26 +7,29 @@ import {
   Toolbar,
   Icons,
   notify,
-} from '@richkitjs/react'
-import { StarterKit } from '@richkitjs/starter-kit'
-import {
   AlignMenu,
   BlockTypeMenu,
+  BulletListMenu,
+  FindReplace,
   HighlightMenu,
   ImageMenu,
   LinkMenu,
+  OrderedListMenu,
   ToolbarButton,
   ToolbarGroup,
 } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
 import { SIMPLE_CONTENT } from '../content'
 import { useDevEditor } from './useDevEditor'
 
 export function SimpleEditor() {
   const editor = useEditor({ extensions: StarterKit, content: SIMPLE_CONTENT })
   useDevEditor(editor)
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [findOpen, setFindOpen] = useState(false)
 
   return (
-    <div className="demo-frame demo-simple" data-theme="dark">
+    <div className="demo-frame demo-simple" data-theme={theme}>
       {editor && (
         <Toolbar editor={editor} className="toolbar demo-toolbar">
           <ToolbarGroup>
@@ -36,26 +40,30 @@ export function SimpleEditor() {
             <BlockTypeMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
+            <BulletListMenu editor={editor} />
+            <OrderedListMenu editor={editor} />
             <ToolbarButton
               editor={editor}
-              command="toggleBulletList"
-              isActiveName="bulletList"
-              label={<Icons.BulletListIcon />}
-              title="Bullet list"
+              command="toggleTaskList"
+              isActiveName="taskList"
+              label={<Icons.TaskListIcon />}
+              title="To-do list"
             />
-            <ToolbarButton
-              editor={editor}
-              command="toggleOrderedList"
-              isActiveName="orderedList"
-              label={<Icons.OrderedListIcon />}
-              title="Numbered list"
-            />
+          </ToolbarGroup>
+          <ToolbarGroup>
             <ToolbarButton
               editor={editor}
               command="toggleBlockquote"
               isActiveName="blockquote"
               label={<Icons.BlockquoteIcon />}
               title="Blockquote"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleCodeBlock"
+              isActiveName="codeBlock"
+              label={<Icons.CodeBlockIcon />}
+              title="Code block"
             />
           </ToolbarGroup>
           <ToolbarGroup>
@@ -98,10 +106,50 @@ export function SimpleEditor() {
             <LinkMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
+            <ToolbarButton
+              editor={editor}
+              command="toggleSuperscript"
+              isActiveName="superscript"
+              label={<Icons.SuperscriptIcon />}
+              title="Superscript"
+            />
+            <ToolbarButton
+              editor={editor}
+              command="toggleSubscript"
+              isActiveName="subscript"
+              label={<Icons.SubscriptIcon />}
+              title="Subscript"
+            />
+          </ToolbarGroup>
+          <ToolbarGroup>
             <AlignMenu editor={editor} />
           </ToolbarGroup>
           <ToolbarGroup>
             <ImageMenu editor={editor} />
+          </ToolbarGroup>
+          <ToolbarGroup className="tb-group-end">
+            <button
+              type="button"
+              className={`tb-btn${findOpen ? ' is-active' : ''}`}
+              title="Find and replace"
+              onMouseDown={(e) => {
+                e.preventDefault()
+                setFindOpen(true)
+              }}
+            >
+              <Icons.SearchIcon />
+            </button>
+            <button
+              type="button"
+              className="tb-btn"
+              title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+              onMouseDown={(e) => {
+                e.preventDefault()
+                setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+              }}
+            >
+              {theme === 'dark' ? <Icons.SunIcon /> : <Icons.MoonIcon />}
+            </button>
           </ToolbarGroup>
         </Toolbar>
       )}
@@ -157,6 +205,7 @@ export function SimpleEditor() {
           </BubbleMenu>
         </div>
       </div>
+      {editor && <FindReplace editor={editor} open={findOpen} onClose={() => setFindOpen(false)} />}
     </div>
   )
 }

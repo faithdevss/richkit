@@ -1,5 +1,6 @@
 import { Node, wrapInList, type Command } from '@richkitjs/core'
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
+import { TaskItemNodeView } from './nodeView'
 
 function taskCommand(factory: typeof splitListItem, attrs?: Record<string, unknown>): Command {
   return ({ state, dispatch, view }) => {
@@ -41,6 +42,26 @@ export const TaskItem = Node.create({
     { 'data-type': 'task-item', 'data-checked': String(node.attrs.checked) },
     0,
   ],
+  addNodeViews: () => ({
+    taskItem: (node, view, getPos) => new TaskItemNodeView(node, view, getPos),
+  }),
+  addCommands: () => ({
+    toggleTaskChecked:
+      (): Command =>
+      ({ state, dispatch }) => {
+        const type = state.schema.nodes['taskItem']
+        if (!type) return false
+        const { $from } = state.selection
+        for (let depth = $from.depth; depth > 0; depth--) {
+          if ($from.node(depth).type !== type) continue
+          const pos = $from.before(depth)
+          const checked = !($from.node(depth).attrs.checked as boolean)
+          if (dispatch) dispatch(state.tr.setNodeAttribute(pos, 'checked', checked))
+          return true
+        }
+        return false
+      },
+  }),
   addKeyboardShortcuts: () => ({
     // new items start unchecked regardless of the split item's state
     Enter: taskCommand(splitListItem, { checked: false }),
@@ -48,3 +69,5 @@ export const TaskItem = Node.create({
     'Shift-Tab': taskCommand(liftListItem),
   }),
 })
+
+export { TaskItemNodeView } from './nodeView'

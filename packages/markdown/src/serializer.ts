@@ -127,6 +127,47 @@ export const serializer = new MarkdownSerializer(
       state.closeBlock(node)
     },
     table: tableSerializer,
+    // GitHub-style alerts are the closest Markdown has to a callout
+    callout: (state, node) => {
+      const kind = String(node.attrs['kind'] ?? 'tip').toUpperCase()
+      state.wrapBlock('> ', null, node, () => {
+        state.write(`[!${kind}]`)
+        state.ensureNewLine()
+        state.renderContent(node)
+      })
+    },
+    toggle: (state, node) => {
+      const open = node.attrs['open'] ? ' open' : ''
+      state.write(`<details${open}>`)
+      state.ensureNewLine()
+      state.renderContent(node)
+      state.write('</details>')
+      state.closeBlock(node)
+    },
+    toggleSummary: (state, node) => {
+      state.write('<summary>')
+      state.renderInline(node)
+      state.write('</summary>')
+      state.closeBlock(node)
+    },
+    toggleBody: (state, node) => {
+      state.renderContent(node)
+    },
+    bookmark: (state, node) => {
+      const href = (node.attrs['href'] as string) || ''
+      const title = state.esc((node.attrs['title'] as string) || href)
+      state.write(`[${title}](${href})`)
+      state.closeBlock(node)
+    },
+    media: (state, node) => {
+      const src = (node.attrs['src'] as string) || ''
+      const name = state.esc((node.attrs['name'] as string) || src)
+      state.write(`[${name}](${src})`)
+      state.closeBlock(node)
+    },
+    mention: (state, node) => {
+      state.write(`@${String(node.attrs['label'] ?? node.attrs['id'] ?? '')}`)
+    },
     hardBreak: (state) => {
       state.write('\\\n')
     },

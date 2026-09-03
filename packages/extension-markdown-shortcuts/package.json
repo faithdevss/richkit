@@ -26,7 +26,9 @@
   "dependencies": {
     "@richkitjs/core": "workspace:*",
     "prosemirror-inputrules": "^1.4.0",
-    "prosemirror-model": "^1.24.1"
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-transform": "^1.10.2",
+    "prosemirror-state": "^1.4.3"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

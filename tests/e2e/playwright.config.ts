@@ -1,9 +1,11 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const PORT = 5173
+// Vite walks to the next free port when the configured one is taken, so both
+// are overridable — point a run at whatever the dev servers actually claimed.
+const PORT = Number(process.env.PLAYGROUND_PORT ?? 5173)
 // The showcase (docs site) is a separate app on its own port; a few specs
 // exercise it rather than the playground editor.
-const SHOWCASE_PORT = 5174
+const SHOWCASE_PORT = Number(process.env.SHOWCASE_PORT ?? 5174)
 const SHOWCASE_SPECS = /showcase\..*\.spec\.ts/
 
 export default defineConfig({

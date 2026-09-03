@@ -32,11 +32,32 @@ export const DOCX_CONTENT = `
 `
 
 export const NOTION_CONTENT = `
-<blockquote><p>💞 <strong>Invite your colleagues to make this fun!</strong><br />Just copy the URL from your browser and share it — everyone with the link can join in and collaborate in real time.</p></blockquote>
-<p>Start writing your thoughts here … ✏️</p>
-<p>Try some <strong>Markdown:</strong> type <code>#</code> for a heading, <code>-</code> for a bullet, or <code>&gt;</code> for a quote.</p>
-<p></p>
-<p>Type <code>/</code> to open the command menu and discover blocks, formatting, and hidden gems.</p>
+<h1>Writing with blocks ✨</h1>
+<blockquote><p>💡 <strong>Every paragraph here is a block.</strong><br />Hover one to pick up its handle, drag it anywhere on the page, or open the block menu to turn it into a heading, a list, or a code fence.</p></blockquote>
+<p>This template is shaped for the two things people write most: <strong>documentation</strong> and <strong>long-form posts</strong>. Nothing is bolted on — the handles, the slash menu, and the selection toolbar all drive the same command API you get from <code>@richkitjs/core</code>.</p>
+<h2>Three ways to reach a command</h2>
+<ol>
+  <li><p>Type <code>/</code> at the start of an empty line for the command menu.</p></li>
+  <li><p>Select text to bring up the formatting bubble — including <em>Improve</em>, which streams an AI rewrite in.</p></li>
+  <li><p>Use Markdown as you type: <code>#</code> for a heading, <code>-</code> for a bullet, <code>&gt;</code> for a quote, <code>\`\`\`</code> for code.</p></li>
+</ol>
+<h2>Reordering</h2>
+<p>Pick up the <strong>⠿</strong> handle in the gutter and drag. A blue line shows where the block will land, and the whole move is a single undo step.</p>
+<pre><code class="language-ts">import { useEditor, EditorContent, BlockHandle } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
+
+const editor = useEditor({ extensions: StarterKit, content })
+// &lt;BlockHandle editor={editor} /&gt; adds the gutter — that is the whole setup.</code></pre>
+<h2>A checklist, because docs always need one</h2>
+<ul data-type="task-list">
+  <li data-type="task-item" data-checked="true"><p>Drag a block to a new position</p></li>
+  <li data-type="task-item" data-checked="false"><p>Turn this line into a heading from the block menu</p></li>
+  <li data-type="task-item" data-checked="false"><p>Ask AI to continue writing the section below</p></li>
+</ul>
+<h2>Make it yours</h2>
+<p>Swap the palette, drop the AI section from the slash menu, or add your own block actions — the template is <mark>plain React</mark> over headless extensions, so there is no theme to fight.</p>
+<hr />
+<p>Prefer a document-shaped surface with page chrome and DOCX round-tripping? The <strong>Docx editor</strong> template is next door.</p>
 `
 
 export const SIMPLE_CONTENT = `

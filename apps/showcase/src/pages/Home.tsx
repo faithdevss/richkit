@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Icons } from '@richkitjs/react'
 import { ComparisonTable } from '../components/ComparisonTable'
+import { HeroPreview } from '../components/HeroPreview'
+import { Icon, type IconName } from '../components/SiteIcons'
+import { TemplateCard } from '../components/TemplateCard'
+import { TEMPLATES } from '../data/templates'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
 import { ClassicEditor } from '../editors/FormFieldEditor'
@@ -12,12 +16,8 @@ import docxSource from '../editors/DocxEditor.tsx?raw'
 import classicSource from '../editors/FormFieldEditor.tsx?raw'
 import notionSource from '../editors/NotionEditor.tsx?raw'
 import simpleSource from '../editors/SimpleEditor.tsx?raw'
-import { TemplatePreview } from '../components/TemplatePreview'
 
 type TabId = 'agent' | 'docx' | 'notion' | 'simple' | 'classic'
-// The template cards below only have wireframe art for the four document-style
-// editors, so they take the narrower union.
-type TemplateTab = Exclude<TabId, 'classic'>
 
 const SOURCES: Record<TabId, string> = {
   agent: agentSource,
@@ -27,86 +27,81 @@ const SOURCES: Record<TabId, string> = {
   classic: classicSource,
 }
 
-const TABS: { id: TabId; label: string }[] = [
-  { id: 'agent', label: 'Agent editor' },
-  { id: 'docx', label: 'Docx editor' },
-  { id: 'notion', label: 'Notion-like editor' },
-  { id: 'simple', label: 'Simple editor' },
-  { id: 'classic', label: 'Classic editor' },
+const TABS: { id: TabId; label: string; pkg: string }[] = [
+  { id: 'agent', label: 'Agent editor', pkg: '@richkitjs/extension-ai' },
+  { id: 'docx', label: 'Docx editor', pkg: '@richkitjs/docx' },
+  { id: 'notion', label: 'Notion-like editor', pkg: '@richkitjs/extension-slash-commands' },
+  { id: 'simple', label: 'Simple editor', pkg: '@richkitjs/starter-kit' },
+  { id: 'classic', label: 'Classic editor', pkg: '@richkitjs/extension-table' },
 ]
 
-const TAB_IDS = new Set<string>(['agent', 'docx', 'notion', 'simple', 'classic'])
+const TAB_IDS = new Set<string>(TABS.map((t) => t.id))
+
+const INSTALL = 'pnpm add @richkitjs/starter-kit'
 
 const METRICS: { value: string; label: string }[] = [
-  { value: '40+', label: 'extensions' },
+  { value: '40+', label: 'extensions on npm' },
   { value: '100%', label: 'headless core' },
-  { value: 'MIT', label: 'licensed' },
+  { value: '$0', label: 'for the full feature set' },
 ]
 
-const FEATURES: { icon: string; badge?: string; title: string; body: string }[] = [
+const STACK = ['React 18 · 19', 'Next.js', 'Vite', 'TypeScript', 'ProseMirror', 'Yjs-ready']
+
+const FEATURES: { id: string; icon: IconName; tag: string; title: string; body: string }[] = [
   {
-    icon: '✦',
-    title: 'AI Toolkit',
-    body: 'Wire agents into the document. Build chatbots, proofreaders, and multi-step edit workflows on top of the editor state.',
+    id: 'ai',
+    icon: 'sparkle',
+    tag: 'MIT',
+    title: 'AI toolkit',
+    body: 'Wire agents into the document. Chatbots, proofreaders and multi-step edit workflows arrive as reviewable suggestions, not silent rewrites.',
   },
   {
-    icon: '⇄',
+    id: 'conversion',
+    icon: 'convert',
+    tag: 'MIT',
     title: 'Conversion',
-    body: 'Import and export DOCX, Markdown, and HTML with dedicated packages that map cleanly to the editor schema.',
+    body: 'DOCX, Markdown and HTML in and out, with packages that map cleanly to the editor schema. Runs in the browser — no conversion service.',
   },
   {
-    icon: '◍',
+    id: 'collab',
+    icon: 'collab',
+    tag: 'Roadmap',
     title: 'Collaboration',
-    body: 'Transaction-based core built for shared editing — track changes, presence, and deterministic document state.',
+    body: 'A transaction-based core built for shared editing: deterministic document state, presence hooks and a Yjs-ready shape.',
   },
   {
-    icon: '❝',
+    id: 'comments',
+    icon: 'comment',
+    tag: 'MIT',
     title: 'Comments',
-    body: 'Anchor inline threads to ranges. Discuss, resolve, and keep annotations glued to the text as it moves.',
+    body: 'Anchor inline threads to ranges. Discuss, resolve, and keep annotations glued to the text as it moves around them.',
   },
   {
-    icon: '▤',
+    id: 'documents',
+    icon: 'book',
+    tag: 'MIT',
     title: 'Documents',
-    body: 'Page breaks, word count, and paginated docx layout — the primitives real document tools depend on.',
+    body: 'Page breaks, word count and paginated DOCX layout — the primitives real document tools depend on, not a demo approximation.',
   },
   {
-    icon: '◆',
+    id: 'editor',
+    icon: 'type',
+    tag: 'MIT',
     title: 'Editor',
-    body: 'A framework-agnostic core with first-class React bindings. Open source, extensible, yours to ship.',
+    body: 'A framework-agnostic core with first-class React bindings. Headless, typed end to end, and yours to extend.',
   },
 ]
 
-const TEMPLATES: { title: string; tag: string; body: string; tab: TemplateTab }[] = [
-  {
-    title: 'Simple editor',
-    tag: 'Free',
-    body: 'A batteries-included toolbar editor — bold, lists, links, headings. Drop it in and go.',
-    tab: 'simple',
-  },
-  {
-    title: 'Notion-like editor',
-    tag: 'Free',
-    body: 'Slash commands, callouts, and a clean block canvas for doc-style writing.',
-    tab: 'notion',
-  },
-  {
-    title: 'Docx editor',
-    tag: 'Free',
-    body: 'A paginated paper sheet with DOCX import/export baked in for real documents.',
-    tab: 'docx',
-  },
+const PROOF: { head: string; body: string }[] = [
+  { head: 'MIT licensed', body: 'Core and every extension' },
+  { head: 'No license key', body: 'Never phones home' },
+  { head: 'Runs in the browser', body: 'DOCX without a service' },
+  { head: 'Typed end to end', body: 'TypeScript sources, ESM + CJS' },
+  { head: 'Bring your own model', body: 'Anthropic or OpenAI adapters' },
 ]
 
-const SUPPORT_LINKS: { label: string; href: string; body: string }[] = [
-  {
-    label: 'GitHub Sponsors',
-    href: 'https://github.com/sponsors/faithdevss',
-    body: 'Recurring or one-time sponsorship through GitHub.',
-  },
-]
-
-function initialTab(): TabId {
-  const h = typeof window !== 'undefined' ? window.location.hash.slice(1) : ''
+function tabFromHash(hash: string): TabId {
+  const h = hash.replace(/^#/, '')
   return (TAB_IDS.has(h) ? h : 'agent') as TabId
 }
 
@@ -148,20 +143,25 @@ function CheckIcon() {
 }
 
 export function Home() {
-  const [tab, setTab] = useState<TabId>(initialTab)
+  const { hash } = useLocation()
+  const navigate = useNavigate()
+  // The tab lives in the hash so a link can open one, which means the hash --
+  // not local state -- has to be what renders, or Back leaves the URL and the
+  // tabbar disagreeing.
+  const tab = tabFromHash(hash)
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [installCopied, setInstallCopied] = useState(false)
 
-  const selectTab = (id: TabId) => {
-    setTab(id)
-    if (typeof window !== 'undefined') window.location.hash = id
-  }
+  const active = TABS.find((t) => t.id === tab)!
 
-  const copyCode = async () => {
+  const selectTab = (id: TabId) => navigate({ hash: id }, { replace: true })
+
+  const copy = async (text: string, mark: (v: boolean) => void) => {
     try {
-      await navigator.clipboard.writeText(SOURCES[tab])
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1500)
+      await navigator.clipboard.writeText(text)
+      mark(true)
+      window.setTimeout(() => mark(false), 1500)
     } catch {
       // clipboard unavailable — ignore
     }
@@ -169,39 +169,83 @@ export function Home() {
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-eyebrow">The rich text editor toolkit for React</div>
-        <h1 className="hero-title">
-          Build <em>AI-native</em> editors <em>faster</em> 🚀
-          <br />
-          with production-ready <em>tools</em>
-        </h1>
-        <p className="hero-sub">
-          A headless, extensible, framework-agnostic editor core with React bindings. Ship agent
-          editors, docx editors, Notion-like editors, and simple editors — all from one MIT-licensed
-          toolkit.
-        </p>
-        <div className="hero-actions">
-          <a href="#examples" className="btn-primary">
-            Explore examples
-          </a>
-          <Link to="/docs/installation" className="btn-secondary">
-            Read the docs
-          </Link>
-          <code className="hero-install">pnpm add @richkitjs/starter-kit</code>
+      <section className="shell hero" id="top">
+        <div>
+          <div className="hero-eyebrow">
+            <b>MIT</b>
+            The rich text editor toolkit for React
+          </div>
+          <h1 className="hero-title">
+            Build AI-native editors with <em>production-ready</em> primitives
+          </h1>
+          <p className="hero-sub">
+            A headless, transaction-based editor core with first-class React bindings. Track
+            changes, comments, DOCX round-tripping and agent workflows ship as MIT packages — no
+            license key, no hosted backend, no vendor account.
+          </p>
+          <div className="hero-actions">
+            <a href="#examples" className="btn-primary">
+              <Icon name="book" size={17} />
+              Explore live examples
+            </a>
+            <Link to="/docs/installation" className="btn-secondary">
+              <Icon name="docs" size={17} />
+              Read the docs
+            </Link>
+          </div>
+          <button
+            type="button"
+            className="hero-install"
+            onClick={() => copy(INSTALL, setInstallCopied)}
+            title="Copy install command"
+          >
+            <span className="prompt">$</span> {INSTALL}
+            <span className="copied">{installCopied ? 'Copied' : ''}</span>
+          </button>
+          <div className="hero-metrics">
+            {METRICS.map((m) => (
+              <div key={m.label}>
+                <span className="metric-value">{m.value}</span>
+                <span className="metric-label">{m.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="hero-metrics">
-          {METRICS.map((m) => (
-            <div className="metric" key={m.label}>
-              <span className="metric-value">{m.value}</span>
-              <span className="metric-label">{m.label}</span>
-            </div>
-          ))}
+        <div className="hero-art">
+          <HeroPreview />
+          <p className="hero-art-note">
+            Agent edits land as suggestions you accept or reject.{' '}
+            <a href="#examples">Open the live editor ↗</a>
+          </p>
         </div>
       </section>
 
-      <section id="examples" className="examples">
+      <section className="shell">
+        <div className="stack-strip">
+          <span className="lead">Ships with the stack you already run</span>
+          <div className="names">
+            {STACK.map((s) => (
+              <span key={s}>{s}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="examples" className="shell section">
+        <div className="section-head">
+          <div>
+            <h2 className="section-title">Five editors, one core</h2>
+            <p className="section-sub">
+              Five surfaces built from the same <code>@richkitjs</code> packages. Switch tabs to see
+              how far one core stretches.
+            </p>
+          </div>
+          <Link to="/templates" className="section-link">
+            All templates →
+          </Link>
+        </div>
+
         <div className="tabbar" role="tablist" aria-label="Editor examples">
           {TABS.map((t) => (
             <button
@@ -217,6 +261,16 @@ export function Home() {
         </div>
 
         <div className="stage-wrap">
+          <div className="frame-bar">
+            <div className="frame-dots">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span className="frame-title">{active.label}</span>
+            <code className="frame-pkg">{active.pkg}</code>
+          </div>
+
           <div className="stage-actions">
             <button
               type="button"
@@ -232,7 +286,7 @@ export function Home() {
                 type="button"
                 className={`code-icon-btn${copied ? ' is-active' : ''}`}
                 title={copied ? 'Copied' : 'Copy code'}
-                onClick={copyCode}
+                onClick={() => copy(SOURCES[tab], setCopied)}
               >
                 {copied ? <CheckIcon /> : <CopyIcon />}
               </button>
@@ -255,25 +309,25 @@ export function Home() {
         </div>
 
         <p className="stage-caption">
-          Every example above is a live editor built with the same <code>@richkitjs</code> packages.
-          Switch tabs to see how far one core stretches. Want the write-up and code for each? See
-          the <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
+          Each template's full source sits in <code>apps/showcase/src/editors</code>. Want the
+          write-up for each? See the <Link to="/docs/usecases/agent-workflows">usecase docs</Link>.
         </p>
       </section>
 
-      <section id="features" className="features">
-        <h2 className="section-title">
-          Everything you need to build <em>real</em> editors
-        </h2>
-        <p className="section-sub">
-          One core, a grid of composable packages. Add only what you ship.
+      <section id="platform" className="shell section">
+        <h2 className="section-title">Everything you need to build real editors</h2>
+        <p className="section-sub" style={{ marginBottom: 34 }}>
+          One core, a grid of composable packages. Add only what you ship — and none of it sits
+          behind a plan.
         </p>
         <div className="feature-grid">
           {FEATURES.map((f) => (
-            <div className="feature-card" key={f.title}>
+            <div className="feature-card" id={f.id} key={f.title}>
               <div className="feature-top">
-                <span className="feature-icon">{f.icon}</span>
-                {f.badge && <span className="feature-badge">{f.badge}</span>}
+                <span className="feature-icon">
+                  <Icon name={f.icon} size={19} />
+                </span>
+                <span className={`tag${f.tag === 'MIT' ? ' is-mit' : ''}`}>{f.tag}</span>
               </div>
               <h3 className="feature-title">{f.title}</h3>
               <p className="feature-body">{f.body}</p>
@@ -282,42 +336,39 @@ export function Home() {
         </div>
       </section>
 
-      <section id="templates" className="templates">
-        <h2 className="section-title">
-          Launch faster with <em>ready-made templates</em>
-        </h2>
-        <p className="section-sub">Open a template, then jump straight to its live demo.</p>
+      <section id="templates" className="shell section">
+        <div className="section-head">
+          <div>
+            <h2 className="section-title">Templates and UI components</h2>
+            <p className="section-sub">
+              Not just editors — the panels, menus and review surfaces around them. Copy the source
+              out of the repo and keep the parts you want.
+            </p>
+          </div>
+          <Link to="/templates" className="section-link">
+            All templates →
+          </Link>
+        </div>
         <div className="template-grid">
-          {TEMPLATES.map((t) => (
-            <button
-              className="template-card"
-              key={t.title}
-              onClick={() => {
-                selectTab(t.tab)
-                document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              <div className="template-preview">
-                <TemplatePreview variant={t.tab} />
-              </div>
-              <div className="template-meta">
-                <span className="template-name">{t.title}</span>
-                <span className="template-tag">{t.tag}</span>
-              </div>
-              <p className="template-body">{t.body}</p>
-            </button>
+          {TEMPLATES.slice(0, 3).map((t) => (
+            <TemplateCard key={t.title} template={t} />
           ))}
         </div>
       </section>
 
-      <section id="compare" className="compare">
-        <h2 className="section-title">
-          The paid features, <em>open sourced</em>
-        </h2>
-        <p className="section-sub">
-          Track changes, comments, and DOCX round-tripping sit behind a plan almost everywhere else.
-          Here they are MIT packages on npm.
-        </p>
+      <section id="compare" className="shell section">
+        <div className="section-head">
+          <div>
+            <h2 className="section-title">The paid features, open sourced</h2>
+            <p className="section-sub">
+              Track changes, comments and DOCX round-tripping sit behind a plan almost everywhere
+              else. Here they are MIT packages on npm.
+            </p>
+          </div>
+          <Link to="/docs/comparison" className="section-link">
+            Full comparison &amp; sources →
+          </Link>
+        </div>
 
         <ComparisonTable notes={false} />
 
@@ -325,31 +376,44 @@ export function Home() {
           <span className="cmp-mark is-open">✓</span> open source ·{' '}
           <span className="cmp-mark is-paid">$</span> paid plan ·{' '}
           <span className="cmp-mark is-partial">~</span> partial ·{' '}
-          <span className="cmp-mark is-none">–</span> unavailable — see the{' '}
-          <Link to="/docs/comparison">full comparison</Link> for the caveats and sources.
+          <span className="cmp-mark is-none">–</span> unavailable — claims taken from each vendor's
+          own pricing and licensing pages.
         </p>
       </section>
 
-      <section id="support" className="support">
-        <h2 className="section-title">
-          Support the <em>project</em>
-        </h2>
-        <p className="section-sub">
-          RichKit is free and MIT-licensed. Sponsorship funds maintenance and new extensions.
-        </p>
-        <div className="support-grid">
-          {SUPPORT_LINKS.map((s) => (
+      <section className="shell section">
+        <div className="proof-grid">
+          {PROOF.map((p) => (
+            <div className="proof-cell" key={p.head}>
+              <b>{p.head}</b>
+              <span>{p.body}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="support" className="shell section">
+        <div className="cta-panel">
+          <h2>Install it and ship the editor this week</h2>
+          <p>
+            One command gets you the starter kit. The AI, DOCX and comments packages are one install
+            away — and they cost nothing.
+          </p>
+          <div className="cta-actions">
+            <Link to="/docs/installation" className="btn-light">
+              <Icon name="type" size={17} />
+              Get started
+            </Link>
             <a
-              className="support-card"
-              key={s.label}
-              href={s.href}
+              href="https://github.com/sponsors/faithdevss"
+              className="btn-secondary"
               target="_blank"
               rel="noreferrer"
             >
-              <span className="support-name">{s.label}</span>
-              <p className="support-body">{s.body}</p>
+              <Icon name="plus" size={17} />
+              Sponsor the project
             </a>
-          ))}
+          </div>
         </div>
       </section>
     </>
