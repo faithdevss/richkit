@@ -17,14 +17,13 @@ export type ComparisonRow = {
  * Competitor claims are sourced from the vendors' own pricing/licensing
  * pages — see COMPARISON_SOURCES. Keep them checkable, not editorial.
  */
-export const COMPARISON_COLUMNS = ['RichKit', 'Tiptap', 'Lexical', 'CKEditor 5', 'TinyMCE'] as const
+export const COMPARISON_COLUMNS = ['RichKit', 'Tiptap', 'CKEditor 5', 'TinyMCE'] as const
 
 export const COMPARISON_ROWS: ComparisonRow[] = [
   {
     feature: 'Editor license',
     detail: 'What the core itself is licensed under.',
     cells: [
-      { state: 'open', label: 'MIT' },
       { state: 'open', label: 'MIT' },
       { state: 'open', label: 'MIT' },
       {
@@ -49,7 +48,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Paid',
         note: 'Conversion is a hosted service, from the Start plan.',
       },
-      { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature', note: 'Import from Word and export to Word.' },
       { state: 'paid', label: 'Paid add-on', note: 'Export to Word; included only on Enterprise.' },
     ],
@@ -64,7 +62,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Paid add-on',
         note: 'An add-on on every plan, Start to Enterprise.',
       },
-      { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature' },
       {
         state: 'paid',
@@ -83,11 +80,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Paid',
         note: 'Part of the Documents bundle; needs cloud-stored docs.',
       },
-      {
-        state: 'none',
-        label: 'Not built in',
-        note: 'The playground has one; no published package.',
-      },
       { state: 'paid', label: 'Premium feature' },
       { state: 'paid', label: 'Professional plan', note: 'Not on Free or Essential.' },
     ],
@@ -102,7 +94,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         note: '@richkitjs/extension-ai — bring your own provider; edits arrive as reviewable suggestions.',
       },
       { state: 'paid', label: 'Paid', note: 'Content AI bundle.' },
-      { state: 'none', label: 'Not built in' },
       { state: 'paid', label: 'Premium feature', note: 'AI Assistant.' },
       {
         state: 'paid',
@@ -125,7 +116,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'Free self-host / paid cloud',
         note: 'Hocuspocus is MIT; the managed backend is on a paid plan.',
       },
-      { state: 'partial', label: 'Bring your own Yjs', note: '@lexical/yjs is MIT; you host it.' },
       { state: 'paid', label: 'Premium feature' },
       {
         state: 'paid',
@@ -144,11 +134,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: 'MIT component',
         note: 'Slash Dropdown Menu — copied into your repo by the CLI, not an npm package.',
       },
-      {
-        state: 'partial',
-        label: 'Build it yourself',
-        note: 'Typeahead menu plugin, no ready-made command list.',
-      },
       { state: 'paid', label: 'Premium feature', note: 'Needs a commercial license key.' },
       {
         state: 'partial',
@@ -163,7 +148,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     cells: [
       { state: 'open', label: 'MIT', note: '@richkitjs/extension-find-replace' },
       { state: 'open', label: 'MIT', note: '@tiptap/extension-find-and-replace, headless UI.' },
-      { state: 'none', label: 'Not built in' },
       { state: 'open', label: 'Included' },
       { state: 'open', label: 'Included', note: 'searchreplace, an open-source plugin.' },
     ],
@@ -178,7 +162,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         note: 'npm install and ship. The editor never phones home; only the optional AI extension calls out, to a provider you choose.',
       },
       { state: 'partial', label: 'Editor yes, platform no' },
-      { state: 'open', label: 'Yes' },
       {
         state: 'partial',
         label: 'License key required',
@@ -201,7 +184,6 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
         label: '$59 – $1,199 / mo',
         note: '$49 – $999 on annual billing, plus $49 / dev / mo past the seats included.',
       },
-      { state: 'open', label: '$0', note: 'You build the missing pieces.' },
       {
         state: 'paid',
         label: 'from ~$700 / mo',
@@ -248,7 +230,6 @@ export const COMPARISON_SOURCES: { label: string; href: string }[] = [
     label: 'TinyMCE license key',
     href: 'https://www.tiny.cloud/docs/tinymce/latest/license-key/',
   },
-  { label: 'Lexical on GitHub', href: 'https://github.com/facebook/lexical' },
 ]
 
 export const COMPARISON_CHECKED = 'September 2026'
