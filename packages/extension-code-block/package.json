@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-code-block",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Code block extension for @richkitjs/core",
   "license": "MIT",
   "type": "module",

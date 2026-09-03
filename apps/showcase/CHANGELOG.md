@@ -1,5 +1,16 @@
 # showcase
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [83cc996]
+- Updated dependencies [83cc996]
+- Updated dependencies [0db73f6]
+  - @richkitjs/extension-drag-handle@0.2.0
+  - @richkitjs/starter-kit@0.2.0
+  - @richkitjs/react@0.2.0
+
 ## 0.0.1
 
 ### Patch Changes

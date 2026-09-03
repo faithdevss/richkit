@@ -1,4 +1,4 @@
-# @richkitjs/extension-table
+# @richkitjs/extension-toggle
 
 ## 0.2.0
 
@@ -22,14 +22,3 @@
   - images take alignment, a caption, and alt text from a node-view toolbar
   - code blocks show line numbers
   - the block menu's "Turn Into" submenu no longer tears down mid-click
-
-## 0.1.0
-
-### Minor Changes
-
-- 534bdf5: Initial public release: headless ProseMirror core, 36 extensions, starter kit, markdown/HTML/DOCX converters, React and Vue 3 bindings.
-
-### Patch Changes
-
-- Updated dependencies [534bdf5]
-  - @richkitjs/core@0.1.0
