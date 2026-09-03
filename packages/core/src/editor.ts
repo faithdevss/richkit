@@ -1,7 +1,7 @@
 import { baseKeymap } from 'prosemirror-commands'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
-import { inputRules, type InputRule } from 'prosemirror-inputrules'
+import { inputRules, undoInputRule, type InputRule } from 'prosemirror-inputrules'
 import { keymap } from 'prosemirror-keymap'
 import { Schema, type Attrs, type Node as PMNode } from 'prosemirror-model'
 import { EditorState, Plugin, type Transaction } from 'prosemirror-state'
@@ -10,6 +10,7 @@ import { CommandChain, type Command } from './commands/chain'
 import { clearFormatting, selectAll } from './commands/util'
 import { EventEmitter } from './events'
 import type { AnyExtension } from './extension/extension'
+import { trailingClick } from './plugins/trailing-click'
 import { buildSchema } from './schema/builder'
 import { docToHtml, htmlToDoc } from './html'
 
@@ -90,13 +91,20 @@ export class Editor {
       }
     }
 
-    if (rules.length) plugins.push(inputRules({ rules }))
+    if (rules.length) {
+      plugins.push(inputRules({ rules }))
+      // Backspace right after a rule fired undoes the rule itself rather than
+      // the typing behind it, so `# ` comes back as literal text. It reports
+      // false when no rule just ran, leaving every other Backspace binding be.
+      plugins.push(keymap({ Backspace: undoInputRule }))
+    }
     if (Object.keys(shortcuts).length) {
       plugins.push(keymap(this.adaptShortcuts(shortcuts)))
     }
     plugins.push(keymap(baseKeymap))
     plugins.push(dropCursor())
     plugins.push(gapCursor())
+    plugins.push(trailingClick())
     return plugins
   }
 

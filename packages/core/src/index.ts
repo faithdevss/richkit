@@ -19,6 +19,7 @@ export {
   toggleWrap,
   toggleBlockType,
 } from './commands/blocks'
+export { trailingClick } from './plugins/trailing-click'
 export { htmlToDoc, docToHtml } from './html'
 export { createAutosave } from './autosave'
 export type { AutosaveOptions } from './autosave'

@@ -10,6 +10,7 @@ import {
   deleteRow,
   deleteTable,
   goToNextCell,
+  isInTable,
   mergeCells,
   splitCell,
   tableEditing,
@@ -181,7 +182,16 @@ export const TableHeader = Node.create({
 })
 
 function nextCell(direction: 1 | -1): Command {
-  return ({ state, dispatch }) => goToNextCell(direction)(state, dispatch ?? undefined)
+  return ({ state, dispatch, view }) => {
+    if (goToNextCell(direction)(state, dispatch ?? undefined)) return true
+    // Tab out of the last cell grows the table instead of leaving it — the
+    // behaviour every spreadsheet and Notion-style table has.
+    if (direction !== 1 || !isInTable(state)) return false
+    if (!addRowAfter(state, dispatch ?? undefined)) return false
+    const grown = view?.state
+    if (!grown) return true
+    return goToNextCell(direction)(grown, dispatch ?? undefined)
+  }
 }
 
 export const TablePlugins = Extension.create({

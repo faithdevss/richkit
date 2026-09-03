@@ -104,12 +104,14 @@ export const MarkdownShortcuts = Extension.create({
     const horizontalRule = schema.nodes['horizontalRule'] as NodeType | undefined
     if (horizontalRule) {
       // Typography has already turned the first `--` into an em dash by the
-      // time the third character lands, so both spellings have to match.
+      // time the third character lands, so both spellings have to match. The
+      // trailing space is optional: Notion and TipTap both swap the divider in
+      // on that third character rather than waiting for one.
       const paragraph = schema.nodes['paragraph'] as NodeType | undefined
       rules.push(
         // replaceRangeWith, not replaceWith: a block node cannot live inside
         // the paragraph's inline content, so the range has to be widened
-        new InputRule(/^(?:---|\u2014-|\*\*\*|___)\s$/, (state, _match, start, end) => {
+        new InputRule(/^(?:---|\u2014-|\*\*\*|___)\s?$/, (state, _match, start, end) => {
           const tr = state.tr.replaceRangeWith(start, end, horizontalRule.create())
           // The rule leaves the divider itself selected, so the next keystroke
           // would type over it — park the caret in a textblock after it.
