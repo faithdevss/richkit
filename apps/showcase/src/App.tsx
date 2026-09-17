@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DocsLayout } from './layouts/DocsLayout'
 import { SiteShell } from './layouts/SiteShell'
 import { Home } from './pages/Home'
+import { Pricing } from './pages/Pricing'
+import { Privacy, Refunds, Terms } from './pages/Legal'
 import { Templates } from './pages/Templates'
 import { Comparison } from './pages/docs/Comparison'
 import { ExtensionsReference } from './pages/docs/ExtensionsReference'
@@ -28,6 +30,10 @@ export function App() {
       <Routes>
         <Route element={<SiteShell />}>
           <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refunds" element={<Refunds />} />
           <Route path="/templates" element={<Templates />} />
           <Route path="/docs" element={<DocsLayout />}>
             <Route index element={<Navigate to="introduction" replace />} />

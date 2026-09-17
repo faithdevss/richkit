@@ -12,6 +12,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "@paddle/paddle-js": "^1.6.5",
     "@richkitjs/core": "workspace:*",
     "@richkitjs/docx": "workspace:*",
     "@richkitjs/extension-ai": "workspace:*",

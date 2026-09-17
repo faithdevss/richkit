@@ -17,6 +17,7 @@ const NAV: { label: string; to: string; icon: IconName }[] = [
   { label: 'Platform', to: `${HOME}#platform`, icon: 'platform' },
   { label: 'Templates', to: '/templates', icon: 'book' },
   { label: 'Compare', to: '/docs/comparison', icon: 'compare' },
+  { label: 'Pricing', to: '/pricing', icon: 'price' },
   { label: 'Docs', to: '/docs', icon: 'docs' },
   { label: 'Support', to: SPONSOR, icon: 'plus' },
 ]
@@ -49,6 +50,16 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'Core concepts', to: '/docs/core-concepts' },
       { label: 'Styling', to: '/docs/styling' },
       { label: 'Comparison', to: '/docs/comparison' },
+      { label: 'Pricing', to: '/pricing' },
+    ],
+  },
+  {
+    head: 'Legal',
+    links: [
+      { label: 'Terms of service', to: '/terms' },
+      { label: 'Privacy policy', to: '/privacy' },
+      { label: 'Refund policy', to: '/refunds' },
+      { label: 'Licence', to: '/pricing' },
     ],
   },
   {
@@ -192,7 +203,9 @@ export function SiteShell() {
               <div className="site-brand">
                 <Brand />
               </div>
-              <p className="foot-tagline">The open-source rich text editor toolkit for React.</p>
+              <p className="foot-tagline">
+                The rich text editor toolkit for React. $99 a year, every package.
+              </p>
             </div>
             {FOOT_COLS.map((c) => (
               <div className="foot-col" key={c.head}>
@@ -205,7 +218,13 @@ export function SiteShell() {
           </div>
           <div className="foot-base">
             Built with <code>@richkitjs/core</code> · <code>@richkitjs/react</code> ·{' '}
-            <code>@richkitjs/starter-kit</code> · MIT licensed
+            <code>@richkitjs/starter-kit</code> · Free for noncommercial use ·{' '}
+            <Link to="/pricing">$99/yr commercial</Link>
+            <span className="foot-legal">
+              <Link to="/terms">Terms</Link>
+              <Link to="/privacy">Privacy</Link>
+              <Link to="/refunds">Refunds</Link>
+            </span>
           </div>
         </footer>
       </div>

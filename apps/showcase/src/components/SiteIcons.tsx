@@ -36,6 +36,10 @@ export const ICON_PATHS = {
     'M20.5 12v3a3 3 0 0 1-3 3h-14',
   ],
   comment: ['M21 12a8 8 0 0 1-8 8H7l-4 3v-9a8 8 0 0 1 8-8h2a8 8 0 0 1 8 6z'],
+  price: [
+    'M3 3.5h7.6a2 2 0 0 1 1.4.6l8 8a2 2 0 0 1 0 2.8l-5.1 5.1a2 2 0 0 1-2.8 0l-8-8a2 2 0 0 1-.6-1.4z',
+    'M7.2 7.2h.01',
+  ],
 } as const
 
 export type IconName = keyof typeof ICON_PATHS

@@ -773,7 +773,7 @@ body {
   text-transform: uppercase;
   white-space: nowrap;
 }
-.tag.is-mit {
+.tag.is-included {
   border-color: rgba(69, 224, 200, 0.32);
   background: rgba(69, 224, 200, 0.1);
   color: var(--site-teal);
@@ -2591,4 +2591,220 @@ button.tpl-card {
 .tb-group-end {
   margin-left: auto;
   border-right: 0;
+}
+
+/* ============================================================
+   PRICING — two-card licence comparison, price table, FAQ.
+   ============================================================ */
+.price-section {
+  padding-bottom: 8px;
+}
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+.price-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid var(--site-line);
+  background: var(--site-panel);
+}
+/* The paid card is the one being sold, so it carries the brand gradient edge. */
+.price-card.is-primary {
+  border-color: rgba(139, 92, 255, 0.38);
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(139, 92, 255, 0.14), rgba(139, 92, 255, 0) 62%),
+    var(--site-panel-raised);
+}
+.price-card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.price-card-head .tag {
+  align-self: flex-start;
+}
+.price-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.price-amount b {
+  font-size: 2.6rem;
+  font-weight: 680;
+  letter-spacing: -0.035em;
+  color: var(--site-text-strong);
+  line-height: 1;
+}
+.price-amount span {
+  font-size: 0.92rem;
+  color: var(--site-text-muted);
+}
+.price-note {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--site-text-soft);
+}
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Push the CTA to the card foot so both cards' buttons line up. */
+  flex: 1;
+}
+.price-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--site-text-soft);
+}
+.price-check {
+  flex: none;
+  margin-top: 3px;
+  color: var(--site-teal);
+}
+.price-cta {
+  align-self: stretch;
+  justify-content: center;
+}
+.price-legal {
+  margin: 22px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--site-text-dim);
+}
+.price-legal a {
+  color: var(--site-text-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.price-legal a:hover {
+  color: var(--site-text-strong);
+}
+
+.price-compare {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid var(--site-line);
+  overflow: hidden;
+}
+.price-compare-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(140px, auto) minmax(180px, 1.4fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--site-line-soft);
+  background: var(--site-panel);
+}
+.price-compare-row:last-child {
+  border-bottom: 0;
+}
+.price-compare-row.is-win {
+  background: rgba(69, 224, 200, 0.07);
+}
+.price-compare-row b {
+  font-size: 0.96rem;
+  font-weight: 650;
+  color: var(--site-text-strong);
+}
+.price-compare-cost {
+  font-family: var(--site-mono);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--site-text);
+}
+.price-compare-row.is-win .price-compare-cost {
+  color: var(--site-teal);
+}
+.price-compare-sub {
+  font-size: 0.86rem;
+  color: var(--site-text-dim);
+}
+@media (max-width: 720px) {
+  .price-compare-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+.price-faq {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px 32px;
+}
+.price-faq-item h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--site-text-strong);
+}
+.price-faq-item p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--site-text-soft);
+}
+.price-faq-item a {
+  color: var(--site-violet-pale);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Legal pages — terms, privacy, refunds. Long-form prose, so the measure is
+   capped rather than filling the full shell width. */
+.legal-body {
+  max-width: 720px;
+  color: var(--site-text-soft);
+  font-size: 15px;
+  line-height: 1.72;
+}
+.legal-body h2 {
+  margin: 34px 0 12px;
+  color: var(--site-text);
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.legal-body h2:first-child {
+  margin-top: 0;
+}
+.legal-body p {
+  margin: 0 0 14px;
+}
+.legal-body ul {
+  margin: 0 0 14px;
+  padding-left: 20px;
+}
+.legal-body li {
+  margin-bottom: 9px;
+}
+.legal-body b {
+  color: var(--site-text);
+  font-weight: 620;
+}
+.legal-updated {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--site-line);
+  color: var(--site-text-muted);
+  font-size: 13px;
+}
+.foot-legal {
+  display: inline-flex;
+  gap: 14px;
+  margin-left: 14px;
 }
