@@ -277,13 +277,7 @@ function PlainRow({ children }: { children: ReactNode }) {
   return <div className="tb-row">{children}</div>
 }
 
-export function ToolbarGroup({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) {
+export function ToolbarGroup({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={className ? `tb-group ${className}` : 'tb-group'}>{children}</div>
 }
 
