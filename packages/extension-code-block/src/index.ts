@@ -1,6 +1,6 @@
 import { Node, toggleBlockType, type Command } from '@richkitjs/core'
 import { TextSelection, type EditorState } from 'prosemirror-state'
-import { codeBlockHighlightPlugin } from './highlight'
+import { codeBlockHighlightPlugin, highlighterFor, type LanguageFn } from './highlight'
 import { CodeBlockNodeView } from './nodeView'
 
 const INDENT = '  '
@@ -87,7 +87,16 @@ const outdentInCode = (): Command => {
   }
 }
 
-export const CodeBlock = Node.create({
+export interface CodeBlockOptions extends Record<string, unknown> {
+  /**
+   * Extra highlight.js grammars, merged over the built-in set. Pass `common`
+   * or `all` from `lowlight`, or single grammars from
+   * `highlight.js/lib/languages/*`.
+   */
+  languages: Record<string, LanguageFn>
+}
+
+export const CodeBlock = Node.create<CodeBlockOptions>({
   name: 'codeBlock',
   group: 'block',
   content: 'text*',
@@ -95,6 +104,7 @@ export const CodeBlock = Node.create({
   code: true,
   defining: true,
   whitespace: 'pre',
+  addOptions: () => ({ languages: {} }),
   attrs: {
     language: { default: null },
   },
@@ -127,15 +137,29 @@ export const CodeBlock = Node.create({
     Tab: indentInCode(),
     'Shift-Tab': outdentInCode(),
   }),
-  addProseMirrorPlugins: () => [codeBlockHighlightPlugin('codeBlock')],
-  addNodeViews: () => ({
+  addProseMirrorPlugins: ({ options }) => [
+    codeBlockHighlightPlugin('codeBlock', highlighterFor(options.languages)),
+  ],
+  addNodeViews: ({ options }) => ({
     codeBlock: (node, view, getPos) =>
-      new CodeBlockNodeView(node, view, () => {
-        const p = getPos()
-        return typeof p === 'number' ? p : undefined
-      }),
+      new CodeBlockNodeView(
+        node,
+        view,
+        () => {
+          const p = getPos()
+          return typeof p === 'number' ? p : undefined
+        },
+        highlighterFor(options.languages),
+      ),
   }),
 })
 
-export { codeBlockHighlightPlugin, getRegisteredLanguages } from './highlight'
+export {
+  codeBlockHighlightPlugin,
+  createHighlighter,
+  defaultLanguages,
+  getRegisteredLanguages,
+  highlighterFor,
+} from './highlight'
+export type { Highlighter, LanguageFn } from './highlight'
 export { CodeBlockNodeView } from './nodeView'

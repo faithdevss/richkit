@@ -1,6 +1,6 @@
 import type { Node as PMNode } from 'prosemirror-model'
 import type { EditorView, NodeView } from 'prosemirror-view'
-import { getRegisteredLanguages } from './highlight'
+import { getRegisteredLanguages, type Highlighter } from './highlight'
 
 export class CodeBlockNodeView implements NodeView {
   dom: HTMLElement
@@ -13,6 +13,7 @@ export class CodeBlockNodeView implements NodeView {
     node: PMNode,
     private readonly view: EditorView,
     private readonly getPos: () => number | undefined,
+    highlighter?: Highlighter,
   ) {
     this.node = node
 
@@ -25,13 +26,18 @@ export class CodeBlockNodeView implements NodeView {
     const select = document.createElement('select')
     select.className = 'code-block-lang'
     select.setAttribute('contenteditable', 'false')
-    for (const lang of getRegisteredLanguages()) {
+    const languages = getRegisteredLanguages(highlighter)
+    // content can name a language that has no grammar registered; keep it
+    // selectable so the picker does not silently show the wrong value
+    const current = node.attrs.language as string | null
+    if (current && !languages.includes(current)) languages.push(current)
+    for (const lang of languages) {
       const opt = document.createElement('option')
       opt.value = lang
       opt.textContent = lang
       select.appendChild(opt)
     }
-    select.value = (node.attrs.language as string | null) ?? ''
+    select.value = current ?? ''
 
     select.addEventListener('mousedown', (e) => e.stopPropagation())
     select.addEventListener('change', () => {
