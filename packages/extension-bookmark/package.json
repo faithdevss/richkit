@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/extension-bookmark",
   "version": "0.1.0",
-  "description": "Bookmark block extension for @richkitjs/core",
-  "license": "MIT",
+  "description": "Link preview cards for RichKit: insertBookmark renders a URL as a card with title, description and image supplied by your own resolver. Never fetches on its own.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -32,19 +35,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/extension-bookmark"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
     "prosemirror",
-    "bookmark"
+    "richkit-extension",
+    "bookmark",
+    "link-preview",
+    "link-card",
+    "unfurl"
   ]
 }

@@ -42,7 +42,7 @@ const INSTALL = 'pnpm add @richkitjs/starter-kit'
 const METRICS: { value: string; label: string }[] = [
   { value: '40+', label: 'extensions on npm' },
   { value: '100%', label: 'headless core' },
-  { value: '$0', label: 'for the full feature set' },
+  { value: '$99', label: 'a year, every package' },
 ]
 
 const STACK = ['React 18 · 19', 'Next.js', 'Vite', 'TypeScript', 'ProseMirror', 'Yjs-ready']
@@ -51,14 +51,14 @@ const FEATURES: { id: string; icon: IconName; tag: string; title: string; body: 
   {
     id: 'ai',
     icon: 'sparkle',
-    tag: 'MIT',
+    tag: 'Included',
     title: 'AI toolkit',
     body: 'Wire agents into the document. Chatbots, proofreaders and multi-step edit workflows arrive as reviewable suggestions, not silent rewrites.',
   },
   {
     id: 'conversion',
     icon: 'convert',
-    tag: 'MIT',
+    tag: 'Included',
     title: 'Conversion',
     body: 'DOCX, Markdown and HTML in and out, with packages that map cleanly to the editor schema. Runs in the browser — no conversion service.',
   },
@@ -72,29 +72,30 @@ const FEATURES: { id: string; icon: IconName; tag: string; title: string; body: 
   {
     id: 'comments',
     icon: 'comment',
-    tag: 'MIT',
+    tag: 'Included',
     title: 'Comments',
     body: 'Anchor inline threads to ranges. Discuss, resolve, and keep annotations glued to the text as it moves around them.',
   },
   {
     id: 'documents',
     icon: 'book',
-    tag: 'MIT',
+    tag: 'Included',
     title: 'Documents',
     body: 'Page breaks, word count and paginated DOCX layout — the primitives real document tools depend on, not a demo approximation.',
   },
   {
     id: 'editor',
     icon: 'type',
-    tag: 'MIT',
+    tag: 'Included',
     title: 'Editor',
     body: 'A framework-agnostic core with first-class React bindings. Headless, typed end to end, and yours to extend.',
   },
 ]
 
 const PROOF: { head: string; body: string }[] = [
-  { head: 'MIT licensed', body: 'Core and every extension' },
+  { head: 'One flat price', body: 'Unlimited devs, every package' },
   { head: 'No license key', body: 'Never phones home' },
+  { head: 'Source available', body: 'Read and patch every line' },
   { head: 'Runs in the browser', body: 'DOCX without a service' },
   { head: 'Typed end to end', body: 'TypeScript sources, ESM + CJS' },
   { head: 'Bring your own model', body: 'Anthropic or OpenAI adapters' },
@@ -172,7 +173,7 @@ export function Home() {
       <section className="shell hero" id="top">
         <div>
           <div className="hero-eyebrow">
-            <b>MIT</b>
+            <b>$99/yr</b>
             The rich text editor toolkit for React
           </div>
           <h1 className="hero-title">
@@ -180,8 +181,8 @@ export function Home() {
           </h1>
           <p className="hero-sub">
             A headless, transaction-based editor core with first-class React bindings. Track
-            changes, comments, DOCX round-tripping and agent workflows ship as MIT packages — no
-            license key, no hosted backend, no vendor account.
+            changes, comments, DOCX round-tripping and agent workflows are in the box, for one flat
+            price — no per-seat maths, no license key, no hosted backend, no vendor account.
           </p>
           <div className="hero-actions">
             <a href="#examples" className="btn-primary">
@@ -327,7 +328,7 @@ export function Home() {
                 <span className="feature-icon">
                   <Icon name={f.icon} size={19} />
                 </span>
-                <span className={`tag${f.tag === 'MIT' ? ' is-mit' : ''}`}>{f.tag}</span>
+                <span className={`tag${f.tag === 'Included' ? ' is-included' : ''}`}>{f.tag}</span>
               </div>
               <h3 className="feature-title">{f.title}</h3>
               <p className="feature-body">{f.body}</p>
@@ -359,10 +360,10 @@ export function Home() {
       <section id="compare" className="shell section">
         <div className="section-head">
           <div>
-            <h2 className="section-title">The paid features, open sourced</h2>
+            <h2 className="section-title">The same premium features, a tenth of the price</h2>
             <p className="section-sub">
-              Track changes, comments and DOCX round-tripping sit behind a plan almost everywhere
-              else. Here they are MIT packages on npm.
+              Track changes, comments, DOCX round-tripping and AI sit behind four-figure plans
+              almost everywhere else. Here they are on npm, all of them, for $99 a year.
             </p>
           </div>
           <Link to="/docs/comparison" className="section-link">
@@ -373,8 +374,8 @@ export function Home() {
         <ComparisonTable notes={false} />
 
         <p className="stage-caption">
-          <span className="cmp-mark is-open">✓</span> open source ·{' '}
-          <span className="cmp-mark is-paid">$</span> paid plan ·{' '}
+          <span className="cmp-mark is-open">✓</span> included in the base price ·{' '}
+          <span className="cmp-mark is-paid">$</span> costs extra ·{' '}
           <span className="cmp-mark is-partial">~</span> partial ·{' '}
           <span className="cmp-mark is-none">–</span> unavailable — claims taken from each vendor's
           own pricing and licensing pages.

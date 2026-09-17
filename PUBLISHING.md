@@ -1,6 +1,6 @@
 # Publishing
 
-How the 46 `@richkitjs/*` packages get to npm.
+How the 53 `@richkitjs/*` packages get to npm.
 
 Releases are automated. You never run `npm publish` by hand — you write a changeset, and
 merging two PRs does the rest. The only manual work is the one-time npm account setup in
@@ -214,11 +214,22 @@ version PR's branch.
 
 A new `packages/<name>/` needs all of this before its first release:
 
-- `package.json` with `name` (`@richkitjs/*`), `description`, `license`, `files: ["dist"]`,
+- `package.json` with `name` (`@richkitjs/*`), `description`,
+  `license: "PolyForm-Noncommercial-1.0.0"`,
+  `files: ["dist", "LICENSE", "LICENSE-COMMERCIAL", "NOTICE"]`,
   `main` / `module` / `types` / `exports`, `repository.directory`, `homepage`, `bugs`,
   `sideEffects`, and `keywords`. Copy `packages/core/package.json` as the template.
 - `README.md` and `LICENSE` — npm always includes both regardless of `files`, and a package
   page with no README looks abandoned.
+- **Copies of `LICENSE`, `LICENSE-COMMERCIAL`, and `NOTICE` from the repo root.** npm only
+  auto-includes `LICENSE`, so the other two have to be listed in `files` or they never reach
+  the tarball — and the commercial terms have to travel with the code. Refresh all three in
+  every package whenever the root copies change:
+
+  ```bash
+  for d in packages/*/; do cp LICENSE LICENSE-COMMERCIAL NOTICE "$d"; done
+  ```
+
 - A `build` script producing `dist/` with ESM, CJS, and `.d.ts` — inherit `tsup.config.base.ts`.
 - **A changeset.** New packages are the easiest thing to forget, and see the section above for
   why that is expensive.
@@ -232,8 +243,10 @@ Sanity-check what a package will actually ship:
 cd packages/<name> && npm pack --dry-run
 ```
 
-Expect `LICENSE`, `README.md`, `package.json`, and `dist/`. Source files or `node_modules` in
-that listing mean `files` is wrong.
+Expect `LICENSE`, `LICENSE-COMMERCIAL`, `NOTICE`, `README.md`, `package.json`, and `dist/`
+(plus `scripts/` for `@richkitjs/core`, which carries the postinstall licensing notice). Source
+files or `node_modules` in that listing mean `files` is wrong; a missing `LICENSE-COMMERCIAL` or
+`NOTICE` means the copy step above was skipped.
 
 ## Prereleases
 

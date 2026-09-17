@@ -29,7 +29,7 @@ function Line({ w, tone }: { w: string; tone?: 'faint' | 'accent' }) {
 }
 
 export function TemplateCard({ template }: { template: Template }) {
-  const { variant, title, body, pkg, tag = 'MIT', status = 'Available on npm' } = template
+  const { variant, title, body, pkg, tag = 'Included', status = 'Available on npm' } = template
   const pending = /development|roadmap|soon/i.test(status)
   const Art = ART[variant]
 
@@ -41,7 +41,7 @@ export function TemplateCard({ template }: { template: Template }) {
         </div>
       </div>
       <div className="tpl-meta">
-        <span className={`tag${tag === 'MIT' ? ' is-mit' : ''}`}>{tag}</span>
+        <span className={`tag${tag === 'Included' ? ' is-included' : ''}`}>{tag}</span>
         <h3 className="tpl-title">{title}</h3>
         <p className="tpl-body">{body}</p>
         <div className="tpl-foot">

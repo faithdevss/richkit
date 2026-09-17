@@ -26,6 +26,39 @@ Headless, extensible WYSIWYG rich text editor. ProseMirror core, React binding, 
 - **Keyboard** — Mod-B/I/U/Shift-S/E marks, Mod-Alt-1..6 headings, Mod-Shift-7/8/9 lists, Enter splits list item
 - **BubbleMenu + Toolbar** — Floating UI–positioned selection menu, default toolbar in `@richkitjs/react`
 
+## Bundle size
+
+JavaScript shipped for a full editor — tables, images, task lists, code highlighting and
+markdown — minified and gzipped:
+
+| Editor                                                         | Gzipped    |
+| -------------------------------------------------------------- | ---------- |
+| **RichKit** — `@richkitjs/core` + `starter-kit`, 41 extensions | **184 KB** |
+| Tiptap 3.31 — core + StarterKit + matching extensions          | 222 KB     |
+| CKEditor 5 v48.5 — classic editor + 25 plugins                 | 250 KB     |
+| TinyMCE 8.9 — core, theme, model, icons + 7 plugins            | 455 KB     |
+
+Smaller setups:
+
+| Import                                                               | Gzipped |
+| -------------------------------------------------------------------- | ------- |
+| `@richkitjs/core` alone                                              | 64 KB   |
+| `@richkitjs/react` + `starter-kit` (no toolbar)                      | 187 KB  |
+| `@richkitjs/react` + `starter-kit` + `DefaultToolbar` + `BubbleMenu` | 199 KB  |
+
+Measured September 2026 with esbuild (`--bundle --minify`, production mode) and `gzip -9`.
+Only the named imports are bundled, so unused exports are tree-shaken. React, React DOM and
+all CSS are excluded. The Tiptap row adds table, image, task list, lowlight code block,
+highlight, text align, text style, mention, details and markdown to StarterKit, which on its
+own is 117 KB.
+
+Word import/export (`@richkitjs/docx`) is not in these numbers. It pulls in `docx` and
+`mammoth`, so import it only where you use it — or load it with `await import()`.
+
+Code blocks register 16 highlight.js grammars by default. Add more with
+`CodeBlock.configure({ languages })` — see
+[`@richkitjs/extension-code-block`](./packages/extension-code-block/README.md).
+
 ## Install
 
 Published to the public npm registry under the [`@richkitjs`](https://www.npmjs.com/org/richkitjs) scope — no extra registry config needed.
@@ -199,4 +232,15 @@ Publishing to npm is automated from `main`. See [PUBLISHING.md](./PUBLISHING.md)
 
 ## License
 
-MIT
+RichKit is dual licensed.
+
+| Use                                                                   | License                                            | Cost                                                       |
+| --------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------- |
+| Hobby projects, learning, research, education, charities, non-profits | [PolyForm Noncommercial 1.0.0](./LICENSE)          | Free                                                       |
+| Any commercial or business use                                        | [RichKit Commercial License](./LICENSE-COMMERCIAL) | [$99 / year](https://faithdevss.github.io/richkit/pricing) |
+
+The commercial license is flat-rate: unlimited developers, unlimited products,
+all packages, no license key and no telemetry. Every entity gets a free 90-day
+evaluation period before it has to buy.
+
+Third-party components keep their own licenses — see [NOTICE](./NOTICE).

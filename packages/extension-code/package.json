@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/extension-code",
   "version": "0.1.0",
-  "description": "Inline code mark extension for @richkitjs/core",
-  "license": "MIT",
+  "description": "Inline code mark for RichKit: toggleCode command and Mod-E shortcut.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -32,19 +35,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/extension-code"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
     "prosemirror",
-    "code"
+    "richkit-extension",
+    "code",
+    "inline-code",
+    "formatting"
   ]
 }

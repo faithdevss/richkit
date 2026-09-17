@@ -1,0 +1,198 @@
+RichKit Commercial License Agreement
+Version 1.0 — 2026
+
+Copyright 2026 Saimum Islam (https://github.com/faithdevss/richkit)
+
+RichKit is dual licensed. Noncommercial use is covered by the PolyForm
+Noncommercial License 1.0.0 in the LICENSE file, free of charge. Commercial
+use requires the paid license described here.
+
+Purchase a license at https://faithdevss.github.io/richkit/pricing
+
+
+----------------------------------------------------------------------
+1. DEFINITIONS
+----------------------------------------------------------------------
+
+"Software" means the RichKit source code, the packages published under the
+@richkitjs npm scope, and their documentation.
+
+"Licensor" means Saimum Islam.
+
+"Licensee" means the legal entity that has purchased a license under these
+terms, together with all entities it controls, that control it, or that are
+under common control with it.
+
+"Commercial Use" means any use of the Software by or on behalf of a business,
+or in connection with a product, service, or internal tool that is operated
+for commercial advantage or monetary compensation. Use by a sole proprietor
+in the course of business is Commercial Use.
+
+"Licensed Version" means any version of the Software released while the
+Licensee's license is active.
+
+
+----------------------------------------------------------------------
+2. LICENSE GRANT
+----------------------------------------------------------------------
+
+Subject to payment of the applicable fee and to the Licensee's compliance
+with these terms, the Licensor grants the Licensee a worldwide,
+non-exclusive, non-transferable, non-sublicensable license to:
+
+  (a) use, copy, and modify the Software for Commercial Use;
+
+  (b) embed the Software, in source or compiled form, in the Licensee's own
+      products and internal tools, and distribute it as an integrated part
+      of those products to the Licensee's own end users; and
+
+  (c) permit the Licensee's employees and contractors to exercise these
+      rights on the Licensee's behalf and for the Licensee's benefit.
+
+The grant covers an unlimited number of developers, an unlimited number of
+products, and all packages published under the @richkitjs npm scope. There
+is no per-seat count, no license key, and no activation or telemetry check.
+
+
+----------------------------------------------------------------------
+3. FREE EVALUATION PERIOD
+----------------------------------------------------------------------
+
+The Licensor grants any entity the rights in Section 2, free of charge, for
+ninety (90) consecutive days beginning on that entity's first Commercial Use
+of the Software, for the purpose of evaluating the Software and building an
+integration.
+
+No registration, key, or notice to the Licensor is required. At the end of
+the ninety-day period the entity must either purchase a license or cease
+Commercial Use of the Software.
+
+
+----------------------------------------------------------------------
+4. TERM, FEES, AND PERPETUAL FALLBACK
+----------------------------------------------------------------------
+
+Licenses are sold as an annual subscription. Fees, currency, and available
+tiers are those published at https://faithdevss.github.io/richkit/pricing at
+the time of purchase.
+
+While the subscription is active the Licensee receives all updates to the
+Software and may use every Licensed Version.
+
+If the subscription lapses or is cancelled, the Licensee retains a perpetual,
+irrevocable license under Section 2 to continue using, and to continue
+shipping in already-released and future products, the last Licensed Version
+released before the lapse. The Licensee has no right to versions released
+after the lapse.
+
+Fees are non-refundable except where required by law.
+
+
+----------------------------------------------------------------------
+5. RESTRICTIONS
+----------------------------------------------------------------------
+
+The Licensee may not:
+
+  (a) distribute, sell, sublicense, rent, or lease the Software on a
+      standalone basis, or as a rich text editor library, editor SDK,
+      component toolkit, or developer framework that competes with the
+      Software;
+
+  (b) remove, obscure, or alter any copyright, "Required Notice", or license
+      notice contained in the Software;
+
+  (c) publish the Software, or a derivative of it, to a public package
+      registry under any name; or
+
+  (d) use the Licensor's names, logos, or trademarks except to state factually
+      that the Licensee's product is built with RichKit.
+
+Distributing the Software compiled into, and as a non-separable part of, the
+Licensee's own application is expressly permitted and is not restricted by
+subsection (a).
+
+
+----------------------------------------------------------------------
+6. THIRD-PARTY COMPONENTS
+----------------------------------------------------------------------
+
+The Software incorporates third-party open source components listed in the
+NOTICE file. Those components remain under their own licenses, and nothing in
+this Agreement limits the Licensee's rights in them or the Licensee's
+obligation to preserve their notices.
+
+
+----------------------------------------------------------------------
+7. OWNERSHIP
+----------------------------------------------------------------------
+
+The Software is licensed, not sold. The Licensor retains all right, title,
+and interest in the Software, including all intellectual property rights.
+The Licensee owns the products it builds with the Software and any
+modifications it makes, subject to the Licensor's rights in the underlying
+Software.
+
+
+----------------------------------------------------------------------
+8. SUPPORT
+----------------------------------------------------------------------
+
+The standard license includes no guaranteed support, response time, or
+service level. Support commitments, if any, are those stated for the tier
+purchased at https://faithdevss.github.io/richkit/pricing.
+
+
+----------------------------------------------------------------------
+9. WARRANTY DISCLAIMER
+----------------------------------------------------------------------
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS" AND
+"AS AVAILABLE", WITHOUT WARRANTY OR CONDITION OF ANY KIND, EXPRESS, IMPLIED,
+OR STATUTORY, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND
+NON-INFRINGEMENT. THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE
+UNINTERRUPTED, ERROR-FREE, OR FREE OF HARMFUL COMPONENTS.
+
+
+----------------------------------------------------------------------
+10. LIMITATION OF LIABILITY
+----------------------------------------------------------------------
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR WILL NOT BE LIABLE FOR
+ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE
+DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, OR GOODWILL, ARISING OUT
+OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE, WHETHER IN CONTRACT, TORT,
+OR ANY OTHER THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+THE LICENSOR'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO THIS
+AGREEMENT WILL NOT EXCEED THE FEES PAID BY THE LICENSEE UNDER THIS AGREEMENT
+IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+
+
+----------------------------------------------------------------------
+11. TERMINATION
+----------------------------------------------------------------------
+
+If the Licensee materially breaches these terms, the Licensor may notify the
+Licensee in writing. If the Licensee does not come into full compliance, and
+take practical steps to correct past violations, within thirty (30) days of
+that notice, all licenses granted under this Agreement end immediately,
+including the perpetual fallback in Section 4.
+
+
+----------------------------------------------------------------------
+12. GENERAL
+----------------------------------------------------------------------
+
+This Agreement is the entire agreement between the parties regarding the
+Software and supersedes all prior understandings. It may be modified only in
+a writing signed by the Licensor. If any provision is held unenforceable, the
+remainder stays in effect. A failure to enforce any provision is not a waiver
+of it.
+
+This Agreement is governed by the laws of the People's Republic of Bangladesh,
+without regard to its conflict of laws rules, and the parties submit to the
+exclusive jurisdiction of the courts of Bangladesh.
+
+Questions: https://github.com/faithdevss/richkit

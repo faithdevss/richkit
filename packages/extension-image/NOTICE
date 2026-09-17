@@ -1,0 +1,69 @@
+RichKit
+Copyright 2026 Saimum Islam (https://github.com/faithdevss/richkit)
+
+Licensed under the PolyForm Noncommercial License 1.0.0 (see LICENSE) for
+noncommercial use, or under the RichKit Commercial License Agreement (see
+LICENSE-COMMERCIAL) for commercial use.
+
+
+----------------------------------------------------------------------
+THIRD-PARTY COMPONENTS
+----------------------------------------------------------------------
+
+RichKit builds on the open source packages below. They are declared as
+dependencies and peer dependencies and are NOT bundled into the published
+@richkitjs artifacts -- each is installed separately by the consumer and
+ships its own license text. They remain under their own licenses, which the
+RichKit license does not and cannot alter.
+
+
+ProseMirror -- MIT License
+  Copyright (C) 2015-2017 by Marijn Haverbeke <marijn@haverbeke.berlin>
+  and others
+  https://github.com/ProseMirror
+
+  prosemirror-commands, prosemirror-dropcursor, prosemirror-gapcursor,
+  prosemirror-history, prosemirror-inputrules, prosemirror-keymap,
+  prosemirror-markdown, prosemirror-model, prosemirror-schema-list,
+  prosemirror-state, prosemirror-tables, prosemirror-transform,
+  prosemirror-view
+
+
+Floating UI (@floating-ui/dom) -- MIT License
+  Copyright (c) 2021-present Floating UI contributors
+  https://github.com/floating-ui/floating-ui
+
+
+docx -- MIT License
+  Copyright (c) 2016 Dolan Miu
+  https://github.com/dolanmiu/docx
+
+
+lowlight -- MIT License
+  Copyright (c) Titus Wormer <tituswormer@gmail.com>
+  https://github.com/wooorm/lowlight
+
+  lowlight depends on highlight.js -- BSD-3-Clause License
+  Copyright (c) 2006, Ivan Sagalaev
+  https://github.com/highlightjs/highlight.js
+
+
+mammoth -- BSD-2-Clause License
+  Copyright (c) 2013, Michael Williamson
+  https://github.com/mwilliamson/mammoth.js
+
+
+markdown-it -- MIT License
+  Copyright (c) 2014 Vitaly Puzrin, Alex Kocharin
+  https://github.com/markdown-it/markdown-it
+
+
+PEER DEPENDENCIES (supplied by the consuming application)
+
+React, React DOM -- MIT License
+  Copyright (c) Meta Platforms, Inc. and affiliates
+  https://github.com/facebook/react
+
+Vue -- MIT License
+  Copyright (c) 2018-present, Yuxi (Evan) You
+  https://github.com/vuejs/core

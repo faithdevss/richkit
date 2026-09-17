@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/core",
   "version": "0.1.0",
-  "description": "Headless rich text editor core (ProseMirror-based)",
-  "license": "MIT",
+  "description": "Headless, framework-agnostic rich text editor built on ProseMirror. Extension API, schema builder, chainable commands, HTML/JSON I/O and autosave. 64 KB gzipped.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,11 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "scripts",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -24,7 +28,8 @@
     "lint": "eslint src",
     "test": "vitest run",
     "docs": "typedoc",
-    "clean": "rm -rf dist .turbo docs"
+    "clean": "rm -rf dist .turbo docs",
+    "postinstall": "node scripts/postinstall.cjs"
   },
   "dependencies": {
     "prosemirror-commands": "^1.6.2",
@@ -49,18 +54,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
-    "prosemirror"
+    "prosemirror",
+    "headless",
+    "headless-editor",
+    "block-editor",
+    "notion-like",
+    "document-editor",
+    "contenteditable",
+    "typescript",
+    "framework-agnostic",
+    "extensible",
+    "html",
+    "json"
   ]
 }

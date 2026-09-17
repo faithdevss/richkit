@@ -24,7 +24,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Editor license',
     detail: 'What the core itself is licensed under.',
     cells: [
-      { state: 'open', label: 'MIT' },
+      {
+        state: 'partial',
+        label: 'PolyForm NC / commercial',
+        note: 'Free for hobby, learning, research, education and charities. Business use needs the $99 / yr commercial license, after a free 90-day evaluation.',
+      },
       { state: 'open', label: 'MIT' },
       {
         state: 'partial',
@@ -40,7 +44,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     cells: [
       {
         state: 'open',
-        label: 'MIT',
+        label: 'Included',
         note: '@richkitjs/docx — runs in the browser, no server call.',
       },
       {
@@ -56,7 +60,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Track changes',
     detail: 'Redlining with accept / reject per change.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkitjs/extension-track-changes' },
+      { state: 'open', label: 'Included', note: '@richkitjs/extension-track-changes' },
       {
         state: 'paid',
         label: 'Paid add-on',
@@ -74,7 +78,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Comments & threads',
     detail: 'Inline threads anchored to a range of text.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkitjs/extension-comments' },
+      { state: 'open', label: 'Included', note: '@richkitjs/extension-comments' },
       {
         state: 'paid',
         label: 'Paid',
@@ -90,7 +94,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     cells: [
       {
         state: 'open',
-        label: 'MIT',
+        label: 'Included',
         note: '@richkitjs/extension-ai — bring your own provider; edits arrive as reviewable suggestions.',
       },
       { state: 'paid', label: 'Paid', note: 'Content AI bundle.' },
@@ -128,7 +132,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Slash commands',
     detail: 'Type / to insert blocks.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkitjs/extension-slash-commands, menu included.' },
+      {
+        state: 'open',
+        label: 'Included',
+        note: '@richkitjs/extension-slash-commands, menu included.',
+      },
       {
         state: 'open',
         label: 'MIT component',
@@ -146,10 +154,37 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Find & replace',
     detail: 'Search across the document, replace one or all.',
     cells: [
-      { state: 'open', label: 'MIT', note: '@richkitjs/extension-find-replace' },
+      { state: 'open', label: 'Included', note: '@richkitjs/extension-find-replace' },
       { state: 'open', label: 'MIT', note: '@tiptap/extension-find-and-replace, headless UI.' },
       { state: 'open', label: 'Included' },
       { state: 'open', label: 'Included', note: 'searchreplace, an open-source plugin.' },
+    ],
+  },
+  {
+    feature: 'Bundle size',
+    detail:
+      'JavaScript shipped for a full editor: tables, images, task lists, code highlighting, markdown. Minified + gzipped, production build, CSS and UI framework excluded.',
+    cells: [
+      {
+        state: 'open',
+        label: '184 KB',
+        note: '@richkitjs/core + starter-kit, all 40+ extensions. The core alone is 64 KB.',
+      },
+      {
+        state: 'open',
+        label: '222 KB',
+        note: 'Core + StarterKit (117 KB) plus table, image, task list, lowlight code block, highlight, text align, text style, mention, details and markdown.',
+      },
+      {
+        state: 'partial',
+        label: '250 KB',
+        note: 'Classic editor with 25 plugins, before the editor stylesheet.',
+      },
+      {
+        state: 'partial',
+        label: '455 KB',
+        note: 'Core, silver theme, DOM model, icons and 7 plugins, before the skin stylesheets.',
+      },
     ],
   },
   {
@@ -178,7 +213,11 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     feature: 'Cost of the full feature set',
     detail: 'Everything above, for one product, per month. List price, before volume.',
     cells: [
-      { state: 'open', label: '$0' },
+      {
+        state: 'open',
+        label: '$8.25 / mo',
+        note: '$99 / year flat, billed once. Unlimited developers, unlimited products, every package — no per-seat charge and no usage metering. Free for noncommercial use.',
+      },
       {
         state: 'paid',
         label: '$59 – $1,199 / mo',

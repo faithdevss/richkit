@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/extension-list-item",
   "version": "0.1.0",
-  "description": "List item extension for @richkitjs/core",
-  "license": "MIT",
+  "description": "List item node for RichKit, shared by bullet and ordered lists: split, indent with Tab and outdent with Shift-Tab.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -33,19 +36,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/extension-list-item"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
     "prosemirror",
-    "list-item"
+    "richkit-extension",
+    "list-item",
+    "list",
+    "indent"
   ]
 }

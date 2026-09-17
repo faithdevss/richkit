@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/ai-anthropic",
   "version": "0.1.0",
-  "description": "Anthropic (Claude) streaming transport for @richkitjs/extension-ai",
-  "license": "MIT",
+  "description": "Anthropic Claude streaming transport for @richkitjs/extension-ai. Streams completions into the editor with cancellation support.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -35,19 +38,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/ai-anthropic"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
+    "wysiwyg",
+    "prosemirror",
     "ai",
     "anthropic",
-    "claude"
+    "claude",
+    "llm",
+    "streaming",
+    "ai-writing"
   ]
 }

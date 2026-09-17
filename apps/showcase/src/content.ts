@@ -62,7 +62,7 @@ const editor = useEditor({ extensions: StarterKit, content })
 
 export const SIMPLE_CONTENT = `
 <h1>Getting started</h1>
-<p>Welcome to the <mark>Simple Editor</mark> template! This template integrates <strong>open source</strong> UI components and RichKit extensions licensed under <strong>MIT</strong>.</p>
+<p>Welcome to the <mark>Simple Editor</mark> template! This template wires up RichKit’s UI components and extensions — every one of them included in a <strong>single $99/year licence</strong>.</p>
 <p>Integrate it by following the <a href="#">RichKit UI Components docs</a> or using our CLI tool.</p>
 <pre><code>pnpm add @richkitjs/starter-kit</code></pre>
 <h2>Features</h2>

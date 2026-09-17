@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/extension-ai",
   "version": "0.1.0",
-  "description": "AI authoring extension for @richkitjs/core, with track-changes review",
-  "license": "MIT",
+  "description": "AI writing for RichKit: stream model output into the document as tracked suggestions the user accepts or rejects. Bring any provider through a transport function.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -39,19 +42,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/extension-ai"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
     "prosemirror",
-    "ai"
+    "richkit-extension",
+    "ai",
+    "ai-writing",
+    "llm",
+    "streaming",
+    "copilot",
+    "suggestions"
   ]
 }

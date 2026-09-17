@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/starter-kit",
   "version": "0.1.0",
-  "description": "All standard @richkitjs/core extensions bundled in one package",
-  "license": "MIT",
+  "description": "Every standard RichKit extension in one import: 41 extensions covering marks, headings, lists, tables, images, code highlighting, callouts, comments, markdown shortcuts and more. 184 KB gzipped.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -75,18 +78,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/starter-kit"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
-    "prosemirror"
+    "prosemirror",
+    "headless",
+    "headless-editor",
+    "block-editor",
+    "notion-like",
+    "document-editor",
+    "contenteditable",
+    "typescript",
+    "starter-kit",
+    "extensions",
+    "tables",
+    "markdown",
+    "code-highlighting"
   ]
 }

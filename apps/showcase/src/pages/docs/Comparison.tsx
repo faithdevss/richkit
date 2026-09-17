@@ -8,16 +8,16 @@ const TIPTAP_POINTS: { title: string; body: string }[] = [
     body: 'Tiptap ships an MIT core and, since June 2025, eight more formerly-Pro extensions under MIT too — that part is genuinely open. What sits behind a plan is the layer most document apps actually need: DOCX conversion, comments, document history, AI, and managed collaboration.',
   },
   {
-    title: 'RichKit puts those same features in npm, under MIT.',
-    body: 'Track changes, comments, and DOCX import/export are ordinary packages in this repo. Read the source, fork them, ship them in a closed-source product. No plan, no seat count, no conversion endpoint.',
+    title: 'RichKit charges once, for all of it.',
+    body: 'Track changes, comments, AI and DOCX import/export are ordinary packages in this repo, and the commercial license covers every one of them for $99 a year. No per-seat maths, no add-on shopping, no bundle that only unlocks when your documents live in someone else’s cloud.',
   },
   {
     title: 'Nothing calls home.',
-    body: 'DOCX conversion runs in the browser. There is no API key to provision and no document that has to live in someone else’s cloud for a feature to switch on.',
+    body: 'DOCX conversion runs in the browser. There is no license key to provision, no activation check, and no document that has to leave your infrastructure for a feature to switch on. You can read and patch every line you ship.',
   },
   {
     title: 'Where Tiptap is still ahead — plainly.',
-    body: 'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. If you want someone to page at 3am, pay them.',
+    body: 'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. Its core is MIT, which RichKit’s is not. If you want someone to page at 3am, pay them.',
   },
 ]
 
@@ -26,17 +26,18 @@ export function Comparison() {
     <div className="docs-prose cmp-page">
       <h1>How RichKit compares</h1>
       <p>
-        Every rich text editor calls itself open source. The question worth asking is narrower:{' '}
-        <em>which parts</em> are open, and what does the rest cost once you need it? This page
-        answers that for RichKit and the editors teams usually weigh it against.
+        Every rich text editor is cheap until you need the document features. Track changes,
+        comments, DOCX round-tripping and AI are where the invoices start, and they are the reason
+        most teams end up on a four-figure plan. This page shows what each editor charges for them,
+        with the vendors’ own pricing pages as the source.
       </p>
 
       <div className="cmp-claim">
         <span className="cmp-claim-head">The short version</span>
         <p>
-          RichKit is MIT end to end. Track changes, comments, and DOCX round-tripping are the
-          features other editors put on a paid plan — here they are packages you install, read, and
-          fork.
+          RichKit ships the whole premium layer — track changes, comments, DOCX, AI — for{' '}
+          <strong>$99 a year, flat</strong>, with unlimited developers and unlimited products. The
+          same feature set runs roughly $500–$1,200 a month elsewhere. Noncommercial use is free.
         </p>
       </div>
 
@@ -44,17 +45,17 @@ export function Comparison() {
       <ComparisonTable />
 
       <p className="cmp-legend">
-        <span className="cmp-mark is-open">✓</span> open source ·{' '}
-        <span className="cmp-mark is-paid">$</span> paid plan or add-on ·{' '}
-        <span className="cmp-mark is-partial">~</span> partial or self-assembled ·{' '}
+        <span className="cmp-mark is-open">✓</span> included in the base price ·{' '}
+        <span className="cmp-mark is-paid">$</span> paid plan or add-on on top ·{' '}
+        <span className="cmp-mark is-partial">~</span> partial, conditional or self-assembled ·{' '}
         <span className="cmp-mark is-none">–</span> not available
       </p>
 
       <h2>On Tiptap specifically</h2>
       <p>
         Tiptap is the closest comparison, and the fairest one — RichKit and Tiptap are both
-        headless, extension-driven, ProseMirror-shaped toolkits. The difference is where the line
-        between free and paid falls.
+        headless, extension-driven, ProseMirror-shaped toolkits. The difference is what the document
+        layer costs once you need it.
       </p>
 
       {TIPTAP_POINTS.map((p) => (
@@ -66,22 +67,29 @@ export function Comparison() {
 
       <h2>Pick RichKit when</h2>
       <ul>
-        <li>You need track changes, comments, or DOCX and a $0 line item.</li>
+        <li>You need track changes, comments, DOCX or AI and a line item under $100 a year.</li>
         <li>You are shipping closed-source and do not want a GPL obligation.</li>
         <li>Your documents cannot leave your infrastructure.</li>
-        <li>You want to patch the editor yourself instead of filing a ticket.</li>
+        <li>You would rather patch the editor yourself than file a ticket.</li>
+        <li>You want one price that does not move when the team or the traffic grows.</li>
       </ul>
 
       <h2>Pick something else when</h2>
       <ul>
+        <li>
+          You need an OSI-approved license, or your policy rules out source-available terms —
+          RichKit is PolyForm Noncommercial plus a commercial license, not MIT.
+        </li>
         <li>You need managed real-time collaboration today — RichKit has not shipped it.</li>
         <li>You need a vendor SLA, certifications, or paid support.</li>
         <li>You want a decade of production hardening behind every edge case.</li>
       </ul>
 
       <p>
-        If the first list is yours, start at <Link to="/docs/installation">Installation</Link> or
-        browse the <Link to="/docs/extensions">extensions reference</Link>.
+        If the first list is yours, start at <Link to="/docs/installation">Installation</Link>,
+        browse the <Link to="/docs/extensions">extensions reference</Link>, or see{' '}
+        <Link to="/pricing">what a license costs</Link>. Every company gets 90 days of free
+        commercial use before it has to buy.
       </p>
 
       <h2>Sources</h2>

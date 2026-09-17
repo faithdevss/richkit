@@ -1,8 +1,8 @@
 {
   "name": "@richkitjs/markdown",
   "version": "0.1.0",
-  "description": "Markdown serialization and parsing for @richkitjs/core",
-  "license": "MIT",
+  "description": "Markdown for RichKit: parse Markdown into the editor and serialize documents back, including tables and task lists.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,7 +15,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
@@ -36,18 +39,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faithdevss/rich_editor.git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
     "directory": "packages/markdown"
   },
-  "homepage": "https://github.com/faithdevss/rich_editor#readme",
+  "homepage": "https://faithdevss.github.io/richkit/",
   "bugs": {
-    "url": "https://github.com/faithdevss/rich_editor/issues"
+    "url": "https://github.com/faithdevss/richkit/issues"
   },
   "sideEffects": false,
   "keywords": [
+    "richkit",
     "rich-text",
+    "rich-text-editor",
+    "text-editor",
     "editor",
     "wysiwyg",
-    "prosemirror"
+    "prosemirror",
+    "markdown",
+    "markdown-editor",
+    "markdown-parser",
+    "markdown-serializer",
+    "gfm"
   ]
 }
