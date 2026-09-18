@@ -41,8 +41,12 @@ export class Extension<O extends Record<string, unknown> = Record<string, unknow
     return new Extension<O>(config)
   }
 
+  // Returns a copy so configuring an extension never changes the shared
+  // instance other editors (or StarterKit) already hold.
   configure(options: Partial<O>): this {
-    this.options = { ...this.options, ...options }
-    return this
+    const copy = Object.create(Object.getPrototypeOf(this) as object) as this
+    Object.assign(copy, this)
+    copy.options = { ...this.options, ...options }
+    return copy
   }
 }
