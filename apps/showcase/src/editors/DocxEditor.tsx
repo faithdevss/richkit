@@ -101,11 +101,11 @@ export function DocxEditor() {
             </button>
           </ToolbarGroup>
           <ToolbarGroup>
-            <BlockTypeMenu editor={editor} />
+            <BlockTypeMenu editor={editor} iconOnly />
           </ToolbarGroup>
           <ToolbarGroup>
-            <FontFamilyMenu editor={editor} />
-            <FontSizeMenu editor={editor} />
+            <FontFamilyMenu editor={editor} iconOnly />
+            <FontSizeMenu editor={editor} iconOnly />
           </ToolbarGroup>
           <ToolbarGroup>
             <ToolbarButton
