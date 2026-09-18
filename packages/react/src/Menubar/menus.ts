@@ -4,6 +4,7 @@ import { docToMarkdown } from '@richkitjs/markdown'
 import { createElement } from 'react'
 import { notify } from '../Notifications/notify'
 import { printEditor } from '../print'
+import { storeFile, type UploadFile } from '../upload'
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -62,6 +63,44 @@ export interface MenuActions {
   suggestionsOpen?: boolean
   toggleOutline?: () => void
   outlineOpen?: boolean
+  /**
+   * Stores a file picked from Insert → Image/File and resolves to its URL.
+   * Without it, files are inlined as data: URLs.
+   */
+  uploadFile?: UploadFile
+}
+
+function pickFile(): Promise<File | null> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.onchange = () => resolve(input.files?.[0] ?? null)
+    input.click()
+  })
+}
+
+async function insertImage(editor: Editor, actions: MenuActions) {
+  const image = await notify.image({ uploadFile: actions.uploadFile })
+  if (image) runCmd(editor, 'insertImage', image)
+}
+
+async function uploadFileLink(editor: Editor, actions: MenuActions) {
+  const file = await pickFile()
+  if (!file) return
+  const href = await storeFile(file, actions.uploadFile)
+  if (href) insertLinkedText(editor, file.name, href)
+}
+
+async function promptFileLink(editor: Editor) {
+  const href = await notify.prompt({
+    title: 'Insert file link',
+    placeholder: 'https://example.com/report.pdf',
+    okLabel: 'Insert',
+    required: true,
+  })
+  if (!href) return
+  const name = decodeURIComponent(href.split(/[?#]/)[0]?.split('/').pop() || '') || href
+  insertLinkedText(editor, name, href)
 }
 
 function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
@@ -84,17 +123,6 @@ async function promptLink(editor: Editor) {
   else runCmd(editor, 'setLink', { href: url })
 }
 
-async function promptImage(editor: Editor) {
-  const url = await notify.prompt({
-    title: 'Insert image',
-    placeholder: 'https://… or data: URL',
-    okLabel: 'Insert',
-    required: true,
-  })
-  if (!url) return
-  runCmd(editor, 'insertImage', { src: url })
-}
-
 async function promptTable(editor: Editor) {
   const rowsStr = await notify.prompt({ title: 'Table rows', defaultValue: '3', okLabel: 'Next' })
   if (rowsStr === null) return
@@ -115,6 +143,14 @@ async function promptTable(editor: Editor) {
 
 function insertText(editor: Editor, text: string) {
   editor.view.dispatch(editor.view.state.tr.insertText(text))
+  editor.focus()
+}
+
+function insertLinkedText(editor: Editor, text: string, href: string) {
+  const { state } = editor.view
+  const link = state.schema.marks['link']
+  const node = link ? state.schema.text(text, [link.create({ href })]) : state.schema.text(text)
+  editor.view.dispatch(state.tr.replaceSelectionWith(node, false))
   editor.focus()
 }
 
@@ -178,19 +214,6 @@ async function pasteRich(editor: Editor) {
   } catch {
     await pasteAsText(editor)
   }
-}
-
-function insertFileLink(editor: Editor) {
-  const input = document.createElement('input')
-  input.type = 'file'
-  input.onchange = () => {
-    const f = input.files?.[0]
-    if (!f) return
-    const url = URL.createObjectURL(f)
-    runCmd(editor, 'setLink', { href: url })
-    insertText(editor, f.name)
-  }
-  input.click()
 }
 
 async function insertMedia(editor: Editor) {
@@ -363,8 +386,15 @@ export function buildMenus(_editor: Editor, actions: MenuActions = {}): MenuDef[
     {
       label: 'Insert',
       items: [
-        { label: 'Image…', icon: icon(ImageIcon), onSelect: promptImage },
-        { label: 'File…', icon: icon(LinkIcon), onSelect: insertFileLink },
+        { label: 'Image…', icon: icon(ImageIcon), onSelect: (ed) => insertImage(ed, actions) },
+        {
+          label: 'File',
+          icon: icon(LinkIcon),
+          submenu: [
+            { label: 'Upload from computer…', onSelect: (ed) => uploadFileLink(ed, actions) },
+            { label: 'From URL…', onSelect: promptFileLink },
+          ],
+        },
         { label: 'Table…', icon: icon(TableIcon), onSelect: promptTable },
         { separator: true },
         { label: 'Link…', icon: icon(LinkIcon), shortcut: `${MOD}K`, onSelect: promptLink },

@@ -22,6 +22,14 @@ export { Menubar } from './Menubar/Menubar'
 export type { MenuDef, MenuEntry, MenuItemDef, MenubarProps } from './Menubar/Menubar'
 export { buildMenus } from './Menubar/menus'
 export type { MenuActions } from './Menubar/menus'
+export { storeFile } from './upload'
+export { ImageInsertPanel } from './ImageInsert/ImageInsertPanel'
+export type {
+  ImageInsertPanelProps,
+  ImageInsertTab,
+  ImageInsertValue,
+} from './ImageInsert/ImageInsertPanel'
+export type { UploadFile } from './upload'
 export { CommentSidebar } from './Comments/CommentSidebar'
 export type { CommentSidebarProps } from './Comments/CommentSidebar'
 export { CommentComposer } from './Comments/CommentComposer'
@@ -37,7 +45,9 @@ export type {
   PromptOptions,
   ConfirmOptions,
   AlertOptions,
+  ImageDialogOptions,
 } from './Notifications/notify'
+export type { NotificationsHostProps } from './Notifications/NotificationsHost'
 export { SlashMenu, defaultSlashItems } from './SlashMenu/SlashMenu'
 export { MentionMenu } from './MentionMenu/MentionMenu'
 export type { MentionMenuProps, MentionCandidate } from './MentionMenu/MentionMenu'

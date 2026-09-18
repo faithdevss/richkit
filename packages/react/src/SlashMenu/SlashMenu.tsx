@@ -173,17 +173,9 @@ export const defaultSlashItems: SlashItem[] = [
     isAvailable: (e) => Boolean(e.schema.nodes['image']),
     run: (editor, range) => {
       deleteRange(editor, range)
-      void notify
-        .prompt({
-          title: 'Insert image',
-          message: 'Image URL',
-          placeholder: 'https://…',
-          okLabel: 'Insert',
-          required: true,
-        })
-        .then((src) => {
-          if (src) editor.chain().call('insertImage', { src }).focus().run()
-        })
+      void notify.image().then((image) => {
+        if (image) editor.chain().call('insertImage', image).focus().run()
+      })
     },
   },
   {

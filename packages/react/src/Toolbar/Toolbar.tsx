@@ -26,6 +26,7 @@ import { BlockTypeMenu } from './BlockTypeMenu'
 import { TextColorMenu, HighlightMenu } from './ColorMenu'
 import { FontFamilyMenu, FontSizeMenu } from './FontMenu'
 import { ImageMenu } from './ImageMenu'
+import type { UploadFile } from '../upload'
 import { LinkMenu } from './LinkMenu'
 import { EmojiMenu, LineHeightMenu, SpecialCharsMenu } from './MiscMenus'
 import { TableMenu } from './TableMenu'
@@ -81,6 +82,8 @@ export interface ToolbarProps {
   className?: string
   /** Collapse anything that does not fit into a "more" popover. Default true. */
   overflow?: boolean
+  /** Stores images uploaded from the default toolbar; defaults to data: URLs. */
+  uploadFile?: UploadFile
 }
 
 /** Children that already lay out their own rows must not be wrapped in one. */
@@ -93,7 +96,13 @@ function hasOwnRows(children: ReactNode) {
   })
 }
 
-export function Toolbar({ editor, children, className, overflow = true }: ToolbarProps) {
+export function Toolbar({
+  editor,
+  children,
+  className,
+  overflow = true,
+  uploadFile,
+}: ToolbarProps) {
   if (!editor) return null
   // Custom children are one row of groups, so the row wrapper goes here; the
   // default toolbar owns two rows and wraps each of them itself.
@@ -104,7 +113,7 @@ export function Toolbar({ editor, children, className, overflow = true }: Toolba
       children
     )
   ) : (
-    <DefaultToolbar editor={editor} overflow={overflow} />
+    <DefaultToolbar editor={editor} overflow={overflow} uploadFile={uploadFile} />
   )
   return (
     <div className={className ?? 'toolbar'} role="toolbar" aria-label="Editor toolbar">
@@ -116,9 +125,10 @@ export function Toolbar({ editor, children, className, overflow = true }: Toolba
 export interface DefaultToolbarProps {
   editor: Editor
   overflow?: boolean
+  uploadFile?: UploadFile
 }
 
-export function DefaultToolbar({ editor, overflow = true }: DefaultToolbarProps) {
+export function DefaultToolbar({ editor, overflow = true, uploadFile }: DefaultToolbarProps) {
   const Row = overflow ? ToolbarOverflow : PlainRow
   return (
     <>
@@ -134,7 +144,7 @@ export function DefaultToolbar({ editor, overflow = true }: DefaultToolbarProps)
         </ToolbarGroup>
         <ToolbarGroup>
           <LinkMenu editor={editor} />
-          <ImageMenu editor={editor} />
+          <ImageMenu editor={editor} uploadFile={uploadFile} />
           <TableMenu editor={editor} />
           <ToolbarButton
             editor={editor}

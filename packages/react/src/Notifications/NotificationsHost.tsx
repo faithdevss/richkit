@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { ImageInsertPanel } from '../ImageInsert/ImageInsertPanel'
+import { _registerDefaultUploadFile, type UploadFile } from '../upload'
 import {
   _registerDialogApi,
   _registerToastApi,
   type AlertOptions,
   type ConfirmOptions,
+  type ImageDialogOptions,
   type PromptOptions,
   type ToastEntry,
   type ToastKind,
@@ -12,16 +15,25 @@ import {
 
 interface PendingDialog {
   id: number
-  kind: 'prompt' | 'confirm' | 'alert'
+  kind: 'prompt' | 'confirm' | 'alert' | 'image'
   prompt?: PromptOptions
   confirm?: ConfirmOptions
   alert?: AlertOptions
+  image?: ImageDialogOptions
   resolve: (v: unknown) => void
 }
 
 const DEFAULT_TOAST_MS = 4000
 
-export function NotificationsHost() {
+export interface NotificationsHostProps {
+  /**
+   * Stores images and files users upload from the toolbar, menubar and slash
+   * menu, resolving to their URL. Without it they are inlined as data: URLs.
+   */
+  uploadFile?: UploadFile
+}
+
+export function NotificationsHost({ uploadFile }: NotificationsHostProps = {}) {
   const [toasts, setToasts] = useState<ToastEntry[]>([])
   const [dialog, setDialog] = useState<PendingDialog | null>(null)
   const [draft, setDraft] = useState('')
@@ -51,6 +63,11 @@ export function NotificationsHost() {
     },
     [dismissToast],
   )
+
+  useEffect(() => {
+    _registerDefaultUploadFile(uploadFile)
+    return () => _registerDefaultUploadFile(undefined)
+  }, [uploadFile])
 
   useEffect(() => {
     _registerToastApi({ show: showToast, dismiss: dismissToast })
@@ -86,6 +103,16 @@ export function NotificationsHost() {
           })
         })
       },
+      image(opts) {
+        return new Promise((resolve) => {
+          setDialog({
+            id: dialogIdRef.current++,
+            kind: 'image',
+            image: opts,
+            resolve: resolve as (v: unknown) => void,
+          })
+        })
+      },
     })
     return () => {
       _registerToastApi(null)
@@ -111,7 +138,7 @@ export function NotificationsHost() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault()
-        if (dialog.kind === 'prompt') closeDialog(null)
+        if (dialog.kind === 'prompt' || dialog.kind === 'image') closeDialog(null)
         else if (dialog.kind === 'confirm') closeDialog(false)
         else closeDialog(undefined)
       }
@@ -146,7 +173,11 @@ export function NotificationsHost() {
           className="re-dialog-backdrop"
           onMouseDown={() =>
             closeDialog(
-              dialog.kind === 'confirm' ? false : dialog.kind === 'prompt' ? null : undefined,
+              dialog.kind === 'confirm'
+                ? false
+                : dialog.kind === 'prompt' || dialog.kind === 'image'
+                  ? null
+                  : undefined,
             )
           }
         >
@@ -162,7 +193,9 @@ export function NotificationsHost() {
                   ? dialog.prompt!.title
                   : dialog.kind === 'confirm'
                     ? dialog.confirm!.title
-                    : dialog.alert!.title}
+                    : dialog.kind === 'image'
+                      ? (dialog.image!.title ?? 'Insert image')
+                      : dialog.alert!.title}
               </h3>
             </header>
             <div className="re-dialog-body">
@@ -193,49 +226,68 @@ export function NotificationsHost() {
               {dialog.kind === 'alert' && (
                 <p className="re-dialog-message">{dialog.alert!.message ?? ''}</p>
               )}
+              {dialog.kind === 'image' && (
+                <ImageInsertPanel
+                  key={dialog.id}
+                  uploadFile={dialog.image!.uploadFile}
+                  defaultTab={dialog.image!.defaultTab}
+                  onInsert={(image) => closeDialog(image)}
+                  onCancel={() => closeDialog(null)}
+                />
+              )}
             </div>
-            <footer className="re-dialog-footer">
-              {dialog.kind === 'prompt' && (
-                <>
-                  <button type="button" className="tb-btn-ghost" onClick={() => closeDialog(null)}>
-                    {dialog.prompt!.cancelLabel ?? 'Cancel'}
-                  </button>
+            {dialog.kind !== 'image' && (
+              <footer className="re-dialog-footer">
+                {dialog.kind === 'prompt' && (
+                  <>
+                    <button
+                      type="button"
+                      className="tb-btn-ghost"
+                      onClick={() => closeDialog(null)}
+                    >
+                      {dialog.prompt!.cancelLabel ?? 'Cancel'}
+                    </button>
+                    <button
+                      type="button"
+                      className="tb-btn-primary"
+                      onClick={() => closeDialog(draft)}
+                      disabled={dialog.prompt!.required ? !draft.trim() : false}
+                    >
+                      {dialog.prompt!.okLabel ?? 'OK'}
+                    </button>
+                  </>
+                )}
+                {dialog.kind === 'confirm' && (
+                  <>
+                    <button
+                      type="button"
+                      className="tb-btn-ghost"
+                      onClick={() => closeDialog(false)}
+                    >
+                      {dialog.confirm!.cancelLabel ?? 'Cancel'}
+                    </button>
+                    <button
+                      type="button"
+                      className={dialog.confirm!.destructive ? 'tb-btn-danger' : 'tb-btn-primary'}
+                      onClick={() => closeDialog(true)}
+                      autoFocus
+                    >
+                      {dialog.confirm!.okLabel ?? 'OK'}
+                    </button>
+                  </>
+                )}
+                {dialog.kind === 'alert' && (
                   <button
                     type="button"
                     className="tb-btn-primary"
-                    onClick={() => closeDialog(draft)}
-                    disabled={dialog.prompt!.required ? !draft.trim() : false}
-                  >
-                    {dialog.prompt!.okLabel ?? 'OK'}
-                  </button>
-                </>
-              )}
-              {dialog.kind === 'confirm' && (
-                <>
-                  <button type="button" className="tb-btn-ghost" onClick={() => closeDialog(false)}>
-                    {dialog.confirm!.cancelLabel ?? 'Cancel'}
-                  </button>
-                  <button
-                    type="button"
-                    className={dialog.confirm!.destructive ? 'tb-btn-danger' : 'tb-btn-primary'}
-                    onClick={() => closeDialog(true)}
+                    onClick={() => closeDialog(undefined)}
                     autoFocus
                   >
-                    {dialog.confirm!.okLabel ?? 'OK'}
+                    {dialog.alert!.okLabel ?? 'OK'}
                   </button>
-                </>
-              )}
-              {dialog.kind === 'alert' && (
-                <button
-                  type="button"
-                  className="tb-btn-primary"
-                  onClick={() => closeDialog(undefined)}
-                  autoFocus
-                >
-                  {dialog.alert!.okLabel ?? 'OK'}
-                </button>
-              )}
-            </footer>
+                )}
+              </footer>
+            )}
           </div>
         </div>
       )}

@@ -1,3 +1,6 @@
+import type { ImageInsertTab, ImageInsertValue } from '../ImageInsert/ImageInsertPanel'
+import type { UploadFile } from '../upload'
+
 export type ToastKind = 'info' | 'success' | 'warn' | 'error'
 
 export interface ToastOptions {
@@ -36,6 +39,13 @@ export interface AlertOptions {
   okLabel?: string
 }
 
+export interface ImageDialogOptions {
+  title?: string
+  /** Overrides the uploader given to NotificationsHost. */
+  uploadFile?: UploadFile
+  defaultTab?: ImageInsertTab
+}
+
 export interface ToastApi {
   show(kind: ToastKind, message: string, opts?: ToastOptions): number
   dismiss(id: number): void
@@ -45,6 +55,7 @@ export interface DialogApi {
   prompt(opts: PromptOptions): Promise<string | null>
   confirm(opts: ConfirmOptions): Promise<boolean>
   alert(opts: AlertOptions): Promise<void>
+  image(opts: ImageDialogOptions): Promise<ImageInsertValue | null>
 }
 
 let toastApi: ToastApi | null = null
@@ -83,6 +94,11 @@ export const notify = {
   alert(opts: AlertOptions): Promise<void> {
     if (!dialogApi) return Promise.resolve()
     return dialogApi.alert(opts)
+  },
+  /** Upload-or-link image picker; resolves to the image to insert, or null. */
+  image(opts: ImageDialogOptions = {}): Promise<ImageInsertValue | null> {
+    if (!dialogApi) return Promise.resolve(null)
+    return dialogApi.image(opts)
   },
 }
 

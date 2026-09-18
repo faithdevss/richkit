@@ -92,9 +92,32 @@ test.describe('image insert', () => {
     await page.goto('/')
     await focusEditor(page)
     await clickToolbar(page, 'title="Insert image"')
-    await page.locator('.tb-image-form input[type="url"]').fill('https://placehold.co/100x100.png')
-    await page.locator('.tb-image-form .tb-btn-primary').click()
+    await page.locator('.re-image-tab', { hasText: 'Link' }).click()
+    await page
+      .locator('.re-image-insert input[type="url"]')
+      .fill('https://placehold.co/100x100.png')
+    await page.locator('.re-image-insert .tb-btn-primary').click()
     await expect(page.locator('.editor img')).toBeVisible()
+  })
+
+  test('insert via popover upload', async ({ page }) => {
+    await page.goto('/')
+    await focusEditor(page)
+    await clickToolbar(page, 'title="Insert image"')
+    await page.locator('.re-image-insert input[type="file"]').setInputFiles({
+      name: 'pixel.png',
+      mimeType: 'image/png',
+      buffer: Buffer.from(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+        'base64',
+      ),
+    })
+    await expect(page.locator('.re-image-drop img')).toBeVisible()
+    await page.locator('.re-image-insert .tb-btn-primary').click()
+    await expect(page.locator('.editor img[alt="pixel.png"]')).toHaveAttribute(
+      'src',
+      /^data:image\/png/,
+    )
   })
 })
 
