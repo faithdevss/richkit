@@ -27,6 +27,7 @@
     "@richkitjs/extension-line-height": "workspace:*",
     "@richkitjs/extension-link": "workspace:*",
     "@richkitjs/extension-list-item": "workspace:*",
+    "@richkitjs/extension-math": "workspace:*",
     "@richkitjs/extension-ordered-list": "workspace:*",
     "@richkitjs/extension-page-break": "workspace:*",
     "@richkitjs/extension-paragraph": "workspace:*",

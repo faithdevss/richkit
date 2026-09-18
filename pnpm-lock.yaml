@@ -102,6 +102,15 @@ importers:
       '@richkitjs/extension-drag-handle':
         specifier: workspace:*
         version: link:../../packages/extension-drag-handle
+      '@richkitjs/extension-find-replace':
+        specifier: workspace:*
+        version: link:../../packages/extension-find-replace
+      '@richkitjs/extension-math':
+        specifier: workspace:*
+        version: link:../../packages/extension-math
+      '@richkitjs/extension-mention':
+        specifier: workspace:*
+        version: link:../../packages/extension-mention
       '@richkitjs/extension-placeholder':
         specifier: workspace:*
         version: link:../../packages/extension-placeholder
@@ -685,6 +694,31 @@ importers:
       prosemirror-transform:
         specifier: ^1.10.2
         version: 1.12.0
+    devDependencies:
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.16)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/extension-math:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      katex:
+        specifier: ^0.18.7
+        version: 0.18.7
+      prosemirror-inputrules:
+        specifier: ^1.4.0
+        version: 1.5.1
+      prosemirror-model:
+        specifier: ^1.24.1
+        version: 1.25.5
+      prosemirror-view:
+        specifier: ^1.37.0
+        version: 1.41.8
     devDependencies:
       tsup:
         specifier: ^8.3.5
@@ -1377,6 +1411,9 @@ importers:
       '@richkitjs/extension-list-item':
         specifier: workspace:*
         version: link:../../packages/extension-list-item
+      '@richkitjs/extension-math':
+        specifier: workspace:*
+        version: link:../../packages/extension-math
       '@richkitjs/extension-ordered-list':
         specifier: workspace:*
         version: link:../../packages/extension-ordered-list
@@ -2613,6 +2650,10 @@ packages:
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
 
+  commander@15.0.0:
+    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
+    engines: {node: '>=22.12.0'}
+
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
@@ -3144,6 +3185,10 @@ packages:
 
   jszip@3.10.1:
     resolution: {integrity: sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==}
+
+  katex@0.18.7:
+    resolution: {integrity: sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==}
+    hasBin: true
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -5386,6 +5431,8 @@ snapshots:
 
   comma-separated-tokens@2.0.3: {}
 
+  commander@15.0.0: {}
+
   commander@4.1.1: {}
 
   concat-map@0.0.1: {}
@@ -6010,6 +6057,10 @@ snapshots:
       pako: 1.0.11
       readable-stream: 2.3.8
       setimmediate: 1.0.5
+
+  katex@0.18.7:
+    dependencies:
+      commander: 15.0.0
 
   keyv@4.5.4:
     dependencies:

@@ -1,0 +1,70 @@
+{
+  "name": "@richkitjs/extension-math",
+  "version": "0.0.0",
+  "description": "Math for RichKit: inline and block LaTeX formulas rendered with KaTeX, with $…$ and $$…$$ shortcuts.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./style.css"
+  },
+  "files": [
+    "dist",
+    "style.css",
+    "LICENSE",
+    "LICENSE-COMMERCIAL",
+    "NOTICE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@richkitjs/core": "workspace:*",
+    "katex": "^0.18.7",
+    "prosemirror-inputrules": "^1.4.0",
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-view": "^1.37.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faithdevss/richkit.git",
+    "directory": "packages/extension-math"
+  },
+  "homepage": "https://faithdevss.github.io/richkit/",
+  "bugs": {
+    "url": "https://github.com/faithdevss/richkit/issues"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "richkit",
+    "rich-text",
+    "rich-text-editor",
+    "text-editor",
+    "editor",
+    "wysiwyg",
+    "prosemirror",
+    "richkit-extension",
+    "math",
+    "latex",
+    "katex",
+    "equation",
+    "formula",
+    "edtech"
+  ]
+}

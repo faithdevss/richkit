@@ -1,0 +1,11 @@
+/* KaTeX's stylesheet and fonts, so apps don't have to depend on katex directly. */
+@import 'katex/dist/katex.min.css';
+
+.rk-math {
+  cursor: pointer;
+}
+.rk-math-block {
+  display: block;
+  margin: 0.8em 0;
+  text-align: center;
+}
