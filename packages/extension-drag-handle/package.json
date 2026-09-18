@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-drag-handle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Block drag handle and block-level actions for @richkitjs/core",
   "license": "MIT",
   "type": "module",

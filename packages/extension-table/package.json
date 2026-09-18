@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-table",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Table extension for @richkitjs/core, with column resizing",
   "license": "MIT",
   "type": "module",
