@@ -28,9 +28,14 @@ export interface ImageOptions extends Record<string, unknown> {
   /**
    * Collects the caption and alt text. The extension ships no dialog of its
    * own, so the host app can route this through its own prompt; the default
-   * falls back to the browser's.
+   * falls back to the browser's. `anchor` is the pressed button, for hosts
+   * that float the prompt next to it.
    */
-  editText?: (opts: { title: string; value: string }) => Promise<string | null>
+  editText?: (opts: {
+    title: string
+    value: string
+    anchor?: HTMLElement
+  }) => Promise<string | null>
 }
 
 export const Image = Node.create<ImageOptions>({

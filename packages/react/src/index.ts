@@ -8,7 +8,8 @@ export { ToolbarOverflow } from './Toolbar/ToolbarOverflow'
 export type { ToolbarOverflowProps } from './Toolbar/ToolbarOverflow'
 export { BlockTypeMenu } from './Toolbar/BlockTypeMenu'
 export { TableMenu } from './Toolbar/TableMenu'
-export { LinkMenu } from './Toolbar/LinkMenu'
+export { LinkMenu, LinkPanel } from './Toolbar/LinkMenu'
+export type { LinkMenuProps, LinkPanelProps } from './Toolbar/LinkMenu'
 export { ImageMenu } from './Toolbar/ImageMenu'
 export { AlignMenu } from './Toolbar/AlignMenu'
 export { BulletListMenu, OrderedListMenu } from './Toolbar/ListMenu'
@@ -37,7 +38,7 @@ export type { CommentComposerProps } from './Comments/CommentComposer'
 export { SuggestionSidebar } from './TrackChanges/SuggestionSidebar'
 export type { SuggestionSidebarProps } from './TrackChanges/SuggestionSidebar'
 export { NotificationsHost } from './Notifications/NotificationsHost'
-export { notify } from './Notifications/notify'
+export { notify, selectionAnchor } from './Notifications/notify'
 export type {
   ToastKind,
   ToastEntry,
@@ -46,6 +47,8 @@ export type {
   ConfirmOptions,
   AlertOptions,
   ImageDialogOptions,
+  LinkDialogOptions,
+  DialogAnchor,
 } from './Notifications/notify'
 export type { NotificationsHostProps } from './Notifications/NotificationsHost'
 export { SlashMenu, defaultSlashItems } from './SlashMenu/SlashMenu'

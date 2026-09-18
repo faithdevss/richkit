@@ -1,7 +1,11 @@
 import type { Node as PMNode } from 'prosemirror-model'
 import type { EditorView, NodeView } from 'prosemirror-view'
 
-type EditText = (opts: { title: string; value: string }) => Promise<string | null>
+type EditText = (opts: {
+  title: string
+  value: string
+  anchor?: HTMLElement
+}) => Promise<string | null>
 
 const ALIGNMENTS: { align: 'left' | 'center' | 'right'; label: string }[] = [
   { align: 'left', label: 'Align left' },
@@ -74,7 +78,7 @@ export class ImageNodeView implements NodeView {
     bar.setAttribute('contenteditable', 'false')
     bar.hidden = true
 
-    const button = (label: string, onPress: () => void) => {
+    const button = (label: string, onPress: (btn: HTMLElement) => void) => {
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className = 'richkit-image-btn'
@@ -83,7 +87,7 @@ export class ImageNodeView implements NodeView {
       btn.addEventListener('mousedown', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        onPress()
+        onPress(btn)
       })
       bar.appendChild(btn)
       return btn
@@ -94,18 +98,20 @@ export class ImageNodeView implements NodeView {
         this.setAttr('align', this.node.attrs.align === align ? null : align)
       })
     }
-    button('Caption', () => {
+    button('Caption', (anchor) => {
       void this.editText({
         title: 'Caption',
+        anchor,
         value: (this.node.attrs.caption as string | null) ?? '',
       }).then((value) => {
         if (value === null) return
         this.setAttr('caption', value || null)
       })
     })
-    button('Alt text', () => {
+    button('Alt text', (anchor) => {
       void this.editText({
         title: 'Alt text',
+        anchor,
         value: (this.node.attrs.alt as string | null) ?? '',
       }).then((value) => {
         if (value === null) return

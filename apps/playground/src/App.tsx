@@ -5,6 +5,7 @@ import {
   EditorContent,
   FindReplace,
   Icons,
+  LinkMenu,
   Menubar,
   AIPrompt,
   NotificationsHost,
@@ -293,25 +294,7 @@ export function App() {
               >
                 <Icons.UnderlineIcon />
               </button>
-              <button
-                type="button"
-                className={`tb-btn${editor.isActive('link') ? ' is-active' : ''}`}
-                onMouseDown={async (e) => {
-                  e.preventDefault()
-                  const url = await notify.prompt({
-                    title: 'Link',
-                    message: 'Paste a URL (leave empty to remove).',
-                    placeholder: 'https://example.com',
-                    okLabel: 'Apply',
-                  })
-                  if (url === null) return
-                  if (url === '') editor.chain().call('unsetLink').focus().run()
-                  else editor.chain().call('setLink', { href: url }).focus().run()
-                }}
-                title="Link"
-              >
-                <Icons.LinkIcon />
-              </button>
+              <LinkMenu editor={editor} />
               <button
                 type="button"
                 className="tb-btn"

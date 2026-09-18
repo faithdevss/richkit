@@ -133,6 +133,29 @@ test.describe('link', () => {
     await expect(page.locator('.editor a[href="https://example.com"]')).toContainText('click here')
   })
 
+  test('selected text fills the display text field', async ({ page }) => {
+    await page.goto('/')
+    await focusEditor(page)
+    await page.keyboard.type('click here')
+    await page.keyboard.press(`${MOD}+a`)
+    await clickToolbar(page, 'title="Link"')
+    await expect(page.locator('.tb-link-form input[type="text"]')).toHaveValue('click here')
+  })
+
+  test('inserts a link with custom text, or the URL when text is empty', async ({ page }) => {
+    await page.goto('/')
+    await focusEditor(page)
+    await clickToolbar(page, 'title="Link"')
+    await page.locator('.tb-link-form input[type="url"]').fill('https://a.com')
+    await page.locator('.tb-link-form input[type="text"]').fill('Site A')
+    await page.locator('.tb-link-form .tb-btn-primary').click()
+    await expect(page.locator('.editor a[href="https://a.com"]')).toHaveText('Site A')
+    await clickToolbar(page, 'title="Link"')
+    await page.locator('.tb-link-form input[type="url"]').fill('https://b.com')
+    await page.locator('.tb-link-form .tb-btn-primary').click()
+    await expect(page.locator('.editor a[href="https://b.com"]')).toHaveText('https://b.com')
+  })
+
   test('remove link', async ({ page }) => {
     await page.goto('/')
     await focusEditor(page)

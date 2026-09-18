@@ -65,10 +65,10 @@ test.describe('notifications (toast + dialog)', () => {
     await page.locator('.menubar-trigger:has-text("Insert")').click()
     await page.locator('.menu-item:has-text("Link")').click()
 
-    const dlg = page.locator('.re-dialog-prompt')
+    const dlg = page.locator('.re-dialog-link')
     await expect(dlg).toBeVisible()
-    await dlg.locator('input').fill('https://example.com')
-    await dlg.locator('button:has-text("Apply")').click()
+    await dlg.locator('input[type="url"]').fill('https://example.com')
+    await dlg.locator('button:has-text("Insert")').click()
 
     await expect(page.locator('.editor a[href="https://example.com"]')).toBeVisible()
   })
@@ -80,10 +80,10 @@ test.describe('notifications (toast + dialog)', () => {
     await page.locator('.menubar-trigger:has-text("Insert")').click()
     await page.locator('.menu-item:has-text("Image")').click()
 
-    const dlg = page.locator('.re-dialog-prompt')
+    const dlg = page.locator('.re-dialog-image')
     await expect(dlg).toBeVisible()
     await dlg.locator('button:has-text("Cancel")').click()
-    await expect(page.locator('.re-dialog-prompt')).toHaveCount(0)
+    await expect(page.locator('.re-dialog-image')).toHaveCount(0)
     await expect(page.locator('.editor img')).toHaveCount(0)
   })
 
@@ -93,10 +93,10 @@ test.describe('notifications (toast + dialog)', () => {
 
     await page.locator('.menubar-trigger:has-text("Insert")').click()
     await page.locator('.menu-item:has-text("Image")').click()
-    await expect(page.locator('.re-dialog-prompt')).toBeVisible()
+    await expect(page.locator('.re-dialog-image')).toBeVisible()
 
     await page.keyboard.press('Escape')
-    await expect(page.locator('.re-dialog-prompt')).toHaveCount(0)
+    await expect(page.locator('.re-dialog-image')).toHaveCount(0)
   })
 
   test('confirm dialog destructive button has danger style', async ({ page }) => {

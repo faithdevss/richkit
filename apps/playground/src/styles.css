@@ -2073,6 +2073,20 @@ kbd {
   flex-direction: column;
   animation: re-dialog-pop 0.12s ease-out;
 }
+.re-dialog.is-anchored {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  visibility: hidden;
+  min-width: 300px;
+  max-width: min(420px, calc(100vw - 16px));
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.re-dialog-link .re-dialog-body {
+  padding: 12px;
+}
 .re-dialog-header {
   padding: 14px 18px 6px;
 }

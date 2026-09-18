@@ -2,7 +2,7 @@ import type { Editor } from '@richkitjs/core'
 import { downloadDocx } from '@richkitjs/docx'
 import { docToMarkdown } from '@richkitjs/markdown'
 import { createElement } from 'react'
-import { notify } from '../Notifications/notify'
+import { notify, selectionAnchor } from '../Notifications/notify'
 import { printEditor } from '../print'
 import { storeFile, type UploadFile } from '../upload'
 import {
@@ -80,7 +80,10 @@ function pickFile(): Promise<File | null> {
 }
 
 async function insertImage(editor: Editor, actions: MenuActions) {
-  const image = await notify.image({ uploadFile: actions.uploadFile })
+  const image = await notify.image({
+    uploadFile: actions.uploadFile,
+    anchor: selectionAnchor(editor),
+  })
   if (image) runCmd(editor, 'insertImage', image)
 }
 
@@ -97,6 +100,7 @@ async function promptFileLink(editor: Editor) {
     placeholder: 'https://example.com/report.pdf',
     okLabel: 'Insert',
     required: true,
+    anchor: selectionAnchor(editor),
   })
   if (!href) return
   const name = decodeURIComponent(href.split(/[?#]/)[0]?.split('/').pop() || '') || href
@@ -111,16 +115,8 @@ function runCmd(editor: Editor, cmd: string, ...args: unknown[]) {
     .run()
 }
 
-async function promptLink(editor: Editor) {
-  const url = await notify.prompt({
-    title: 'Insert link',
-    message: 'Paste a URL (leave empty to remove an existing link).',
-    placeholder: 'https://example.com',
-    okLabel: 'Apply',
-  })
-  if (url === null) return
-  if (url === '') runCmd(editor, 'unsetLink')
-  else runCmd(editor, 'setLink', { href: url })
+function promptLink(editor: Editor) {
+  return notify.link({ editor })
 }
 
 async function promptTable(editor: Editor) {
@@ -223,6 +219,7 @@ async function insertMedia(editor: Editor) {
     placeholder: 'https://youtube.com/watch?v=…',
     okLabel: 'Insert',
     required: true,
+    anchor: selectionAnchor(editor),
   })
   if (!url) return
   const before = editor.state.doc

@@ -8,7 +8,7 @@ import {
 } from '@richkitjs/extension-slash-commands'
 import { computePosition, flip, offset, shift } from '@floating-ui/dom'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import { notify } from '../Notifications/notify'
+import { notify, selectionAnchor } from '../Notifications/notify'
 import {
   BlockquoteIcon,
   BulletListIcon,
@@ -94,6 +94,7 @@ function mediaItem(
             placeholder: 'https://…',
             okLabel: 'Insert',
             required: true,
+            anchor: selectionAnchor(editor, range.from),
           })
           .then((src) => {
             if (src) editor.chain().call('insertMedia', { kind, src }).focus().run()
@@ -173,7 +174,7 @@ export const defaultSlashItems: SlashItem[] = [
     isAvailable: (e) => Boolean(e.schema.nodes['image']),
     run: (editor, range) => {
       deleteRange(editor, range)
-      void notify.image().then((image) => {
+      void notify.image({ anchor: selectionAnchor(editor, range.from) }).then((image) => {
         if (image) editor.chain().call('insertImage', image).focus().run()
       })
     },
@@ -194,6 +195,7 @@ export const defaultSlashItems: SlashItem[] = [
           placeholder: 'https://youtube.com/watch?v=…',
           okLabel: 'Insert',
           required: true,
+          anchor: selectionAnchor(editor, range.from),
         })
         .then((url) => {
           if (url) editor.chain().call('insertEmbed', url).focus().run()
@@ -233,6 +235,7 @@ export const defaultSlashItems: SlashItem[] = [
           placeholder: 'https://…',
           okLabel: 'Insert',
           required: true,
+          anchor: selectionAnchor(editor, range.from),
         })
         .then((href) => {
           if (href) editor.chain().call('insertBookmark', href).focus().run()
