@@ -16,7 +16,14 @@ const NAV: { label: string; to: string; icon: IconName }[] = [
   { label: 'Pricing', to: '/pricing', icon: 'price' },
 ]
 
-const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
+interface FootCol {
+  head: string
+  links: { label: string; to: string }[]
+  /** Trailing "see everything" link, for columns that only show highlights. */
+  more?: { label: string; to: string }
+}
+
+const FOOT_COLS: FootCol[] = [
   {
     head: 'Product',
     links: [
@@ -32,18 +39,10 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'Agent', to: '/docs/usecases/agent-workflows' },
       { label: 'Docx', to: '/docs/usecases/docx-editing' },
       { label: 'Notion-like', to: '/docs/usecases/notion-blocks' },
-      { label: 'Simple', to: '/docs/usecases/simple-editor' },
-      { label: 'Classic', to: '/docs/usecases/classic-editor' },
-      { label: 'Question', to: '/examples#question' },
-      { label: 'Markdown', to: '/examples#markdown' },
       { label: 'Comments', to: '/examples#comments' },
       { label: 'Track changes', to: '/examples#track-changes' },
-      { label: 'Mentions', to: '/examples#mentions' },
-      { label: 'Minimal', to: '/examples#minimal' },
-      { label: 'Comment box', to: '/examples#comment-box' },
-      { label: 'Find & replace', to: '/examples#find-replace' },
-      { label: 'HTML', to: '/examples#html' },
     ],
+    more: { label: 'All examples', to: '/examples' },
   },
   {
     head: 'Resources',
@@ -216,6 +215,11 @@ export function SiteShell() {
                 {c.links.map((l) => (
                   <FootLink key={l.label} to={l.to} label={l.label} />
                 ))}
+                {c.more && (
+                  <Link to={c.more.to} className="foot-more">
+                    {c.more.label} <span aria-hidden="true">→</span>
+                  </Link>
+                )}
               </div>
             ))}
           </div>

@@ -12,7 +12,6 @@ const ROUTE_LINKS = [
   ['Extensions', '/docs/extensions'],
   ['Agent', '/docs/usecases/agent-workflows'],
   ['Notion-like', '/docs/usecases/notion-blocks'],
-  ['Simple', '/docs/usecases/simple-editor'],
   ['Introduction', '/docs/introduction'],
   ['Installation', '/docs/installation'],
   ['Core concepts', '/docs/core-concepts'],

@@ -1125,8 +1125,8 @@ button.tpl-card {
 }
 .foot-cols {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) repeat(auto-fit, minmax(130px, 1fr));
-  gap: 34px;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(auto-fit, minmax(120px, 1fr));
+  gap: 28px;
   padding-bottom: 34px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -1157,6 +1157,17 @@ button.tpl-card {
 }
 .foot-col a:hover {
   color: var(--site-text-strong);
+}
+.foot-col a.foot-more {
+  color: var(--site-text-strong);
+  font-weight: 500;
+}
+.foot-col a.foot-more span {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+.foot-col a.foot-more:hover span {
+  transform: translateX(3px);
 }
 .foot-base {
   padding-top: 22px;
@@ -2196,8 +2207,17 @@ button.tpl-card {
 .ff-input {
   border: 1px solid var(--border-strong);
   border-radius: 4px;
-  overflow: hidden;
   background: var(--surface);
+}
+/* Rounded by the children rather than overflow: hidden, which would cut off
+   toolbar popovers taller than the editor below them. */
+.ff-input > :first-child {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.ff-input > :last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .ff-field.is-error .ff-input {
   border-color: #d32f2f;

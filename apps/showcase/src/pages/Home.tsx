@@ -393,27 +393,22 @@ export function Home() {
         </div>
       </section>
 
-      <section id="support" className="shell section">
+      <section id="get-started" className="shell section">
         <div className="cta-panel">
           <h2>Install it and ship the editor this week</h2>
           <p>
             One command gets you the starter kit. The AI, DOCX and comments packages are one install
-            away — and they cost nothing.
+            away — and one licence covers every package.
           </p>
           <div className="cta-actions">
             <Link to="/docs/installation" className="btn-light">
               <Icon name="type" size={17} />
               Get started
             </Link>
-            <a
-              href="https://github.com/sponsors/faithdevss"
-              className="btn-secondary"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Icon name="plus" size={17} />
-              Sponsor the project
-            </a>
+            <Link to="/pricing" className="btn-secondary">
+              <Icon name="price" size={17} />
+              See pricing
+            </Link>
           </div>
         </div>
       </section>
