@@ -90,4 +90,42 @@ describe('embed node', () => {
     const json = editor.getJSON() as { content: { type: string }[] }
     expect(json.content.some((n) => n.type === 'embed')).toBe(false)
   })
+  it('renders a resize handle and round-trips a resized width', () => {
+    editor.setContent(
+      '<div data-embed data-width="480px"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>',
+    )
+    expect(editor.view.dom.querySelector('.richkit-embed-resize')).not.toBeNull()
+    const html = editor.getHTML()
+    expect(html).toContain('data-width="480px"')
+    expect(html).toMatch(/[\s;"]width: ?480px/)
+  })
+  it('round-trips centre alignment with inline margins', () => {
+    editor.setContent(
+      '<div data-embed data-width="480px" data-align="center"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>',
+    )
+    const json = editor.getJSON() as { content: { type: string; attrs: { align: string } }[] }
+    expect(json.content.find((n) => n.type === 'embed')?.attrs.align).toBe('center')
+    const html = editor.getHTML()
+    expect(html).toContain('data-align="center"')
+    expect(html).toMatch(/margin-left: ?auto/)
+    expect(html).toMatch(/margin-right: ?auto/)
+  })
+
+  it('toggles alignment from the toolbar', () => {
+    editor.setContent(
+      '<div data-embed><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>',
+    )
+    const btn = editor.view.dom.querySelector<HTMLElement>('.richkit-embed-btn[data-align="center"]')
+    btn?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }))
+    expect(editor.getHTML()).toContain('data-align="center"')
+    btn?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }))
+    expect(editor.getHTML()).not.toContain('data-align')
+  })
+
+  it('ignores unknown align values', () => {
+    editor.setContent(
+      '<div data-embed data-align="evil;x"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe></div>',
+    )
+    expect(editor.getHTML()).not.toContain('data-align')
+  })
 })

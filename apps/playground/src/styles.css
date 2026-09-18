@@ -2116,6 +2116,49 @@ kbd {
   outline: 2px solid #1f6feb;
   outline-offset: 2px;
 }
+.richkit-embed-resize {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.richkit-embed:hover .richkit-embed-resize,
+.richkit-embed-selected .richkit-embed-resize,
+.richkit-embed-resizing .richkit-embed-resize {
+  opacity: 1;
+}
+.richkit-embed-resize:hover {
+  background: var(--accent-hover) !important;
+}
+.richkit-embed-toolbar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 6px;
+  background: rgb(0 0 0 / 0.75);
+  z-index: 2;
+}
+.richkit-embed-toolbar[hidden] {
+  display: none;
+}
+.richkit-embed-btn {
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.richkit-embed-btn:hover {
+  background: rgb(255 255 255 / 0.15);
+}
+.richkit-embed-btn.is-active {
+  background: var(--accent);
+}
 
 /* ---- Phase 2: source code tabs ---- */
 .re-source-tabs {

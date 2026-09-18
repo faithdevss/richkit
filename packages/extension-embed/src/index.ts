@@ -1,5 +1,5 @@
 import { Node, type Command } from '@richkitjs/core'
-import { EmbedNodeView } from './nodeView'
+import { EmbedNodeView, alignMargins, type EmbedAlign } from './nodeView'
 import { normalizeEmbedUrl, type EmbedProvider } from './providers'
 
 export interface EmbedAttrs {
@@ -8,6 +8,7 @@ export interface EmbedAttrs {
   width?: string | null
   height?: string | null
   aspect?: string
+  align?: EmbedAlign | null
 }
 
 function attrsFromUrl(url: string | null): EmbedAttrs | false {
@@ -15,6 +16,10 @@ function attrsFromUrl(url: string | null): EmbedAttrs | false {
   const normalized = normalizeEmbedUrl(url)
   if (!normalized) return false
   return normalized
+}
+
+function parseAlign(value: string | null): EmbedAlign | null {
+  return value === 'left' || value === 'center' || value === 'right' ? value : null
 }
 
 export const Embed = Node.create({
@@ -29,6 +34,7 @@ export const Embed = Node.create({
     width: { default: '100%' },
     height: { default: null },
     aspect: { default: '16/9' },
+    align: { default: null },
   },
   parseHTML: () => [
     {
@@ -43,6 +49,7 @@ export const Embed = Node.create({
           width: el.getAttribute('data-width') ?? '100%',
           height: el.getAttribute('data-height'),
           aspect: el.getAttribute('data-aspect') ?? attrs.aspect,
+          align: parseAlign(el.getAttribute('data-align')),
         }
       },
     },
@@ -56,16 +63,19 @@ export const Embed = Node.create({
     },
   ],
   renderHTML: (node) => {
-    const { src, provider, width, height, aspect } = node.attrs as unknown as EmbedAttrs
+    const { src, provider, width, height, aspect, align } = node.attrs as unknown as EmbedAttrs
+    const margins = alignMargins(align ?? null)
+    const marginStyle = margins.left ? `;margin-left:${margins.left};margin-right:${margins.right}` : ''
     const wrapper: Record<string, string> = {
       'data-embed': '',
       'data-provider': provider,
       'data-src': src,
       'data-width': width ?? '100%',
       'data-aspect': aspect ?? '16/9',
-      style: `width:${width ?? '100%'};max-width:100%;aspect-ratio:${aspect ?? '16/9'}`,
+      style: `width:${width ?? '100%'};max-width:100%;aspect-ratio:${aspect ?? '16/9'}${marginStyle}`,
     }
     if (height) wrapper['data-height'] = height
+    if (align) wrapper['data-align'] = align
     if (provider === 'video') {
       return ['div', wrapper, ['video', { src, controls: '', style: 'width:100%;height:100%' }]]
     }
@@ -73,7 +83,7 @@ export const Embed = Node.create({
       src,
       allow: 'fullscreen; autoplay; encrypted-media; picture-in-picture',
       allowfullscreen: '',
-      referrerpolicy: 'no-referrer',
+      referrerpolicy: 'strict-origin-when-cross-origin',
       style: 'width:100%;height:100%;border:0',
     }
     if (provider === 'generic') {
@@ -82,7 +92,7 @@ export const Embed = Node.create({
     return ['div', wrapper, ['iframe', iframe]]
   },
   addNodeViews: () => ({
-    embed: (node) => new EmbedNodeView(node),
+    embed: (node, view, getPos) => new EmbedNodeView(node, view, getPos),
   }),
   addCommands: () => ({
     insertEmbed: (...args: unknown[]): Command => {
@@ -102,3 +112,4 @@ export const Embed = Node.create({
 
 export { normalizeEmbedUrl } from './providers'
 export type { EmbedProvider, NormalizedEmbed } from './providers'
+export type { EmbedAlign } from './nodeView'
