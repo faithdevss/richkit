@@ -29,12 +29,16 @@ export function ToolbarOverflow({ children, className, moreTitle = 'More' }: Too
   const measuredWidth = useRef(-1)
   const [visible, setVisible] = useState(count)
   const [measuring, setMeasuring] = useState(true)
+  const [measuredCount, setMeasuredCount] = useState(count)
 
-  // Any change to the children invalidates the widths we cached.
-  useEffect(() => {
-    measuredWidth.current = -1
+  // Any change to the children invalidates the widths we cached. Adjusting
+  // state during render (rather than in an effect) keeps this from firing on
+  // mount, where it would race the first measuring pass and leave the row
+  // stuck in `measuring`.
+  if (measuredCount !== count) {
+    setMeasuredCount(count)
     setMeasuring(true)
-  }, [count])
+  }
 
   useLayoutEffect(() => {
     if (moreRef.current) moreWidth.current = moreRef.current.offsetWidth || moreWidth.current
