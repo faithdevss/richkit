@@ -54,8 +54,7 @@ export function ExampleDoc() {
         <h2 id="full-source">Full source</h2>
         <details className="example-source">
           <summary>
-            Show <code>apps/showcase/src/editors/…</code> — {example.source.split('\n').length}{' '}
-            lines
+            Show <code>packages/editors/src/…</code> — {example.source.split('\n').length} lines
           </summary>
           <pre className="docs-pre">
             <code>{example.source}</code>

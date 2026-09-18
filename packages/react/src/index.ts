@@ -1,4 +1,8 @@
 export { useEditor } from './useEditor'
+export { useControlledEditor } from './useControlledEditor'
+export type { ControlledEditorOptions } from './useControlledEditor'
+export { getEditorValue, toEditorContent } from './value'
+export type { ValueFormat, EditorValue, JSONContent } from './value'
 export { EditorContent } from './EditorContent'
 export { EditorProvider, useEditorContext } from './EditorProvider'
 export { BubbleMenu } from './BubbleMenu'

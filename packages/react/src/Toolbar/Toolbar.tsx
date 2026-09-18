@@ -115,8 +115,19 @@ export function Toolbar({
   ) : (
     <DefaultToolbar editor={editor} overflow={overflow} uploadFile={uploadFile} />
   )
+  // A read-only editor keeps its toolbar in place but out of reach: commands
+  // dispatch regardless of `editable`, so the buttons must not be clickable.
+  const editable = editor.isEditable
   return (
-    <div className={className ?? 'toolbar'} role="toolbar" aria-label="Editor toolbar">
+    <div
+      className={className ?? 'toolbar'}
+      role="toolbar"
+      aria-label="Editor toolbar"
+      aria-disabled={editable ? undefined : true}
+      ref={(el) => {
+        if (el) el.inert = !editable
+      }}
+    >
       {body}
     </div>
   )

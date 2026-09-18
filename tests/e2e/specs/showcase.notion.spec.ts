@@ -140,7 +140,7 @@ test.describe('core editing', () => {
       .locator('.rk-prompt-input, .modal input, input[placeholder*="example" i]')
       .first()
       .fill('https://example.com')
-    await page.locator('button:has-text("Apply")').click()
+    await page.locator('button:has-text("Insert")').click()
     expect(await html(page)).toContain('href="https://example.com"')
   })
 
@@ -682,6 +682,20 @@ test.describe('media', () => {
     expect(await html(page)).toContain('<img')
   })
 
+  test('the image picker floats under the slash position, not as a modal', async ({ page }) => {
+    await open(page)
+    await slash(page)
+    await page.locator('.slash-menu-item', { hasText: 'Image' }).first().click()
+    const dlg = page.locator('.re-dialog-image.is-anchored')
+    await expect(dlg).toBeVisible()
+    await expect(page.locator('.re-dialog-backdrop')).toHaveCount(0)
+    const caret = await page.locator(`${ED} > p`).last().boundingBox()
+    const box = await dlg.boundingBox()
+    expect(box!.y).toBeGreaterThanOrEqual(caret!.y)
+    await page.keyboard.press('Escape')
+    await expect(dlg).toHaveCount(0)
+  })
+
   test('an inserted image can be resized, aligned and captioned', async ({ page }) => {
     await open(page)
     await slash(page)
@@ -786,14 +800,10 @@ test.describe('links and bookmarks', () => {
       .locator('.rk-prompt-input, .modal input, input[placeholder*="example" i]')
       .first()
       .fill('https://example.com')
-    await page.locator('button:has-text("Apply")').click()
+    await page.locator('button:has-text("Insert")').click()
     await selectAll(page)
     await page.locator('.notion-bubble [title="Link"]').click()
-    await page
-      .locator('.rk-prompt-input, .modal input, input[placeholder*="example" i]')
-      .first()
-      .fill('')
-    await page.locator('button:has-text("Apply")').click()
+    await page.locator('.tb-link-form button:has-text("Remove")').click()
     expect(await html(page)).not.toContain('<a ')
   })
 

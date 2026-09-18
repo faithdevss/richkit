@@ -14,6 +14,9 @@ import { trailingClick } from './plugins/trailing-click'
 import { buildSchema } from './schema/builder'
 import { docToHtml, htmlToDoc } from './html'
 
+// Transaction meta: a doc change that should not surface as an `update`.
+const SILENT = 'richkit:silent'
+
 export interface EditorEvents {
   create: { editor: Editor }
   transaction: { editor: Editor; transaction: Transaction }
@@ -22,6 +25,17 @@ export interface EditorEvents {
   focus: { editor: Editor; event: FocusEvent }
   blur: { editor: Editor; event: FocusEvent }
   destroy: void
+}
+
+export interface SetContentOptions {
+  /**
+   * Fire `update` (and so `onUpdate`) for this change. Turn it off when the
+   * content comes from outside — a controlled `value` prop — so syncing it in
+   * does not echo straight back out as a change. Defaults to true.
+   */
+  emitUpdate?: boolean
+  /** Record the change on the undo stack. Defaults to true. */
+  addToHistory?: boolean
 }
 
 export interface EditorOptions {
@@ -45,9 +59,11 @@ export class Editor {
   private readonly emitter = new EventEmitter<EditorEvents>()
   private readonly commandMap: Record<string, (...args: unknown[]) => Command> = {}
   private destroyed = false
+  private editable: boolean
 
   constructor(options: EditorOptions) {
     this.extensions = options.extensions
+    this.editable = options.editable !== false
     this.schema = buildSchema(this.extensions, this)
     this.registerEventHandlers(options)
     this.collectCommands()
@@ -154,7 +170,7 @@ export class Editor {
 
     this.view = new EditorView(options.element ?? null, {
       state,
-      editable: () => options.editable !== false,
+      editable: () => this.editable,
       nodeViews: this.buildNodeViews(),
       dispatchTransaction: (tr) => this.handleTransaction(tr),
       handleDOMEvents: {
@@ -176,7 +192,9 @@ export class Editor {
     const next = this.view.state.apply(tr)
     this.view.updateState(next)
     this.emitter.emit('transaction', { editor: this, transaction: tr })
-    if (tr.docChanged) this.emitter.emit('update', { editor: this, transaction: tr })
+    if (tr.docChanged && !tr.getMeta(SILENT)) {
+      this.emitter.emit('update', { editor: this, transaction: tr })
+    }
     if (tr.selectionSet) this.emitter.emit('selectionUpdate', { editor: this })
   }
 
@@ -186,6 +204,36 @@ export class Editor {
 
   get isEditable(): boolean {
     return this.view.editable
+  }
+
+  /** Switches the editor between editable and read-only without rebuilding it. */
+  setEditable(editable: boolean): void {
+    if (editable === this.editable) return
+    this.editable = editable
+    // Re-reads the editable prop and toggles contenteditable on the DOM.
+    this.view.setProps({})
+    // An empty transaction, so anything listening — a toolbar that greys out
+    // when read-only — re-renders.
+    this.view.dispatch(this.view.state.tr.setMeta('richkit:editable', editable))
+  }
+
+  /**
+   * True when the document holds nothing a reader would see: no text beyond
+   * whitespace and no leaf content such as an image, formula or rule. A doc of
+   * empty paragraphs still counts as empty — what a required field wants.
+   */
+  get isEmpty(): boolean {
+    let empty = true
+    this.view.state.doc.descendants((node) => {
+      if (!empty) return false
+      if (node.isText) {
+        if (node.text!.trim()) empty = false
+      } else if (node.isLeaf && node.type.name !== 'hardBreak') {
+        empty = false
+      }
+      return empty
+    })
+    return empty
   }
 
   get isDestroyed(): boolean {
@@ -262,9 +310,14 @@ export class Editor {
     return this.view.state.doc.textContent
   }
 
-  setContent(content: string | PMNode | Record<string, unknown>): void {
+  setContent(
+    content: string | PMNode | Record<string, unknown>,
+    options: SetContentOptions = {},
+  ): void {
     const doc = this.parseInitialDoc(content)
     const tr = this.view.state.tr.replaceWith(0, this.view.state.doc.content.size, doc.content)
+    if (options.emitUpdate === false) tr.setMeta(SILENT, true)
+    if (options.addToHistory === false) tr.setMeta('addToHistory', false)
     this.view.dispatch(tr)
   }
 

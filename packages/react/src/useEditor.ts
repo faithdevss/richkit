@@ -13,8 +13,9 @@ function createStore(editor: Editor): Store {
     version++
     listeners.forEach((l) => l())
   }
-  editor.on('update', bump)
-  editor.on('selectionUpdate', bump)
+  // Every dispatch, not just `update`: a silent setContent (a controlled value
+  // syncing in) and plugin-state-only transactions still change what the UI shows.
+  editor.on('transaction', bump)
   return {
     subscribe: (cb) => {
       listeners.add(cb)

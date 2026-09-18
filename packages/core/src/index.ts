@@ -1,5 +1,5 @@
 export { Editor } from './editor'
-export type { EditorOptions, EditorEvents } from './editor'
+export type { EditorOptions, EditorEvents, SetContentOptions } from './editor'
 export { Extension } from './extension/extension'
 export type { ExtensionConfig, AnyExtension } from './extension/extension'
 export { Node } from './extension/node'

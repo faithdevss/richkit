@@ -1,20 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { Editor } from '@richkitjs/core'
-import {
-  useEditor,
-  EditorContent,
-  BubbleMenu,
-  CommentComposer,
-  CommentSidebar,
-  Toolbar,
-  Icons,
-  notify,
-  ToolbarButton,
-  ToolbarGroup,
-} from '@richkitjs/react'
-import { StarterKit } from '@richkitjs/starter-kit'
+import { CommentsEditor as Comments } from '@richkitjs/editors'
 import { COMMENTS_CONTENT } from '../content'
-import { useDevEditor } from './useDevEditor'
+import { exposeEditor } from './useDevEditor'
 
 type Range = { from: number; to: number }
 
@@ -70,106 +58,16 @@ function seedThreads(editor: Editor) {
 }
 
 export function CommentsEditor() {
-  const editor = useEditor({ extensions: StarterKit, content: COMMENTS_CONTENT })
-  useDevEditor(editor)
-  const [composer, setComposer] = useState<Range | null>(null)
-
-  useEffect(() => {
-    if (editor) seedThreads(editor)
-  }, [editor])
-
-  const openComposer = useCallback(() => {
-    if (!editor) return
-    const { from, to, empty } = editor.state.selection
-    if (empty) {
-      notify.toast.warn('Select some text in the editor first.')
-      return
-    }
-    setComposer({ from, to })
-  }, [editor])
-
-  const closeComposer = useCallback(() => setComposer(null), [])
-
-  const submit = (body: string) => {
-    if (!editor || !composer) return
-    editor
-      .chain()
-      .call('addComment', { body, ...composer })
-      .focus()
-      .run()
-    setComposer(null)
-  }
-
+  const [html, setHtml] = useState(COMMENTS_CONTENT)
   return (
-    <div className="demo-frame demo-comments" data-theme="light">
-      {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar demo-toolbar-light">
-          <ToolbarGroup>
-            <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
-            <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
-          </ToolbarGroup>
-          <ToolbarGroup>
-            <ToolbarButton
-              editor={editor}
-              command="toggleBold"
-              isActiveName="bold"
-              label={<Icons.BoldIcon />}
-              title="Bold"
-            />
-            <ToolbarButton
-              editor={editor}
-              command="toggleItalic"
-              isActiveName="italic"
-              label={<Icons.ItalicIcon />}
-              title="Italic"
-            />
-            <ToolbarButton
-              editor={editor}
-              command="toggleUnderline"
-              isActiveName="underline"
-              label={<Icons.UnderlineIcon />}
-              title="Underline"
-            />
-          </ToolbarGroup>
-          <ToolbarGroup>
-            <button
-              type="button"
-              className="tb-btn"
-              title="Add comment"
-              onMouseDown={(e) => {
-                e.preventDefault()
-                openComposer()
-              }}
-            >
-              <Icons.CommentIcon />
-            </button>
-          </ToolbarGroup>
-        </Toolbar>
-      )}
-      <div className="sidebar-split">
-        <div className="demo-scroll">
-          <div className="demo-page demo-page-sheet">
-            <EditorContent editor={editor} className="editor" />
-            <BubbleMenu editor={editor} className="bubble-menu">
-              {editor && (
-                <button
-                  type="button"
-                  className="tb-btn"
-                  title="Comment"
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                    openComposer()
-                  }}
-                >
-                  <Icons.CommentIcon />
-                </button>
-              )}
-            </BubbleMenu>
-          </div>
-        </div>
-        <CommentSidebar editor={editor} onAddRequest={openComposer} />
-      </div>
-      <CommentComposer editor={editor} range={composer} onClose={closeComposer} onSubmit={submit} />
-    </div>
+    <Comments
+      value={html}
+      onChange={setHtml}
+      author="You"
+      onEditorReady={(editor) => {
+        exposeEditor(editor)
+        seedThreads(editor)
+      }}
+    />
   )
 }
