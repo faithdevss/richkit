@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-paste-handler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Smart paste for RichKit: cleans HTML from Word and Google Docs, converts pasted Markdown, and turns pasted URLs into links.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",

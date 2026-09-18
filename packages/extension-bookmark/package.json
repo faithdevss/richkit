@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-bookmark",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Link preview cards for RichKit: insertBookmark renders a URL as a card with title, description and image supplied by your own resolver. Never fetches on its own.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",

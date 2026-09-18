@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-toggle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Collapsible toggle blocks for RichKit, like Notion toggles: a clickable summary that shows or hides nested content.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-link",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Link mark for RichKit: setLink, unsetLink and automatic linking of typed URLs.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",

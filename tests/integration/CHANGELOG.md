@@ -1,5 +1,17 @@
 # integration-tests
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [83cc996]
+  - @richkitjs/extension-paste-handler@0.2.0
+  - @richkitjs/extension-task-list@0.2.0
+  - @richkitjs/extension-code-block@0.2.0
+  - @richkitjs/extension-image@0.2.0
+  - @richkitjs/extension-table@0.2.0
+  - @richkitjs/extension-link@0.2.0
+
 ## 0.0.1
 
 ### Patch Changes

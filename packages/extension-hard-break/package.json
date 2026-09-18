@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-hard-break",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Hard line break for RichKit: Shift-Enter or Mod-Enter inserts a <br> inside a block.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
