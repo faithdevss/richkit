@@ -30,15 +30,15 @@
   "dependencies": {
     "@richkitjs/core": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
-    "prosemirror-model": "^1.24.1",
-    "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.37.0"
+    "prosemirror-model": "^1.25.11",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.42.3"
   },
   "devDependencies": {
-    "jsdom": "^25.0.1",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.6"
+    "jsdom": "^30.1.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.1"
   },
   "repository": {
     "type": "git",

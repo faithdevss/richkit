@@ -1,7 +1,7 @@
 import { htmlToDoc, type Editor } from '@richkitjs/core'
 import type { Node as PMNode, Schema } from 'prosemirror-model'
 import MarkdownIt from 'markdown-it'
-import type StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
+import type { StateCore } from 'markdown-it'
 
 const TASK_RE = /^\[([ xX])\]\s+/
 

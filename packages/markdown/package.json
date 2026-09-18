@@ -28,14 +28,13 @@
   },
   "dependencies": {
     "@richkitjs/core": "workspace:*",
-    "prosemirror-markdown": "^1.13.1",
-    "prosemirror-model": "^1.24.1",
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^15.0.2",
+    "prosemirror-markdown": "^1.13.7",
+    "prosemirror-model": "^1.25.11"
   },
   "devDependencies": {
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "@types/markdown-it": "^14.1.2"
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
   },
   "repository": {
     "type": "git",

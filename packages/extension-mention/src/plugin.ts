@@ -133,7 +133,6 @@ export function closeMention(view: EditorView): void {
 
 export function registerMentionEnter(view: EditorView, fn: OnEnter | null): void {
   const plugin = mentionKey.get(view.state) as
-    | (Plugin<MentionState> & { registerOnEnter?: (fn: OnEnter | null) => void })
-    | undefined
+    (Plugin<MentionState> & { registerOnEnter?: (fn: OnEnter | null) => void }) | undefined
   plugin?.registerOnEnter?.(fn)
 }

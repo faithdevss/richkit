@@ -28,12 +28,12 @@
   },
   "dependencies": {
     "@richkitjs/core": "workspace:*",
-    "docx": "^9.5.1",
-    "mammoth": "^1.11.0"
+    "docx": "^9.7.1",
+    "mammoth": "^1.12.3"
   },
   "devDependencies": {
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2"
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
   },
   "repository": {
     "type": "git",

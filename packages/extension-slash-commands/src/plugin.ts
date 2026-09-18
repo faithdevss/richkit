@@ -137,7 +137,6 @@ export function closeSlash(view: EditorView): void {
 
 export function registerSlashEnter(view: EditorView, fn: OnEnter | null): void {
   const plugin = slashKey.get(view.state) as
-    | (Plugin<SlashState> & { registerOnEnter?: (fn: OnEnter | null) => void })
-    | undefined
+    (Plugin<SlashState> & { registerOnEnter?: (fn: OnEnter | null) => void }) | undefined
   plugin?.registerOnEnter?.(fn)
 }
