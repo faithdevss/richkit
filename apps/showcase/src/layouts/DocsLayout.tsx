@@ -2,6 +2,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { DocsToc } from '../components/DocsToc'
+import { EXAMPLES } from '../data/examples'
 import { Icon, type IconName } from '../components/SiteIcons'
 import { mdxComponents } from '../mdx-components'
 
@@ -39,6 +40,11 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
       { label: 'Simple editor', to: '/docs/usecases/simple-editor' },
       { label: 'Classic editor', to: '/docs/usecases/classic-editor' },
     ],
+  },
+  {
+    head: 'Examples',
+    icon: 'book',
+    items: EXAMPLES.map((e) => ({ label: e.title, to: `/docs/examples/${e.id}` })),
   },
 ]
 

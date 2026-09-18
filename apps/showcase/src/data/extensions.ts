@@ -59,6 +59,11 @@ export const EXTENSIONS: ExtensionEntry[] = [
     category: 'Nodes',
     description: 'Inline @ mentions for people and pages, with a suggestion plugin.',
   },
+  {
+    pkg: 'extension-math',
+    category: 'Nodes',
+    description: 'Inline and block LaTeX formulas rendered with KaTeX, with $…$ shortcuts.',
+  },
   { pkg: 'extension-code-block', category: 'Nodes', description: 'Fenced code block node.' },
   {
     pkg: 'extension-horizontal-rule',

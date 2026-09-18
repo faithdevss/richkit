@@ -1,11 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { DocsLayout } from './layouts/DocsLayout'
 import { SiteShell } from './layouts/SiteShell'
+import { Examples } from './pages/Examples'
 import { Home } from './pages/Home'
 import { Pricing } from './pages/Pricing'
 import { Privacy, Refunds, Terms } from './pages/Legal'
 import { Templates } from './pages/Templates'
 import { Comparison } from './pages/docs/Comparison'
+import { ExampleDoc } from './pages/docs/ExampleDoc'
 import { ExtensionsReference } from './pages/docs/ExtensionsReference'
 import Introduction from './content/docs/introduction.mdx'
 import Installation from './content/docs/installation.mdx'
@@ -35,6 +37,7 @@ export function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/refunds" element={<Refunds />} />
           <Route path="/templates" element={<Templates />} />
+          <Route path="/examples" element={<Examples />} />
           <Route path="/docs" element={<DocsLayout />}>
             <Route index element={<Navigate to="introduction" replace />} />
             <Route path="introduction" element={<Introduction />} />
@@ -48,6 +51,7 @@ export function App() {
             <Route path="api/starter-kit" element={<StarterKitApi />} />
             <Route path="extensions" element={<ExtensionsReference />} />
             <Route path="comparison" element={<Comparison />} />
+            <Route path="examples/:id" element={<ExampleDoc />} />
             <Route path="usecases/agent-workflows" element={<AgentWorkflowsUsecase />} />
             <Route path="usecases/docx-editing" element={<DocxEditingUsecase />} />
             <Route path="usecases/notion-blocks" element={<NotionBlocksUsecase />} />

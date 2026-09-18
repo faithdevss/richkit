@@ -2,24 +2,18 @@ import { NotificationsHost } from '@richkitjs/react'
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
-// Always ends in a slash, so `${HOME}#features` is a valid absolute URL under
-// any deploy base. A bare "/#features" would jump to the domain root instead.
-const HOME = import.meta.env.BASE_URL
-
 import { LogoMark } from '../components/LogoMark'
 import { ScrollManager } from '../components/ScrollManager'
 import { GitHubIcon, Icon, type IconName } from '../components/SiteIcons'
 
 const GITHUB = 'https://github.com/faithdevss/richkit'
-const SPONSOR = 'https://github.com/sponsors/faithdevss'
 
 const NAV: { label: string; to: string; icon: IconName }[] = [
-  { label: 'Platform', to: `${HOME}#platform`, icon: 'platform' },
+  { label: 'Docs', to: '/docs', icon: 'docs' },
   { label: 'Templates', to: '/templates', icon: 'book' },
+  { label: 'Examples', to: '/examples', icon: 'type' },
   { label: 'Compare', to: '/docs/comparison', icon: 'compare' },
   { label: 'Pricing', to: '/pricing', icon: 'price' },
-  { label: 'Docs', to: '/docs', icon: 'docs' },
-  { label: 'Support', to: SPONSOR, icon: 'plus' },
 ]
 
 const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
@@ -40,6 +34,15 @@ const FOOT_COLS: { head: string; links: { label: string; to: string }[] }[] = [
       { label: 'Notion-like', to: '/docs/usecases/notion-blocks' },
       { label: 'Simple', to: '/docs/usecases/simple-editor' },
       { label: 'Classic', to: '/docs/usecases/classic-editor' },
+      { label: 'Question', to: '/examples#question' },
+      { label: 'Markdown', to: '/examples#markdown' },
+      { label: 'Comments', to: '/examples#comments' },
+      { label: 'Track changes', to: '/examples#track-changes' },
+      { label: 'Mentions', to: '/examples#mentions' },
+      { label: 'Minimal', to: '/examples#minimal' },
+      { label: 'Comment box', to: '/examples#comment-box' },
+      { label: 'Find & replace', to: '/examples#find-replace' },
+      { label: 'HTML', to: '/examples#html' },
     ],
   },
   {

@@ -112,3 +112,101 @@ export const CLASSIC_CONTENT = `
 <ul style="list-style-type: square"><li><p>Re-run the pricing test in EMEA.</p></li><li><p>Ship usage-based billing to the top 20 accounts.</p></li></ul>
 <p style="text-align: center"><em>Select any of the above and try the toolbar — every control edits this document live.</em></p>
 `
+
+export const MARKDOWN_CONTENT = `# Release notes
+
+RichKit reads and writes **Markdown**. Edit on the left, or type straight into the source on the right — both stay in sync.
+
+## What changed
+
+- Faster \`docToMarkdown\` for long documents
+- Tables survive a *round trip*
+- ~~Legacy parser~~ removed
+
+> Markdown shortcuts work too: start a line with \`##\` or \`-\` and a space.
+
+\`\`\`ts
+import { docToMarkdown } from '@richkitjs/markdown'
+
+const md = docToMarkdown(editor.state.doc)
+\`\`\`
+`
+
+export const COMMENTS_CONTENT = `
+<h2>Launch plan — v2 onboarding</h2>
+<p>We ship the new onboarding flow to all self-serve accounts on <strong>14 October</strong>. The rollout starts at 10% and doubles every two days if error rates stay flat.</p>
+<p>Support gets a briefing the week before. Marketing holds the announcement until the rollout reaches 50%, so early bugs stay quiet.</p>
+<ul>
+  <li>Owner: Growth team</li>
+  <li>Success metric: activation within the first session</li>
+  <li>Rollback: feature flag, no deploy needed</li>
+</ul>
+<p>Select any text and press the comment button to start a thread.</p>
+`
+
+// Suggestions are plain marked-up spans, so a document can arrive with review
+// already in progress — the same shape the editor writes when tracking.
+const ins = (id: string, author: string, text: string) =>
+  `<span data-suggestion="insertion" data-suggestion-id="${id}" data-suggestion-author="${author}" data-suggestion-created="1789637400000">${text}</span>`
+const del = (id: string, author: string, text: string) =>
+  `<span data-suggestion="deletion" data-suggestion-id="${id}" data-suggestion-author="${author}" data-suggestion-created="1789654200000">${text}</span>`
+
+export const TRACK_CONTENT = `
+<h2>Services agreement — clause 4</h2>
+<p><strong>4.1 Payment.</strong> The Client pays each invoice within ${del('s-1', 'Dana (Legal)', 'sixty (60)')}${ins('s-2', 'Dana (Legal)', 'thirty (30)')} days of receipt.</p>
+<p><strong>4.2 Late fees.</strong> Overdue amounts accrue interest at 1.5% per month${ins('s-3', 'Sam (Finance)', ', capped at 10% of the invoice total')}.</p>
+<p><strong>4.3 Disputes.</strong> The Client raises any disputed amount in writing ${del('s-4', 'Sam (Finance)', 'as soon as reasonably practicable')}${ins('s-5', 'Sam (Finance)', 'within ten business days')}.</p>
+<p>Tracking is on — type anywhere and your edits become suggestions too.</p>
+`
+
+export const MENTION_MESSAGES: { author: string; html: string }[] = [
+  {
+    author: 'Priya',
+    html: '<p>Design review moved to Thursday. <span data-mention="marcus" data-label="Marcus" data-kind="user">@Marcus</span> can you bring the new onboarding flows?</p>',
+  },
+  {
+    author: 'Marcus',
+    html: '<p>Will do. Specs are in <span data-mention="onboarding-v2" data-label="Onboarding v2" data-kind="page">@Onboarding v2</span>.</p>',
+  },
+]
+
+export const MINIMAL_CONTENT = `
+<p>This editor loads five extensions: paragraphs, <strong>bold</strong>, <em>italic</em>, <a href="https://richkit.dev">links</a> and undo history. Nothing else.</p>
+<p>There is no toolbar. Select a few words and a small menu appears, or use ⌘B, ⌘I and ⌘Z.</p>
+`
+
+export const FIND_CONTENT = `
+<h2>Style guide — product copy</h2>
+<p>Write for the customer, not for the team. The customer should finish a sentence knowing what to do next, and the customer should never need to know how the product works inside.</p>
+<p>Use the product name sparingly. When the customer is already inside the product, "the dashboard" reads better than the full name.</p>
+<h3>Buttons</h3>
+<p>Start buttons with a verb: Save, Send, Invite. A button tells the customer what happens when they press it, so avoid vague labels like OK or Submit.</p>
+<h3>Errors</h3>
+<p>Say what went wrong and what the customer can do about it. Never blame the customer for an error the product could have prevented.</p>
+<p>Try it: search for <strong>customer</strong> and replace it with <strong>reader</strong>.</p>
+`
+
+export const HTML_CONTENT = `<h2>Product update</h2>
+<p>The editor writes <strong>clean, semantic HTML</strong> — no inline styles unless you ask for them.</p>
+<ul>
+<li><p>Headings stay headings</p></li>
+<li><p>Lists stay lists</p></li>
+</ul>
+<blockquote><p>Paste HTML on the right and watch it render on the left.</p></blockquote>`
+
+export const QUESTION_STEM = `
+<p><strong>Question 3.</strong> A car accelerates uniformly from rest. The table shows its velocity <span data-math="v"></span> at time <span data-math="t"></span>.</p>
+<table>
+  <tr><th><p>Time <span data-math="t"></span> (s)</p></th><th><p>0</p></th><th><p>2</p></th><th><p>4</p></th><th><p>6</p></th></tr>
+  <tr><td><p>Velocity <span data-math="v"></span> (m/s)</p></td><td><p>0</p></td><td><p>6</p></td><td><p>12</p></td><td><p>18</p></td></tr>
+</table>
+<p>Which of these gives the car’s acceleration <span data-math="a"></span>?</p>
+<div data-math-block="a = \\frac{v_f - v_i}{t_f - t_i}"></div>
+`
+
+export const QUESTION_OPTIONS = [
+  '<p><span data-math="a = \\frac{\\Delta v}{\\Delta t} = 3\\ \\text{m/s}^2"></span></p>',
+  '<p><span data-math="a = v \\cdot t = 108\\ \\text{m/s}^2"></span></p>',
+  '<p>v<sub>f</sub> − v<sub>i</sub> = 18 m/s</p>',
+  '<p><span data-math="a = \\sqrt{v^2 + t^2}"></span></p>',
+]
