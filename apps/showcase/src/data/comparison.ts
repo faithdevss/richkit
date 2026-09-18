@@ -211,27 +211,27 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
   },
   {
     feature: 'Cost of the full feature set',
-    detail: 'Everything above, for one product, per month. List price, before volume.',
+    detail: 'Everything above, for one product, per year. List price, before volume.',
     cells: [
       {
         state: 'open',
-        label: '$8.25 / mo',
-        note: '$99 / year flat, billed once. Unlimited developers, unlimited products, every package — no per-seat charge and no usage metering. Free for noncommercial use.',
+        label: '$99 / yr',
+        note: '$99 / year flat (about $8.25 a month), billed once. Unlimited developers, unlimited products, every package — no per-seat charge and no usage metering. Free for noncommercial use.',
       },
       {
         state: 'paid',
-        label: '$59 – $1,199 / mo',
-        note: '$49 – $999 on annual billing, plus $49 / dev / mo past the seats included.',
+        label: '$588 – $11,988 / yr',
+        note: '$49 – $999 / mo on annual billing ($59 – $1,199 billed monthly), plus $49 / dev / mo past the seats included.',
       },
       {
         state: 'paid',
-        label: 'from ~$700 / mo',
-        note: 'Professional $319 plus the Collaboration add-on $249 and AI from $133. 20,000 editor loads included, then $30 per 1,000.',
+        label: 'from ~$8,400 / yr',
+        note: 'Per month: Professional $319 plus the Collaboration add-on $249 and AI from $133. 20,000 editor loads included, then $30 per 1,000.',
       },
       {
         state: 'paid',
-        label: 'from ~$514 / mo',
-        note: 'Professional $145 plus Word import $39, Word export $39, Revision History $79, Suggested Edits $79 and AI from $133. 20,000 editor loads included, then $40 per 1,000.',
+        label: 'from ~$6,168 / yr',
+        note: 'Per month: Professional $145 plus Word import $39, Word export $39, Revision History $79, Suggested Edits $79 and AI from $133. 20,000 editor loads included, then $40 per 1,000.',
       },
     ],
   },

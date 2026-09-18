@@ -242,10 +242,10 @@ export function Pricing() {
 
         <div className="price-compare">
           {[
-            { name: 'RichKit', cost: '$8.25 / mo', sub: '$99 a year, flat', win: true },
-            { name: 'Tiptap', cost: '$59 – $1,199 / mo', sub: 'plus $49 / dev past the seats' },
-            { name: 'CKEditor 5', cost: 'from ~$700 / mo', sub: 'plus usage past 20,000 loads' },
-            { name: 'TinyMCE', cost: 'from ~$514 / mo', sub: 'plus usage past 20,000 loads' },
+            { name: 'RichKit', cost: '$99 / yr', sub: 'flat — about $8.25 a month', win: true },
+            { name: 'Tiptap', cost: '$588 – $11,988 / yr', sub: 'plus $588 / dev past the seats' },
+            { name: 'CKEditor 5', cost: 'from ~$8,400 / yr', sub: 'plus usage past 20,000 loads' },
+            { name: 'TinyMCE', cost: 'from ~$6,168 / yr', sub: 'plus usage past 20,000 loads' },
           ].map((r) => (
             <div className={`price-compare-row${r.win ? ' is-win' : ''}`} key={r.name}>
               <b>{r.name}</b>
