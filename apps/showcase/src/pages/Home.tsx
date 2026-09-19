@@ -78,7 +78,7 @@ const FEATURES: { id: string; icon: IconName; tag: string; title: string; body: 
   },
   {
     id: 'documents',
-    icon: 'book',
+    icon: 'fileText',
     tag: 'Included',
     title: 'Documents',
     body: 'Page breaks, word count and paginated DOCX layout — the primitives real document tools depend on, not a demo approximation.',
@@ -186,11 +186,11 @@ export function Home() {
           </p>
           <div className="hero-actions">
             <a href="#examples" className="btn-primary">
-              <Icon name="book" size={17} />
+              <Icon name="code" size={17} />
               Explore live examples
             </a>
             <Link to="/docs/installation" className="btn-secondary">
-              <Icon name="docs" size={17} />
+              <Icon name="bookOpen" size={17} />
               Read the docs
             </Link>
           </div>
@@ -402,7 +402,7 @@ export function Home() {
           </p>
           <div className="cta-actions">
             <Link to="/docs/installation" className="btn-light">
-              <Icon name="type" size={17} />
+              <Icon name="flag" size={17} />
               Get started
             </Link>
             <Link to="/pricing" className="btn-secondary">

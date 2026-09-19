@@ -3,20 +3,41 @@
  * so they sit on one optical weight next to the nav and card type.
  */
 export const ICON_PATHS = {
-  platform: ['M4 6h16', 'M8 12h12', 'M12 18h8'],
-  book: [
-    'M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z',
-    'M8 3v18',
-    'M16 3v18',
+  // navigation — each glyph names what the link leads to
+  bookOpen: [
+    'M12 7v14',
+    'M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z',
   ],
-  compare: [
-    'M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
-    'M3 10h18',
-    'M3 16h18',
-    'M9 4v16',
-    'M15 4v16',
+  layout: [
+    'M4 3h16a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z',
+    'M4 14h7a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1z',
+    'M17 14h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1z',
   ],
-  docs: ['M14 4H9a4 4 0 0 0 0 8h5', 'M14 4v16', 'M18 4v16'],
+  code: ['m18 16 4-4-4-4', 'm6 8-4 4 4 4', 'm14.5 4-5 16'],
+  compare: ['M8 3 4 7l4 4', 'M4 7h16', 'm16 21 4-4-4-4', 'M20 17H4'],
+  price: [
+    'M3 3.5h7.6a2 2 0 0 1 1.4.6l8 8a2 2 0 0 1 0 2.8l-5.1 5.1a2 2 0 0 1-2.8 0l-8-8a2 2 0 0 1-.6-1.4z',
+    'M7.2 7.2h.01',
+  ],
+  flag: ['M4 22V15', 'M4 15V4s1.5-1 4-1 4.5 2 8 2 4-1 4-1v11s-1.5 1-4 1-4.5-2-8-2-4 1-4 1z'],
+  fileCode: [
+    'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
+    'M14 3v5h5',
+    'm10 12.5-2 2 2 2',
+    'm14 16.5 2-2-2-2',
+  ],
+  briefcase: [
+    'M4 7h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z',
+    'M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2',
+    'M2 13h20',
+  ],
+  // feature cards
+  fileText: [
+    'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
+    'M14 3v5h5',
+    'M9 13h6',
+    'M9 17h6',
+  ],
   plus: ['M12 5v14', 'M5 12h14'],
   type: ['M5 7V4.5h14V7', 'M12 4.5v15', 'M9 19.5h6'],
   sparkle: [
@@ -36,10 +57,6 @@ export const ICON_PATHS = {
     'M20.5 12v3a3 3 0 0 1-3 3h-14',
   ],
   comment: ['M21 12a8 8 0 0 1-8 8H7l-4 3v-9a8 8 0 0 1 8-8h2a8 8 0 0 1 8 6z'],
-  price: [
-    'M3 3.5h7.6a2 2 0 0 1 1.4.6l8 8a2 2 0 0 1 0 2.8l-5.1 5.1a2 2 0 0 1-2.8 0l-8-8a2 2 0 0 1-.6-1.4z',
-    'M7.2 7.2h.01',
-  ],
 } as const
 
 export type IconName = keyof typeof ICON_PATHS

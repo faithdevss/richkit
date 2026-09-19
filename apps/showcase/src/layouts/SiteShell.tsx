@@ -9,9 +9,9 @@ import { GitHubIcon, Icon, type IconName } from '../components/SiteIcons'
 const GITHUB = 'https://github.com/faithdevss/richkit'
 
 const NAV: { label: string; to: string; icon: IconName }[] = [
-  { label: 'Docs', to: '/docs', icon: 'docs' },
-  { label: 'Templates', to: '/templates', icon: 'book' },
-  { label: 'Examples', to: '/examples', icon: 'type' },
+  { label: 'Docs', to: '/docs', icon: 'bookOpen' },
+  { label: 'Templates', to: '/templates', icon: 'layout' },
+  { label: 'Examples', to: '/examples', icon: 'code' },
   { label: 'Compare', to: '/docs/comparison', icon: 'compare' },
   { label: 'Pricing', to: '/pricing', icon: 'price' },
 ]

@@ -150,7 +150,7 @@ export function Pricing() {
               ))}
             </ul>
             <Link to="/docs/installation" className="btn-secondary price-cta">
-              <Icon name="docs" size={17} />
+              <Icon name="code" size={17} />
               Start building
             </Link>
           </div>

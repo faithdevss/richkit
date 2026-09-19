@@ -112,10 +112,11 @@ body {
   place-items: center;
   width: 28px;
   height: 28px;
-  border-radius: 9px;
-  background: var(--site-grad);
+  /* 60/256 of the favicon's corner radius, at 28px */
+  border-radius: 7px;
+  background: linear-gradient(135deg, #9b7bff, #4f46e5);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(124, 92, 255, 0.45);
+  box-shadow: 0 6px 18px rgba(99, 76, 240, 0.45);
 }
 .site-links {
   display: flex;
@@ -658,13 +659,23 @@ body {
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
+/* sits in the frame bar's empty right end, clear of the editor below —
+   floating over the demo it covered its text on every tab */
 .stage-actions {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
+  top: 5px;
+  right: 10px;
   z-index: 200;
   display: flex;
-  gap: 8px;
+  gap: 6px;
+}
+.stage-actions .code-icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+.stage-wrap > .frame-bar {
+  padding-right: 88px;
 }
 .code-icon-btn {
   display: inline-grid;
@@ -1598,7 +1609,10 @@ button.tpl-card {
   }
 }
 @media (max-width: 860px) {
-  .docs-shell {
+  /* :has() out-ranks the plain class, so the comparison page's two-column
+     override has to be collapsed by name too */
+  .docs-shell,
+  .docs-shell:has(.cmp-page) {
     grid-template-columns: 1fr;
     gap: 0;
   }
@@ -1933,10 +1947,6 @@ button.tpl-card {
   .demo-frame {
     min-height: 460px;
     max-height: 78vh;
-  }
-  .stage-actions {
-    bottom: 10px;
-    left: 10px;
   }
 
   .docs-prose h1 {

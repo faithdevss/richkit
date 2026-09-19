@@ -9,7 +9,7 @@ import { mdxComponents } from '../mdx-components'
 const NAV: { head: string; icon: IconName; items: { label: string; to: string }[] }[] = [
   {
     head: 'Getting started',
-    icon: 'type',
+    icon: 'flag',
     items: [
       { label: 'Introduction', to: '/docs/introduction' },
       { label: 'Installation', to: '/docs/installation' },
@@ -20,7 +20,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
   },
   {
     head: 'Reference',
-    icon: 'docs',
+    icon: 'fileCode',
     items: [
       { label: 'Editor (core)', to: '/docs/api/editor' },
       { label: 'StarterKit & options', to: '/docs/api/starter-kit' },
@@ -32,7 +32,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
   },
   {
     head: 'Use cases',
-    icon: 'platform',
+    icon: 'briefcase',
     items: [
       { label: 'Agent workflows', to: '/docs/usecases/agent-workflows' },
       { label: 'Docx editing', to: '/docs/usecases/docx-editing' },
@@ -43,7 +43,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
   },
   {
     head: 'Examples',
-    icon: 'book',
+    icon: 'code',
     items: EXAMPLES.map((e) => ({ label: e.title, to: `/docs/examples/${e.id}` })),
   },
 ]
@@ -73,7 +73,7 @@ export function DocsLayout() {
           aria-expanded={navOpen}
           onClick={() => setNavOpen((v) => !v)}
         >
-          <Icon name="docs" size={15} />
+          <Icon name="bookOpen" size={15} />
           Browse docs
           <svg
             className="chev"
