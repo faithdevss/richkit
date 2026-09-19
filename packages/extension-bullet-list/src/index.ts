@@ -1,4 +1,4 @@
-import { Node, wrapInList, type Command } from '@richkitjs/core'
+import { Node, toggleList, type Command } from '@richkitjs/core'
 
 export const BULLET_LIST_STYLES = ['disc', 'circle', 'square'] as const
 export type BulletListStyle = (typeof BULLET_LIST_STYLES)[number]
@@ -26,7 +26,7 @@ function setBulletListStyle(style: BulletListStyle | null): Command {
     }
     // Not in a list yet: wrap first, then re-run against the state the wrap
     // produced so one click both creates the list and styles it.
-    if (!wrapInList('bulletList')(props)) return false
+    if (!toggleList('bulletList')(props)) return false
     const { view } = props
     if (!view) return true
     return setBulletListStyle(style)({
@@ -62,13 +62,13 @@ export const BulletList = Node.create({
       ? ['ul', { style: `list-style-type: ${node.attrs.listStyle as string}` }, 0]
       : ['ul', 0],
   addCommands: () => ({
-    toggleBulletList: () => wrapInList('bulletList'),
+    toggleBulletList: () => toggleList('bulletList'),
     setBulletListStyle: (...args: unknown[]): Command => {
       const [style] = args as [BulletListStyle | null]
       return setBulletListStyle(style)
     },
   }),
   addKeyboardShortcuts: () => ({
-    'Mod-Shift-8': wrapInList('bulletList'),
+    'Mod-Shift-8': toggleList('bulletList'),
   }),
 })

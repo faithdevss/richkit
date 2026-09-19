@@ -16,6 +16,7 @@ export {
   wrapIn,
   lift,
   wrapInList,
+  toggleList,
   toggleWrap,
   toggleBlockType,
 } from './commands/blocks'

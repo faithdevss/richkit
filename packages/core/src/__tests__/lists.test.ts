@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { wrapInList } from '../commands/blocks'
+import { toggleList } from '../commands/blocks'
 import { Editor } from '../editor'
 import { Node } from '../extension/node'
 
@@ -23,7 +23,7 @@ const BulletList = Node.create({
   content: 'listItem+',
   parseHTML: () => [{ tag: 'ul' }],
   renderHTML: () => ['ul', 0],
-  addCommands: () => ({ toggleBulletList: () => wrapInList('bulletList') }),
+  addCommands: () => ({ toggleBulletList: () => toggleList('bulletList') }),
 })
 const OrderedList = Node.create({
   name: 'orderedList',
@@ -32,7 +32,7 @@ const OrderedList = Node.create({
   attrs: { start: { default: 1 } },
   parseHTML: () => [{ tag: 'ol' }],
   renderHTML: () => ['ol', 0],
-  addCommands: () => ({ toggleOrderedList: () => wrapInList('orderedList') }),
+  addCommands: () => ({ toggleOrderedList: () => toggleList('orderedList') }),
 })
 
 describe('lists', () => {
@@ -65,6 +65,29 @@ describe('lists', () => {
     expect(editor.getHTML()).toContain('<ul>')
     expect(editor.getText()).toContain('a')
     expect(editor.getText()).toContain('b')
+    editor.destroy()
+  })
+
+  it('unwraps when toggling the same list type', () => {
+    const editor = new Editor({
+      extensions: [Paragraph, ListItem, BulletList, OrderedList],
+      content: '<p>one</p>',
+    })
+    editor.commands.toggleOrderedList!()
+    editor.commands.toggleOrderedList!()
+    expect(editor.getHTML()).toBe('<p>one</p>')
+    editor.destroy()
+  })
+
+  it('converts between ordered and bullet lists in place', () => {
+    const editor = new Editor({
+      extensions: [Paragraph, ListItem, BulletList, OrderedList],
+      content: '<ol><li><p>a</p></li><li><p>b</p></li></ol>',
+    })
+    editor.commands.toggleBulletList!()
+    expect(editor.getHTML()).toBe('<ul><li><p>a</p></li><li><p>b</p></li></ul>')
+    editor.commands.toggleOrderedList!()
+    expect(editor.getHTML()).toBe('<ol><li><p>a</p></li><li><p>b</p></li></ol>')
     editor.destroy()
   })
 })

@@ -1,4 +1,4 @@
-import { Node, wrapInList, type Command } from '@richkitjs/core'
+import { Node, toggleList, type Command } from '@richkitjs/core'
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
 import { TaskItemNodeView } from './nodeView'
 
@@ -17,10 +17,10 @@ export const TaskList = Node.create({
   parseHTML: () => [{ tag: 'ul[data-type="task-list"]' }],
   renderHTML: () => ['ul', { 'data-type': 'task-list' }, 0],
   addCommands: () => ({
-    toggleTaskList: () => wrapInList('taskList'),
+    toggleTaskList: () => toggleList('taskList'),
   }),
   addKeyboardShortcuts: () => ({
-    'Mod-Shift-9': wrapInList('taskList'),
+    'Mod-Shift-9': toggleList('taskList'),
   }),
 })
 

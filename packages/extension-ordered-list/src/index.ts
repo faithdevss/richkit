@@ -1,4 +1,4 @@
-import { Node, wrapInList, type Command } from '@richkitjs/core'
+import { Node, toggleList, type Command } from '@richkitjs/core'
 
 export const ORDERED_LIST_STYLES = [
   'decimal',
@@ -33,7 +33,7 @@ function setOrderedListStyle(style: OrderedListStyle | null): Command {
     }
     // Not in a list yet: wrap first, then re-run against the state the wrap
     // produced so one click both creates the list and styles it.
-    if (!wrapInList('orderedList')(props)) return false
+    if (!toggleList('orderedList')(props)) return false
     const { view } = props
     if (!view) return true
     return setOrderedListStyle(style)({
@@ -76,13 +76,13 @@ export const OrderedList = Node.create({
     return Object.keys(attrs).length ? ['ol', attrs, 0] : ['ol', 0]
   },
   addCommands: () => ({
-    toggleOrderedList: () => wrapInList('orderedList'),
+    toggleOrderedList: () => toggleList('orderedList'),
     setOrderedListStyle: (...args: unknown[]): Command => {
       const [style] = args as [OrderedListStyle | null]
       return setOrderedListStyle(style)
     },
   }),
   addKeyboardShortcuts: () => ({
-    'Mod-Shift-7': wrapInList('orderedList'),
+    'Mod-Shift-7': toggleList('orderedList'),
   }),
 })
