@@ -108,8 +108,47 @@ function createHandles(view: EditorView, overlay: HTMLElement, table: HTMLTableE
   return { table, corner, rowHandles }
 }
 
+interface Box {
+  left: number
+  top: number
+  right: number
+  bottom: number
+}
+
+/**
+ * The part of the viewport where `el` can actually be seen: the viewport
+ * intersected with every clipping ancestor. The handles live in a fixed
+ * overlay on <body>, so nothing clips them for us — without this they float
+ * over the toolbar, or past the frame, once the table scrolls out of view.
+ */
+function visibleArea(el: HTMLElement): Box {
+  const box: Box = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }
+  for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+    const style = getComputedStyle(p)
+    if (style.overflowX === 'visible' && style.overflowY === 'visible') continue
+    const r = p.getBoundingClientRect()
+    box.left = Math.max(box.left, r.left)
+    box.top = Math.max(box.top, r.top)
+    box.right = Math.min(box.right, r.right)
+    box.bottom = Math.min(box.bottom, r.bottom)
+  }
+  return box
+}
+
+const SLACK = 2
+
 function positionHandles(set: HandleSet, table: HTMLTableElement) {
   const rect = table.getBoundingClientRect()
+  const area = visibleArea(table)
+  const shown = rect.width > 0 && rect.height > 0
+
+  const cornerVisible =
+    shown &&
+    rect.right >= area.left - SLACK &&
+    rect.right <= area.right + SLACK &&
+    rect.bottom >= area.top - SLACK &&
+    rect.bottom <= area.bottom + SLACK
+  set.corner.style.display = cornerVisible ? '' : 'none'
   set.corner.style.left = `${rect.right - 8}px`
   set.corner.style.top = `${rect.bottom - 8}px`
 
@@ -121,9 +160,13 @@ function positionHandles(set: HandleSet, table: HTMLTableElement) {
     const h = set.rowHandles[i]
     if (!h) return
     const r = row.getBoundingClientRect()
-    h.style.left = `${rect.left}px`
+    const left = Math.max(rect.left, area.left)
+    const right = Math.min(rect.right, area.right)
+    const visible = shown && right > left && r.bottom >= area.top && r.bottom <= area.bottom
+    h.style.display = visible ? '' : 'none'
+    h.style.left = `${left}px`
     h.style.top = `${r.bottom - 3}px`
-    h.style.width = `${rect.width}px`
+    h.style.width = `${Math.max(0, right - left)}px`
     h.style.height = '6px'
   })
 }
