@@ -1,4 +1,4 @@
-import { Node, setBlockType, type Command } from '@richkitjs/core'
+import { Node, setBlockType, toggleBlockType, type Command } from '@richkitjs/core'
 
 export interface HeadingOptions extends Record<string, unknown> {
   levels: number[]
@@ -37,7 +37,7 @@ export const Heading = Node.create<HeadingOptions>({
   addCommands: () => ({
     setHeading: (...args: unknown[]): Command => {
       const [opts] = args as [{ level: number }]
-      return setBlockType('heading', { level: opts.level })
+      return toggleBlockType('heading', 'paragraph', { level: opts.level })
     },
   }),
   addKeyboardShortcuts: (ctx) => {

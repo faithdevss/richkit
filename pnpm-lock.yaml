@@ -1523,6 +1523,9 @@ importers:
       '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
+      '@richkitjs/starter-kit':
+        specifier: workspace:*
+        version: link:../../packages/starter-kit
     devDependencies:
       jsdom:
         specifier: ^30.1.0

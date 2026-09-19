@@ -43,7 +43,8 @@
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-underline": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",
-    "@richkitjs/markdown": "workspace:*"
+    "@richkitjs/markdown": "workspace:*",
+    "@richkitjs/starter-kit": "workspace:*"
   },
   "devDependencies": {
     "jsdom": "^30.1.0",

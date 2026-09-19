@@ -21,13 +21,28 @@ function setTextAlignCmd(align: TextAlign, types: string[]): Command {
   }
 }
 
+/** Like setTextAlignCmd, but clears the alignment when every block already has it. */
+function toggleTextAlignCmd(align: TextAlign, types: string[]): Command {
+  return (props) => {
+    const { from, to } = props.state.selection
+    let all = align !== null
+    let any = false
+    props.state.doc.nodesBetween(from, to, (node) => {
+      if (!types.includes(node.type.name)) return
+      any = true
+      if (node.attrs.textAlign !== align) all = false
+    })
+    return setTextAlignCmd(any && all ? null : align, types)(props)
+  }
+}
+
 export const TextAlign = Extension.create<TextAlignOptions>({
   name: 'textAlign',
   addOptions: () => ({ types: ['paragraph', 'heading'] }),
   addCommands: (ctx) => ({
     setTextAlign: (...args: unknown[]): Command => {
       const [align] = args as [TextAlign]
-      return setTextAlignCmd(align, ctx.options.types)
+      return toggleTextAlignCmd(align, ctx.options.types)
     },
     unsetTextAlign: (): Command => setTextAlignCmd(null, ctx.options.types),
   }),
