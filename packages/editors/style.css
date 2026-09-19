@@ -2839,6 +2839,14 @@ kbd {
   background: var(--surface);
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.3);
   z-index: 30;
+  /* never wider than the image: on a narrow frame the buttons scroll */
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+/* display: flex above would otherwise override the hidden attribute */
+.editor .richkit-image-toolbar[hidden] {
+  display: none;
 }
 .editor .richkit-image-btn {
   border: 0;
@@ -3483,8 +3491,15 @@ kbd {
 }
 
 @media (max-width: 720px) {
+  /* the editor already carries the handle gutter — the scroller adds none */
   .demo-notion .demo-scroll {
-    padding-left: 56px;
+    padding: 28px 12px 56px 4px;
+  }
+  .demo-page-notion .editor .ProseMirror {
+    padding: 0 4px 0 56px;
+  }
+  .demo-page-notion .editor h1:first-child {
+    font-size: 1.9rem;
   }
   .notion-rail {
     display: none;

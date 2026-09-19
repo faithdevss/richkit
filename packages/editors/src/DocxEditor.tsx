@@ -109,6 +109,10 @@ export const DocxEditor = forwardRef(function DocxEditor(
       {editor && (
         <Toolbar editor={editor} className="toolbar demo-toolbar">
           <ToolbarGroup>
+            <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
+            <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
+          </ToolbarGroup>
+          <ToolbarGroup>
             <button
               type="button"
               className="tb-btn"
