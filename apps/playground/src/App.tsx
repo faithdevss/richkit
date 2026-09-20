@@ -18,7 +18,8 @@ import {
   useEditor,
 } from '@richkitjs/react'
 import { importDocxFile } from '@richkitjs/docx'
-import { getTrackState } from '@richkitjs/extension-track-changes'
+import { Comment } from '@richkitjs/extension-comments'
+import { getTrackState, TrackChangesKit } from '@richkitjs/extension-track-changes'
 import { getWordCount } from '@richkitjs/extension-word-count'
 import { setMarkdownContent } from '@richkitjs/markdown'
 import { AI, type AIComplete } from '@richkitjs/extension-ai'
@@ -72,7 +73,12 @@ export function App() {
   const [composerRange, setComposerRange] = useState<{ from: number; to: number } | null>(null)
 
   const editor = useEditor({
-    extensions: [...StarterKit, AI.configure({ complete: demoComplete })],
+    extensions: [
+      ...StarterKit,
+      Comment,
+      ...TrackChangesKit,
+      AI.configure({ complete: demoComplete }),
+    ],
     content: typeof window !== 'undefined' ? localStorage.getItem(DRAFT_KEY) || INITIAL : INITIAL,
     onUpdate: ({ editor }) => {
       const next = editor.getHTML()

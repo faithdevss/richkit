@@ -1,10 +1,8 @@
 import { Blockquote } from '@richkitjs/extension-blockquote'
 import { Bookmark } from '@richkitjs/extension-bookmark'
 import { Callout } from '@richkitjs/extension-callout'
-import { Comment } from '@richkitjs/extension-comments'
 import { DragHandle } from '@richkitjs/extension-drag-handle'
 import { FindReplace } from '@richkitjs/extension-find-replace'
-import { TrackChangesKit } from '@richkitjs/extension-track-changes'
 import { Bold } from '@richkitjs/extension-bold'
 import { BulletList } from '@richkitjs/extension-bullet-list'
 import { CaseChange } from '@richkitjs/extension-case-change'
@@ -81,8 +79,6 @@ export const StarterKit = [
   Typography,
   MarkdownShortcuts,
   FindReplace,
-  Comment,
-  ...TrackChangesKit,
   PasteHandler,
   SlashCommands,
   DragHandle,
@@ -93,10 +89,8 @@ export {
   Blockquote,
   Bookmark,
   Callout,
-  Comment,
   DragHandle,
   FindReplace,
-  TrackChangesKit,
   Bold,
   BulletList,
   CaseChange,

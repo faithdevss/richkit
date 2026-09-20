@@ -2,7 +2,7 @@
   "name": "@richkitjs/react",
   "version": "0.2.0",
   "description": "React 18/19 bindings for RichKit: useEditor hook, EditorContent, ready-made DefaultToolbar, BubbleMenu, table/link/image/color menus and EditorProvider.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-text-style",
   "version": "0.1.0",
   "description": "Text color, font family and font size for RichKit, with set and unset commands for each.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

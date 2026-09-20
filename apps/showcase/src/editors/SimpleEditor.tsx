@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SimpleEditor as Simple } from '@richkitjs/editors'
+import { SimpleEditor as Simple } from '@richkitjs/editors-pro'
 import { SIMPLE_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

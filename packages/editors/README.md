@@ -3,22 +3,18 @@
 Ready-made React editors for [RichKit](https://faithdevss.github.io/richkit/). Each one works like
 a form input: `value` in, `onChange` out.
 
-| Component            | What it is                                                         |
-| -------------------- | ------------------------------------------------------------------ |
-| `NotionEditor`       | Block page: drag handle, `/` commands, `@` mentions, outline, AI   |
-| `SimpleEditor`       | Full StarterKit behind a one-row toolbar                           |
-| `MinimalEditor`      | Paragraphs, bold, italic, links; bubble menu only                  |
-| `ClassicEditor`      | Labelled form field: menubar, toolbar, helper text, error state    |
-| `QuestionEditor`     | Multiple-choice question with formulas; value is a `QuestionValue` |
-| `MarkdownEditor`     | Rich editing beside live Markdown source; value is Markdown        |
-| `HtmlEditor`         | Rich editing beside live HTML source                               |
-| `DocxEditor`         | Word-processor page with .docx import/export, zoom and print       |
-| `CommentsEditor`     | Anchored comment threads with a sidebar                            |
-| `TrackChangesEditor` | Suggesting mode with accept/reject                                 |
-| `MentionsEditor`     | Chat composer: `@` mentions, Enter sends                           |
-| `CommentBoxEditor`   | Reply box with a character limit                                   |
-| `FindReplaceEditor`  | Editor under an always-open find and replace bar                   |
-| `AgentEditor`        | Document with an agent dock that drafts sections                   |
+| Component           | What it is                                                  |
+| ------------------- | ----------------------------------------------------------- |
+| `MinimalEditor`     | Paragraphs, bold, italic, links; bubble menu only           |
+| `MarkdownEditor`    | Rich editing beside live Markdown source; value is Markdown |
+| `HtmlEditor`        | Rich editing beside live HTML source                        |
+| `MentionsEditor`    | Chat composer: `@` mentions, Enter sends                    |
+| `CommentBoxEditor`  | Reply box with a character limit                            |
+| `FindReplaceEditor` | Editor under an always-open find and replace bar            |
+
+MIT, free for any use. The Simple, Notion, Classic, Question, Comments, Track changes, DOCX and Agent
+editors are [RichKit Pro](https://faithdevss.github.io/richkit/pricing), in
+[`@richkitjs/editors-pro`](https://www.npmjs.com/package/@richkitjs/editors-pro).
 
 ## Install
 
@@ -40,11 +36,11 @@ import { NotificationsHost } from '@richkitjs/editors'
 
 ```tsx
 import { useState } from 'react'
-import { NotionEditor } from '@richkitjs/editors'
+import { MinimalEditor } from '@richkitjs/editors'
 
 function PostForm() {
   const [body, setBody] = useState('<p>Hello</p>')
-  return <NotionEditor value={body} onChange={setBody} />
+  return <MinimalEditor value={body} onChange={setBody} />
 }
 ```
 
@@ -61,9 +57,7 @@ caret does not jump.
   name="description"
   control={control}
   rules={{ required: true }}
-  render={({ field, fieldState }) => (
-    <ClassicEditor {...field} label="Description" error={!!fieldState.error} />
-  )}
+  render={({ field, fieldState }) => <MinimalEditor {...field} aria-invalid={!!fieldState.error} />}
 />
 ```
 
@@ -73,7 +67,7 @@ caret does not jump.
 
 ```tsx
 <form action="/posts" method="post">
-  <SimpleEditor name="body" defaultValue="" />
+  <MinimalEditor name="body" defaultValue="" />
   <button>Save</button>
 </form>
 ```
@@ -98,24 +92,9 @@ caret does not jump.
 | `onEditorReady`               | `(editor: Editor) => void`                 | the live editor, for any command                           |
 | `ref`                         | `EditorHandle`                             | `editor`, `focus`, `blur`, `getValue`, `setValue`, `clear` |
 
-Each editor also has its own props, for example `NotionEditor`'s `mentions`, `ai`, `header` and
-`footer`, or `DocxEditor`'s `title` and `filename`. All of them are typed and documented in the
-package's type definitions.
-
-### QuestionEditor
-
-Its value is structured. Each text in it is HTML:
-
-```ts
-interface QuestionValue {
-  stem: string
-  options: string[]
-  correct: number
-  points: number
-}
-```
-
-It needs the math styles: `import '@richkitjs/extension-math/style.css'`.
+Each editor also has its own props, for example `MentionsEditor`'s `mentions` or
+`CommentBoxEditor`'s `limit`. All of them are typed and documented in the package's type
+definitions.
 
 ## Build your own
 
@@ -131,3 +110,7 @@ function MyEditor({ value, onChange }: { value: string; onChange: (html: string)
   return <EditorContent editor={editor} />
 }
 ```
+
+## License
+
+[MIT](./LICENSE) — free for any use, commercial or not.

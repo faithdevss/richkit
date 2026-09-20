@@ -651,6 +651,20 @@ body {
   color: #fff;
   box-shadow: 0 6px 16px rgba(96, 88, 255, 0.35);
 }
+.tab-pro {
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 0.6rem;
+  vertical-align: 1px;
+}
+.frame-bar .tag {
+  text-decoration: none;
+}
+.tab.is-active .tab-pro {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
 .stage-wrap {
   position: relative;
   border-radius: 18px;
@@ -1968,7 +1982,7 @@ button.tpl-card {
 }
 .price-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
   align-items: stretch;
 }

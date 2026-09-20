@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import { Extension, Mark, type Command } from '@richkitjs/core'
 import { TextSelection } from 'prosemirror-state'
 import { getSuggestions, newId, trackChangesPlugin, trackKey } from './plugin'
@@ -72,7 +73,10 @@ export const Deletion = Mark.create({
 
 export const TrackChanges = Extension.create({
   name: 'trackChanges',
-  addProseMirrorPlugins: () => [trackChangesPlugin()],
+  addProseMirrorPlugins: () => {
+    requirePro('track-changes')
+    return [trackChangesPlugin()]
+  },
   addCommands: () => ({
     enableTrackChanges: (...args: unknown[]): Command => {
       const [author] = args as [string?]

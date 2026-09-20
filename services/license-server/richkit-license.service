@@ -1,0 +1,33 @@
+[Unit]
+Description=RichKit Pro licence server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=richkit
+Group=richkit
+WorkingDirectory=/opt/richkit-license
+EnvironmentFile=/opt/richkit-license/.env
+ExecStart=/usr/bin/node server.mjs
+Restart=on-failure
+RestartSec=5
+
+# The private signing key is the whole asset here, so the service gets as
+# little of the machine as it can do its job with.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ReadWritePaths=/var/lib/richkit-license
+
+[Install]
+WantedBy=multi-user.target

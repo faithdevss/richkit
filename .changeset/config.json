@@ -2,10 +2,23 @@
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [],
+  "fixed": [
+    [
+      "@richkitjs/license",
+      "@richkitjs/docx",
+      "@richkitjs/extension-track-changes",
+      "@richkitjs/extension-comments",
+      "@richkitjs/extension-ai",
+      "@richkitjs/ai-openai",
+      "@richkitjs/ai-anthropic",
+      "@richkitjs/editors-pro"
+    ]
+  ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["playground"]
+  "ignore": [
+    "playground"
+  ]
 }

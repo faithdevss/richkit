@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-history",
   "version": "0.1.0",
   "description": "Undo and redo for RichKit, with Mod-Z, Mod-Shift-Z and Mod-Y shortcuts and configurable depth and grouping delay.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

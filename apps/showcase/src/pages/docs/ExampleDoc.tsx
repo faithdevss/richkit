@@ -21,7 +21,9 @@ export function ExampleDoc() {
   return (
     <>
       <div className="docs-prose">
-        <h1>{example.title}</h1>
+        <h1>
+          {example.title} {example.pro && <span className="tag is-included">Pro</span>}
+        </h1>
         <p>{example.blurb}</p>
         <p>
           Built on <code>{example.pkg}</code>.{' '}

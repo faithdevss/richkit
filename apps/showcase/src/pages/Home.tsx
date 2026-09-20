@@ -8,31 +8,42 @@ import { TemplateCard } from '../components/TemplateCard'
 import { TEMPLATES } from '../data/templates'
 import { AgentEditor } from '../editors/AgentEditor'
 import { DocxEditor } from '../editors/DocxEditor'
+import { MarkdownEditor } from '../editors/MarkdownEditor'
 import { ClassicEditor } from '../editors/FormFieldEditor'
 import { NotionEditor } from '../editors/NotionEditor'
-import { SimpleEditor } from '../editors/SimpleEditor'
-import agentSource from '../../../../packages/editors/src/AgentEditor.tsx?raw'
-import docxSource from '../../../../packages/editors/src/DocxEditor.tsx?raw'
-import classicSource from '../../../../packages/editors/src/ClassicEditor.tsx?raw'
-import notionSource from '../../../../packages/editors/src/NotionEditor.tsx?raw'
-import simpleSource from '../../../../packages/editors/src/SimpleEditor.tsx?raw'
+import { QuestionEditor } from '../editors/QuestionEditor'
+import agentSource from '../../../../packages/editors-pro/src/AgentEditor.tsx?raw'
+import docxSource from '../../../../packages/editors-pro/src/DocxEditor.tsx?raw'
+import classicSource from '../../../../packages/editors-pro/src/ClassicEditor.tsx?raw'
+import notionSource from '../../../../packages/editors-pro/src/NotionEditor.tsx?raw'
+import questionSource from '../../../../packages/editors-pro/src/QuestionEditor.tsx?raw'
+import markdownSource from '../../../../packages/editors/src/MarkdownEditor.tsx?raw'
 
-type TabId = 'agent' | 'docx' | 'notion' | 'simple' | 'classic'
+type TabId = 'markdown' | 'agent' | 'docx' | 'notion' | 'classic' | 'question'
 
 const SOURCES: Record<TabId, string> = {
+  markdown: markdownSource,
   agent: agentSource,
   docx: docxSource,
   notion: notionSource,
-  simple: simpleSource,
   classic: classicSource,
+  question: questionSource,
 }
 
-const TABS: { id: TabId; label: string; pkg: string }[] = [
-  { id: 'agent', label: 'Agent editor', pkg: '@richkitjs/extension-ai' },
-  { id: 'docx', label: 'Docx editor', pkg: '@richkitjs/docx' },
-  { id: 'notion', label: 'Notion-like editor', pkg: '@richkitjs/extension-slash-commands' },
-  { id: 'simple', label: 'Simple editor', pkg: '@richkitjs/starter-kit' },
-  { id: 'classic', label: 'Classic editor', pkg: '@richkitjs/extension-table' },
+// `pro` marks editors from @richkitjs/editors-pro, which need a licence key in
+// production. The rest are from the free @richkitjs/editors.
+const TABS: { id: TabId; label: string; pkg: string; pro?: boolean }[] = [
+  { id: 'markdown', label: 'Markdown editor', pkg: '@richkitjs/markdown' },
+  { id: 'agent', label: 'Agent editor', pkg: '@richkitjs/extension-ai', pro: true },
+  { id: 'docx', label: 'Docx editor', pkg: '@richkitjs/docx', pro: true },
+  {
+    id: 'notion',
+    label: 'Notion-like editor',
+    pkg: '@richkitjs/extension-slash-commands',
+    pro: true,
+  },
+  { id: 'classic', label: 'Classic editor', pkg: '@richkitjs/extension-table', pro: true },
+  { id: 'question', label: 'Question editor', pkg: '@richkitjs/extension-math', pro: true },
 ]
 
 const TAB_IDS = new Set<string>(TABS.map((t) => t.id))
@@ -256,7 +267,13 @@ export function Home() {
               className={`tab${tab === t.id ? ' is-active' : ''}`}
               onClick={() => selectTab(t.id)}
             >
-              {t.label}
+              {/* Seven tabs only fit one row without the repeated word; the frame bar keeps the full name. */}
+              {t.label.replace(/ editor$/, '')}
+              {t.pro ? (
+                <span className="tag is-included tab-pro">Pro</span>
+              ) : (
+                <span className="tag tab-pro">Free</span>
+              )}
             </button>
           ))}
         </div>
@@ -269,6 +286,11 @@ export function Home() {
               <span />
             </div>
             <span className="frame-title">{active.label}</span>
+            {active.pro && (
+              <Link to="/pricing" className="tag is-included">
+                Pro
+              </Link>
+            )}
             <code className="frame-pkg">{active.pkg}</code>
           </div>
 
@@ -300,11 +322,12 @@ export function Home() {
             </pre>
           ) : (
             <div className="stage">
+              {tab === 'markdown' && <MarkdownEditor />}
               {tab === 'agent' && <AgentEditor />}
               {tab === 'docx' && <DocxEditor />}
               {tab === 'notion' && <NotionEditor />}
-              {tab === 'simple' && <SimpleEditor />}
               {tab === 'classic' && <ClassicEditor />}
+              {tab === 'question' && <QuestionEditor />}
             </div>
           )}
         </div>

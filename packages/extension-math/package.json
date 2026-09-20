@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-math",
   "version": "0.0.0",
   "description": "Math for RichKit: inline and block LaTeX formulas rendered with KaTeX, with $…$ and $$…$$ shortcuts.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -19,7 +19,6 @@
     "dist",
     "style.css",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

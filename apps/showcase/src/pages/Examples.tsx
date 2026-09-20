@@ -49,6 +49,7 @@ function ExampleStage({ example }: { example: Example }) {
             <span />
           </div>
           <span className="frame-title">{example.title}</span>
+          {example.pro && <span className="tag is-included">Pro</span>}
           <code className="frame-pkg">{example.pkg}</code>
         </div>
         <div className="stage-actions">

@@ -47,6 +47,9 @@ importers:
       '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../../packages/extension-ai
+      '@richkitjs/extension-comments':
+        specifier: workspace:*
+        version: link:../../packages/extension-comments
       '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../../packages/extension-track-changes
@@ -87,9 +90,6 @@ importers:
 
   apps/showcase:
     dependencies:
-      '@paddle/paddle-js':
-        specifier: ^1.6.5
-        version: 1.6.5
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -99,6 +99,9 @@ importers:
       '@richkitjs/editors':
         specifier: workspace:*
         version: link:../../packages/editors
+      '@richkitjs/editors-pro':
+        specifier: workspace:*
+        version: link:../../packages/editors-pro
       '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../../packages/extension-ai
@@ -126,6 +129,9 @@ importers:
       '@richkitjs/extension-word-count':
         specifier: workspace:*
         version: link:../../packages/extension-word-count
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../../packages/license
       '@richkitjs/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
@@ -178,6 +184,9 @@ importers:
       '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../extension-ai
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
     devDependencies:
       jsdom:
         specifier: ^30.1.0
@@ -197,6 +206,9 @@ importers:
       '@richkitjs/extension-ai':
         specifier: workspace:*
         version: link:../extension-ai
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
     devDependencies:
       jsdom:
         specifier: ^30.1.0
@@ -271,6 +283,9 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
       docx:
         specifier: ^9.7.1
         version: 9.7.1
@@ -290,12 +305,6 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
-      '@richkitjs/docx':
-        specifier: workspace:*
-        version: link:../docx
-      '@richkitjs/extension-ai':
-        specifier: workspace:*
-        version: link:../extension-ai
       '@richkitjs/extension-find-replace':
         specifier: workspace:*
         version: link:../extension-find-replace
@@ -346,6 +355,73 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(@types/node@26.6.1)(jsdom@30.1.0)(vite@8.3.0(@types/node@26.6.1)(esbuild@0.27.7)(yaml@2.9.1))
 
+  packages/editors-pro:
+    dependencies:
+      '@richkitjs/core':
+        specifier: workspace:*
+        version: link:../core
+      '@richkitjs/docx':
+        specifier: workspace:*
+        version: link:../docx
+      '@richkitjs/editors':
+        specifier: workspace:*
+        version: link:../editors
+      '@richkitjs/extension-ai':
+        specifier: workspace:*
+        version: link:../extension-ai
+      '@richkitjs/extension-comments':
+        specifier: workspace:*
+        version: link:../extension-comments
+      '@richkitjs/extension-math':
+        specifier: workspace:*
+        version: link:../extension-math
+      '@richkitjs/extension-placeholder':
+        specifier: workspace:*
+        version: link:../extension-placeholder
+      '@richkitjs/extension-track-changes':
+        specifier: workspace:*
+        version: link:../extension-track-changes
+      '@richkitjs/extension-word-count':
+        specifier: workspace:*
+        version: link:../extension-word-count
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
+      '@richkitjs/markdown':
+        specifier: workspace:*
+        version: link:../markdown
+      '@richkitjs/react':
+        specifier: workspace:*
+        version: link:../react
+      '@richkitjs/starter-kit':
+        specifier: workspace:*
+        version: link:../starter-kit
+    devDependencies:
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.3.0)
+      jsdom:
+        specifier: ^30.1.0
+        version: 30.1.0
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.28)(typescript@6.0.3)(yaml@2.9.1)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@26.6.1)(jsdom@30.1.0)(vite@8.3.0(@types/node@26.6.1)(esbuild@0.27.7)(yaml@2.9.1))
+
   packages/extension-ai:
     dependencies:
       '@richkitjs/core':
@@ -354,6 +430,9 @@ importers:
       '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
       prosemirror-model:
         specifier: ^1.25.11
         version: 1.25.11
@@ -513,6 +592,9 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
       prosemirror-model:
         specifier: ^1.25.11
         version: 1.25.11
@@ -1070,6 +1152,9 @@ importers:
       '@richkitjs/core':
         specifier: workspace:*
         version: link:../core
+      '@richkitjs/license':
+        specifier: workspace:*
+        version: link:../license
       prosemirror-model:
         specifier: ^1.25.11
         version: 1.25.11
@@ -1150,6 +1235,21 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+
+  packages/license:
+    devDependencies:
+      jsdom:
+        specifier: ^30.1.0
+        version: 30.1.0
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(postcss@8.5.28)(typescript@6.0.3)(yaml@2.9.1)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@26.6.1)(jsdom@30.1.0)(vite@8.3.0(@types/node@26.6.1)(esbuild@0.27.7)(yaml@2.9.1))
 
   packages/markdown:
     dependencies:
@@ -1266,9 +1366,6 @@ importers:
       '@richkitjs/extension-code-block':
         specifier: workspace:*
         version: link:../extension-code-block
-      '@richkitjs/extension-comments':
-        specifier: workspace:*
-        version: link:../extension-comments
       '@richkitjs/extension-drag-handle':
         specifier: workspace:*
         version: link:../extension-drag-handle
@@ -1359,9 +1456,6 @@ importers:
       '@richkitjs/extension-toggle':
         specifier: workspace:*
         version: link:../extension-toggle
-      '@richkitjs/extension-track-changes':
-        specifier: workspace:*
-        version: link:../extension-track-changes
       '@richkitjs/extension-typography':
         specifier: workspace:*
         version: link:../extension-typography
@@ -1975,9 +2069,6 @@ packages:
 
   '@oxc-project/types@0.150.0':
     resolution: {integrity: sha512-rDS5/31E9HfPl/CIzGrn0DOlvBbXFseQ5URJ9sYMfstbKLD/c6Gm9vmRzRGDdAXyOIL4zmO37lc9RIwYqVruZw==}
-
-  '@paddle/paddle-js@1.6.5':
-    resolution: {integrity: sha512-uFRvptUzYRqRlqTU5XmfcZWC9BGVYpZNdANd3giJjZbJlHesnE4gn8PyjtYpesU1ar2ZGPuJxHvrrSIV9jjdVw==}
 
   '@playwright/test@1.63.0':
     resolution: {integrity: sha512-oxMK4vllB9RK5NQ2l1pq1IfOf2AvnEuj/vYGDj0H2nMtmtZpKtCwt/l00GEO6xjGfpBNAvjovvYdCm50dRQkpQ==}
@@ -4342,8 +4433,6 @@ snapshots:
     optional: true
 
   '@oxc-project/types@0.150.0': {}
-
-  '@paddle/paddle-js@1.6.5': {}
 
   '@playwright/test@1.63.0':
     dependencies:

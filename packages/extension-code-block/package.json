@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-code-block",
   "version": "0.2.0",
   "description": "Code blocks for RichKit with syntax highlighting (16 languages built in, add any highlight.js grammar), language picker, line numbers, copy button and Tab indenting.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

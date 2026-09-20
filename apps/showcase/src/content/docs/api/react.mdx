@@ -43,6 +43,61 @@ const editor = useEditor({
 Putting state in `deps` would destroy and rebuild the editor on every change, losing
 content, selection, and undo history. Reserve `deps` for genuinely switching documents.
 
+## `useControlledEditor`
+
+`useEditor` with the contract of a form input: `value`/`defaultValue` in, `onChange`
+out, in the format your app stores. It is what every
+[ready-made editor](/docs/api/editors) is built on.
+
+```tsx
+import { useControlledEditor, EditorContent } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
+
+function MyEditor({ value, onChange }: { value: string; onChange: (html: string) => void }) {
+  const editor = useControlledEditor({ extensions: StarterKit, value, onChange })
+  return <EditorContent editor={editor} />
+}
+```
+
+Takes every [`EditorOptions`](/docs/api/editor) field except `content` and `editable`,
+plus:
+
+| Option         | Type                                       | Default  | Description |
+| -------------- | ------------------------------------------ | -------- | ----------- |
+| `value`        | `EditorValue<F>`                           | —        | The content, in `format`. Passing it makes the editor controlled. |
+| `defaultValue` | `EditorValue<F>`                           | —        | Starting content for an uncontrolled editor. |
+| `onChange`     | `(value: EditorValue<F>) => void`          | —        | Called with the new content, in `format`, after every edit. |
+| `format`       | `'html' \| 'markdown' \| 'text' \| 'json'` | `'html'` | Shape of `value` and `onChange`. `EditorValue<'json'>` is `JSONContent`; the rest are `string`. |
+| `disabled`     | `boolean`                                  | `false`  | Read-only. Your component styles it as disabled. |
+| `readOnly`     | `boolean`                                  | `false`  | Read-only. |
+
+Second argument: `deps`, as for `useEditor`. Returns `Editor | null`.
+
+- A `value` the editor itself just emitted is not written back, so typing never resets
+  the caret.
+- Any other `value` (a form reset, a loaded record) replaces the document **without**
+  firing `onChange` and **without** landing on the undo stack.
+- `disabled` / `readOnly` flip the live editor instead of rebuilding it.
+- An empty document reads as `''` in the string formats, not `<p></p>`.
+- Your own `onUpdate` still runs, after `onChange`.
+
+### `getEditorValue` / `toEditorContent`
+
+The conversions `useControlledEditor` uses, for when you read or write values yourself.
+
+```ts
+getEditorValue(editor, 'markdown') // current doc as Markdown ('' when empty)
+editor.setContent(toEditorContent(md, 'markdown'))
+```
+
+| Function                          | Returns                  | Description |
+| --------------------------------- | ------------------------ | ----------- |
+| `getEditorValue(editor, format)`  | `EditorValue<format>`    | The document as HTML, Markdown, plain text (one line per block) or JSON. |
+| `toEditorContent(value, format)`  | `string \| JSONContent`  | Turns a value in `format` into content `Editor` accepts: Markdown → HTML, text → one `<p>` per line (escaped), HTML and JSON unchanged. |
+
+Types: `ValueFormat` (`'html' | 'markdown' | 'text' | 'json'`), `EditorValue<F>` and
+`JSONContent` (a ProseMirror document as plain JSON).
+
 ## `EditorContent`
 
 The editable surface. Props extend `HTMLAttributes<HTMLDivElement>`, so `className`,
@@ -73,6 +128,7 @@ otherwise thread `editor` through every level.
 | `children`  | `ReactNode`      | —       | Your buttons and groups.                                                      |
 | `className` | `string`         | —       | —                                                                             |
 | `overflow`  | `boolean`        | `true`  | Keep the row on one line, moving whatever does not fit into a "more" popover. |
+| `uploadFile` | `UploadFile`    | —       | Stores images uploaded from the toolbar and resolves to their URL. Defaults to `NotificationsHost`'s, then `data:` URLs. See [Uploads](#uploads). |
 
 The row re-measures on resize, so buttons come back as soon as there is room —
 this is what keeps the toolbar to a single line on a phone. Pass
@@ -102,40 +158,90 @@ Layout wrapper for visually grouping buttons. Takes `children` only.
 
 ### `DefaultToolbar`
 
-| Prop       | Type      | Default | Description                                             |
-| ---------- | --------- | ------- | ------------------------------------------------------- |
-| `editor`   | `Editor`  | —       | **Non-nullable.** Guard on `editor` before rendering.   |
-| `overflow` | `boolean` | `true`  | Same collapsing behaviour, applied to each of its rows. |
+| Prop         | Type         | Default | Description                                             |
+| ------------ | ------------ | ------- | ------------------------------------------------------- |
+| `editor`     | `Editor`     | —       | **Non-nullable.** Guard on `editor` before rendering.   |
+| `overflow`   | `boolean`    | `true`  | Same collapsing behaviour, applied to each of its rows. |
+| `uploadFile` | `UploadFile` | —       | Passed to its image menu. See [Uploads](#uploads).       |
 
-A prebuilt toolbar covering the StarterKit commands — no other props, no slots. For a
-custom set, compose `Toolbar` + `ToolbarButton` yourself.
+A prebuilt toolbar covering the StarterKit commands — no slots. For a custom set,
+compose `Toolbar` + `ToolbarButton` yourself.
+
+### `ToolbarOverflow`
+
+The single-line row `Toolbar` uses when `overflow` is on, for building rows of your own
+(`DefaultToolbar` renders one per row). Children that do not fit move into a "more"
+popover at the end, and come back as the row widens.
+
+| Prop        | Type        | Default  | Description                                    |
+| ----------- | ----------- | -------- | ---------------------------------------------- |
+| `children`  | `ReactNode` | —        | The row's items. Each direct child moves as one unit, so wrap related buttons in a `ToolbarGroup`. |
+| `className` | `string`    | —        | Added next to `tb-row tb-overflow`.            |
+| `moreTitle` | `string`    | `'More'` | Tooltip and accessible name of the "more" button. |
 
 ## Menus
 
-All take a non-nullable `editor`.
+Toolbar dropdowns. All take a non-nullable `editor`, so render them only once the editor
+exists (`{editor && <LinkMenu editor={editor} />}`). Each one needs the extension whose
+commands it runs; all of them are in `StarterKit`.
 
-| Component         | Props                                                    |
-| ----------------- | -------------------------------------------------------- |
-| `BlockTypeMenu`   | `editor: Editor`, `iconOnly?: boolean`                   |
-| `LinkMenu`        | `editor: Editor`                                         |
-| `ImageMenu`       | `editor: Editor`                                         |
-| `AlignMenu`       | `editor: Editor`, `dropdown?: boolean`                   |
-| `BulletListMenu`  | `editor: Editor`                                         |
-| `OrderedListMenu` | `editor: Editor`                                         |
-| `TextColorMenu`   | `editor: Editor`                                         |
-| `HighlightMenu`   | `editor: Editor`                                         |
-| `FontFamilyMenu`  | `editor: Editor`, `iconOnly?: boolean`                   |
-| `FontSizeMenu`    | `editor: Editor`, `iconOnly?: boolean`                   |
-| `TableMenu`       | `editor: Editor`, `maxRows?: number`, `maxCols?: number` |
+| Component          | Props                                                    | What it does |
+| ------------------ | -------------------------------------------------------- | ------------ |
+| `BlockTypeMenu`    | `editor`, `iconOnly?: boolean`                           | Paragraph / heading picker showing the current block type. `iconOnly` shows an icon instead of the label, for compact toolbars. |
+| `LinkMenu`         | `editor`                                                 | Link button (active inside a link) opening a URL + text form. |
+| `ImageMenu`        | `editor`, `uploadFile?: UploadFile`                      | Image button opening the upload/link picker ([`ImageInsertPanel`](#imageinsertpanel)). |
+| `AlignMenu`        | `editor`, `dropdown?: boolean`                           | Left/center/right/justify buttons. `dropdown` collapses them into one menu. |
+| `BulletListMenu`   | `editor`                                                 | Split button: toggle a bullet list, or pick a marker style (disc, circle, square). |
+| `OrderedListMenu`  | `editor`                                                 | Split button: toggle a numbered list, or pick a numbering style (decimal, leading zero, lower/upper alpha, lower/upper roman). |
+| `TextColorMenu`    | `editor`                                                 | Text colour swatches plus Reset. |
+| `HighlightMenu`    | `editor`                                                 | Highlight colour swatches plus Reset. |
+| `FontFamilyMenu`   | `editor`, `iconOnly?: boolean`                           | Font family picker, each option in its own font. |
+| `FontSizeMenu`     | `editor`, `iconOnly?: boolean`                           | Font size picker. |
+| `LineHeightMenu`   | `editor`                                                 | Line-height picker. Needs the `LineHeight` extension. |
+| `TableMenu`        | `editor`, `maxRows?: number` (8), `maxCols?: number` (10) | Outside a table: a grid to pick the size of a new table (with a header row). Inside one: row, column, merge and delete actions. |
+| `EmojiMenu`        | `editor`                                                 | Grid of common emoji; inserts at the caret. |
+| `SpecialCharsMenu` | `editor`                                                 | Grid of symbols (©, ®, →, …); inserts at the caret. |
+
+### `LinkPanel`
+
+The form inside `LinkMenu`, for placing it in your own popover or dialog. It edits the
+link under the caret, or links the selection.
+
+| Prop      | Type         | Description                          |
+| --------- | ------------ | ------------------------------------ |
+| `editor`  | `Editor`     | —                                    |
+| `onClose` | `() => void` | **Required.** Called after apply, remove or cancel. |
+
+Emptying the URL of an existing link removes it.
+
+### `ImageInsertPanel`
+
+The upload-or-link image picker used by `ImageMenu` and `notify.image`. It does not touch
+the editor — you insert what it gives you.
+
+| Prop         | Type                                | Default    | Description |
+| ------------ | ----------------------------------- | ---------- | ----------- |
+| `onInsert`   | `(image: ImageInsertValue) => void` | —          | **Required.** Receives `{ src: string; alt: string \| null }`. |
+| `onCancel`   | `() => void`                        | —          | Shows a Cancel button when given. |
+| `uploadFile` | `UploadFile`                        | host's     | Stores the picked file. See [Uploads](#uploads). |
+| `defaultTab` | `'upload' \| 'link'`                | `'upload'` | Which tab opens first. |
+
+```tsx
+<ImageInsertPanel
+  onInsert={({ src, alt }) => editor.chain().call('insertImage', { src, alt }).focus().run()}
+/>
+```
 
 ### `Popover`
 
 | Prop        | Type                               | Default   | Description                                    |
 | ----------- | ---------------------------------- | --------- | ---------------------------------------------- |
 | `trigger`   | `ReactNode`                        | —         | Element that opens the popover.                |
-| `children`  | `(close: () => void) => ReactNode` | —         | **Render prop** — receives a `close` callback. |
+| `children`  | `(close: () => void) => ReactNode` | —         | **Render prop** — receives a `close` callback. Rendered only while open. |
 | `align`     | `'start' \| 'end'`                 | `'start'` | Edge alignment.                                |
-| `className` | `string`                           | —         | —                                              |
+| `className` | `string`                           | —         | Added to the panel (`tb-pop-panel`).           |
+
+Clicking the trigger toggles it; clicking outside or pressing <kbd>Esc</kbd> closes it.
 
 ## `BubbleMenu`
 
@@ -168,25 +274,86 @@ Floating menu positioned over the current selection; hidden when the selection i
 | `onSelect`          | `(editor: Editor) => void` | —                    |
 | `submenu`           | `MenuItemDef[]`            | Nested menu.         |
 
+### `buildMenus(editor, actions?)`
+
+Returns the default menu set — **File, Edit, View, Insert, Format, Tools, Table,
+Help** — as `MenuDef[]`. Filter or extend it before passing it to `Menubar`:
+
+```tsx
+const menus = buildMenus(editor, { findReplace: () => setFindOpen(true) })
+  .filter((m) => ['Edit', 'Insert', 'Format'].includes(m.label))
+
+<Menubar editor={editor} menus={menus} />
+```
+
+Items that open app UI need a callback from you; without one they render disabled.
+`MenuActions`:
+
+| Action               | Type         | Menu item it powers |
+| -------------------- | ------------ | ------------------- |
+| `findReplace`        | `() => void` | Edit → Find and replace…. Open a [`FindReplace`](#modals) modal. |
+| `sourceCode`         | `() => void` | View → Source code and Tools → Source code. Open a [`SourceCode`](#modals) modal. |
+| `restoreDraft`       | `() => void` | File → Restore last draft. |
+| `importFile`         | `() => void` | File → Import file…. |
+| `wordCount`          | `() => void` | Tools → Word count. |
+| `shortcuts`          | `() => void` | Help → Keyboard shortcuts. |
+| `toggleSpellcheck`   | `() => void` | Tools → Spellcheck. `spellcheckOn?: boolean` sets its checkmark. |
+| `addComment`         | `() => void` | Insert → Comment. |
+| `toggleOutline`      | `() => void` | View → Outline panel and Insert → Table of contents. `outlineOpen?: boolean` sets the checkmark. |
+| `toggleComments`     | `() => void` | View → Comments panel. `commentsOpen?: boolean` sets its checkmark. |
+| `toggleTrackChanges` | `() => void` | View → Track changes. `trackChangesOn?: boolean` sets its checkmark. |
+| `toggleSuggestions`  | `() => void` | View → Suggestions panel. `suggestionsOpen?: boolean` sets its checkmark. |
+| `uploadFile`         | `UploadFile` | Insert → Image… and Insert → File → Upload from computer…. Without it files are inlined as `data:` URLs. |
+
+Everything else (export to HTML/JSON/Markdown/PDF/Word, print, formatting, tables)
+works with no actions.
+
 ## `SlashMenu`
 
 | Prop        | Type             | Default             | Description                        |
 | ----------- | ---------------- | ------------------- | ---------------------------------- |
 | `editor`    | `Editor \| null` | —                   | —                                  |
-| `items`     | `SlashItem[]`    | `defaultSlashItems` | Replaces the default command list. |
+| `items`     | `SlashItem[]`    | `defaultSlashItems` | Replaces the default command list. Spread `defaultSlashItems` to extend it. |
 | `className` | `string`         | —                   | —                                  |
+| `recentStorageKey` | `string \| null` | `'richkit:slash-recent'` | `localStorage` key the "Recent" section remembers used commands under. `null` turns the section off. |
+| `recentLimit` | `number`       | `5`                 | How many commands the "Recent" section keeps. |
+
+Typing `/` opens it. The query matches `label` and `keywords` — label prefixes rank
+first, then substrings, then loose typo-tolerant matches (`/bllt` finds Bullet List).
+Arrow keys and <kbd>Enter</kbd> pick; <kbd>Esc</kbd> closes.
 
 | `SlashItem` field | Type                                          | Description                                                      |
 | ----------------- | --------------------------------------------- | ---------------------------------------------------------------- |
 | `id`              | `string`                                      | Unique key.                                                      |
 | `label`           | `string`                                      | Displayed name.                                                  |
-| `keywords`        | `string`                                      | Extra search terms.                                              |
-| `group`           | `string`                                      | Section heading the item is listed under.                        |
+| `keywords`        | `string`                                      | **Required.** Extra search terms, space-separated (may be `''`). |
+| `group`           | `string`                                      | Section heading the item is listed under. Ungrouped items come first. |
 | `icon`            | `ReactNode`                                   | —                                                                |
 | `isAvailable`     | `(editor: Editor) => boolean`                 | Hide the item conditionally.                                     |
 | `run`             | `(editor: Editor, range: SlashRange) => void` | Action. `range` covers the typed `/query` so you can replace it. |
 
 Requires the `SlashCommands` extension (already in `StarterKit`).
+
+## `MentionMenu`
+
+The `@` picker. Typing `@` opens it; typing filters; arrow keys and <kbd>Enter</kbd>
+insert a mention node. Requires the `Mention` extension.
+
+| Prop        | Type                                                          | Default                     | Description |
+| ----------- | ------------------------------------------------------------- | --------------------------- | ----------- |
+| `editor`    | `Editor \| null`                                              | —                           | —           |
+| `items`     | `MentionCandidate[]`                                          | —                           | **Required.** Everyone and everything that can be mentioned. |
+| `filter`    | `(items: MentionCandidate[], query: string) => MentionCandidate[]` | substring on label/detail | Replace the search — fuzzy matching, server results you already fetched. |
+| `className` | `string`                                                      | —                           | —           |
+
+| `MentionCandidate` field | Type                  | Description |
+| ------------------------ | --------------------- | ----------- |
+| `id`                     | `string`              | **Required.** Stored in the document. |
+| `label`                  | `string`              | **Required.** Shown in the menu and stored in the document. |
+| `kind`                   | `'user' \| 'page'`    | Picks the default icon and styling. |
+| `detail`                 | `string`              | Secondary line — a handle, an email, a breadcrumb. |
+| `avatar`                 | `ReactNode`           | Shown in the menu row instead of the default avatar circle. |
+| `href`                   | `string`              | Stored on the mention node — where it should link. |
 
 ## `BlockHandle`
 
@@ -234,8 +401,9 @@ Requires the `DragHandle` extension (already in `StarterKit`), which also binds
 | `OutlineSidebar`    | `editor`       | `Editor \| null` | Heading outline.                                                     |
 |                     | `onClose`      | `() => void`     | —                                                                    |
 
-`getOutline(doc)` returns `OutlineEntry[]` (`{ level, text, pos }`) if you want to render
-your own.
+`getOutline(editor)` returns `OutlineEntry[]` (`{ level, text, pos }`) if you want to
+render your own. `pos` is the heading's document position — scroll to it with
+`editor.view.domAtPos(pos + 1)`.
 
 ### `CommentComposer`
 
@@ -251,14 +419,19 @@ your own.
 
 | Component     | Props                                                                                                                            |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `Modal`       | `open: boolean`, `title: string`, `onClose: () => void`, `children: ReactNode`, `footer?: ReactNode`, `width?: number \| string` |
+| `Modal`       | `open: boolean`, `title: string`, `onClose: () => void`, `children: ReactNode`, `footer?: ReactNode`, `width?: number \| string` (520) |
 | `FindReplace` | `editor: Editor`, `open: boolean`, `onClose: () => void`                                                                         |
 | `SourceCode`  | `editor: Editor`, `open: boolean`, `onClose: () => void`                                                                         |
 
 ## Notifications
 
-Mount `<NotificationsHost />` once near your app root — it takes no props. Then call
-`notify` from anywhere:
+Mount `<NotificationsHost />` once near your app root. Its one prop:
+
+| Prop         | Type         | Description |
+| ------------ | ------------ | ----------- |
+| `uploadFile` | `UploadFile` | Stores images and files users upload from the toolbar, menubar, slash menu and image dialog, resolving to their URL. Without it they are inlined as `data:` URLs. |
+
+Then call `notify` from anywhere:
 
 ```tsx
 notify.toast.success('Saved')
@@ -275,12 +448,56 @@ are on `notify` directly.
 
 | Dialog           | Options                                                                                       | Resolves to      |
 | ---------------- | --------------------------------------------------------------------------------------------- | ---------------- |
-| `notify.prompt`  | `title`, `message?`, `placeholder?`, `defaultValue?`, `okLabel?`, `cancelLabel?`, `required?` | `string \| null` |
-| `notify.confirm` | `title`, `message?`, `okLabel?`, `cancelLabel?`, `destructive?`                               | `boolean`        |
+| `notify.prompt`  | `title`, `message?`, `placeholder?`, `defaultValue?`, `okLabel?`, `cancelLabel?`, `required?`, `anchor?` | `string \| null` (null on cancel) |
+| `notify.confirm` | `title`, `message?`, `okLabel?`, `cancelLabel?`, `destructive?` (red OK button)               | `boolean`        |
 | `notify.alert`   | `title`, `message?`, `okLabel?`                                                               | `void`           |
+| `notify.image`   | `title?`, `uploadFile?`, `defaultTab?: 'upload' \| 'link'`, `anchor?`                          | `{ src, alt } \| null` |
+| `notify.link`    | `editor` (required), `anchor?`                                                                | `void` — edits the link in the editor itself |
+
+`anchor` floats the dialog under a spot instead of centring it as a modal. Pass an
+element, or `selectionAnchor(editor, pos?)` to anchor at the selection (or at `pos`):
+
+```ts
+const body = await notify.prompt({ title: 'Comment', anchor: selectionAnchor(editor) })
+const image = await notify.image({ anchor: selectionAnchor(editor) })
+if (image) editor.chain().call('insertImage', image).focus().run()
+```
+
+Toast calls take `(message: string, { durationMs? })` and return an id for
+`notify.toast.dismiss(id)`.
 
 Without a mounted `NotificationsHost`, toasts fall back to `console` and dialogs resolve
-to their default (`prompt` → `defaultValue ?? null`, `confirm` → `false`).
+to their default (`prompt` → `defaultValue ?? null`, `confirm` → `false`, `image` →
+`null`).
+
+## Uploads
+
+```ts
+type UploadFile = (file: File) => Promise<string>
+```
+
+An `UploadFile` stores a file the user picked and resolves to the URL to put in the
+document. Give one to `NotificationsHost` and every insert path (toolbar, menubar, slash
+menu, image dialog) uses it; a `uploadFile` prop on a single component overrides it
+there.
+
+```tsx
+<NotificationsHost
+  uploadFile={async (file) => {
+    const body = new FormData()
+    body.append('file', file)
+    const res = await fetch('/api/uploads', { method: 'POST', body })
+    return (await res.json()).url
+  }}
+/>
+```
+
+With no uploader, files up to 10 MB are inlined as `data:` URLs (the document grows by
+the file's size); larger ones are refused with a toast. If the uploader throws, the user
+sees an error toast and nothing is inserted.
+
+`storeFile(file, uploadFile?)` runs that same logic for your own file inputs and
+resolves to the URL, or `null` when nothing should be inserted.
 
 ## `printEditor`
 
@@ -292,5 +509,30 @@ printEditor(editor, { title: 'My document', extraCss: '@page { margin: 2cm }' })
 | ---------- | -------- | ----------------------------------- |
 | `title`    | `string` | Document title in the print dialog. |
 | `extraCss` | `string` | CSS injected into the print window. |
+
+Opens the browser print dialog with only the document, styled for paper.
+
+## `Icons`
+
+The 18px stroke icons the toolbars use, as React components. Each takes any SVG prop
+(`width`, `className`, `strokeWidth`…) and inherits `currentColor`.
+
+```tsx
+import { Icons } from '@richkitjs/react'
+
+<ToolbarButton editor={editor} command="toggleBold" isActiveName="bold" label={<Icons.BoldIcon />} />
+```
+
+Available: `BoldIcon`, `ItalicIcon`, `UnderlineIcon`, `StrikeIcon`, `CodeIcon`,
+`CodeBlockIcon`, `ParagraphIcon`, `HeadingIcon`, `BulletListIcon`, `OrderedListIcon`,
+`TaskListIcon`, `BlockquoteIcon`, `ImageIcon`, `LinkIcon`, `MediaIcon`, `TableIcon`,
+`UndoIcon`, `RedoIcon`, `AlignLeftIcon`, `AlignCenterIcon`, `AlignRightIcon`,
+`AlignJustifyIcon`, `TextColorIcon`, `HighlightIcon`, `FontIcon`, `FontSizeIcon`,
+`LineHeightIcon`, `HorizontalRuleIcon`, `EmojiIcon`, `OmegaIcon`, `IndentInIcon`,
+`IndentOutIcon`, `FullscreenIcon`, `ClearFormatIcon`, `CommentIcon`, `SubscriptIcon`,
+`SuperscriptIcon`, `ListTreeIcon`, `MoreIcon`, `PlusIcon`, `MinusIcon`,
+`ChevronDownIcon`, `ChevronRightIcon`, `SparkleIcon`, `GripIcon`, `TrashIcon`,
+`CopyIcon`, `DuplicateIcon`, `TurnIntoIcon`, `TextIcon`, `MoonIcon`, `SunIcon`,
+`FileImportIcon`, `FileExportIcon`, `PrintIcon`, `PageSetupIcon`, `SearchIcon`.
 
 </div>

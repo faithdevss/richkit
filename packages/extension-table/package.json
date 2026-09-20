@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-table",
   "version": "0.2.0",
   "description": "Tables for RichKit: insert, add and delete rows and columns, merge and split cells, header rows and columns, column resizing and Tab navigation.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

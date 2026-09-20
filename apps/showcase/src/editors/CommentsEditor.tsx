@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Editor } from '@richkitjs/core'
-import { CommentsEditor as Comments } from '@richkitjs/editors'
+import { CommentsEditor as Comments } from '@richkitjs/editors-pro'
 import { COMMENTS_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

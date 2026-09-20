@@ -43,15 +43,16 @@ jobs:
       - name: Build showcase
         env:
           VITE_BASE: ${{ steps.pages.outputs.base_path || format('/{0}/', github.event.repository.name) }}
-          # The Paddle client token ships in the bundle by design — it only
-          # opens a checkout, and Paddle rejects it on any domain not approved
-          # in the dashboard. It lives in secrets anyway so it is rotatable in
-          # one place. Leave these unset and the buy buttons fall back to
+          # Lemon Squeezy buy URLs ship in the bundle by design — they only
+          # open a checkout. Leave these unset and the buy buttons fall back to
           # enquiry links rather than breaking the build.
-          VITE_PADDLE_ENV: ${{ vars.PADDLE_ENV }}
-          VITE_PADDLE_CLIENT_TOKEN: ${{ secrets.PADDLE_CLIENT_TOKEN }}
-          VITE_PADDLE_PRICE_ANNUAL: ${{ vars.PADDLE_PRICE_ANNUAL }}
-          VITE_PADDLE_PRICE_LIFETIME: ${{ vars.PADDLE_PRICE_LIFETIME }}
+          VITE_LS_CHECKOUT_STARTUP: ${{ vars.LS_CHECKOUT_STARTUP }}
+          VITE_LS_CHECKOUT_BUSINESS: ${{ vars.LS_CHECKOUT_BUSINESS }}
+          VITE_LS_CHECKOUT_LIFETIME: ${{ vars.LS_CHECKOUT_LIFETIME }}
+          # The showcase runs Pro demos in production, so it needs its own key.
+          # Mint it with --domains faithdevss.github.io so copying it out of
+          # the public bundle is useless anywhere else.
+          VITE_RICHKIT_LICENSE_KEY: ${{ vars.RICHKIT_LICENSE_KEY }}
         run: pnpm turbo run build --filter=showcase
 
       - uses: actions/upload-pages-artifact@v3

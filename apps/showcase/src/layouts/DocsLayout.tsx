@@ -16,6 +16,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
       { label: 'Core concepts', to: '/docs/core-concepts' },
       { label: 'Styling', to: '/docs/styling' },
       { label: 'AI', to: '/docs/ai' },
+      { label: 'Licensing', to: '/docs/licensing' },
     ],
   },
   {
@@ -24,6 +25,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
     items: [
       { label: 'Editor (core)', to: '/docs/api/editor' },
       { label: 'StarterKit & options', to: '/docs/api/starter-kit' },
+      { label: 'Ready-made editors', to: '/docs/api/editors' },
       { label: 'React components', to: '/docs/api/react' },
       { label: 'Commands', to: '/docs/api/commands' },
       { label: 'Extensions', to: '/docs/extensions' },
@@ -44,7 +46,10 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
   {
     head: 'Examples',
     icon: 'code',
-    items: EXAMPLES.map((e) => ({ label: e.title, to: `/docs/examples/${e.id}` })),
+    items: EXAMPLES.map((e) => ({
+      label: e.pro ? `${e.title} · Pro` : e.title,
+      to: `/docs/examples/${e.id}`,
+    })),
   },
 ]
 

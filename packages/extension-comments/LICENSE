@@ -1,138 +1,263 @@
-Required Notice: Copyright 2026 Saimum Islam (https://github.com/faithdevss/richkit)
+RichKit Pro License Agreement
+Version 2.0 — 2026
 
-RichKit is dual licensed. This file is the free, noncommercial license.
-Commercial and business use requires a paid license -- see LICENSE-COMMERCIAL.
+Copyright 2026 Saimum Islam (https://github.com/faithdevss/richkit)
+
+RichKit is open-core. The core editor and basic extensions are free under the
+MIT License in the LICENSE file. The RichKit Pro packages listed below are
+licensed only under this Agreement.
+
+Purchase a license at https://faithdevss.github.io/richkit/pricing
+
 
 ----------------------------------------------------------------------
+1. DEFINITIONS
+----------------------------------------------------------------------
 
-# PolyForm Noncommercial License 1.0.0
+"Software" means the RichKit Pro packages — @richkitjs/docx,
+@richkitjs/extension-track-changes, @richkitjs/extension-comments,
+@richkitjs/extension-ai, @richkitjs/ai-openai, @richkitjs/ai-anthropic and
+@richkitjs/editors-pro — their source code, and their documentation, together
+with any package the Licensor later publishes as part of RichKit Pro.
 
-<https://polyformproject.org/licenses/noncommercial/1.0.0>
+"Licensor" means Saimum Islam.
 
-## Acceptance
+"Licensee" means the legal entity that has purchased a license under these
+terms, together with all entities it controls, that control it, or that are
+under common control with it.
 
-In order to get any license under these terms, you must agree
-to them as both strict obligations and conditions to all
-your licenses.
+"Plan" means the license tier purchased — Startup, Business, Lifetime or
+Enterprise — as described in Section 3.
 
-## Copyright License
+"License Key" means the signed key the Licensor issues to the Licensee for
+its Plan.
 
-The licensor grants you a copyright license for the
-software to do everything you might do with the software
-that would otherwise infringe the licensor's copyright
-in it for any permitted purpose.  However, you may
-only distribute the software according to [Distribution
-License](#distribution-license) and make changes or new works
-based on the software according to [Changes and New Works
-License](#changes-and-new-works-license).
+"Developer" means a natural person who writes, modifies or configures code
+that uses the Software.
 
-## Distribution License
+"Licensed Version" means any version of the Software released on or before
+the "updates until" date recorded in the Licensee's License Key.
 
-The licensor grants you an additional copyright license
-to distribute copies of the software.  Your license
-to distribute covers distributing the software with
-changes and new works permitted by [Changes and New Works
-License](#changes-and-new-works-license).
+"Production Use" means use of the Software in an application reachable by
+anyone other than its developers, including staging environments shared with
+clients or testers.
 
-## Notices
 
-You must ensure that anyone who gets a copy of any part of
-the software from you also gets a copy of these terms or the
-URL for them above, as well as copies of any plain-text lines
-beginning with `Required Notice:` that the licensor provided
-with the software.  For example:
+----------------------------------------------------------------------
+2. LICENSE GRANT
+----------------------------------------------------------------------
 
-> Required Notice: Copyright Yoyodyne, Inc. (http://example.com)
+Subject to payment of the applicable fee and to the Licensee's compliance
+with these terms, the Licensor grants the Licensee a worldwide,
+non-exclusive, non-transferable, non-sublicensable license, within the limits
+of its Plan, to:
 
-## Changes and New Works License
+  (a) use, copy, and modify the Licensed Versions of the Software;
 
-The licensor grants you an additional copyright license to
-make changes and new works based on the software for any
-permitted purpose.
+  (b) embed the Software, in source or compiled form, in the Licensee's own
+      products and internal tools, and distribute it as an integrated part
+      of those products to the Licensee's own end users; and
 
-## Patent License
+  (c) permit the Licensee's employees and contractors to exercise these
+      rights on the Licensee's behalf and for the Licensee's benefit.
 
-The licensor grants you a patent license for the software that
-covers patent claims the licensor can license, or becomes able
-to license, that you would infringe by using the software.
 
-## Noncommercial Purposes
+----------------------------------------------------------------------
+3. PLANS
+----------------------------------------------------------------------
 
-Any noncommercial purpose is a permitted purpose.
+  Startup     For a Licensee whose annual gross revenue, including funding
+              received in the last twelve months, is below USD 1,000,000.
+              Up to three (3) Developers and one (1) product or internal
+              tool.
 
-## Personal Uses
+  Business    Up to twenty (20) Developers. Unlimited products, internal
+              tools and client projects.
 
-Personal use for research, experiment, and testing for
-the benefit of public knowledge, personal study, private
-entertainment, hobby projects, amateur pursuits, or religious
-observance, without any anticipated commercial application,
-is use for a permitted purpose.
+  Lifetime    The rights of the Business Plan, bought with a single payment.
+              Every version of the Software the Licensor releases, at any
+              time, is a Licensed Version.
 
-## Noncommercial Organizations
+  Enterprise  Limits, support and terms as agreed in writing with the
+              Licensor.
 
-Use by any charitable organization, educational institution,
-public research organization, public safety or health
-organization, environmental protection organization,
-or government institution is use for a permitted purpose
-regardless of the source of funding or obligations resulting
-from the funding.
+Plan limits are not enforced by the Software; they are a condition of this
+Agreement. A Licensee that outgrows its Plan must upgrade within thirty (30)
+days. Fees, currency and current Plan descriptions are those published at
+https://faithdevss.github.io/richkit/pricing at the time of purchase.
 
-## Fair Use
+On reasonable written notice, and no more than once in any twelve-month
+period, the Licensor may ask the Licensee to confirm in writing that its use
+is within its Plan.
 
-You may have "fair use" rights for the software under the
-law. These terms do not limit them.
 
-## No Other Rights
+----------------------------------------------------------------------
+4. LICENSE KEY
+----------------------------------------------------------------------
 
-These terms do not allow you to sublicense or transfer any of
-your licenses to anyone else, or prevent the licensor from
-granting licenses to anyone else.  These terms do not imply
-any other licenses.
+The Licensor issues each Licensee a License Key. The Licensee must configure
+the Software with it for Production Use. The key is verified locally, inside
+the Licensee's application; the Software makes no network call, activation or
+telemetry request to the Licensor.
 
-## Patent Defense
+Without a valid License Key, the Software shows a small "unlicensed" notice
+on production hosts. It does not stop working, block editing, or alter
+documents.
 
-If you make any written claim that the software infringes or
-contributes to infringement of any patent, your patent license
-for the software granted under these terms ends immediately. If
-your company makes such a claim, your patent license ends
-immediately for work on behalf of your company.
+The License Key is confidential to the Licensee, except as necessarily
+embedded in the Licensee's own applications. The Licensee may not share it
+with any other entity.
 
-## Violations
 
-The first time you are notified in writing that you have
-violated any of these terms, or done anything with the software
-not covered by your licenses, your licenses can nonetheless
-continue if you come into full compliance with these terms,
-and take practical steps to correct past violations, within
-32 days of receiving notice.  Otherwise, all your licenses
-end immediately.
+----------------------------------------------------------------------
+5. EVALUATION
+----------------------------------------------------------------------
 
-## No Liability
+Anyone may use the Software free of charge on development hosts (such as
+localhost) for evaluation and development, without a License Key.
 
-***As far as the law allows, the software comes as is, without
-any warranty or condition, and the licensor will not be liable
-to you for any damages arising out of these terms or the use
-or nature of the software, under any kind of legal claim.***
+Anyone may also make Production Use of the Software without a License Key
+for up to thirty (30) consecutive days to evaluate it, with the unlicensed
+notice displayed. After that period the entity must either purchase a
+license or cease Production Use of the Software.
 
-## Definitions
 
-The **licensor** is the individual or entity offering these
-terms, and the **software** is the software the licensor makes
-available under these terms.
+----------------------------------------------------------------------
+6. TERM, FEES, AND PERPETUAL FALLBACK
+----------------------------------------------------------------------
 
-**You** refers to the individual or entity agreeing to these
-terms.
+Startup and Business Plans are annual subscriptions. While a subscription is
+active, the Licensor issues renewed License Keys covering new releases.
 
-**Your company** is any legal entity, sole proprietorship,
-or other kind of organization that you work for, plus all
-organizations that have control over, are under the control of,
-or are under common control with that organization.  **Control**
-means ownership of substantially all the assets of an entity,
-or the power to direct its management and policies by vote,
-contract, or otherwise.  Control can be direct or indirect.
+If a subscription lapses or is cancelled, the Licensee retains a perpetual,
+irrevocable license under Section 2 to continue using, and to continue
+shipping in already-released and future products, every Licensed Version.
+Its License Key continues to work with those versions. The Licensee has no
+right to versions released after its License Key's "updates until" date.
 
-**Your licenses** are all the licenses granted to you for the
-software under these terms.
+The Lifetime Plan does not expire, and its License Key covers every version
+the Licensor releases.
 
-**Use** means anything you do with the software requiring one
-of your licenses.
+The Licensor is not obliged to continue developing, maintaining or releasing
+the Software, for any Plan. If the Licensor stops releasing new versions, or
+discontinues the Software, every license already granted continues under
+these terms: all Licensed Versions remain licensed, and License Keys continue
+to work with them, because they are verified without contacting the Licensor.
+Discontinuation does not entitle any Licensee to a refund.
+
+Refunds are available as described in the refund policy at
+https://faithdevss.github.io/richkit/refunds, and otherwise only where
+required by law. A refund ends the license and its License Key.
+
+
+----------------------------------------------------------------------
+7. RESTRICTIONS
+----------------------------------------------------------------------
+
+The Licensee may not:
+
+  (a) distribute, sell, sublicense, rent, or lease the Software on a
+      standalone basis, or as a rich text editor library, editor SDK,
+      component toolkit, or developer framework that competes with the
+      Software;
+
+  (b) remove, obscure, or alter any copyright, "Required Notice", or license
+      notice contained in the Software;
+
+  (c) publish the Software, or a derivative of it, to a public package
+      registry under any name;
+
+  (d) remove, disable, or circumvent the License Key check or the unlicensed
+      notice, or create or distribute License Keys; or
+
+  (e) use the Licensor's names, logos, or trademarks except to state factually
+      that the Licensee's product is built with RichKit.
+
+Distributing the Software compiled into, and as a non-separable part of, the
+Licensee's own application is expressly permitted and is not restricted by
+subsection (a).
+
+
+----------------------------------------------------------------------
+8. THIRD-PARTY COMPONENTS
+----------------------------------------------------------------------
+
+The Software incorporates third-party open source components listed in the
+NOTICE file. Those components remain under their own licenses, and nothing in
+this Agreement limits the Licensee's rights in them or the Licensee's
+obligation to preserve their notices.
+
+
+----------------------------------------------------------------------
+9. OWNERSHIP
+----------------------------------------------------------------------
+
+The Software is licensed, not sold. The Licensor retains all right, title,
+and interest in the Software, including all intellectual property rights.
+The Licensee owns the products it builds with the Software and any
+modifications it makes, subject to the Licensor's rights in the underlying
+Software.
+
+
+----------------------------------------------------------------------
+10. SUPPORT
+----------------------------------------------------------------------
+
+The standard license includes no guaranteed support, response time, or
+service level. Support commitments, if any, are those stated for the tier
+purchased at https://faithdevss.github.io/richkit/pricing.
+
+
+----------------------------------------------------------------------
+11. WARRANTY DISCLAIMER
+----------------------------------------------------------------------
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS" AND
+"AS AVAILABLE", WITHOUT WARRANTY OR CONDITION OF ANY KIND, EXPRESS, IMPLIED,
+OR STATUTORY, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND
+NON-INFRINGEMENT. THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE
+UNINTERRUPTED, ERROR-FREE, OR FREE OF HARMFUL COMPONENTS.
+
+
+----------------------------------------------------------------------
+12. LIMITATION OF LIABILITY
+----------------------------------------------------------------------
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR WILL NOT BE LIABLE FOR
+ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE
+DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, DATA, OR GOODWILL, ARISING OUT
+OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE, WHETHER IN CONTRACT, TORT,
+OR ANY OTHER THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+THE LICENSOR'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO THIS
+AGREEMENT WILL NOT EXCEED THE FEES PAID BY THE LICENSEE UNDER THIS AGREEMENT
+IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+
+
+----------------------------------------------------------------------
+13. TERMINATION
+----------------------------------------------------------------------
+
+If the Licensee materially breaches these terms, the Licensor may notify the
+Licensee in writing. If the Licensee does not come into full compliance, and
+take practical steps to correct past violations, within thirty (30) days of
+that notice, all licenses granted under this Agreement end immediately,
+including the perpetual fallback in Section 6.
+
+
+----------------------------------------------------------------------
+14. GENERAL
+----------------------------------------------------------------------
+
+This Agreement is the entire agreement between the parties regarding the
+Software and supersedes all prior understandings. It may be modified only in
+a writing signed by the Licensor. If any provision is held unenforceable, the
+remainder stays in effect. A failure to enforce any provision is not a waiver
+of it.
+
+This Agreement is governed by the laws of the People's Republic of Bangladesh,
+without regard to its conflict of laws rules, and the parties submit to the
+exclusive jurisdiction of the courts of Bangladesh.
+
+Questions: https://github.com/faithdevss/richkit

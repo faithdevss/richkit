@@ -12,10 +12,10 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@paddle/paddle-js": "^1.6.5",
     "@richkitjs/core": "workspace:*",
     "@richkitjs/docx": "workspace:*",
     "@richkitjs/editors": "workspace:*",
+    "@richkitjs/editors-pro": "workspace:*",
     "@richkitjs/extension-ai": "workspace:*",
     "@richkitjs/extension-drag-handle": "workspace:*",
     "@richkitjs/extension-find-replace": "workspace:*",
@@ -25,6 +25,7 @@
     "@richkitjs/extension-slash-commands": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",
+    "@richkitjs/license": "workspace:*",
     "@richkitjs/markdown": "workspace:*",
     "@richkitjs/react": "workspace:*",
     "@richkitjs/starter-kit": "workspace:*",

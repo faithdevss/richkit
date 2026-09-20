@@ -35,9 +35,9 @@ export function Comparison() {
       <div className="cmp-claim">
         <span className="cmp-claim-head">The short version</span>
         <p>
-          RichKit ships the whole premium layer — track changes, comments, DOCX, AI — for{' '}
-          <strong>$99 a year, flat</strong>, with unlimited developers and unlimited products. The
-          same feature set runs roughly $500–$1,200 a month elsewhere. Noncommercial use is free.
+          RichKit&rsquo;s core is MIT. The premium layer — track changes, comments, DOCX, AI — is
+          RichKit Pro, <strong>from $99 a year</strong>, self-hosted, with no per-document fees.
+          The same feature set runs roughly $500–$1,200 a month elsewhere.
         </p>
       </div>
 
@@ -77,8 +77,8 @@ export function Comparison() {
       <h2>Pick something else when</h2>
       <ul>
         <li>
-          You need an OSI-approved license, or your policy rules out source-available terms —
-          RichKit is PolyForm Noncommercial plus a commercial license, not MIT.
+          You need an OSI-approved license for the premium features too — the RichKit core is MIT,
+          but the Pro packages are source-available under a commercial licence.
         </li>
         <li>You need managed real-time collaboration today — RichKit has not shipped it.</li>
         <li>You need a vendor SLA, certifications, or paid support.</li>

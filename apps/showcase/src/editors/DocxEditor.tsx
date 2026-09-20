@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DocxEditor as Docx } from '@richkitjs/editors'
+import { DocxEditor as Docx } from '@richkitjs/editors-pro'
 import { DOCX_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

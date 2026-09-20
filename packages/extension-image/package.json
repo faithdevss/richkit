@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-image",
   "version": "0.2.0",
   "description": "Images for RichKit: drag-to-resize, alignment, alt text and captions.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

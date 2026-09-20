@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-ordered-list",
   "version": "0.1.0",
   "description": "Ordered list node for RichKit: toggleOrderedList, decimal, alphabetic and roman numbering, and Mod-Shift-7 shortcut.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

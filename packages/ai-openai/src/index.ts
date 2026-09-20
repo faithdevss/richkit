@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import type { AIComplete, AICompletionRequest } from '@richkitjs/extension-ai'
 
 export interface OpenAIAdapterOptions {
@@ -83,6 +84,7 @@ interface ChatChunk {
  * OpenAI's response straight through without reshaping it.
  */
 export function openaiComplete(options: OpenAIAdapterOptions): AIComplete {
+  requirePro('ai-openai')
   const {
     endpoint,
     dangerouslyBrowserApiKey,

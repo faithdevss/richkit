@@ -1,4 +1,4 @@
-import { useState, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { isValidElement, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
 export function Demo({ title, children }: { title?: string; children: ReactNode }) {
   return (
@@ -44,15 +44,17 @@ export function Install({ packages }: { packages: string }) {
   )
 }
 
+/** Plain text of a heading, including what sits inside inline `code`. */
+function textOf(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(textOf).join('')
+  if (isValidElement<{ children?: ReactNode }>(node)) return textOf(node.props.children)
+  return ''
+}
+
 /** Anchor id for a heading, so the on-this-page rail has something to link to. */
 function slug(node: ReactNode): string | undefined {
-  const text =
-    typeof node === 'string'
-      ? node
-      : Array.isArray(node)
-        ? node.filter((n) => typeof n === 'string').join('')
-        : ''
-  const id = text
+  const id = textOf(node)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')

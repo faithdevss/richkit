@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import { Extension, type Command } from '@richkitjs/core'
 import { trackKey } from '@richkitjs/extension-track-changes'
 import type { EditorState } from 'prosemirror-state'
@@ -173,7 +174,10 @@ export const AI = Extension.create<AIOptions>({
     attributeAs: 'AI Assistant',
     track: true,
   }),
-  addProseMirrorPlugins: () => [aiPlugin()],
+  addProseMirrorPlugins: () => {
+    requirePro('ai')
+    return [aiPlugin()]
+  },
   addCommands: (ctx) => {
     let run: AbortController | null = null
 

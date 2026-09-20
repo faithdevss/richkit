@@ -1,25 +1,25 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-// Fill these in before submitting the site for Paddle's domain review. Paddle
-// checks that the trading entity and contact route are real and reachable, and
-// a placeholder here is the most common reason a domain gets rejected.
+// Fill these in before submitting the store for Lemon Squeezy's review. They
+// check that the trading entity and contact route are real and reachable, and a
+// placeholder here is the most common reason a store gets rejected.
 const ENTITY = 'FaithDevs'
 const CONTACT_EMAIL = 'support@richkit.dev'
 const JURISDICTION = 'Bangladesh'
-const UPDATED = '18 September 2026'
+const UPDATED = '19 September 2026'
 
-// Paddle requires the merchant of record to be named in the terms. It is not a
-// formality: buyers contract with Paddle for the payment, and with us for the
+// The merchant of record has to be named in the terms. It is not a formality:
+// buyers contract with Lemon Squeezy for the payment, and with us for the
 // licence, and the two have to be told apart.
 const MOR = (
   <>
     Our order process is conducted by our online reseller{' '}
-    <a href="https://www.paddle.com" target="_blank" rel="noreferrer">
-      Paddle.com
+    <a href="https://www.lemonsqueezy.com" target="_blank" rel="noreferrer">
+      Lemon Squeezy
     </a>
-    . Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service
-    inquiries and handles returns.
+    . Lemon Squeezy is the Merchant of Record for all our orders. Lemon Squeezy handles payment,
+    billing inquiries and returns.
   </>
 )
 
@@ -56,75 +56,75 @@ export function Terms() {
     <LegalPage
       eyebrow="Legal"
       title="Terms of service"
-      lede={`The agreement between you and ${ENTITY} covering the RichKit packages, this website, and the commercial licence.`}
+      lede={`The agreement between you and ${ENTITY} covering the RichKit packages, this website, and the RichKit Pro licence.`}
     >
       <h2>Who we are</h2>
       <p>
         RichKit is published by {ENTITY}. These terms cover the RichKit software packages, this
-        website, and any commercial licence you buy from us. Contact us at{' '}
+        website, and any RichKit Pro licence you buy from us. Contact us at{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
 
       <h2>Payments and the merchant of record</h2>
       <p>{MOR}</p>
       <p>
-        This means Paddle, not {ENTITY}, is the seller for your purchase. Paddle collects payment,
+        This means Lemon Squeezy, not {ENTITY}, is the seller for your purchase. Lemon Squeezy collects payment,
         charges any applicable VAT or sales tax, issues your invoice, and handles billing support and
         refunds. We remain responsible for the software itself and for the licence you are granted.
       </p>
 
       <h2>What you are buying</h2>
       <p>
-        A licence to use the RichKit packages commercially. There is no licence key, no activation
-        call, and no telemetry — the editor never contacts us. The licence is a contract, not a
-        technical lock, which also means nothing stops working if your users are offline or your
-        build is air-gapped.
+        RichKit is open-core. The core editor and the basic extensions are free under the{' '}
+        <a
+          href="https://github.com/faithdevss/richkit/blob/main/LICENSE"
+          target="_blank"
+          rel="noreferrer"
+        >
+          MIT licence
+        </a>
+        , for any use, commercial or not. What you buy is a licence to use the Pro packages —
+        DOCX import and export, track changes, comments, AI and the Pro editors — in
+        production, under the{' '}
+        <a
+          href="https://github.com/faithdevss/richkit/blob/main/LICENSE-COMMERCIAL"
+          target="_blank"
+          rel="noreferrer"
+        >
+          RichKit Pro licence
+        </a>
+        .
       </p>
-      <ul>
-        <li>
-          <b>Noncommercial use is free</b>, under{' '}
-          <a
-            href="https://github.com/faithdevss/richkit/blob/main/LICENSE"
-            target="_blank"
-            rel="noreferrer"
-          >
-            PolyForm Noncommercial 1.0.0
-          </a>
-          . Hobby projects, study, research, schools, charities and government bodies get the same
-          packages, with nothing held back.
-        </li>
-        <li>
-          <b>Commercial use requires a paid licence</b>, under{' '}
-          <a
-            href="https://github.com/faithdevss/richkit/blob/main/LICENSE-COMMERCIAL"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LICENSE-COMMERCIAL
-          </a>
-          . One licence covers your whole company: every developer, every product, every client
-          project.
-        </li>
-      </ul>
       <p>
-        Commercial use means any use by or on behalf of a business, or in a product, service or
-        internal tool operated for commercial advantage. If those licence files and these terms ever
-        disagree, the licence files govern the software and these terms govern the purchase.
+        Each purchase comes with a licence key, emailed to you within one business day. The key is
+        checked entirely inside your application, with no network call, no activation and no
+        telemetry — the editor never contacts us, so nothing breaks if your users are offline or
+        your build is air-gapped. Without a valid key, Pro packages show a small &ldquo;unlicensed&rdquo;
+        badge on production sites. They never stop working or block editing.
+      </p>
+      <p>
+        Plans are priced by company size, as described on the <Link to="/pricing">pricing page</Link>{' '}
+        and defined in the Pro licence. Each plan covers the whole company within its limits. If the
+        licence files and these terms ever disagree, the licence files govern the software and these
+        terms govern the purchase.
       </p>
 
       <h2>Evaluation</h2>
       <p>
-        You may use RichKit commercially for 90 days from your first commercial use without paying,
-        so you can build the real integration before deciding. No signup, no key, and no notice to us
-        is required.
+        The Pro packages run on localhost and other development hosts with no key and no badge, so
+        you can build the real integration before deciding. You may also run them in production
+        without a key for 30 days while you evaluate; the badge shows during that time.
       </p>
 
       <h2>Renewal and expiry</h2>
       <p>
-        The annual licence renews yearly until cancelled. If you stop paying, you keep a perpetual
-        licence to the last version released while your licence was active, including in products you
-        have already shipped and in new ones — you simply do not receive versions released after
-        that. The lifetime licence is a single payment and does not expire.
+        Annual plans renew yearly until cancelled. If you stop paying, you keep a perpetual licence
+        to every version released while your licence was active, and your key keeps working with
+        those versions — in products you have already shipped and in new ones. You simply do not
+        receive versions released after that. The lifetime licence is a single payment, does not
+        expire, and covers every version we release. We are not obliged to keep releasing new
+        versions; if we ever stop, every licence and key keeps working with the versions already
+        released.
       </p>
 
       <h2>What you may not do</h2>
@@ -147,7 +147,7 @@ export function Terms() {
         apply from the date they are published. These terms are governed by the laws of{' '}
         {JURISDICTION}. Questions go to{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>, and billing questions can also go
-        directly to Paddle. See also our <Link to="/privacy">privacy policy</Link> and{' '}
+        directly to Lemon Squeezy. See also our <Link to="/privacy">privacy policy</Link> and{' '}
         <Link to="/refunds">refund policy</Link>.
       </p>
     </LegalPage>
@@ -163,9 +163,9 @@ export function Privacy() {
     >
       <h2>The short version</h2>
       <p>
-        The RichKit packages collect nothing. The editor makes no network calls to us, has no
-        telemetry, and has no licence check to phone home with. Anything you type stays in your
-        application.
+        The RichKit packages collect nothing. The editor makes no network calls to us and has no
+        telemetry. The Pro licence key is verified locally, inside your application, and is never
+        sent anywhere. Anything you type stays in your application.
       </p>
 
       <h2>This website</h2>
@@ -185,18 +185,19 @@ export function Privacy() {
 
       <h2>Buying a licence</h2>
       <p>
-        Checkout is handled by Paddle, our merchant of record. When you open a checkout, Paddle
+        Checkout is handled by Lemon Squeezy, our merchant of record. When you open a checkout, Lemon Squeezy
         receives the information you enter — name, email address, billing address and payment details
         — and processes it as an independent controller under{' '}
-        <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noreferrer">
-          Paddle&rsquo;s privacy policy
+        <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noreferrer">
+          Lemon Squeezy&rsquo;s privacy policy
         </a>
         . We never see or store your card details.
       </p>
       <p>
-        From Paddle we receive the record of your purchase: your name, email address, country, and
-        what you bought. We use it to know who holds a licence, to send licence and release
-        information, and to answer support requests. We do not sell it or use it for advertising.
+        From Lemon Squeezy we receive the record of your purchase: your name, email address, country,
+        and what you bought. We use it to issue your licence key, to know who holds a licence, to
+        send licence and release information, and to answer support requests. Your company name and
+        email are written into the licence key itself. We do not sell it or use it for advertising.
       </p>
 
       <h2>Support and email</h2>
@@ -211,7 +212,7 @@ export function Privacy() {
         accounting obligations. You can ask us for a copy of what we hold, ask us to correct it, or
         ask us to delete it where we are not required to keep it — write to{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Requests about payment data are best
-        sent to Paddle, who hold it.
+        sent to Lemon Squeezy, who hold it.
       </p>
     </LegalPage>
   )
@@ -222,24 +223,24 @@ export function Refunds() {
     <LegalPage
       eyebrow="Legal"
       title="Refund policy"
-      lede="A 30-day refund on any licence, handled by Paddle, our merchant of record."
+      lede="A 30-day refund on any licence, handled by Lemon Squeezy, our merchant of record."
     >
       <h2>30 days, no argument</h2>
       <p>
         If a RichKit licence is not right for you, ask for a refund within 30 days of purchase and
         you will get your money back in full. That applies to both the annual and the lifetime
-        licence. You do not need to justify the request.
+        licence, on every plan. You do not need to justify the request.
       </p>
       <p>
-        RichKit is free to evaluate commercially for 90 days before you pay anything, so we would
-        rather you tried it properly first than bought and returned it.
+        The Pro packages run without a key on development hosts, so we would rather you tried them
+        properly first than bought and returned them.
       </p>
 
       <h2>How to request one</h2>
       <p>{MOR}</p>
       <p>
-        Because Paddle is the merchant of record, refunds are issued by Paddle. Request one from the
-        receipt email Paddle sent you, or email{' '}
+        Because Lemon Squeezy is the merchant of record, refunds are issued by Lemon Squeezy. Request
+        one from the receipt email Lemon Squeezy sent you, or email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and we will raise it for you. Refunds
         return to the original payment method, typically within five to ten business days depending
         on your bank.
@@ -249,8 +250,8 @@ export function Refunds() {
       <p>
         You can cancel an annual licence at any time to stop it renewing, and you keep the licence
         until the end of the period you have paid for. Renewal charges are refundable under the same
-        30-day window as a first purchase. After a refund, your commercial licence ends, though the
-        packages remain free to use noncommercially.
+        30-day window as a first purchase. After a refund, your Pro licence and its key end, though the
+        MIT core remains free to use.
       </p>
 
       <h2>When we may decline</h2>

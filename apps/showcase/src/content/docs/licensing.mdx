@@ -1,0 +1,77 @@
+import { Install } from '../../mdx-components'
+
+<div className="docs-prose">
+
+# Licensing
+
+RichKit is open-core. The core editor and every basic extension are **MIT** —
+free for any use, commercial or not, with nothing to configure. The premium
+packages are **RichKit Pro**.
+
+| Free (MIT)                                                                            | Pro                                                                                                |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `@richkitjs/core`, `react`, `vue`, `starter-kit`                                      | `@richkitjs/docx`                                                                                  |
+| `@richkitjs/html`, `markdown`                                                         | `@richkitjs/extension-track-changes`                                                               |
+| Every basic extension — tables, images, links, lists, math, mentions, slash commands… | `@richkitjs/extension-comments`                                                                    |
+|                                                                                       | `@richkitjs/extension-ai`, `ai-openai`, `ai-anthropic`                                             |
+|                                                                                       | `@richkitjs/editors-pro` (Simple, Notion, Classic, Question, Comments, Track changes, DOCX, Agent editors) |
+
+## Trying Pro
+
+Pro packages need no key on development hosts: `localhost`, `127.0.0.1`,
+`*.local`, `*.localhost`, `*.test` and `file:` pages. Install them and build
+the real integration before you buy.
+
+## Adding your licence key
+
+After purchase you receive a licence key by email. Register it once, at
+startup, before or after your first editor mounts.
+
+</div>
+
+<Install packages="@richkitjs/license" />
+
+<div className="docs-prose">
+
+```ts
+// main.ts
+import { setLicenseKey } from '@richkitjs/license'
+
+setLicenseKey(import.meta.env.VITE_RICHKIT_LICENSE_KEY)
+```
+
+The key is verified **locally**, with a public key built into the package. There
+is no activation call, no telemetry, and nothing is sent anywhere — offline and
+air-gapped apps work the same. The key is not a secret in the password sense: it
+ships inside your bundle, like any client-side licence key. It is still yours
+alone; do not share it with other companies.
+
+## Without a key
+
+On a production host, Pro packages without a valid key show a small
+**"RichKit Pro · unlicensed"** badge in the corner of the page and log one
+console warning. That is all. The editor keeps working, editing is never
+blocked, and documents are never touched.
+
+## When your subscription ends
+
+A key covers every RichKit Pro release up to its _updates until_ date — forever.
+If you stop renewing, keep shipping those versions with the same key; only
+releases published after that date show the badge. Renewing sends you a new
+key.
+
+## Checking a key
+
+```ts
+import { getLicenseStatus } from '@richkitjs/license'
+
+const status = await getLicenseStatus()
+// { valid: true, payload: { company, plan, updatesUntil, … } }
+// or { valid: false, reason: 'missing' | 'malformed' | 'invalid-signature' | 'expired' }
+```
+
+See the [pricing page](/pricing) for plans, and the
+[RichKit Pro licence](https://github.com/faithdevss/richkit/blob/main/LICENSE-COMMERCIAL)
+for the full terms.
+
+</div>

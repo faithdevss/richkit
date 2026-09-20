@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import type { Editor } from '@richkitjs/core'
 import { Document, LevelFormat, Packer } from 'docx'
 import { convertDoc } from './convert'
@@ -10,6 +11,7 @@ export interface ExportDocxOptions {
 }
 
 export async function exportToDocx(editor: Editor, opts: ExportDocxOptions = {}): Promise<Blob> {
+  requirePro('docx')
   const json = editor.getJSON() as unknown as JSONNode
   const children = convertDoc(json)
   const doc = new Document({

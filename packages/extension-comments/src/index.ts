@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import { Mark, type Command } from '@richkitjs/core'
 import { commentsKey, commentsPlugin, newId, type Thread } from './store'
 
@@ -149,7 +150,10 @@ export const Comment = Mark.create({
       }
     },
   }),
-  addProseMirrorPlugins: () => [commentsPlugin()],
+  addProseMirrorPlugins: () => {
+    requirePro('comments')
+    return [commentsPlugin()]
+  },
 })
 
 export { commentsKey, commentsPlugin, getCommentsState, newId } from './store'

@@ -4,7 +4,6 @@ import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { EditorHandle } from '../field'
 import { MinimalEditor } from '../MinimalEditor'
-import { QuestionEditor, type QuestionValue } from '../QuestionEditor'
 
 let root: Root | null = null
 let container: HTMLDivElement | null = null
@@ -79,30 +78,5 @@ describe('ready-made editors as form inputs', () => {
     )
     await typeAtEnd(editor!, ' text')
     expect(out).toBe('plain text')
-  })
-
-  it('QuestionEditor reports the whole question as one value', async () => {
-    let stem: Editor | null = null
-    let value: QuestionValue | undefined
-
-    function Form() {
-      const [q, setQ] = useState<QuestionValue>({
-        stem: '<p>2 + 2 = ?</p>',
-        options: ['<p>3</p>', '<p>4</p>'],
-        correct: 0,
-        points: 1,
-      })
-      value = q
-      return <QuestionEditor value={q} onChange={setQ} onEditorReady={(e) => (stem = e)} />
-    }
-
-    await mount(<Form />)
-    await typeAtEnd(stem!, '!')
-    expect(value!.stem).toBe('<p>2 + 2 = ?!</p>')
-
-    const marks = container!.querySelectorAll<HTMLButtonElement>('.question-option-mark')
-    expect(marks).toHaveLength(2)
-    await act(async () => marks[1]!.click())
-    expect(value).toMatchObject({ correct: 1, options: ['<p>3</p>', '<p>4</p>'] })
   })
 })

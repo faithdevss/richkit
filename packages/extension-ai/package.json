@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-ai",
   "version": "0.1.0",
   "description": "AI writing for RichKit: stream model output into the document as tracked suggestions the user accepts or rejects. Bring any provider through a transport function.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {
@@ -30,6 +29,7 @@
   "dependencies": {
     "@richkitjs/core": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
+    "@richkitjs/license": "workspace:*",
     "prosemirror-model": "^1.25.11",
     "prosemirror-state": "^1.4.4",
     "prosemirror-view": "^1.42.3"

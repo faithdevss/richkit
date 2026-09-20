@@ -215,19 +215,23 @@ version PR's branch.
 A new `packages/<name>/` needs all of this before its first release:
 
 - `package.json` with `name` (`@richkitjs/*`), `description`,
-  `license: "PolyForm-Noncommercial-1.0.0"`,
-  `files: ["dist", "LICENSE", "LICENSE-COMMERCIAL", "NOTICE"]`,
+  `license: "MIT"` (or `"SEE LICENSE IN LICENSE"` for a Pro package),
+  `files: ["dist", "LICENSE", "NOTICE"]`,
   `main` / `module` / `types` / `exports`, `repository.directory`, `homepage`, `bugs`,
   `sideEffects`, and `keywords`. Copy `packages/core/package.json` as the template.
 - `README.md` and `LICENSE` — npm always includes both regardless of `files`, and a package
   page with no README looks abandoned.
-- **Copies of `LICENSE`, `LICENSE-COMMERCIAL`, and `NOTICE` from the repo root.** npm only
-  auto-includes `LICENSE`, so the other two have to be listed in `files` or they never reach
-  the tarball — and the commercial terms have to travel with the code. Refresh all three in
-  every package whenever the root copies change:
+- **A `LICENSE` and `NOTICE`.** A free package's `LICENSE` is the plain MIT text (the root
+  `LICENSE` minus its open-core preamble). A Pro package's `LICENSE` is a copy of the root
+  `LICENSE-COMMERCIAL`, and the package must depend on `@richkitjs/license`, call
+  `requirePro('<feature>')` when used, be listed in the root `LICENSE` preamble, and join the
+  `fixed` group in `.changeset/config.json` so it always releases alongside the licence
+  package. Refresh the Pro copies whenever the root terms change:
 
   ```bash
-  for d in packages/*/; do cp LICENSE LICENSE-COMMERCIAL NOTICE "$d"; done
+  for d in docx extension-track-changes extension-comments extension-ai ai-openai ai-anthropic editors-pro; do
+    cp LICENSE-COMMERCIAL "packages/$d/LICENSE"
+  done
   ```
 
 - A `build` script producing `dist/` with ESM, CJS, and `.d.ts` — inherit `tsup.config.base.ts`.
@@ -243,10 +247,9 @@ Sanity-check what a package will actually ship:
 cd packages/<name> && npm pack --dry-run
 ```
 
-Expect `LICENSE`, `LICENSE-COMMERCIAL`, `NOTICE`, `README.md`, `package.json`, and `dist/`
-(plus `scripts/` for `@richkitjs/core`, which carries the postinstall licensing notice). Source
-files or `node_modules` in that listing mean `files` is wrong; a missing `LICENSE-COMMERCIAL` or
-`NOTICE` means the copy step above was skipped.
+Expect `LICENSE`, `NOTICE`, `README.md`, `package.json`, and `dist/`. Source files or
+`node_modules` in that listing mean `files` is wrong; a missing `NOTICE` means the copy step
+above was skipped.
 
 ## Prereleases
 

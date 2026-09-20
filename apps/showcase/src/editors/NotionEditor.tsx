@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { MentionCandidate } from '@richkitjs/react'
 import type { AICompleteOptions, AICompletionRequest } from '@richkitjs/extension-ai'
-import { NotionEditor as Notion } from '@richkitjs/editors'
+import { NotionEditor as Notion } from '@richkitjs/editors-pro'
 import { NOTION_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-find-replace",
   "version": "0.1.0",
   "description": "Find and replace for RichKit: highlight matches, case-sensitive and regex search, replace one or replace all.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-paragraph",
   "version": "0.1.0",
   "description": "Paragraph node for RichKit, with setParagraph command and Mod-Alt-0 shortcut.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

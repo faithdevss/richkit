@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import type { AIComplete, AICompletionRequest } from '@richkitjs/extension-ai'
 
 /** Thinking depth. `'auto'` omits the field so the model's own default applies. */
@@ -111,6 +112,7 @@ interface StreamEvent {
  * Anthropic's response straight through without reshaping it.
  */
 export function anthropicComplete(options: AnthropicAdapterOptions): AIComplete {
+  requirePro('ai-anthropic')
   const {
     endpoint,
     dangerouslyBrowserApiKey,

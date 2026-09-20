@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { QuestionEditor as Question, type QuestionValue } from '@richkitjs/editors'
+import { QuestionEditor as Question, type QuestionValue } from '@richkitjs/editors-pro'
 import '@richkitjs/extension-math/style.css'
 import { QUESTION_OPTIONS, QUESTION_STEM } from '../content'
 import { exposeEditor } from './useDevEditor'

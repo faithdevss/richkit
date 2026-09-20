@@ -25,9 +25,9 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     detail: 'What the core itself is licensed under.',
     cells: [
       {
-        state: 'partial',
-        label: 'PolyForm NC / commercial',
-        note: 'Free for hobby, learning, research, education and charities. Business use needs the $99 / yr commercial license, after a free 90-day evaluation.',
+        state: 'open',
+        label: 'MIT core / Pro',
+        note: 'The core editor and basic extensions are MIT. DOCX, track changes, comments, AI and the Pro editors are RichKit Pro, from $99 / yr with an offline licence key.',
       },
       { state: 'open', label: 'MIT' },
       {
@@ -215,8 +215,8 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
     cells: [
       {
         state: 'open',
-        label: '$99 / yr',
-        note: '$99 / year flat (about $8.25 a month), billed once. Unlimited developers, unlimited products, every package — no per-seat charge and no usage metering. Free for noncommercial use.',
+        label: '$99 – $499 / yr',
+        note: 'Startup $99 / yr (under $1M revenue, up to 3 devs) or Business $499 / yr (up to 20 devs, unlimited products). $3,000 lifetime. Self-hosted — no per-document fees and no usage metering.',
       },
       {
         state: 'paid',

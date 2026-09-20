@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-markdown-shortcuts",
   "version": "0.2.0",
   "description": "Markdown-as-you-type for RichKit: headings, quotes, lists, task lists, code blocks, dividers and inline bold, italic, strike and code.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

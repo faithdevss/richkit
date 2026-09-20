@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-superscript",
   "version": "0.1.0",
   "description": "Superscript mark for RichKit: toggleSuperscript command and Mod-. shortcut.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

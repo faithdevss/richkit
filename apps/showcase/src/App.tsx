@@ -14,8 +14,10 @@ import Installation from './content/docs/installation.mdx'
 import CoreConcepts from './content/docs/core-concepts.mdx'
 import Styling from './content/docs/styling.mdx'
 import AIDocs from './content/docs/ai.mdx'
+import Licensing from './content/docs/licensing.mdx'
 import EditorApi from './content/docs/api/editor.mdx'
 import ReactApi from './content/docs/api/react.mdx'
+import EditorsApi from './content/docs/api/editors.mdx'
 import CommandsApi from './content/docs/api/commands.mdx'
 import StarterKitApi from './content/docs/api/starter-kit.mdx'
 import AgentWorkflowsUsecase from './content/docs/usecases/agent-workflows.mdx'
@@ -45,8 +47,10 @@ export function App() {
             <Route path="core-concepts" element={<CoreConcepts />} />
             <Route path="styling" element={<Styling />} />
             <Route path="ai" element={<AIDocs />} />
+            <Route path="licensing" element={<Licensing />} />
             <Route path="api/editor" element={<EditorApi />} />
             <Route path="api/react" element={<ReactApi />} />
+            <Route path="api/editors" element={<EditorsApi />} />
             <Route path="api/commands" element={<CommandsApi />} />
             <Route path="api/starter-kit" element={<StarterKitApi />} />
             <Route path="extensions" element={<ExtensionsReference />} />

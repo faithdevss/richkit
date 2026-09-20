@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { ClassicEditor as Classic, type EditorHandle } from '@richkitjs/editors'
+import { ClassicEditor as Classic, type EditorHandle } from '@richkitjs/editors-pro'
 import { CLASSIC_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

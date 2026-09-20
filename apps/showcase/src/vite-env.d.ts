@@ -1,14 +1,14 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** Which Paddle account the checkout talks to. Defaults to the sandbox. */
-  readonly VITE_PADDLE_ENV?: 'sandbox' | 'production'
-  /** Paddle client-side token. Safe to ship; only opens a checkout. */
-  readonly VITE_PADDLE_CLIENT_TOKEN?: string
-  /** Paddle price ID for the $99/yr licence, prefixed `pri_`. */
-  readonly VITE_PADDLE_PRICE_ANNUAL?: string
-  /** Paddle price ID for the $999 lifetime licence, prefixed `pri_`. */
-  readonly VITE_PADDLE_PRICE_LIFETIME?: string
+  /** Lemon Squeezy buy URL for the Startup plan. Public; only opens a checkout. */
+  readonly VITE_LS_CHECKOUT_STARTUP?: string
+  /** Lemon Squeezy buy URL for the Business plan. */
+  readonly VITE_LS_CHECKOUT_BUSINESS?: string
+  /** Lemon Squeezy buy URL for the one-time Lifetime licence. */
+  readonly VITE_LS_CHECKOUT_LIFETIME?: string
+  /** RichKit Pro key for the showcase's own demos, domain-bound to the Pages host. */
+  readonly VITE_RICHKIT_LICENSE_KEY?: string
 }
 
 interface ImportMeta {

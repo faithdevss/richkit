@@ -1,3 +1,4 @@
+import { requirePro } from '@richkitjs/license'
 import type { Editor } from '@richkitjs/core'
 import mammoth from 'mammoth'
 
@@ -15,6 +16,7 @@ const STYLE_MAP = [
 ]
 
 export async function importDocxToHtml(data: ArrayBuffer): Promise<DocxImportResult> {
+  requirePro('docx')
   // browser build of mammoth reads `arrayBuffer`, node build reads `buffer`
   const input: { arrayBuffer: ArrayBuffer; buffer?: Uint8Array } = { arrayBuffer: data }
   if (typeof Buffer !== 'undefined') input.buffer = Buffer.from(data)

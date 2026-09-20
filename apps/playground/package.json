@@ -15,6 +15,7 @@
     "@richkitjs/core": "workspace:*",
     "@richkitjs/docx": "workspace:*",
     "@richkitjs/extension-ai": "workspace:*",
+    "@richkitjs/extension-comments": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",
     "@richkitjs/markdown": "workspace:*",

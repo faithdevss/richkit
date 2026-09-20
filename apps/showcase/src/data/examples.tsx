@@ -3,20 +3,18 @@ import { CommentBoxEditor } from '../editors/CommentBoxEditor'
 import { CommentsEditor } from '../editors/CommentsEditor'
 import { FindReplaceEditor } from '../editors/FindReplaceEditor'
 import { HtmlEditor } from '../editors/HtmlEditor'
-import { MarkdownEditor } from '../editors/MarkdownEditor'
 import { MentionsEditor } from '../editors/MentionsEditor'
 import { MinimalEditor } from '../editors/MinimalEditor'
-import { QuestionEditor } from '../editors/QuestionEditor'
+import { SimpleEditor } from '../editors/SimpleEditor'
 import { TrackChangesEditor } from '../editors/TrackChangesEditor'
 import commentBoxSource from '../../../../packages/editors/src/CommentBoxEditor.tsx?raw'
-import commentsSource from '../../../../packages/editors/src/CommentsEditor.tsx?raw'
+import commentsSource from '../../../../packages/editors-pro/src/CommentsEditor.tsx?raw'
 import findSource from '../../../../packages/editors/src/FindReplaceEditor.tsx?raw'
 import htmlSource from '../../../../packages/editors/src/HtmlEditor.tsx?raw'
-import markdownSource from '../../../../packages/editors/src/MarkdownEditor.tsx?raw'
 import mentionsSource from '../../../../packages/editors/src/MentionsEditor.tsx?raw'
 import minimalSource from '../../../../packages/editors/src/MinimalEditor.tsx?raw'
-import questionSource from '../../../../packages/editors/src/QuestionEditor.tsx?raw'
-import trackSource from '../../../../packages/editors/src/TrackChangesEditor.tsx?raw'
+import simpleSource from '../../../../packages/editors-pro/src/SimpleEditor.tsx?raw'
+import trackSource from '../../../../packages/editors-pro/src/TrackChangesEditor.tsx?raw'
 
 export interface Example {
   id: string
@@ -24,6 +22,8 @@ export interface Example {
   blurb: string
   /** The package the example is about, shown in the frame bar. */
   pkg: string
+  /** Built on a RichKit Pro package, so production use needs a licence key. */
+  pro?: boolean
   /** Everything to install, space-separated. */
   install: string
   /** What to notice, one point per line. */
@@ -38,57 +38,26 @@ const BASE = '@richkitjs/react @richkitjs/starter-kit'
 
 export const EXAMPLES: Example[] = [
   {
-    id: 'question',
-    title: 'Question editor',
+    id: 'simple',
+    title: 'Simple',
     blurb:
-      'Author a multiple-choice question: formulas, tables, images, sub- and superscript, colour and highlight. One toolbar follows whichever field you are in.',
-    pkg: '@richkitjs/extension-math',
-    install: `${BASE} @richkitjs/extension-math`,
+      'The full StarterKit behind a one-row toolbar, with a slash menu, a bubble menu, find and replace and a light/dark toggle. A drop-in editor for most forms and CMS fields.',
+    pkg: '@richkitjs/editors-pro',
+    pro: true,
+    install: `${BASE} @richkitjs/editors @richkitjs/editors-pro @richkitjs/license`,
     points: [
-      'The question uses the full StarterKit plus both math nodes. Each answer option is its own small editor, limited to inline formatting and inline formulas.',
-      'One toolbar serves every field: each editor reports focus, and the toolbar re-binds to whichever was focused last.',
-      'Double-clicking a formula calls the math extension’s `onEdit`, which opens the formula panel with a live KaTeX preview.',
-      'Formulas are stored as `<span data-math>` and `<div data-math-block>` with the LaTeX inside, so saved questions stay readable.',
+      '`SimpleEditor` behaves like a form input: `value` in, `onChange` out, plus `name` for native form submits and a `ref` handle for form libraries.',
+      'Every StarterKit extension is on — headings, lists, tables, images, links, code blocks — with `/` for block commands and a bubble menu over selections.',
+      'The toolbar is plain `@richkitjs/react` parts (`Toolbar`, `BlockTypeMenu`, list menus), so the source is a template for your own.',
     ],
-    snippet: `import { MathBlock, MathInline } from '@richkitjs/extension-math'
-import '@richkitjs/extension-math/style.css'
+    snippet: `import '@richkitjs/editors/style.css'
+import { SimpleEditor } from '@richkitjs/editors-pro'
 
-const onEdit = ({ editor, pos, latex }) => openFormulaPanel({ editor, pos, latex })
+const [html, setHtml] = useState('<p>Hello</p>')
 
-const editor = useEditor({
-  extensions: [
-    ...StarterKit,
-    MathInline.configure({ onEdit }),
-    MathBlock.configure({ onEdit }),
-  ],
-})
-
-editor.chain().call('insertMath', '\\\\frac{\\\\Delta v}{\\\\Delta t}').run()
-editor.chain().call('updateMath', pos, 'a = 3').run()`,
-    source: questionSource,
-    demo: () => <QuestionEditor />,
-  },
-  {
-    id: 'markdown',
-    title: 'Markdown editor',
-    blurb:
-      'Rich editing on the left, the Markdown source on the right. Edit either side and the other follows.',
-    pkg: '@richkitjs/markdown',
-    install: `${BASE} @richkitjs/markdown`,
-    points: [
-      'Markdown goes in through `markdownToHtml` and comes out through `docToMarkdown`. The editor itself only ever holds a document.',
-      'A ref marks updates that came from the source pane, so the editor doesn’t re-serialise and overwrite what is being typed.',
-      'Markdown shortcuts such as `## ` and `- ` come with StarterKit.',
-    ],
-    snippet: `import { docToMarkdown, markdownToHtml } from '@richkitjs/markdown'
-
-const editor = useEditor({
-  extensions: StarterKit,
-  content: markdownToHtml(markdown),
-  onUpdate: ({ editor }) => setMarkdown(docToMarkdown(editor.state.doc)),
-})`,
-    source: markdownSource,
-    demo: () => <MarkdownEditor />,
+<SimpleEditor value={html} onChange={setHtml} placeholder="Write something…" />`,
+    source: simpleSource,
+    demo: () => <SimpleEditor />,
   },
   {
     id: 'comments',
@@ -96,13 +65,17 @@ const editor = useEditor({
     blurb:
       'Select text to start a thread. Reply, resolve and reopen from the sidebar — threads stay anchored to the text they are about.',
     pkg: '@richkitjs/extension-comments',
-    install: BASE,
+    pro: true,
+    install: `${BASE} @richkitjs/extension-comments @richkitjs/license`,
     points: [
-      'Comments ship in StarterKit. A thread is a mark on the text plus an entry in plugin state, so it moves with the text as the document changes.',
+      'Comments are RichKit Pro: add `Comment` from `@richkitjs/extension-comments` to your extensions. A thread is a mark on the text plus an entry in plugin state, so it moves with the text as the document changes.',
       '`CommentSidebar` lists threads with reply, resolve, reopen and delete. `CommentComposer` is the small box that opens under the selection.',
       'The demo seeds two threads on load with `addComment` and `addCommentReply`.',
     ],
-    snippet: `import { CommentComposer, CommentSidebar } from '@richkitjs/react'
+    snippet: `import { Comment } from '@richkitjs/extension-comments'
+import { CommentComposer, CommentSidebar } from '@richkitjs/react'
+
+const editor = useEditor({ extensions: [...StarterKit, Comment] })
 
 editor.chain().call('addComment', { body, author: 'Priya', from, to }).run()
 editor.chain().call('addCommentReply', { id, body: 'Agreed.' }).run()
@@ -118,13 +91,18 @@ editor.chain().call('addCommentReply', { id, body: 'Agreed.' }).run()
     blurb:
       'Edits land as suggestions, attributed to whoever made them. Accept or reject each one, or clear the lot in one go.',
     pkg: '@richkitjs/extension-track-changes',
-    install: BASE,
+    pro: true,
+    install: `${BASE} @richkitjs/extension-track-changes @richkitjs/license`,
     points: [
+      'Track changes is RichKit Pro: add `TrackChangesKit` from `@richkitjs/extension-track-changes` to your extensions.',
       'With tracking on, typed text becomes an insertion and deleted text stays in place as a deletion, both credited to the current author.',
       'Suggestions are plain marked-up spans (`data-suggestion="insertion"`), so a document can be loaded with review already in progress.',
       '`SuggestionSidebar` lists every suggestion, with accept and reject for each one, both for all of them, and the tracking toggle.',
     ],
-    snippet: `import { SuggestionSidebar } from '@richkitjs/react'
+    snippet: `import { TrackChangesKit } from '@richkitjs/extension-track-changes'
+import { SuggestionSidebar } from '@richkitjs/react'
+
+const editor = useEditor({ extensions: [...StarterKit, ...TrackChangesKit] })
 
 editor.chain().call('enableTrackChanges', 'Dana (Legal)').run()
 editor.chain().call('acceptSuggestion', id).run()

@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-bold",
   "version": "0.1.0",
   "description": "Bold mark for RichKit: toggleBold command and Mod-B shortcut.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

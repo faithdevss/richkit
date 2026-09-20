@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-task-list",
   "version": "0.2.0",
   "description": "Task lists (checkboxes) for RichKit: toggleTaskList, Mod-Shift-9 shortcut and nesting with Tab and Shift-Tab.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

@@ -2,7 +2,7 @@
   "name": "@richkitjs/starter-kit",
   "version": "0.2.0",
   "description": "Every standard RichKit extension in one import: 41 extensions covering marks, headings, lists, tables, images, code highlighting, callouts, comments, markdown shortcuts and more. 184 KB gzipped.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {
@@ -36,7 +35,6 @@
     "@richkitjs/extension-case-change": "workspace:*",
     "@richkitjs/extension-code": "workspace:*",
     "@richkitjs/extension-code-block": "workspace:*",
-    "@richkitjs/extension-comments": "workspace:*",
     "@richkitjs/extension-drag-handle": "workspace:*",
     "@richkitjs/extension-embed": "workspace:*",
     "@richkitjs/extension-find-replace": "workspace:*",
@@ -67,7 +65,6 @@
     "@richkitjs/extension-text-align": "workspace:*",
     "@richkitjs/extension-text-style": "workspace:*",
     "@richkitjs/extension-toggle": "workspace:*",
-    "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-typography": "workspace:*",
     "@richkitjs/extension-underline": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*"

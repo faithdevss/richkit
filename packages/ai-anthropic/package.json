@@ -2,7 +2,7 @@
   "name": "@richkitjs/ai-anthropic",
   "version": "0.1.0",
   "description": "Anthropic Claude streaming transport for @richkitjs/extension-ai. Streams completions into the editor with cancellation support.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {
@@ -28,7 +27,8 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@richkitjs/extension-ai": "workspace:*"
+    "@richkitjs/extension-ai": "workspace:*",
+    "@richkitjs/license": "workspace:*"
   },
   "devDependencies": {
     "jsdom": "^30.1.0",

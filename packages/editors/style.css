@@ -3155,6 +3155,12 @@ kbd {
   opacity: 0.6;
   cursor: default;
 }
+.agent-dock-error {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  color: #b42318;
+  line-height: 1.45;
+}
 
 /* Notion callout blockquote already themed via editor-base; add emoji spacing */
 .demo-page-notion .editor blockquote {

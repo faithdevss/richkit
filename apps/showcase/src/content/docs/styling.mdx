@@ -37,6 +37,30 @@ mounts ProseMirror's own DOM into it — you write the stylesheet.
 }
 ```
 
+## Borrowing the editors stylesheet
+
+Don't want to write it all? `@richkitjs/editors/style.css` is the stylesheet behind the
+[ready-made editors](/docs/api/editors), and its rules are not tied to those
+components. Import it and your own `@richkitjs/react` UI is styled too — toolbar
+(`.toolbar`, `.tb-btn`), menus and popovers, `.bubble-menu`, slash and mention menus,
+block handle, sidebars, modals, toasts and the content itself (`.editor .ProseMirror`):
+
+```tsx
+import '@richkitjs/editors/style.css'
+
+<Toolbar editor={editor} className="toolbar">{/* ... */}</Toolbar>
+<EditorContent editor={editor} className="editor" />
+<BubbleMenu editor={editor} className="bubble-menu">{/* ... */}</BubbleMenu>
+```
+
+Note the content rules are scoped under `.editor`, so give `EditorContent` that class.
+Every colour, radius and shadow in it is a CSS variable (`--bg`, `--surface`,
+`--surface-2`, `--border`, `--border-strong`, `--text`, `--text-muted`, `--accent`,
+`--accent-soft`, `--accent-hover`, `--danger`, `--radius`, `--radius-sm`,
+`--radius-lg`, `--shadow-sm/md/lg`), light on `:root` and dark under
+`[data-theme='dark']` — override those to rebrand. The full table is in
+[Ready-made editors → Styling](/docs/api/editors#styling).
+
 ## Theming with CSS custom properties
 
 Every live example on this site (the [usecases](/docs/usecases/agent-workflows)) is

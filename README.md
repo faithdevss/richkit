@@ -232,15 +232,17 @@ Publishing to npm is automated from `main`. See [PUBLISHING.md](./PUBLISHING.md)
 
 ## License
 
-RichKit is dual licensed.
+RichKit is open-core.
 
-| Use                                                                   | License                                            | Cost                                                       |
-| --------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------- |
-| Hobby projects, learning, research, education, charities, non-profits | [PolyForm Noncommercial 1.0.0](./LICENSE)          | Free                                                       |
-| Any commercial or business use                                        | [RichKit Commercial License](./LICENSE-COMMERCIAL) | [$99 / year](https://faithdevss.github.io/richkit/pricing) |
+| Packages                                                                                                                 | License                                     | Cost                                                             |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ---------------------------------------------------------------- |
+| Core, React, Vue, starter kit, HTML, Markdown and every basic extension                                                  | [MIT](./LICENSE)                            | Free, for any use                                                |
+| **Pro:** `docx`, `extension-track-changes`, `extension-comments`, `extension-ai`, `ai-openai`, `ai-anthropic`, `editors-pro` | [RichKit Pro License](./LICENSE-COMMERCIAL) | [from $99 / year](https://faithdevss.github.io/richkit/pricing) |
 
-The commercial license is flat-rate: unlimited developers, unlimited products,
-all packages, no license key and no telemetry. Every entity gets a free 90-day
-evaluation period before it has to buy.
+Pro packages run without a key on localhost and other development hosts. In
+production, call `setLicenseKey()` from `@richkitjs/license` with the key you
+receive after purchase. The key is verified offline — no activation, no
+telemetry. Without one, a small "unlicensed" badge appears; the editor never
+stops working.
 
 Third-party components keep their own licenses — see [NOTICE](./NOTICE).

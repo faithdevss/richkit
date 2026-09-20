@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-drag-handle",
   "version": "0.2.0",
   "description": "Block drag handle for RichKit: drag to reorder blocks, plus block actions such as duplicate (Mod-D) and delete.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

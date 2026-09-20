@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AgentEditor as Agent } from '@richkitjs/editors'
+import { AgentEditor as Agent } from '@richkitjs/editors-pro'
 import { AGENT_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

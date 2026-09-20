@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TrackChangesEditor as TrackChanges } from '@richkitjs/editors'
+import { TrackChangesEditor as TrackChanges } from '@richkitjs/editors-pro'
 import { TRACK_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 

@@ -2,7 +2,7 @@
   "name": "@richkitjs/extension-bullet-list",
   "version": "0.1.0",
   "description": "Bullet list node for RichKit: toggleBulletList, disc, circle and square markers, and Mod-Shift-8 shortcut.",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,7 +17,6 @@
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-COMMERCIAL",
     "NOTICE"
   ],
   "scripts": {

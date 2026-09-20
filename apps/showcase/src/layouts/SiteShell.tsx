@@ -225,8 +225,8 @@ export function SiteShell() {
           </div>
           <div className="foot-base">
             Built with <code>@richkitjs/core</code> · <code>@richkitjs/react</code> ·{' '}
-            <code>@richkitjs/starter-kit</code> · Free for noncommercial use ·{' '}
-            <Link to="/pricing">$99/yr commercial</Link>
+            <code>@richkitjs/starter-kit</code> · MIT core ·{' '}
+            <Link to="/pricing">Pro from $99/yr</Link>
             <span className="foot-legal">
               <Link to="/terms">Terms</Link>
               <Link to="/privacy">Privacy</Link>
