@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-comments",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Inline comment threads for RichKit: add, reply, resolve, reopen and remove comments anchored to text ranges.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

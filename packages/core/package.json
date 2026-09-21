@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Headless, framework-agnostic rich text editor built on ProseMirror. Extension API, schema builder, chainable commands, HTML/JSON I/O and autosave. 64 KB gzipped.",
   "license": "MIT",
   "type": "module",

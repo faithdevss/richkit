@@ -1,5 +1,103 @@
 # @richkitjs/starter-kit
 
+## 0.3.0
+
+### Minor Changes
+
+- 3ec0ab4: RichKit is now open-core.
+
+  The core editor, the React and Vue bindings, the starter kit, HTML, Markdown and every basic
+  extension stay **MIT** — free for any use.
+
+  `docx`, `extension-track-changes`, `extension-comments`, `extension-ai`, `ai-openai`,
+  `ai-anthropic` and the new `editors-pro` become **RichKit Pro**, under the RichKit Pro License Agreement.
+  They run without a key on localhost and other development hosts. In production, register the
+  key you receive after purchase:
+
+  ```ts
+  import { setLicenseKey } from '@richkitjs/license'
+
+  setLicenseKey('YOUR-LICENCE-KEY')
+  ```
+
+  The new `@richkitjs/license` package verifies the key offline — no activation call, no
+  telemetry. Without a valid key, Pro packages show a small "unlicensed" badge and log one
+  warning; they never stop working or block editing. A key keeps working, forever, with every
+  release up to its "updates until" date.
+
+  **Breaking — `@richkitjs/starter-kit`:** `StarterKit` no longer includes `Comment` or
+  `TrackChangesKit`, and no longer re-exports them. Add them yourself:
+
+  ```ts
+  import { Comment } from '@richkitjs/extension-comments'
+  import { TrackChangesKit } from '@richkitjs/extension-track-changes'
+
+  useEditor({ extensions: [...StarterKit, Comment, ...TrackChangesKit] })
+  ```
+
+  **Breaking — `@richkitjs/editors`:** `SimpleEditor`, `NotionEditor`, `ClassicEditor`, `QuestionEditor`,
+  `CommentsEditor`, `TrackChangesEditor`, `DocxEditor` and `AgentEditor` moved to the new
+  `@richkitjs/editors-pro`. `@richkitjs/editors` keeps the free editors (Minimal, HTML,
+  Markdown, Mentions, Comment box, Find & replace), is MIT, and now exports its field helpers
+  (`useEditorField`, `FieldValue`, `useTheme`, `withPlaceholder`, `cx`) for building your own.
+  Both packages share `@richkitjs/editors/style.css`.
+
+  `AgentEditor` gains a `complete` prop that takes the same streaming transport as
+  `@richkitjs/extension-ai` (e.g. `anthropicComplete({ endpoint: '/api/ai' })`). Drafted sections
+  stream into the document as Markdown-rendered content, land as one undo step, and can be
+  stopped mid-stream.
+
+### Patch Changes
+
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+- Updated dependencies [08f0dc7]
+- Updated dependencies [7e383d9]
+- Updated dependencies [04b4cc6]
+  - @richkitjs/core@0.2.0
+  - @richkitjs/extension-bullet-list@0.1.1
+  - @richkitjs/extension-ordered-list@0.1.1
+  - @richkitjs/extension-task-list@0.2.1
+  - @richkitjs/extension-code-block@0.3.0
+  - @richkitjs/extension-table@0.2.1
+  - @richkitjs/extension-heading@0.1.1
+  - @richkitjs/extension-highlight@0.1.1
+  - @richkitjs/extension-text-align@0.1.1
+  - @richkitjs/extension-blockquote@0.1.1
+  - @richkitjs/extension-bold@0.1.1
+  - @richkitjs/extension-bookmark@0.2.1
+  - @richkitjs/extension-callout@0.2.1
+  - @richkitjs/extension-case-change@0.1.1
+  - @richkitjs/extension-code@0.1.1
+  - @richkitjs/extension-drag-handle@0.2.1
+  - @richkitjs/extension-embed@0.1.1
+  - @richkitjs/extension-find-replace@0.1.1
+  - @richkitjs/extension-hard-break@0.2.1
+  - @richkitjs/extension-history@0.1.1
+  - @richkitjs/extension-horizontal-rule@0.1.1
+  - @richkitjs/extension-image@0.2.1
+  - @richkitjs/extension-italic@0.1.1
+  - @richkitjs/extension-line-height@0.1.1
+  - @richkitjs/extension-link@0.2.1
+  - @richkitjs/extension-list-item@0.1.1
+  - @richkitjs/extension-markdown-shortcuts@0.2.1
+  - @richkitjs/extension-media@0.2.1
+  - @richkitjs/extension-mention@0.2.1
+  - @richkitjs/extension-page-break@0.1.1
+  - @richkitjs/extension-paragraph@0.1.1
+  - @richkitjs/extension-paste-handler@0.2.1
+  - @richkitjs/extension-placeholder@0.1.1
+  - @richkitjs/extension-slash-commands@0.1.1
+  - @richkitjs/extension-strike@0.1.1
+  - @richkitjs/extension-subscript@0.1.1
+  - @richkitjs/extension-superscript@0.1.1
+  - @richkitjs/extension-text-style@0.1.1
+  - @richkitjs/extension-toggle@0.2.1
+  - @richkitjs/extension-typography@0.1.1
+  - @richkitjs/extension-underline@0.1.1
+  - @richkitjs/extension-word-count@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,4 +1,4 @@
-# @richkitjs/ai-anthropic
+# @richkitjs/license
 
 ## 0.2.0
 
@@ -58,27 +58,3 @@
   `@richkitjs/extension-ai` (e.g. `anthropicComplete({ endpoint: '/api/ai' })`). Drafted sections
   stream into the document as Markdown-rendered content, land as one undo step, and can be
   stopped mid-stream.
-
-### Patch Changes
-
-- Updated dependencies [01a839d]
-- Updated dependencies [3ec0ab4]
-  - @richkitjs/license@0.2.0
-  - @richkitjs/extension-ai@0.2.0
-
-## 0.1.0
-
-### Minor Changes
-
-- 6a56d74: Add `@richkitjs/ai-anthropic` — Anthropic (Claude) transport for `@richkitjs/extension-ai`.
-
-  Streams the Messages API SSE response into the editor. Zero runtime dependencies: proxy
-  through your own endpoint (recommended) or pass an end-user-supplied key with
-  `dangerouslyBrowserApiKey`. Defaults to `claude-sonnet-5` with thinking off for
-  immediate streaming; surfaces refusals, stream errors, and non-2xx bodies as thrown
-  errors that `extension-ai` reports in its plugin state.
-
-### Patch Changes
-
-- Updated dependencies [dd70dd2]
-  - @richkitjs/extension-ai@0.1.0

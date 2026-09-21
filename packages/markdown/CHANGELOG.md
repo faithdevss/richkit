@@ -1,5 +1,16 @@
 # @richkitjs/markdown
 
+## 0.1.1
+
+### Patch Changes
+
+- f79165d: Upgrade `markdown-it` to v15, which ships its own type definitions, so `@types/markdown-it`
+  is no longer needed.
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

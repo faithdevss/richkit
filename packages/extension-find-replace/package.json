@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-find-replace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find and replace for RichKit: highlight matches, case-sensitive and regex search, replace one or replace all.",
   "license": "MIT",
   "type": "module",

@@ -1,5 +1,19 @@
 # @richkitjs/extension-heading
 
+## 0.1.1
+
+### Patch Changes
+
+- 04b4cc6: A second click now undoes the first for headings, highlight and alignment.
+  `setHeading({ level })` on a heading of that level turns it back into a paragraph,
+  `setHighlight(color)` removes the highlight when the selection already has that color, and
+  `setTextAlign(align)` resets the alignment when every selected block already has it. The
+  keyboard shortcuts for headings and alignment still only set.
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

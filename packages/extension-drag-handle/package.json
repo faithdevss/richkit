@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-drag-handle",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Block drag handle for RichKit: drag to reorder blocks, plus block actions such as duplicate (Mod-D) and delete.",
   "license": "MIT",
   "type": "module",

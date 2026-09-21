@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-typography",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Smart typography for RichKit: curly quotes, em dashes, ellipses, arrows and ©, ®, ™, ±, ≠ as you type.",
   "license": "MIT",
   "type": "module",

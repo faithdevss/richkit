@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue 3 bindings for RichKit: useEditor composable, EditorContent component and provide/inject editor context.",
   "license": "MIT",
   "type": "module",

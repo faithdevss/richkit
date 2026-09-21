@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-italic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Italic mark for RichKit: toggleItalic command and Mod-I shortcut.",
   "license": "MIT",
   "type": "module",

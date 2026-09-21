@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-ordered-list",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ordered list node for RichKit: toggleOrderedList, decimal, alphabetic and roman numbering, and Mod-Shift-7 shortcut.",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-strike",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Strikethrough mark for RichKit: toggleStrike command and Mod-Shift-S shortcut.",
   "license": "MIT",
   "type": "module",

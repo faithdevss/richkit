@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-list-item",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "List item node for RichKit, shared by bullet and ordered lists: split, indent with Tab and outdent with Shift-Tab.",
   "license": "MIT",
   "type": "module",

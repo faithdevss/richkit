@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/editors",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ready-made React editors for RichKit — minimal, simple, HTML, Markdown, mentions, comment box and find & replace — each a form input with value/onChange.",
   "license": "MIT",
   "type": "module",
