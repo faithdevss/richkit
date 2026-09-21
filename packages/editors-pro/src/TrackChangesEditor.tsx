@@ -14,9 +14,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 export interface TrackChangesEditorProps {
@@ -28,7 +28,7 @@ export interface TrackChangesEditorProps {
 
 /** Suggesting mode: edits land as accept/reject-able suggestions in a sidebar. */
 export const TrackChangesEditor = forwardRef(function TrackChangesEditor(
-  props: AnyFieldProps & TrackChangesEditorProps,
+  props: AnyProFieldProps & TrackChangesEditorProps,
   ref: AnyHandleRef,
 ) {
   const { author = 'You', trackChanges = true, placeholder, className, style, name, format } = props
@@ -88,4 +88,4 @@ export const TrackChangesEditor = forwardRef(function TrackChangesEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<TrackChangesEditorProps>
+}) as ProFieldComponent<TrackChangesEditorProps>

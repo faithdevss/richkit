@@ -24,9 +24,9 @@ import {
   FieldValue,
   useEditorField,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 export interface ClassicEditorProps {
@@ -51,7 +51,7 @@ const FIELD_MENUS = ['Edit', 'Insert', 'Format', 'Help']
  * error/required/disabled — in the shape of a Material UI text field.
  */
 export const ClassicEditor = forwardRef(function ClassicEditor(
-  props: AnyFieldProps & ClassicEditorProps,
+  props: AnyProFieldProps & ClassicEditorProps,
   ref: AnyHandleRef,
 ) {
   const {
@@ -206,4 +206,4 @@ export const ClassicEditor = forwardRef(function ClassicEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<ClassicEditorProps>
+}) as ProFieldComponent<ClassicEditorProps>

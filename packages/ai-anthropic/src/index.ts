@@ -42,6 +42,11 @@ export interface AnthropicAdapterOptions {
   headers?: Record<string, string>
   /** Injectable for tests. */
   fetch?: typeof globalThis.fetch
+  /**
+   * Your RichKit Pro licence key, as an alternative to calling
+   * `setLicenseKey` at startup. One registration covers every Pro package.
+   */
+  licenseKey?: string
 }
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
@@ -112,7 +117,7 @@ interface StreamEvent {
  * Anthropic's response straight through without reshaping it.
  */
 export function anthropicComplete(options: AnthropicAdapterOptions): AIComplete {
-  requirePro('ai-anthropic')
+  requirePro('ai-anthropic', options.licenseKey)
   const {
     endpoint,
     dangerouslyBrowserApiKey,

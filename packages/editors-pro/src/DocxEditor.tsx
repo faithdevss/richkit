@@ -30,9 +30,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 const ZOOM_STEPS = [50, 75, 90, 100, 125, 150, 200]
@@ -51,7 +51,7 @@ export interface DocxEditorProps {
  * import/export.
  */
 export const DocxEditor = forwardRef(function DocxEditor(
-  props: AnyFieldProps & DocxEditorProps,
+  props: AnyProFieldProps & DocxEditorProps,
   ref: AnyHandleRef,
 ) {
   const {
@@ -296,4 +296,4 @@ export const DocxEditor = forwardRef(function DocxEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<DocxEditorProps>
+}) as ProFieldComponent<DocxEditorProps>

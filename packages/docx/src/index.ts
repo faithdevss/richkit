@@ -8,10 +8,16 @@ export interface ExportDocxOptions {
   filename?: string
   title?: string
   author?: string
+  /**
+   * Your RichKit Pro licence key, for apps that pass it around instead of
+   * calling `setLicenseKey` at startup. Registering it here licenses every
+   * Pro package on the page.
+   */
+  licenseKey?: string
 }
 
 export async function exportToDocx(editor: Editor, opts: ExportDocxOptions = {}): Promise<Blob> {
-  requirePro('docx')
+  requirePro('docx', opts.licenseKey)
   const json = editor.getJSON() as unknown as JSONNode
   const children = convertDoc(json)
   const doc = new Document({
@@ -46,4 +52,4 @@ export async function downloadDocx(editor: Editor, opts: ExportDocxOptions = {})
 export { convertDoc } from './convert'
 export type { JSONNode, JSONMark } from './types'
 export { importDocxToHtml, importDocxFile } from './import'
-export type { DocxImportResult } from './import'
+export type { DocxImportResult, ImportDocxOptions } from './import'

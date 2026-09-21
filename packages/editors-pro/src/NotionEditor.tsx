@@ -40,9 +40,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 export interface NotionEditorProps {
@@ -127,7 +127,7 @@ function useOutline(editor: Editor | null): OutlineEntry[] {
  * word count. Pass `ai` to switch on the AI commands.
  */
 export const NotionEditor = forwardRef(function NotionEditor(
-  props: AnyFieldProps & NotionEditorProps,
+  props: AnyProFieldProps & NotionEditorProps,
   ref: AnyHandleRef,
 ) {
   const {
@@ -490,4 +490,4 @@ export const NotionEditor = forwardRef(function NotionEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<NotionEditorProps>
+}) as ProFieldComponent<NotionEditorProps>

@@ -41,7 +41,7 @@ import {
 } from '@richkitjs/starter-kit'
 import { Placeholder } from '@richkitjs/extension-placeholder'
 import { MathBlock, MathInline, renderMath, type MathEditRequest } from '@richkitjs/extension-math'
-import { cx, useRequirePro, type Theme } from './field'
+import { cx, useRequirePro, type ProFieldProps, type Theme } from './field'
 
 /** A multiple-choice question as a form value. Every text is HTML. */
 export interface QuestionValue {
@@ -54,7 +54,7 @@ export interface QuestionValue {
   points: number
 }
 
-export interface QuestionEditorProps {
+export interface QuestionEditorProps extends ProFieldProps {
   value?: QuestionValue
   defaultValue?: QuestionValue
   onChange?: (value: QuestionValue) => void
@@ -381,6 +381,7 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
     className,
     style,
     onEditorReady,
+    licenseKey,
   }: QuestionEditorProps,
   ref: ForwardedRef<QuestionEditorHandle>,
 ) {
@@ -434,7 +435,7 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
     if (stem) onEditorReady?.(stem)
   }, [stem])
 
-  useRequirePro(stem)
+  useRequirePro(stem, licenseKey)
 
   useImperativeHandle(
     ref,

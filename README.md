@@ -234,14 +234,16 @@ Publishing to npm is automated from `main`. See [PUBLISHING.md](./PUBLISHING.md)
 
 RichKit is open-core.
 
-| Packages                                                                                                                 | License                                     | Cost                                                             |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ---------------------------------------------------------------- |
-| Core, React, Vue, starter kit, HTML, Markdown and every basic extension                                                  | [MIT](./LICENSE)                            | Free, for any use                                                |
+| Packages                                                                                                                     | License                                     | Cost                                                            |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------- |
+| Core, React, Vue, starter kit, HTML, Markdown and every basic extension                                                      | [MIT](./LICENSE)                            | Free, for any use                                               |
 | **Pro:** `docx`, `extension-track-changes`, `extension-comments`, `extension-ai`, `ai-openai`, `ai-anthropic`, `editors-pro` | [RichKit Pro License](./LICENSE-COMMERCIAL) | [from $99 / year](https://faithdevss.github.io/richkit/pricing) |
 
 Pro packages run without a key on localhost and other development hosts. In
-production, call `setLicenseKey()` from `@richkitjs/license` with the key you
-receive after purchase. The key is verified offline — no activation, no
+production, pass the key you receive after purchase as the `licenseKey` prop on
+a Pro editor — or as an option to `Comment.configure()`, `trackChangesKit()`,
+`AI.configure()` and the DOCX helpers — or call `setLicenseKey()` from
+`@richkitjs/license` once at startup. Any one of them covers the whole page. The key is verified offline — no activation, no
 telemetry. Without one, a small "unlicensed" badge appears; the editor never
 stops working.
 

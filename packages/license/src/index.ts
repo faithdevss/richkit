@@ -29,8 +29,15 @@ let warned = false
 /**
  * Register your RichKit Pro licence key. Call once, before or after the first
  * editor mounts. The key is checked locally; nothing is sent anywhere.
+ *
+ * The key is global to the page, not per editor: the same registration covers
+ * every Pro package. An empty value is ignored, so an env var that is not set
+ * in a preview build never clears a key another call already registered, and
+ * re-registering the same key is a no-op — cheap enough to call on every
+ * render, which is what the `licenseKey` prop does.
  */
-export function setLicenseKey(key: string): void {
+export function setLicenseKey(key: string | null | undefined): void {
+  if (!key || key === licenseKey) return
   licenseKey = key
   status = null
   warned = false
@@ -68,8 +75,13 @@ export function isDevelopmentHost(
  * Called by every Pro package when it is used. Without a valid key on a
  * production host it shows one small badge per page and logs one warning.
  * It never throws, never blocks editing and never touches the document.
+ *
+ * `key` is the licence a caller received as a prop or an option; registering
+ * it here is the same as calling `setLicenseKey` yourself, and it still lands
+ * before the badge check, which waits a tick.
  */
-export function requirePro(feature: string): void {
+export function requirePro(feature: string, key?: string | null): void {
+  if (key) setLicenseKey(key)
   features.add(feature)
   schedule()
 }

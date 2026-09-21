@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { QuestionEditor as Question, type QuestionValue } from '@richkitjs/editors-pro'
+import { LICENSE_KEY } from '../license'
 import '@richkitjs/extension-math/style.css'
 import { QUESTION_OPTIONS, QUESTION_STEM } from '../content'
 import { exposeEditor } from './useDevEditor'
@@ -11,5 +12,12 @@ export function QuestionEditor() {
     correct: 0,
     points: 2,
   })
-  return <Question value={question} onChange={setQuestion} onEditorReady={exposeEditor} />
+  return (
+    <Question
+      value={question}
+      onChange={setQuestion}
+      licenseKey={LICENSE_KEY}
+      onEditorReady={exposeEditor}
+    />
+  )
 }

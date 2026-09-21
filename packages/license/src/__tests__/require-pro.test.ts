@@ -42,6 +42,20 @@ describe('requirePro', () => {
     expect(badge()).toBeNull()
   })
 
+  it('accepts a key handed to requirePro, the way a prop or option does', async () => {
+    requirePro('editors-pro', await signLicensePayload(payload, keys.privateKey))
+    await settle()
+    expect(badge()).toBeNull()
+  })
+
+  it('ignores an empty key, so an unset env var cannot clear a registered one', async () => {
+    setLicenseKey(await signLicensePayload(payload, keys.privateKey))
+    setLicenseKey(undefined)
+    requirePro('docx', '')
+    await settle()
+    expect(badge()).toBeNull()
+  })
+
   it('shows the badge for a forged key', async () => {
     const other = await makeKeyPair()
     setLicenseKey(await signLicensePayload(payload, other.privateKey))

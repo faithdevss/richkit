@@ -14,7 +14,7 @@ folder.
 
 ```
 POST /webhooks/lemonsqueezy   Lemon Squeezy → mint → email
-POST /recover   {"email":…}   resend the latest key for an address
+POST /recover   {"email":…}   resend the latest key for an address (loopback only)
 GET  /health                  liveness, plus how many licences are on file
 ```
 
@@ -95,7 +95,7 @@ leave the two processes apart:
 
 ```caddy
 richkit.yourdomain.com {
-	handle /api/licenses/* {
+	handle /api/licenses/webhooks/lemonsqueezy {
 		uri strip_prefix /api/licenses
 		reverse_proxy 127.0.0.1:8787
 	}
@@ -109,13 +109,17 @@ richkit.yourdomain.com {
 ## In front of it
 
 The service binds to `127.0.0.1:8787` and speaks plain HTTP. Terminate TLS
-outside it.
+outside it, and forward only the webhook: Lemon Squeezy is the one caller that
+needs to reach it from outside. `/recover` and `/health` stay on loopback.
 
 Caddy:
 
 ```caddy
 licenses.yourdomain.com {
-	reverse_proxy 127.0.0.1:8787
+	handle /webhooks/lemonsqueezy {
+		reverse_proxy 127.0.0.1:8787
+	}
+	respond 404
 }
 ```
 
@@ -127,14 +131,24 @@ server {
 	server_name licenses.yourdomain.com;
 	# ssl_certificate … (certbot)
 
-	location / {
+	location = /webhooks/lemonsqueezy {
 		proxy_pass http://127.0.0.1:8787;
 		proxy_set_header X-Forwarded-For $remote_addr;
+	}
+	location / {
+		return 404;
 	}
 }
 ```
 
 Firewall to 80/443 only. The Node port must not be reachable from outside.
+
+To resend a key once support has checked the order, run it on the server:
+
+```bash
+curl -s -X POST http://127.0.0.1:8787/recover \
+  -H 'content-type: application/json' -d '{"email":"buyer@example.com"}'
+```
 
 ## Lemon Squeezy
 
@@ -171,6 +185,12 @@ a customer's build runs. Requires `pnpm --filter @richkitjs/license build` once.
   the customer's runtime path; the annual window caps the exposure.
 - **A failed mint returns 500 on purpose** so Lemon Squeezy retries. Repeats are
   safe.
-- **`/recover` is rate limited** to 3 per address and 20 per IP an hour, and
-  answers identically for unknown addresses so it cannot be used to find out who
-  a customer is. Wire the pricing page's "lost your key" link to it.
+- **`/recover` is a support tool, not a public form.** The pricing FAQ and the
+  licensing docs send customers to `support@richkit.dev`, and support calls this
+  endpoint on the server after checking the order (see the `curl` above); the
+  proxy configs never forward it. It only ever mails the key to the address on
+  that order and never returns it in the response, so even if exposed it would
+  leak nothing — but it would let a stranger trigger mail to a customer. It is
+  rate limited to 3 per address and 20 per IP
+  an hour, and answers identically for unknown addresses so it cannot be used to
+  find out who a customer is.

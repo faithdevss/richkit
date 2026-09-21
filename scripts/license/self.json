@@ -1,0 +1,8 @@
+{
+  "company": "Faithdevs",
+  "email": "contact.faithdevs@gmail.com",
+  "plan": "lifetime",
+  "forever": true,
+  "years": 1,
+  "domains": ["myapp.com", "*.myapp.com"]
+}

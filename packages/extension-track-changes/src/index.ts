@@ -1,5 +1,5 @@
 import { requirePro } from '@richkitjs/license'
-import { Extension, Mark, type Command } from '@richkitjs/core'
+import { Extension, Mark, type AnyExtension, type Command } from '@richkitjs/core'
 import { TextSelection } from 'prosemirror-state'
 import { getSuggestions, newId, trackChangesPlugin, trackKey } from './plugin'
 
@@ -71,10 +71,19 @@ export const Deletion = Mark.create({
   ],
 })
 
-export const TrackChanges = Extension.create({
+export interface TrackChangesOptions extends Record<string, unknown> {
+  /**
+   * Your RichKit Pro licence key, as an alternative to calling
+   * `setLicenseKey` at startup. One registration covers every Pro package.
+   */
+  licenseKey?: string
+}
+
+export const TrackChanges = Extension.create<TrackChangesOptions>({
   name: 'trackChanges',
-  addProseMirrorPlugins: () => {
-    requirePro('track-changes')
+  addOptions: () => ({}),
+  addProseMirrorPlugins: (ctx) => {
+    requirePro('track-changes', ctx.options.licenseKey)
     return [trackChangesPlugin()]
   },
   addCommands: () => ({
@@ -330,6 +339,14 @@ export const TrackChanges = Extension.create({
 })
 
 export const TrackChangesKit = [Insertion, Deletion, TrackChanges]
+
+/**
+ * The kit with options applied — the way to pass a `licenseKey` without
+ * calling `setLicenseKey` at startup.
+ */
+export function trackChangesKit(options: Partial<TrackChangesOptions> = {}): AnyExtension[] {
+  return [Insertion, Deletion, TrackChanges.configure(options)]
+}
 
 export { getSuggestions, getTrackState, trackKey } from './plugin'
 export type { SuggestionEntry, TrackState, TrackMeta } from './plugin'

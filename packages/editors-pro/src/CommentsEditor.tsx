@@ -17,9 +17,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 export interface CommentsEditorProps {
@@ -40,7 +40,7 @@ type Range = { from: number; to: number }
  * with `tr.setMeta(commentsKey, { upsert: thread })` once the editor is ready.
  */
 export const CommentsEditor = forwardRef(function CommentsEditor(
-  props: AnyFieldProps & CommentsEditorProps,
+  props: AnyProFieldProps & CommentsEditorProps,
   ref: AnyHandleRef,
 ) {
   const { author = 'You', placeholder, className, style, name, format } = props
@@ -144,4 +144,4 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<CommentsEditorProps>
+}) as ProFieldComponent<CommentsEditorProps>

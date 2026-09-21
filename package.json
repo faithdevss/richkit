@@ -27,7 +27,8 @@
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish",
     "license:keygen": "node scripts/license/keygen.mjs",
-    "license:mint": "node scripts/license/mint.mjs"
+    "license:mint": "node scripts/license/mint.mjs",
+    "license:self": "node scripts/license/mint.mjs --self"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

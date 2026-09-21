@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Editor } from '@richkitjs/core'
 import { CommentsEditor as Comments } from '@richkitjs/editors-pro'
+import { LICENSE_KEY } from '../license'
 import { COMMENTS_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 
@@ -64,6 +65,7 @@ export function CommentsEditor() {
       value={html}
       onChange={setHtml}
       author="You"
+      licenseKey={LICENSE_KEY}
       onEditorReady={(editor) => {
         exposeEditor(editor)
         seedThreads(editor)

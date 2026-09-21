@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AgentEditor as Agent } from '@richkitjs/editors-pro'
+import { LICENSE_KEY } from '../license'
 import { AGENT_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 
@@ -41,6 +42,7 @@ export function AgentEditor() {
           window.setTimeout(() => resolve(draftSection(prompt)), 550),
         )
       }
+      licenseKey={LICENSE_KEY}
       onEditorReady={exposeEditor}
     />
   )

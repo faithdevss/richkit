@@ -49,13 +49,19 @@ export const EXAMPLES: Example[] = [
       '`SimpleEditor` behaves like a form input: `value` in, `onChange` out, plus `name` for native form submits and a `ref` handle for form libraries.',
       'Every StarterKit extension is on — headings, lists, tables, images, links, code blocks — with `/` for block commands and a bubble menu over selections.',
       'The toolbar is plain `@richkitjs/react` parts (`Toolbar`, `BlockTypeMenu`, list menus), so the source is a template for your own.',
+      'Pro on a production host wants a licence: pass `licenseKey` here, or call `setLicenseKey` once at startup. Either registers the key for every Pro package.',
     ],
     snippet: `import '@richkitjs/editors/style.css'
 import { SimpleEditor } from '@richkitjs/editors-pro'
 
 const [html, setHtml] = useState('<p>Hello</p>')
 
-<SimpleEditor value={html} onChange={setHtml} placeholder="Write something…" />`,
+<SimpleEditor
+  value={html}
+  onChange={setHtml}
+  placeholder="Write something…"
+  licenseKey={import.meta.env.VITE_RICHKIT_LICENSE_KEY}
+/>`,
     source: simpleSource,
     demo: () => <SimpleEditor />,
   },
@@ -71,11 +77,15 @@ const [html, setHtml] = useState('<p>Hello</p>')
       'Comments are RichKit Pro: add `Comment` from `@richkitjs/extension-comments` to your extensions. A thread is a mark on the text plus an entry in plugin state, so it moves with the text as the document changes.',
       '`CommentSidebar` lists threads with reply, resolve, reopen and delete. `CommentComposer` is the small box that opens under the selection.',
       'The demo seeds two threads on load with `addComment` and `addCommentReply`.',
+      'Licence it where you configure it — `Comment.configure({ licenseKey })` — or call `setLicenseKey` once at startup.',
     ],
     snippet: `import { Comment } from '@richkitjs/extension-comments'
 import { CommentComposer, CommentSidebar } from '@richkitjs/react'
 
-const editor = useEditor({ extensions: [...StarterKit, Comment] })
+const KEY = import.meta.env.VITE_RICHKIT_LICENSE_KEY
+const Licensed = Comment.configure({ licenseKey: KEY })
+
+const editor = useEditor({ extensions: [...StarterKit, Licensed] })
 
 editor.chain().call('addComment', { body, author: 'Priya', from, to }).run()
 editor.chain().call('addCommentReply', { id, body: 'Agreed.' }).run()
@@ -98,11 +108,16 @@ editor.chain().call('addCommentReply', { id, body: 'Agreed.' }).run()
       'With tracking on, typed text becomes an insertion and deleted text stays in place as a deletion, both credited to the current author.',
       'Suggestions are plain marked-up spans (`data-suggestion="insertion"`), so a document can be loaded with review already in progress.',
       '`SuggestionSidebar` lists every suggestion, with accept and reject for each one, both for all of them, and the tracking toggle.',
+      '`trackChangesKit({ licenseKey })` is the plain `TrackChangesKit` with options applied; without a key, `setLicenseKey` at startup does the same job.',
     ],
-    snippet: `import { TrackChangesKit } from '@richkitjs/extension-track-changes'
+    snippet: `import { trackChangesKit } from '@richkitjs/extension-track-changes'
 import { SuggestionSidebar } from '@richkitjs/react'
 
-const editor = useEditor({ extensions: [...StarterKit, ...TrackChangesKit] })
+const KEY = import.meta.env.VITE_RICHKIT_LICENSE_KEY
+
+const editor = useEditor({
+  extensions: [...StarterKit, ...trackChangesKit({ licenseKey: KEY })],
+})
 
 editor.chain().call('enableTrackChanges', 'Dana (Legal)').run()
 editor.chain().call('acceptSuggestion', id).run()

@@ -216,7 +216,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       {
         state: 'open',
         label: '$99 – $499 / yr',
-        note: 'Startup $99 / yr (under $1M revenue, up to 3 devs) or Business $499 / yr (up to 20 devs, unlimited products). $3,000 lifetime. Self-hosted — no per-document fees and no usage metering.',
+        note: 'Startup $99 / yr (up to 3 devs, one product) or Business $499 / yr (up to 20 devs, unlimited products). $3,000 lifetime. Self-hosted — no per-document fees and no usage metering.',
       },
       {
         state: 'paid',

@@ -23,9 +23,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 /**
@@ -33,7 +33,7 @@ import {
  * menu, find and replace and a light/dark toggle.
  */
 export const SimpleEditor = forwardRef(function SimpleEditor(
-  props: AnyFieldProps,
+  props: AnyProFieldProps,
   ref: AnyHandleRef,
 ) {
   const { placeholder, className, style, name, format } = props
@@ -205,4 +205,4 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<object>
+}) as ProFieldComponent<object>

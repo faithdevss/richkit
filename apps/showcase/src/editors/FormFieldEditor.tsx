@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { ClassicEditor as Classic, type EditorHandle } from '@richkitjs/editors-pro'
+import { LICENSE_KEY } from '../license'
 import { CLASSIC_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 
@@ -41,6 +42,7 @@ export function FormFieldEditor() {
           setHtml(next)
           setText(field.current?.editor?.getText().trim() ?? '')
         }}
+        licenseKey={LICENSE_KEY}
         onEditorReady={exposeEditor}
       />
       <label className="ff-toggle">
@@ -71,7 +73,12 @@ export function ClassicEditor() {
 
   return (
     <div className="demo-frame ff-demo is-bare" data-theme="dark">
-      <Classic value={html} onChange={setHtml} onEditorReady={exposeEditor} />
+      <Classic
+        value={html}
+        onChange={setHtml}
+        licenseKey={LICENSE_KEY}
+        onEditorReady={exposeEditor}
+      />
     </div>
   )
 }

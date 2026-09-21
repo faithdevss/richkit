@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { MentionCandidate } from '@richkitjs/react'
 import type { AICompleteOptions, AICompletionRequest } from '@richkitjs/extension-ai'
 import { NotionEditor as Notion } from '@richkitjs/editors-pro'
+import { LICENSE_KEY } from '../license'
 import { NOTION_CONTENT } from '../content'
 import { exposeEditor } from './useDevEditor'
 
@@ -87,6 +88,7 @@ export function NotionEditor() {
       mentions={MENTIONS}
       ai={demoComplete}
       aiAuthor="RichKit AI"
+      licenseKey={LICENSE_KEY}
       onEditorReady={exposeEditor}
       header={
         <>

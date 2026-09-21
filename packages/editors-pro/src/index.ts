@@ -13,6 +13,7 @@ export { DocxEditor } from './DocxEditor'
 export type { DocxEditorProps } from './DocxEditor'
 export { AgentEditor, agentDraftPrompt } from './AgentEditor'
 export type { AgentEditorProps } from './AgentEditor'
+export type { ProFieldProps, ProFieldComponent, AnyProFieldProps } from './field'
 export type {
   EditorFieldProps,
   EditorHandle,

@@ -41,6 +41,11 @@ export interface AIOptions extends Record<string, unknown> {
    * extension is not installed in the editor.
    */
   track: boolean
+  /**
+   * Your RichKit Pro licence key, as an alternative to calling
+   * `setLicenseKey` at startup. One registration covers every Pro package.
+   */
+  licenseKey?: string
 }
 
 function newId(): string {
@@ -174,8 +179,8 @@ export const AI = Extension.create<AIOptions>({
     attributeAs: 'AI Assistant',
     track: true,
   }),
-  addProseMirrorPlugins: () => {
-    requirePro('ai')
+  addProseMirrorPlugins: (ctx) => {
+    requirePro('ai', ctx.options.licenseKey)
     return [aiPlugin()]
   },
   addCommands: (ctx) => {

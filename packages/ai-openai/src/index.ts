@@ -23,6 +23,11 @@ export interface OpenAIAdapterOptions {
   headers?: Record<string, string>
   /** Injectable for tests. */
   fetch?: typeof globalThis.fetch
+  /**
+   * Your RichKit Pro licence key, as an alternative to calling
+   * `setLicenseKey` at startup. One registration covers every Pro package.
+   */
+  licenseKey?: string
 }
 
 const OPENAI_URL = 'https://api.openai.com/v1/chat/completions'
@@ -84,7 +89,7 @@ interface ChatChunk {
  * OpenAI's response straight through without reshaping it.
  */
 export function openaiComplete(options: OpenAIAdapterOptions): AIComplete {
-  requirePro('ai-openai')
+  requirePro('ai-openai', options.licenseKey)
   const {
     endpoint,
     dangerouslyBrowserApiKey,

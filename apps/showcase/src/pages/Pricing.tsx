@@ -9,7 +9,6 @@ import {
   useLemonCheckout,
 } from '../lib/lemonsqueezy'
 
-
 // Where "talk to a human" goes — purchase orders, signed agreements, SLAs.
 const CONTACT = 'https://github.com/faithdevss/richkit/issues/new?title=License%20enquiry'
 
@@ -38,7 +37,7 @@ const PLANS: Plan[] = [
     tag: 'Startup',
     price: '$99',
     per: '/ year',
-    note: 'Companies under $1M annual revenue, up to 3 developers.',
+    note: 'Up to 3 developers, one product or internal tool.',
     includes: [
       'Every Pro package',
       'One product or internal tool',
@@ -88,9 +87,21 @@ const FAQ: { q: string; a: ReactNode }[] = [
     q: 'How does the licence key work?',
     a: (
       <>
-        You get a signed key by email after purchase and call <code>setLicenseKey(key)</code> once
-        at startup. It is checked inside your app — no network call, no activation, no telemetry.
-        See the <Link to="/docs/licensing">licensing docs</Link>.
+        You get a signed key by email after purchase, then either call{' '}
+        <code>setLicenseKey(key)</code> once at startup or pass it as the <code>licenseKey</code>{' '}
+        prop on any Pro editor. It is checked inside your app — no network call, no activation, no
+        telemetry. See the <Link to="/docs/licensing">licensing docs</Link>.
+      </>
+    ),
+  },
+  {
+    q: 'I lost my key — can you resend it?',
+    a: (
+      <>
+        Email <a href="mailto:support@richkit.dev">support@richkit.dev</a> from the address you
+        bought with. We check the order and resend the same key to that address — nothing is
+        revoked, so a live build keeps working meanwhile. Keys can also be locked to your own
+        domains on request; see the <Link to="/docs/licensing">licensing docs</Link>.
       </>
     ),
   },
@@ -108,7 +119,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Which plan do I need?',
-    a: 'Startup if your company makes under $1M a year and has up to three developers on the product. Business for up to 20 developers and any number of products. Bigger than that, or need an SLA or invoicing? Talk to us about Enterprise.',
+    a: 'Startup if you have up to three developers working on one product. Business for up to 20 developers and any number of products. Bigger than that, or need an SLA or invoicing? Talk to us about Enterprise.',
   },
   {
     q: 'Can I read and modify the source?',
@@ -159,7 +170,11 @@ export function Pricing() {
       )
     }
     return (
-      <button type="button" className="btn-primary price-cta" onClick={() => openCheckout(checkout)}>
+      <button
+        type="button"
+        className="btn-primary price-cta"
+        onClick={() => openCheckout(checkout)}
+      >
         <Icon name="plus" size={17} />
         {label}
       </button>
@@ -266,7 +281,12 @@ export function Pricing() {
 
         <div className="price-compare">
           {[
-            { name: 'RichKit Pro', cost: 'from $99 / yr', sub: 'self-hosted, no per-document fees', win: true },
+            {
+              name: 'RichKit Pro',
+              cost: 'from $99 / yr',
+              sub: 'self-hosted, no per-document fees',
+              win: true,
+            },
             { name: 'Tiptap', cost: '$588 – $11,988 / yr', sub: 'plus $588 / dev past the seats' },
             { name: 'CKEditor 5', cost: 'from ~$8,400 / yr', sub: 'plus usage past 20,000 loads' },
             { name: 'TinyMCE', cost: 'from ~$6,168 / yr', sub: 'plus usage past 20,000 loads' },

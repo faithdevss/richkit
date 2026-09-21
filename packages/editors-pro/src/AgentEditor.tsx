@@ -19,9 +19,9 @@ import {
   useEditorField,
   useTheme,
   withPlaceholder,
-  type AnyFieldProps,
+  type AnyProFieldProps,
   type AnyHandleRef,
-  type FieldComponent,
+  type ProFieldComponent,
 } from './field'
 
 export interface AgentEditorProps {
@@ -61,7 +61,7 @@ function stripFence(markdown: string): string {
  * writes it, and it lands in the document through the same API the toolbar uses.
  */
 export const AgentEditor = forwardRef(function AgentEditor(
-  props: AnyFieldProps & AgentEditorProps,
+  props: AnyProFieldProps & AgentEditorProps,
   ref: AnyHandleRef,
 ) {
   const { onDraft, complete, placeholder, className, style, name, format } = props
@@ -311,4 +311,4 @@ export const AgentEditor = forwardRef(function AgentEditor(
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )
-}) as FieldComponent<AgentEditorProps>
+}) as ProFieldComponent<AgentEditorProps>

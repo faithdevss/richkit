@@ -2,8 +2,17 @@ import { requirePro } from '@richkitjs/license'
 import { Mark, type Command } from '@richkitjs/core'
 import { commentsKey, commentsPlugin, newId, type Thread } from './store'
 
-export const Comment = Mark.create({
+export interface CommentsOptions extends Record<string, unknown> {
+  /**
+   * Your RichKit Pro licence key, as an alternative to calling
+   * `setLicenseKey` at startup. One registration covers every Pro package.
+   */
+  licenseKey?: string
+}
+
+export const Comment = Mark.create<CommentsOptions>({
   name: 'comment',
+  addOptions: () => ({}),
   attrs: {
     id: { default: null },
     resolved: { default: false },
@@ -150,8 +159,8 @@ export const Comment = Mark.create({
       }
     },
   }),
-  addProseMirrorPlugins: () => {
-    requirePro('comments')
+  addProseMirrorPlugins: (ctx) => {
+    requirePro('comments', ctx.options.licenseKey)
     return [commentsPlugin()]
   },
 })

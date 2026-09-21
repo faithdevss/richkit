@@ -46,6 +46,53 @@ air-gapped apps work the same. The key is not a secret in the password sense: it
 ships inside your bundle, like any client-side licence key. It is still yours
 alone; do not share it with other companies.
 
+## Or pass it as a prop
+
+Every Pro editor takes a `licenseKey` prop, so an app that already threads
+config through props needs no startup call:
+
+```tsx
+import { SimpleEditor } from '@richkitjs/editors-pro'
+
+<SimpleEditor
+  value={html}
+  onChange={setHtml}
+  licenseKey={import.meta.env.VITE_RICHKIT_LICENSE_KEY}
+/>
+```
+
+The Pro packages you use without a component take the same key as an option:
+
+```ts
+import { Comment } from '@richkitjs/extension-comments'
+import { trackChangesKit } from '@richkitjs/extension-track-changes'
+import { AI } from '@richkitjs/extension-ai'
+import { openaiComplete } from '@richkitjs/ai-openai'
+import { downloadDocx, importDocxFile } from '@richkitjs/docx'
+
+const licenseKey = import.meta.env.VITE_RICHKIT_LICENSE_KEY
+
+const extensions = [
+  ...StarterKit,
+  Comment.configure({ licenseKey }),
+  ...trackChangesKit({ licenseKey }),
+  AI.configure({ licenseKey, complete: openaiComplete({ endpoint, licenseKey }) }),
+]
+
+await downloadDocx(editor, { filename: 'contract.docx', licenseKey })
+await importDocxFile(editor, file, { licenseKey })
+```
+
+The key is **global to the page, not per editor**: whichever of these runs
+first registers it for every Pro package, so one is enough — you do not have to
+pass it everywhere. With several editors mounted, the last non-empty key wins.
+An empty or missing value is ignored, so an env var that is unset in a preview
+build never clears a key something else already registered, and re-registering
+the same key does nothing.
+
+Passing the prop is exactly `setLicenseKey` under the hood, with the same
+offline check; pick whichever fits your app.
+
 ## Without a key
 
 On a production host, Pro packages without a valid key show a small
@@ -60,15 +107,67 @@ If you stop renewing, keep shipping those versions with the same key; only
 releases published after that date show the badge. Renewing sends you a new
 key.
 
+## Lost your key
+
+Email [support@richkit.dev](mailto:support@richkit.dev) from the address you
+bought with. We check it against the order and send the key back to that
+address — there is no self-serve form, and a key is never sent anywhere other
+than the address on the order it belongs to.
+
+Nothing is revoked or regenerated: a resend is the same key you already had, so
+a build that is live with it keeps working either way. A renewal keeps the same
+licence id, so the key it mails you supersedes the previous one without
+invalidating it — the old key still covers every release up to its own
+_updates until_ date.
+
+## Domain-locked keys
+
+A key can be pinned to the hostnames it works on. Ask for it when you order —
+it is meant for a key that ships in a bundle anyone can read, like this site's
+own demos.
+
+| `domains` entry    | Matches                                            |
+| ------------------ | -------------------------------------------------- |
+| `app.example.com`  | that hostname exactly                              |
+| `*.example.com`    | any subdomain — `app.example.com`, `docs.example.com` |
+| omitted (default)  | every hostname                                     |
+
+On a hostname the key does not cover, the badge appears with reason
+`wrong-domain`. Development hosts are exempt from the check the same way they
+are exempt from needing a key at all, so `localhost` keeps working with a key
+locked to your production domain.
+
+Bare `example.com` is _not_ covered by `*.example.com` — list both if you serve
+the apex. And treat a lock as protection against casual copying, not as
+security: the key is in your bundle either way.
+
 ## Checking a key
 
 ```ts
 import { getLicenseStatus } from '@richkitjs/license'
 
 const status = await getLicenseStatus()
-// { valid: true, payload: { company, plan, updatesUntil, … } }
-// or { valid: false, reason: 'missing' | 'malformed' | 'invalid-signature' | 'expired' }
+// { valid: true, payload: { id, company, email, plan, issued, updatesUntil, domains? } }
+// or { valid: false, reason, payload? }
 ```
+
+| `reason`            | Means                                                                    |
+| ------------------- | ------------------------------------------------------------------------ |
+| `missing`           | no key registered — `setLicenseKey` was never called, or with an empty value |
+| `malformed`         | not a `payload.signature` pair, or the payload is not a licence we understand |
+| `invalid-signature` | not signed by us — truncated, edited or hand-made                        |
+| `expired`           | this release is newer than the key's _updates until_ date                |
+| `wrong-domain`      | valid key, but this hostname is not in its `domains`                     |
+| `unconfigured`      | the build has no public key baked in — a source checkout, not a release   |
+
+`payload` comes back on `expired` and `wrong-domain` too, so you can show which
+licence was found and why it did not apply.
+
+## Enterprise keys
+
+Enterprise licences are minted by hand rather than by the store, so the window
+and any domain lock follow the agreement. They arrive by email like any other
+key and register the same way.
 
 See the [pricing page](/pricing) for plans, and the
 [RichKit Pro licence](https://github.com/faithdevss/richkit/blob/main/LICENSE-COMMERCIAL)
