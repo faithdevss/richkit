@@ -1,20 +1,8 @@
-# @richkitjs/ai-anthropic
+# @richkitjs/editors
 
 ## 0.2.0
 
 ### Minor Changes
-
-- 01a839d: Register a Pro licence key from a prop or an option, not only `setLicenseKey`.
-
-  Every Pro editor takes a `licenseKey` prop, and every Pro package that is not a
-  component takes the same key as an option: `Comment.configure({ licenseKey })`,
-  the new `trackChangesKit({ licenseKey })`, `AI.configure({ licenseKey })`,
-  `openaiComplete`/`anthropicComplete`, and the DOCX export and import helpers.
-
-  The key stays global to the page, so any one of them registers it for every Pro
-  package. `setLicenseKey` now ignores an empty value and re-registering the same
-  key, which makes it safe to call on every render and stops an unset env var in a
-  preview build from clearing a key something else already registered.
 
 - 3ec0ab4: RichKit is now open-core.
 
@@ -59,26 +47,40 @@
   stream into the document as Markdown-rendered content, land as one undo step, and can be
   stopped mid-stream.
 
+- 45334ad: New `@richkitjs/editors`: the showcase editors — Notion, Simple, Minimal, Classic
+  (form field), Question, Markdown, HTML, DOCX, Comments, Track changes, Mentions,
+  Comment box, Find & replace, Agent — as installable components. Each one is a
+  form input: `value`/`defaultValue`/`onChange` in HTML (or `format="markdown" |
+"text" | "json"`), `name` for native forms, `onBlur`, `disabled`, `readOnly`,
+  and a ref with `focus()`, so `{...field}` from react-hook-form spreads straight
+  on. Styles ship as `@richkitjs/editors/style.css`.
+
+  `@richkitjs/react` adds `useControlledEditor` — `useEditor` with the same
+  input contract — plus `getEditorValue`/`toEditorContent`. `useEditor` now
+  re-renders on every transaction, not only on `update`/`selectionUpdate`, and
+  `Toolbar` goes inert while its editor is read-only.
+
+  `@richkitjs/core` adds `setContent(content, { emitUpdate, addToHistory })`,
+  `setEditable()` and `isEmpty`.
+
 ### Patch Changes
 
-- Updated dependencies [01a839d]
+- f013bfd: Add undo and redo buttons to `DocxEditor`. Fix the image toolbar showing permanently (its
+  `display: flex` overrode the `hidden` attribute) and overflowing narrow frames, and stop the
+  Notion editor stacking two left gutters on phones.
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [f79165d]
+- Updated dependencies [a8e0ea2]
 - Updated dependencies [3ec0ab4]
-  - @richkitjs/license@0.2.0
-  - @richkitjs/extension-ai@0.2.0
-
-## 0.1.0
-
-### Minor Changes
-
-- 6a56d74: Add `@richkitjs/ai-anthropic` — Anthropic (Claude) transport for `@richkitjs/extension-ai`.
-
-  Streams the Messages API SSE response into the editor. Zero runtime dependencies: proxy
-  through your own endpoint (recommended) or pass an end-user-supplied key with
-  `dangerouslyBrowserApiKey`. Defaults to `claude-sonnet-5` with thinking off for
-  immediate streaming; surfaces refusals, stream errors, and non-2xx bodies as thrown
-  errors that `extension-ai` reports in its plugin state.
-
-### Patch Changes
-
-- Updated dependencies [dd70dd2]
-  - @richkitjs/extension-ai@0.1.0
+- Updated dependencies [45334ad]
+- Updated dependencies [4a2efdf]
+  - @richkitjs/core@0.2.0
+  - @richkitjs/markdown@0.1.1
+  - @richkitjs/extension-math@0.1.0
+  - @richkitjs/starter-kit@0.3.0
+  - @richkitjs/react@0.3.0
+  - @richkitjs/extension-find-replace@0.1.1
+  - @richkitjs/extension-mention@0.2.1
+  - @richkitjs/extension-placeholder@0.1.1
+  - @richkitjs/extension-word-count@0.1.1

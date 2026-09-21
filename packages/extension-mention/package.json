@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-mention",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "@mentions for RichKit: an inline mention node for users or pages, fed by your own list. No directory or network calls built in.",
   "license": "MIT",
   "type": "module",

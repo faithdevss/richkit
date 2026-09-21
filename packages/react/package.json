@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React 18/19 bindings for RichKit: useEditor hook, EditorContent, ready-made DefaultToolbar, BubbleMenu, table/link/image/color menus and EditorProvider.",
   "license": "MIT",
   "type": "module",

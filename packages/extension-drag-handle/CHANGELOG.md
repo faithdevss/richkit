@@ -1,5 +1,14 @@
 # @richkitjs/extension-drag-handle
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

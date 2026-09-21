@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-media",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Self-hosted video, audio and file attachments for RichKit, rendered as native players or download cards.",
   "license": "MIT",
   "type": "module",

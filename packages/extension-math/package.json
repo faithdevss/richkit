@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-math",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Math for RichKit: inline and block LaTeX formulas rendered with KaTeX, with $…$ and $$…$$ shortcuts.",
   "license": "MIT",
   "type": "module",

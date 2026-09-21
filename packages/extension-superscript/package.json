@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-superscript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Superscript mark for RichKit: toggleSuperscript command and Mod-. shortcut.",
   "license": "MIT",
   "type": "module",

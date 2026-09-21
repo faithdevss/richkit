@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/license",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Offline licence-key verification for RichKit Pro packages.",
   "license": "MIT",
   "type": "module",

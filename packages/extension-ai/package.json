@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-ai",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AI writing for RichKit: stream model output into the document as tracked suggestions the user accepts or rejects. Bring any provider through a transport function.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

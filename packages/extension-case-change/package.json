@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-case-change",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Change text case in RichKit: upper, lower, title, sentence case or toggle, applied to the selection.",
   "license": "MIT",
   "type": "module",

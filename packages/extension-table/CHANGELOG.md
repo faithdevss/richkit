@@ -1,5 +1,17 @@
 # @richkitjs/extension-table
 
+## 0.2.1
+
+### Patch Changes
+
+- 7e383d9: Table resize handles are hidden once their spot scrolls out of the table's visible area. They
+  live in a fixed overlay on `<body>`, so nothing clipped them and they floated over toolbars and
+  past the editor frame when a table scrolled out of view.
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

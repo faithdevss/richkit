@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/editors-pro",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "RichKit Pro ready-made React editors — Notion-style, classic form field, question, comments, track changes, DOCX and agent — each a form input with value/onChange.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

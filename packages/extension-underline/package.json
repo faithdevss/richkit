@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-underline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Underline mark for RichKit: toggleUnderline command and Mod-U shortcut.",
   "license": "MIT",
   "type": "module",

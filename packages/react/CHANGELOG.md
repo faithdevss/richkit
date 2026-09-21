@@ -1,5 +1,52 @@
 # @richkitjs/react
 
+## 0.3.0
+
+### Minor Changes
+
+- 45334ad: New `@richkitjs/editors`: the showcase editors — Notion, Simple, Minimal, Classic
+  (form field), Question, Markdown, HTML, DOCX, Comments, Track changes, Mentions,
+  Comment box, Find & replace, Agent — as installable components. Each one is a
+  form input: `value`/`defaultValue`/`onChange` in HTML (or `format="markdown" |
+"text" | "json"`), `name` for native forms, `onBlur`, `disabled`, `readOnly`,
+  and a ref with `focus()`, so `{...field}` from react-hook-form spreads straight
+  on. Styles ship as `@richkitjs/editors/style.css`.
+
+  `@richkitjs/react` adds `useControlledEditor` — `useEditor` with the same
+  input contract — plus `getEditorValue`/`toEditorContent`. `useEditor` now
+  re-renders on every transaction, not only on `update`/`selectionUpdate`, and
+  `Toolbar` goes inert while its editor is read-only.
+
+  `@richkitjs/core` adds `setContent(content, { emitUpdate, addToHistory })`,
+  `setEditable()` and `isEmpty`.
+
+### Patch Changes
+
+- 4a2efdf: Fix toolbar rows never collapsing into the "more" popover under React 19.
+
+  `ToolbarOverflow` reset its measuring pass from a `useEffect` keyed on the child count,
+  which also fired on mount. React 19 batched that reset with the first pass's
+  `setMeasuring(false)`, so the layout effect never re-ran and the row stayed stuck in
+  `measuring`, rendering every button and overflowing its width. The reset now happens during
+  render and only when the child count actually changes.
+
+- Updated dependencies [e100235]
+- Updated dependencies [01a839d]
+- Updated dependencies [bd4933d]
+- Updated dependencies [f79165d]
+- Updated dependencies [3ec0ab4]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+  - @richkitjs/docx@0.2.0
+  - @richkitjs/extension-comments@0.2.0
+  - @richkitjs/extension-track-changes@0.2.0
+  - @richkitjs/extension-ai@0.2.0
+  - @richkitjs/markdown@0.1.1
+  - @richkitjs/extension-drag-handle@0.2.1
+  - @richkitjs/extension-find-replace@0.1.1
+  - @richkitjs/extension-mention@0.2.1
+  - @richkitjs/extension-slash-commands@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes

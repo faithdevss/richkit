@@ -1,4 +1,4 @@
-# @richkitjs/ai-anthropic
+# @richkitjs/editors-pro
 
 ## 0.2.0
 
@@ -61,24 +61,25 @@
 
 ### Patch Changes
 
+- Updated dependencies [e100235]
+- Updated dependencies [f013bfd]
 - Updated dependencies [01a839d]
+- Updated dependencies [bd4933d]
+- Updated dependencies [f79165d]
+- Updated dependencies [a8e0ea2]
 - Updated dependencies [3ec0ab4]
+- Updated dependencies [45334ad]
+- Updated dependencies [4a2efdf]
+  - @richkitjs/core@0.2.0
+  - @richkitjs/editors@0.2.0
   - @richkitjs/license@0.2.0
+  - @richkitjs/docx@0.2.0
+  - @richkitjs/extension-comments@0.2.0
+  - @richkitjs/extension-track-changes@0.2.0
   - @richkitjs/extension-ai@0.2.0
-
-## 0.1.0
-
-### Minor Changes
-
-- 6a56d74: Add `@richkitjs/ai-anthropic` — Anthropic (Claude) transport for `@richkitjs/extension-ai`.
-
-  Streams the Messages API SSE response into the editor. Zero runtime dependencies: proxy
-  through your own endpoint (recommended) or pass an end-user-supplied key with
-  `dangerouslyBrowserApiKey`. Defaults to `claude-sonnet-5` with thinking off for
-  immediate streaming; surfaces refusals, stream errors, and non-2xx bodies as thrown
-  errors that `extension-ai` reports in its plugin state.
-
-### Patch Changes
-
-- Updated dependencies [dd70dd2]
-  - @richkitjs/extension-ai@0.1.0
+  - @richkitjs/markdown@0.1.1
+  - @richkitjs/extension-math@0.1.0
+  - @richkitjs/starter-kit@0.3.0
+  - @richkitjs/react@0.3.0
+  - @richkitjs/extension-placeholder@0.1.1
+  - @richkitjs/extension-word-count@0.1.1

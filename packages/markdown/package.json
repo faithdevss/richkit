@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/markdown",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Markdown for RichKit: parse Markdown into the editor and serialize documents back, including tables and task lists.",
   "license": "MIT",
   "type": "module",

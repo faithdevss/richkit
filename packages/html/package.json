@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/html",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Parse HTML into a RichKit document and serialize it back (htmlToDoc, docToHtml).",
   "license": "MIT",
   "type": "module",

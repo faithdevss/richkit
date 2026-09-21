@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/docx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Microsoft Word (.docx) import and export for RichKit, entirely in the browser: headings, lists, tables, links and formatting, with no conversion server.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

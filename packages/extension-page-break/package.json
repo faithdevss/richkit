@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-page-break",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Page break node for RichKit, for documents that are printed or exported to Word.",
   "license": "MIT",
   "type": "module",

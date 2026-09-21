@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-bold",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bold mark for RichKit: toggleBold command and Mod-B shortcut.",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-link",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Link mark for RichKit: setLink, unsetLink and automatic linking of typed URLs.",
   "license": "MIT",
   "type": "module",

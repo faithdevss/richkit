@@ -1,5 +1,19 @@
 # @richkitjs/extension-task-list
 
+## 0.2.1
+
+### Patch Changes
+
+- bd4933d: List buttons now toggle. `toggleBulletList`, `toggleOrderedList` and `toggleTaskList` were plain
+  `wrapInList`, so clicking one inside a list did nothing. They now use the new core `toggleList`
+  command: inside a list of the same type the selected items are lifted out, inside a list of
+  another type that list is converted in place (items retyped for task lists), and outside a list
+  the selection is wrapped as before. The list-style commands convert instead of nesting too.
+- Updated dependencies [e100235]
+- Updated dependencies [bd4933d]
+- Updated dependencies [45334ad]
+  - @richkitjs/core@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-highlight",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Text highlight mark for RichKit: setHighlight with any background color, unsetHighlight and Mod-Shift-H shortcut.",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/ai-anthropic",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Anthropic Claude streaming transport for @richkitjs/extension-ai. Streams completions into the editor with cancellation support.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

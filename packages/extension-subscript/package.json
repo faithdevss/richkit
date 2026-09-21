@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-subscript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Subscript mark for RichKit: toggleSubscript command and Mod-, shortcut.",
   "license": "MIT",
   "type": "module",
