@@ -105,9 +105,9 @@ export const DocxEditor = forwardRef(function DocxEditor(
   }, [editor])
 
   return (
-    <div className={cx('demo-frame demo-docx', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-docx', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar">
+        <Toolbar editor={editor} className="toolbar rk-toolbar">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -117,6 +117,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title="Zoom out"
+              aria-label="Zoom out"
               onMouseDown={(e) => {
                 e.preventDefault()
                 stepZoom(-1)
@@ -129,6 +130,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title="Zoom in"
+              aria-label="Zoom in"
               onMouseDown={(e) => {
                 e.preventDefault()
                 stepZoom(1)
@@ -209,6 +211,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title="Import .docx"
+              aria-label="Import .docx"
               onMouseDown={(e) => {
                 e.preventDefault()
                 onImport()
@@ -220,6 +223,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title="Export .docx"
+              aria-label="Export .docx"
               onMouseDown={(e) => {
                 e.preventDefault()
                 void onExport()
@@ -231,6 +235,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title="Print"
+              aria-label="Print"
               onMouseDown={(e) => {
                 e.preventDefault()
                 printEditor(editor, { title: title ?? filename.replace(/\.docx$/i, '') })
@@ -242,6 +247,7 @@ export const DocxEditor = forwardRef(function DocxEditor(
               type="button"
               className="tb-btn"
               title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+              aria-label={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
               onMouseDown={(e) => {
                 e.preventDefault()
                 toggleTheme()
@@ -252,9 +258,9 @@ export const DocxEditor = forwardRef(function DocxEditor(
           </ToolbarGroup>
         </Toolbar>
       )}
-      <div className="demo-scroll demo-scroll-docx">
+      <div className="rk-scroll rk-scroll-docx">
         <div
-          className="demo-page demo-page-docx"
+          className="rk-page rk-page-docx"
           style={{ zoom: zoom === 100 ? undefined : `${String(zoom)}%` }}
         >
           {(title || brand) && (

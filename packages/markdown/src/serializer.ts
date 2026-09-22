@@ -1,5 +1,5 @@
 import { MarkdownSerializer, type MarkdownSerializerState } from 'prosemirror-markdown'
-import type { Node as PMNode } from 'prosemirror-model'
+import { DOMSerializer, type Node as PMNode } from 'prosemirror-model'
 
 type NodeSerializer = (
   state: MarkdownSerializerState,
@@ -31,15 +31,69 @@ function serializeInlineCell(cell: PMNode): string {
     .trim()
 }
 
-const tableSerializer: NodeSerializer = (state, node) => {
-  const rows: string[][] = []
-  let headerRow = false
-  node.forEach((row, _offset, rowIndex) => {
-    const cells: string[] = []
+/** Whether every attr on `node` still has its schema default. */
+function hasDefaultAttrs(node: PMNode): boolean {
+  const specs = node.type.spec.attrs ?? {}
+  return Object.entries(node.attrs).every(([key, value]) => {
+    const fallback = (specs[key] as { default?: unknown } | undefined)?.default ?? null
+    if (Array.isArray(value) && Array.isArray(fallback)) return value.length === fallback.length
+    return (value ?? null) === fallback
+  })
+}
+
+/**
+ * `node` as HTML, for the details Markdown has no syntax for. markdown-it
+ * reads raw HTML blocks back in, and the editor schema parses them. Needs a
+ * DOM; without one (a bare Node process) the caller falls back to plain
+ * Markdown and the details are lost, as before.
+ */
+function nodeToHtml(node: PMNode): string | null {
+  const doc = typeof document === 'undefined' ? null : document
+  if (!doc) return null
+  const wrap = doc.createElement('div')
+  wrap.appendChild(
+    DOMSerializer.fromSchema(node.type.schema).serializeNode(node, { document: doc }),
+  )
+  // an HTML block ends at the first blank line, so keep the markup on one
+  return wrap.innerHTML.replace(/\n\s*\n/g, '\n')
+}
+
+/**
+ * GFM tables hold one line of inline text per cell and always have a header
+ * row. Anything more — no header, a header cell further down, merged cells,
+ * column widths, row heights, several blocks or aligned text in a cell — only
+ * survives as HTML.
+ */
+function isPlainTable(table: PMNode): boolean {
+  let plain = true
+  table.forEach((row, _offset, rowIndex) => {
     row.forEach((cell) => {
-      if (rowIndex === 0 && cell.type.name === 'table_header') headerRow = true
-      cells.push(serializeInlineCell(cell))
+      const isHeader = cell.type.name === 'table_header'
+      if (isHeader !== (rowIndex === 0) || !hasDefaultAttrs(cell)) plain = false
+      if (cell.childCount > 1) plain = false
+      const block = cell.firstChild
+      if (block && (block.type.name !== 'paragraph' || !hasDefaultAttrs(block))) plain = false
+      block?.forEach((inline) => {
+        if (!inline.isText) plain = false
+      })
     })
+  })
+  return plain
+}
+
+const tableSerializer: NodeSerializer = (state, node) => {
+  if (!isPlainTable(node)) {
+    const html = nodeToHtml(node)
+    if (html) {
+      state.write(html)
+      state.closeBlock(node)
+      return
+    }
+  }
+  const rows: string[][] = []
+  node.forEach((row) => {
+    const cells: string[] = []
+    row.forEach((cell) => cells.push(serializeInlineCell(cell)))
     rows.push(cells)
   })
   if (!rows.length) return
@@ -50,12 +104,10 @@ const tableSerializer: NodeSerializer = (state, node) => {
   }
   const line = (r: string[]) => `| ${pad(r).join(' | ')} |`
   const out: string[] = []
-  const first = rows[0] ?? []
-  out.push(line(first))
+  // GFM requires a header row, so without a DOM the first row stands in for one
+  out.push(line(rows[0] ?? []))
   out.push(`| ${new Array(cols).fill('---').join(' | ')} |`)
   for (let i = 1; i < rows.length; i++) out.push(line(rows[i] ?? []))
-  // if there was no header row, we still emit rows[0] as header (GFM requires one)
-  void headerRow
   state.write(out.join('\n'))
   state.closeBlock(node)
 }
@@ -113,6 +165,15 @@ export const serializer = new MarkdownSerializer(
       state.renderContent(node)
     },
     image: (state, node) => {
+      // `![alt](src "title")` has no room for a size, alignment or caption
+      const { width, height, align, caption } = node.attrs
+      if (width != null || height != null || align || caption) {
+        const html = nodeToHtml(node)
+        if (html) {
+          state.write(html)
+          return
+        }
+      }
       const alt = state.esc((node.attrs['alt'] as string) || '')
       const src = (node.attrs['src'] as string) || ''
       const title = node.attrs['title']
@@ -171,8 +232,29 @@ export const serializer = new MarkdownSerializer(
     hardBreak: (state) => {
       state.write('\\\n')
     },
+    math: (state, node) => {
+      state.write(`$${String(node.attrs['latex'] ?? '')}$`)
+    },
+    mathBlock: (state, node) => {
+      state.write('$$')
+      state.ensureNewLine()
+      state.text(String(node.attrs['latex'] ?? ''), false)
+      state.ensureNewLine()
+      state.write('$$')
+      state.closeBlock(node)
+    },
     text: (state, node) => {
-      state.text(node.text ?? '')
+      const text = node.text ?? ''
+      // With math in the schema a bare `$` could open a formula on the way
+      // back in, so it is written escaped. Without math, output is unchanged.
+      if (!node.type.schema.nodes['math'] || !text.includes('$')) {
+        state.text(text)
+        return
+      }
+      text.split('$').forEach((part, i) => {
+        if (i > 0) state.write('\\$')
+        if (part) state.text(part)
+      })
     },
   },
   {

@@ -74,8 +74,8 @@ export const CommentBoxEditor = forwardRef(function CommentBoxEditor(
   }
 
   return (
-    <div className={cx('demo-frame demo-reply', className)} data-theme={theme} style={style}>
-      <div className="demo-scroll">
+    <div className={cx('rk-frame rk-reply', className)} data-theme={theme} style={style}>
+      <div className="rk-scroll">
         <div className="reply-card">
           {children}
           <div className={`reply-box${over ? ' is-over' : ''}`}>

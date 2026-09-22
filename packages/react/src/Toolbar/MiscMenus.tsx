@@ -15,7 +15,12 @@ export function LineHeightMenu({ editor }: { editor: Editor }) {
   return (
     <Popover
       trigger={
-        <button type="button" className="tb-btn tb-btn-split" title="Line height">
+        <button
+          type="button"
+          className="tb-btn tb-btn-split"
+          title="Line height"
+          aria-label="Line height"
+        >
           <LineHeightIcon />
           <ChevronDownIcon className="tb-caret" />
         </button>
@@ -75,7 +80,7 @@ export function EmojiMenu({ editor }: { editor: Editor }) {
   return (
     <Popover
       trigger={
-        <button type="button" className="tb-btn" title="Insert emoji">
+        <button type="button" className="tb-btn" title="Insert emoji" aria-label="Insert emoji">
           <EmojiIcon />
         </button>
       }
@@ -149,7 +154,12 @@ export function SpecialCharsMenu({ editor }: { editor: Editor }) {
   return (
     <Popover
       trigger={
-        <button type="button" className="tb-btn" title="Special characters">
+        <button
+          type="button"
+          className="tb-btn"
+          title="Special characters"
+          aria-label="Special characters"
+        >
           <OmegaIcon />
         </button>
       }

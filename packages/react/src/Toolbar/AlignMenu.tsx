@@ -47,7 +47,12 @@ export function AlignMenu({ editor, dropdown = false }: AlignMenuProps) {
       <Popover
         className="tb-pop-align"
         trigger={
-          <button type="button" className="tb-btn tb-btn-split" title={active.label}>
+          <button
+            type="button"
+            className="tb-btn tb-btn-split"
+            title={active.label}
+            aria-label={active.label}
+          >
             <active.Icon />
             <ChevronDownIcon className="tb-caret" />
           </button>
@@ -62,6 +67,7 @@ export function AlignMenu({ editor, dropdown = false }: AlignMenuProps) {
                 role="menuitem"
                 className={`tb-btn ${current === value ? 'is-active' : ''}`}
                 title={label}
+                aria-label={label}
                 onMouseDown={(e) => {
                   e.preventDefault()
                   apply(value)
@@ -87,6 +93,7 @@ export function AlignMenu({ editor, dropdown = false }: AlignMenuProps) {
             type="button"
             className={`tb-btn ${active ? 'is-active' : ''}`}
             title={label}
+            aria-label={label}
             aria-pressed={active}
             onMouseDown={(e) => {
               e.preventDefault()

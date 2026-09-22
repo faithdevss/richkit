@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkitjs/core'
+import { Node, safeUrl, type Command } from '@richkitjs/core'
 import { NodeSelection, type EditorState } from 'prosemirror-state'
 import { ImageNodeView } from './nodeView'
 
@@ -62,9 +62,10 @@ export const Image = Node.create<ImageOptions>({
       getAttrs: (node) => {
         const el = node as HTMLElement
         const img = el.querySelector('img')
-        if (!img) return false
+        const src = safeUrl(img?.getAttribute('src'), { media: true })
+        if (!img || !src) return false
         return {
-          src: img.getAttribute('src'),
+          src,
           alt: img.getAttribute('alt'),
           title: img.getAttribute('title'),
           width: img.getAttribute('width'),
@@ -78,8 +79,10 @@ export const Image = Node.create<ImageOptions>({
       tag: 'img[src]',
       getAttrs: (node) => {
         const el = node as HTMLImageElement
+        const src = safeUrl(el.getAttribute('src'), { media: true })
+        if (!src) return false
         return {
-          src: el.getAttribute('src'),
+          src,
           alt: el.getAttribute('alt'),
           title: el.getAttribute('title'),
           width: el.getAttribute('width'),
@@ -89,7 +92,9 @@ export const Image = Node.create<ImageOptions>({
     },
   ],
   renderHTML: (node) => {
-    const { align, caption, ...img } = node.attrs as unknown as ImageAttrs & Record<string, unknown>
+    const { align, caption, ...attrs } = node.attrs as unknown as ImageAttrs &
+      Record<string, unknown>
+    const img = { ...attrs, src: safeUrl(attrs.src, { media: true }) }
     // A bare <img> stays a bare <img> so nothing downstream has to learn a
     // wrapper it never asked for; alignment or a caption earns the <figure>.
     if (!align && !caption) return ['img', img]
@@ -134,8 +139,9 @@ export const Image = Node.create<ImageOptions>({
       const [attrs] = args as [ImageAttrs]
       return ({ state, dispatch }) => {
         const type = state.schema.nodes['image']
-        if (!type) return false
-        const node = type.create(attrs)
+        const src = safeUrl(attrs?.src, { media: true })
+        if (!type || !src) return false
+        const node = type.create({ ...attrs, src })
         if (dispatch) dispatch(state.tr.replaceSelectionWith(node).scrollIntoView())
         return true
       }

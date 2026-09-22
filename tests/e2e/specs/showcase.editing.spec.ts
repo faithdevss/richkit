@@ -8,7 +8,7 @@ import { MOD } from './_helpers'
  * so the file guards the escape hatches rather than the block types.
  */
 
-const ED = '.demo-notion .editor .ProseMirror'
+const ED = '.rk-notion .editor .ProseMirror'
 
 async function open(page: Page) {
   await page.goto('/docs/usecases/notion-blocks', { waitUntil: 'domcontentloaded' })
@@ -89,7 +89,7 @@ test.describe('leaving a trailing block', () => {
     await open(page)
     await page.keyboard.type('```')
     await typeCode(page, 'code')
-    const box = (await page.locator('.demo-notion .demo-page-notion').boundingBox())!
+    const box = (await page.locator('.rk-notion .rk-page-notion').boundingBox())!
     await page.mouse.click(box.x + box.width / 2, box.y + box.height - 6)
     await page.keyboard.type('after')
     expect(await html(page)).toMatch(/<\/pre>[\s\S]*after/)
@@ -98,7 +98,7 @@ test.describe('leaving a trailing block', () => {
   test('clicking under a trailing table starts a paragraph', async ({ page }) => {
     await open(page)
     await runSlash(page, 'table')
-    const box = (await page.locator('.demo-notion .demo-page-notion').boundingBox())!
+    const box = (await page.locator('.rk-notion .rk-page-notion').boundingBox())!
     await page.mouse.click(box.x + box.width / 2, box.y + box.height - 6)
     await page.keyboard.type('after')
     expect(await html(page)).toMatch(/<\/table>[\s\S]*after/)
@@ -225,7 +225,7 @@ test.describe('clicking below the content', () => {
     await open(page)
     await page.keyboard.type('select me')
     const p = (await page.locator(`${ED} p`).first().boundingBox())!
-    const stage = (await page.locator('.demo-notion .demo-page-notion').boundingBox())!
+    const stage = (await page.locator('.rk-notion .rk-page-notion').boundingBox())!
     await page.mouse.move(p.x + 4, p.y + p.height / 2)
     await page.mouse.down()
     await page.mouse.move(p.x + 70, p.y + p.height / 2, { steps: 8 })

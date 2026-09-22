@@ -92,6 +92,12 @@ caret does not jump.
 | `onEditorReady`               | `(editor: Editor) => void`                 | the live editor, for any command                           |
 | `ref`                         | `EditorHandle`                             | `editor`, `focus`, `blur`, `getValue`, `setValue`, `clear` |
 
+`clear()` fires `onChange` with `''`. `setValue()` does not — like a new `value` from the
+parent, it is for uncontrolled editors; a controlled one should change `value` instead.
+
+`MarkdownEditor` keeps formulas as `$…$` and `$$…$$`. To render them, load the math styles:
+`import '@richkitjs/extension-math/style.css'`.
+
 Each editor also has its own props, for example `MentionsEditor`'s `mentions` or
 `CommentBoxEditor`'s `limit`. All of them are typed and documented in the package's type
 definitions.

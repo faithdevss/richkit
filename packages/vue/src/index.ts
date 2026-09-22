@@ -1,3 +1,6 @@
 export { useEditor } from './useEditor'
 export { EditorContent } from './EditorContent'
 export { provideEditor, useEditorContext, editorInjectionKey } from './context'
+export { RichViewer } from './RichViewer'
+export { sanitizeHtml, renderHtml } from '@richkitjs/html'
+export type { RenderContent, RenderHtmlOptions } from '@richkitjs/html'

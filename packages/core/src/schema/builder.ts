@@ -60,3 +60,21 @@ export function buildSchema(extensions: AnyExtension[], editor: Editor): Schema 
 
   return new Schema({ nodes, marks })
 }
+
+const schemaCache = new WeakMap<readonly AnyExtension[], Schema>()
+
+/**
+ * The schema a set of extensions defines, without mounting an editor. Handy
+ * for reading, rendering or sanitizing stored content on its own. The result
+ * is cached per array, so pass the same array each time.
+ */
+export function getSchema(extensions: readonly AnyExtension[]): Schema {
+  let schema = schemaCache.get(extensions)
+  if (!schema) {
+    // Schema specs only read `name` and `options` from their context; nothing
+    // reaches for the editor until plugins and commands are built.
+    schema = buildSchema([...extensions], undefined as unknown as Editor)
+    schemaCache.set(extensions, schema)
+  }
+  return schema
+}

@@ -15,6 +15,7 @@ const NAV: { head: string; icon: IconName; items: { label: string; to: string }[
       { label: 'Installation', to: '/docs/installation' },
       { label: 'Core concepts', to: '/docs/core-concepts' },
       { label: 'Styling', to: '/docs/styling' },
+      { label: 'Sanitizing & viewing', to: '/docs/sanitize' },
       { label: 'AI', to: '/docs/ai' },
       { label: 'Licensing', to: '/docs/licensing' },
     ],

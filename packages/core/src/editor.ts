@@ -17,6 +17,13 @@ import { docToHtml, htmlToDoc } from './html'
 // Transaction meta: a doc change that should not surface as an `update`.
 const SILENT = 'richkit:silent'
 
+/**
+ * Transaction meta set on every `setContent` — the document being replaced
+ * wholesale (a form reset, a loaded record), not edited. Plugins that react
+ * to edits, such as track changes, leave these transactions alone.
+ */
+export const SET_CONTENT_META = 'richkit:setContent'
+
 export interface EditorEvents {
   create: { editor: Editor }
   transaction: { editor: Editor; transaction: Transaction }
@@ -316,6 +323,7 @@ export class Editor {
   ): void {
     const doc = this.parseInitialDoc(content)
     const tr = this.view.state.tr.replaceWith(0, this.view.state.doc.content.size, doc.content)
+    tr.setMeta(SET_CONTENT_META, true)
     if (options.emitUpdate === false) tr.setMeta(SILENT, true)
     if (options.addToHistory === false) tr.setMeta('addToHistory', false)
     this.view.dispatch(tr)

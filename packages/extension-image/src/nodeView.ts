@@ -1,3 +1,4 @@
+import { safeUrl } from '@richkitjs/core'
 import type { Node as PMNode } from 'prosemirror-model'
 import type { EditorView, NodeView } from 'prosemirror-view'
 
@@ -154,7 +155,7 @@ export class ImageNodeView implements NodeView {
 
   private applyAttrs(node: PMNode): void {
     const { src, alt, title, width, height } = node.attrs
-    this.img.src = (src as string) ?? ''
+    this.img.src = safeUrl(src, { media: true }) ?? ''
     if (alt) this.img.alt = alt as string
     else this.img.removeAttribute('alt')
     if (title) this.img.title = title as string

@@ -62,6 +62,10 @@ describe('ready-made editors as form inputs', () => {
 
     expect(ref.current!.getValue()).toBe('<p>hello!</p>')
     expect(typeof ref.current!.focus).toBe('function')
+
+    // clear() is a user-visible edit: the parent's state follows it
+    await act(async () => ref.current!.clear())
+    expect(value).toBe('')
   })
 
   it('emits the format asked for', async () => {

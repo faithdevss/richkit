@@ -9,6 +9,7 @@ import {
   ToolbarGroup,
 } from '@richkitjs/react'
 import { StarterKit } from '@richkitjs/starter-kit'
+import { MathKit } from '@richkitjs/extension-math'
 import { docToMarkdown, markdownToHtml } from '@richkitjs/markdown'
 import {
   cx,
@@ -38,7 +39,11 @@ export const MarkdownEditor = forwardRef(function MarkdownEditor(
 ) {
   const { filename = 'document.md', showSource = true, placeholder, className, style, name } = props
   const format = props.format ?? 'markdown'
-  const extensions = useMemo(() => withPlaceholder(StarterKit, placeholder), [placeholder])
+  // Math is in the schema so `$…$` and `$$…$$` in the value survive an edit.
+  const extensions = useMemo(
+    () => withPlaceholder([...StarterKit, ...MathKit], placeholder),
+    [placeholder],
+  )
   const editor = useEditorField(props, ref, extensions, {
     deps: [extensions],
     defaultFormat: 'markdown',
@@ -62,7 +67,7 @@ export const MarkdownEditor = forwardRef(function MarkdownEditor(
     setSource(next)
     if (!editor) return
     fromSource.current = true
-    editor.setContent(markdownToHtml(next))
+    editor.setContent(markdownToHtml(next, { html: true }))
     fromSource.current = false
   }
 
@@ -76,9 +81,9 @@ export const MarkdownEditor = forwardRef(function MarkdownEditor(
   }
 
   return (
-    <div className={cx('demo-frame demo-markdown', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-markdown', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar">
+        <Toolbar editor={editor} className="toolbar rk-toolbar">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -152,6 +157,7 @@ export const MarkdownEditor = forwardRef(function MarkdownEditor(
               type="button"
               className="tb-btn"
               title="Download .md"
+              aria-label="Download .md"
               onMouseDown={(e) => {
                 e.preventDefault()
                 download()
@@ -163,8 +169,8 @@ export const MarkdownEditor = forwardRef(function MarkdownEditor(
         </Toolbar>
       )}
       <div className="md-split">
-        <div className="demo-scroll">
-          <div className="demo-page demo-page-simple">
+        <div className="rk-scroll">
+          <div className="rk-page rk-page-simple">
             <EditorContent editor={editor} className="editor" />
           </div>
         </div>

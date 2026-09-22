@@ -13,6 +13,7 @@ import Introduction from './content/docs/introduction.mdx'
 import Installation from './content/docs/installation.mdx'
 import CoreConcepts from './content/docs/core-concepts.mdx'
 import Styling from './content/docs/styling.mdx'
+import Sanitize from './content/docs/sanitize.mdx'
 import AIDocs from './content/docs/ai.mdx'
 import Licensing from './content/docs/licensing.mdx'
 import EditorApi from './content/docs/api/editor.mdx'
@@ -46,6 +47,7 @@ export function App() {
             <Route path="installation" element={<Installation />} />
             <Route path="core-concepts" element={<CoreConcepts />} />
             <Route path="styling" element={<Styling />} />
+            <Route path="sanitize" element={<Sanitize />} />
             <Route path="ai" element={<AIDocs />} />
             <Route path="licensing" element={<Licensing />} />
             <Route path="api/editor" element={<EditorApi />} />

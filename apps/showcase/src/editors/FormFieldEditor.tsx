@@ -27,7 +27,7 @@ export function FormFieldEditor() {
     : `${text.length} characters · ${html.length} bytes of HTML`
 
   return (
-    <div className="demo-frame ff-demo" data-theme="light">
+    <div className="rk-frame ff-demo" data-theme="light">
       <Classic
         ref={field}
         name="description"
@@ -72,7 +72,7 @@ export function ClassicEditor() {
   const [html, setHtml] = useState(CLASSIC_CONTENT)
 
   return (
-    <div className="demo-frame ff-demo is-bare" data-theme="dark">
+    <div className="rk-frame ff-demo is-bare" data-theme="dark">
       <Classic
         value={html}
         onChange={setHtml}

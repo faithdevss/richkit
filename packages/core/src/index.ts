@@ -1,4 +1,4 @@
-export { Editor } from './editor'
+export { Editor, SET_CONTENT_META } from './editor'
 export type { EditorOptions, EditorEvents, SetContentOptions } from './editor'
 export { Extension } from './extension/extension'
 export type { ExtensionConfig, AnyExtension } from './extension/extension'
@@ -21,6 +21,8 @@ export {
   toggleBlockType,
 } from './commands/blocks'
 export { trailingClick } from './plugins/trailing-click'
-export { htmlToDoc, docToHtml } from './html'
+export { htmlToDoc, docToHtml, isSafeUrl, safeUrl } from './html'
+export type { HtmlDomOptions, SafeUrlOptions } from './html'
+export { getSchema } from './schema/builder'
 export { createAutosave } from './autosave'
 export type { AutosaveOptions } from './autosave'

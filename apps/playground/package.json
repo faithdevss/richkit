@@ -14,15 +14,20 @@
   "dependencies": {
     "@richkitjs/core": "workspace:*",
     "@richkitjs/docx": "workspace:*",
+    "@richkitjs/editors": "workspace:*",
+    "@richkitjs/editors-pro": "workspace:*",
     "@richkitjs/extension-ai": "workspace:*",
     "@richkitjs/extension-comments": "workspace:*",
+    "@richkitjs/extension-math": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",
+    "@richkitjs/license": "workspace:*",
     "@richkitjs/markdown": "workspace:*",
     "@richkitjs/react": "workspace:*",
     "@richkitjs/starter-kit": "workspace:*",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "react-hook-form": "^7.62.0"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",

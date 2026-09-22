@@ -42,6 +42,30 @@ function defaultFilter(items: MentionCandidate[], query: string): MentionCandida
   )
 }
 
+/**
+ * Replaces the typed `@query` with the mention, followed by a space so the
+ * next word does not run into it (unless whitespace already follows).
+ */
+function insertCandidate(editor: Editor, item: MentionCandidate, range: MentionRange) {
+  editor.view.dispatch(editor.view.state.tr.delete(range.from, range.to))
+  editor
+    .chain()
+    .call('insertMention', {
+      id: item.id,
+      label: item.label,
+      kind: item.kind ?? 'user',
+      href: item.href ?? null,
+    })
+    .focus()
+    .run()
+  const { state } = editor.view
+  const after = state.doc.textBetween(
+    state.selection.from,
+    Math.min(state.selection.from + 1, state.selection.$from.end()),
+  )
+  if (!/^\s/.test(after)) editor.view.dispatch(state.tr.insertText(' '))
+}
+
 export function MentionMenu({ editor, items, className, filter }: MentionMenuProps) {
   const ref = useRef<HTMLDivElement>(null)
   const activeRef = useRef<HTMLButtonElement>(null)
@@ -52,19 +76,8 @@ export function MentionMenu({ editor, items, className, filter }: MentionMenuPro
   useEffect(() => {
     if (!editor) return
 
-    const insert = (item: MentionCandidate, range: MentionRange) => {
-      editor.view.dispatch(editor.view.state.tr.delete(range.from, range.to))
-      editor
-        .chain()
-        .call('insertMention', {
-          id: item.id,
-          label: item.label,
-          kind: item.kind ?? 'user',
-          href: item.href ?? null,
-        })
-        .focus()
-        .run()
-    }
+    const insert = (item: MentionCandidate, range: MentionRange) =>
+      insertCandidate(editor, item, range)
 
     const sync = () => {
       const s = getMentionState(editor.state)
@@ -151,17 +164,7 @@ export function MentionMenu({ editor, items, className, filter }: MentionMenuPro
           className={`rk-mention-item${i === view.index ? ' is-active' : ''}`}
           onMouseDown={(e) => {
             e.preventDefault()
-            editor.view.dispatch(editor.view.state.tr.delete(view.range.from, view.range.to))
-            editor
-              .chain()
-              .call('insertMention', {
-                id: item.id,
-                label: item.label,
-                kind: item.kind ?? 'user',
-                href: item.href ?? null,
-              })
-              .focus()
-              .run()
+            insertCandidate(editor, item, view.range)
             closeMention(editor.view)
           }}
         >

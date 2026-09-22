@@ -44,7 +44,8 @@ export function pasteHandlerPlugin(options: PasteHandlerOptions): Plugin {
         if (event.clipboardData?.getData('text/html')) return false
         if (view.state.selection.$from.parent.type.spec.code) return false
         if (looksLikeUrl(text)) return pasteUrl(view, text)
-        if (looksLikeMarkdown(text)) return pasteMarkdown(view, markdownToHtml(text))
+        if (looksLikeMarkdown(text))
+          return pasteMarkdown(view, markdownToHtml(text, { html: true }))
         return false
       },
     },

@@ -65,6 +65,7 @@ function ListSplitButton({
         type="button"
         className={`tb-btn tb-split-main${active ? ' is-active' : ''}`}
         title={title}
+        aria-label={title}
         aria-pressed={active}
         onMouseDown={(e) => {
           e.preventDefault()
@@ -80,6 +81,7 @@ function ListSplitButton({
             type="button"
             className={`tb-btn tb-split-caret${active ? ' is-active' : ''}`}
             title={`${title} style`}
+            aria-label={`${title} style`}
           >
             <ChevronDownIcon className="tb-caret" />
           </button>
@@ -94,6 +96,7 @@ function ListSplitButton({
                 role="menuitem"
                 className={`tb-list-style${active && current === s.value ? ' is-active' : ''}`}
                 title={s.label}
+                aria-label={s.label}
                 onMouseDown={(e) => {
                   e.preventDefault()
                   editor.chain().call(styleCmd, s.value).focus().run()

@@ -68,6 +68,7 @@ export function BlockTypeMenu({ editor, iconOnly = false }: BlockTypeMenuProps) 
           type="button"
           className={`tb-btn tb-blocktype-trigger${iconOnly ? ' is-icon' : ''}`}
           title={`Block type — ${label}`}
+          aria-label={`Block type — ${label}`}
         >
           {iconOnly ? (
             label === 'Paragraph' ? (

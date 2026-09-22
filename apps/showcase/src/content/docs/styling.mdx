@@ -54,11 +54,12 @@ import '@richkitjs/editors/style.css'
 ```
 
 Note the content rules are scoped under `.editor`, so give `EditorContent` that class.
-Every colour, radius and shadow in it is a CSS variable (`--bg`, `--surface`,
-`--surface-2`, `--border`, `--border-strong`, `--text`, `--text-muted`, `--accent`,
-`--accent-soft`, `--accent-hover`, `--danger`, `--radius`, `--radius-sm`,
-`--radius-lg`, `--shadow-sm/md/lg`), light on `:root` and dark under
-`[data-theme='dark']` — override those to rebrand. The full table is in
+Every colour, radius and shadow in it is a CSS variable, prefixed so it never clashes
+with your app's tokens (`--rk-bg`, `--rk-surface`, `--rk-surface-2`, `--rk-border`,
+`--rk-border-strong`, `--rk-text`, `--rk-text-muted`, `--rk-accent`, `--rk-accent-soft`,
+`--rk-accent-hover`, `--rk-danger`, `--rk-radius`, `--rk-radius-sm`, `--rk-radius-lg`,
+`--rk-shadow-sm/md/lg`), light on `:root` and dark under `[data-theme='dark']` — override
+those to rebrand. The full table is in
 [Ready-made editors → Styling](/docs/api/editors#styling).
 
 ## Theming with CSS custom properties
@@ -70,18 +71,18 @@ container with a `data-theme` attribute:
 
 ```css
 [data-theme='light'] {
-  --bg: #f5f6f8;
-  --surface: #ffffff;
-  --border: #e3e6ea;
-  --text: #1a1d21;
-  --accent: #2563eb;
+  --rk-bg: #f5f6f8;
+  --rk-surface: #ffffff;
+  --rk-border: #e3e6ea;
+  --rk-text: #1a1d21;
+  --rk-accent: #2563eb;
 }
 [data-theme='dark'] {
-  --bg: #0c0c0e;
-  --surface: #17171a;
-  --border: #2a2a2f;
-  --text: #ececee;
-  --accent: #7c8bff;
+  --rk-bg: #0c0c0e;
+  --rk-surface: #17171a;
+  --rk-border: #2a2a2f;
+  --rk-text: #ececee;
+  --rk-accent: #7c8bff;
 }
 ```
 

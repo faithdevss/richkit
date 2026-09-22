@@ -67,12 +67,12 @@ export const MentionsEditor = forwardRef(function MentionsEditor(
   }
 
   return (
-    <div className={cx('demo-frame demo-chat', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-chat', className)} data-theme={theme} style={style}>
       {header && <div className="chat-head">{header}</div>}
       {children && <div className="chat-log">{children}</div>}
       <div className="chat-composer" onKeyDownCapture={onKeyDownCapture}>
         <EditorContent editor={editor} className="editor chat-input" />
-        <button type="button" className="chat-send" title="Send" onClick={send}>
+        <button type="button" className="chat-send" title="Send" aria-label="Send" onClick={send}>
           <svg
             width="16"
             height="16"

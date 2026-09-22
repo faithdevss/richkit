@@ -1,7 +1,7 @@
 {
   "name": "@richkitjs/html",
   "version": "0.1.1",
-  "description": "Parse HTML into a RichKit document and serialize it back (htmlToDoc, docToHtml).",
+  "description": "Sanitize and render RichKit HTML without an editor: sanitizeHtml, renderHtml, htmlToDoc, docToHtml, isSafeUrl.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -53,6 +53,8 @@
     "html",
     "html-parser",
     "html-serializer",
-    "sanitize"
+    "sanitize",
+    "xss",
+    "html-sanitizer"
   ]
 }

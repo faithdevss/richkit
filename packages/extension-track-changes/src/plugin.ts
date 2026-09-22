@@ -1,6 +1,7 @@
 import type { EditorState } from 'prosemirror-state'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { ReplaceAroundStep, ReplaceStep } from 'prosemirror-transform'
+import { SET_CONTENT_META } from '@richkitjs/core'
 
 export interface TrackState {
   enabled: boolean
@@ -82,12 +83,11 @@ export function trackChangesPlugin(): Plugin<TrackState> {
     appendTransaction(transactions, _oldState, newState) {
       const ts = trackKey.getState(newState)
       if (!ts?.enabled) return null
-      // skip if all source transactions are our own annotation passes
-      const candidate = transactions.find((t) => {
-        const m = t.getMeta(trackKey) as TrackMeta | undefined
-        return !m?.skip
-      })
-      if (!candidate) return null
+      // Our own annotation passes and wholesale content replacement (a new
+      // `value`, a form reset) are not edits to suggest.
+      const untracked = (t: (typeof transactions)[number]) =>
+        !!(t.getMeta(trackKey) as TrackMeta | undefined)?.skip || !!t.getMeta(SET_CONTENT_META)
+      if (transactions.every(untracked)) return null
 
       const insType = newState.schema.marks['insertion']
       if (!insType) return null
@@ -99,8 +99,7 @@ export function trackChangesPlugin(): Plugin<TrackState> {
       const seenRanges: { from: number; to: number }[] = []
 
       for (const oldTr of transactions) {
-        const m = oldTr.getMeta(trackKey) as TrackMeta | undefined
-        if (m?.skip) continue
+        if (untracked(oldTr)) continue
         for (let i = 0; i < oldTr.steps.length; i++) {
           const step = oldTr.steps[i]
           if (!step) continue

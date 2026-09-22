@@ -1377,7 +1377,7 @@ button.tpl-card {
    DEMO STAGES — the editors' own styles ship in
    @richkitjs/editors/style.css; the site only sizes the stage.
    ============================================================ */
-.demo-frame {
+.rk-frame {
   min-height: 560px;
   max-height: 720px;
 }
@@ -1923,7 +1923,7 @@ button.tpl-card {
   align-items: center;
   gap: 8px;
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--rk-text-muted);
 }
 .ff-readout {
   display: grid;
@@ -1934,15 +1934,15 @@ button.tpl-card {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-muted);
+  color: var(--rk-text-muted);
 }
 .ff-readout pre {
   margin: 4px 0 0;
   padding: 10px 12px;
   border-radius: 6px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: var(--rk-surface-2);
+  border: 1px solid var(--rk-border);
+  color: var(--rk-text);
   font-size: 0.76rem;
   white-space: pre-wrap;
   word-break: break-word;
@@ -1958,7 +1958,7 @@ button.tpl-card {
    "more" popover, so this is page chrome and demo padding only.
    ============================================================ */
 @media (max-width: 640px) {
-  .demo-frame {
+  .rk-frame {
     min-height: 460px;
     max-height: 78vh;
   }
@@ -2220,4 +2220,53 @@ button.tpl-card {
 .example-source .docs-pre {
   max-height: 560px;
   overflow: auto;
+}
+
+/* ---------- sanitize demo ---------- */
+.sanitize-demo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 18px;
+}
+.sanitize-demo-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.sanitize-demo-wide {
+  grid-column: 1 / -1;
+}
+.sanitize-demo-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--site-text-dim);
+}
+.sanitize-demo-input,
+.sanitize-demo-output {
+  height: 260px;
+  margin: 0;
+  font-family: var(--site-mono);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.sanitize-demo-input {
+  resize: vertical;
+  padding: 14px 16px;
+  color: var(--site-text);
+  background: var(--site-panel-deep);
+  border: 1px solid var(--site-line-strong);
+  border-radius: 12px;
+}
+.sanitize-demo-output {
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+@media (max-width: 720px) {
+  .sanitize-demo {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
 }

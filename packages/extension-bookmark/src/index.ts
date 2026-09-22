@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkitjs/core'
+import { isSafeUrl, Node, safeUrl, type Command } from '@richkitjs/core'
 
 export interface BookmarkAttrs {
   href: string
@@ -46,18 +46,24 @@ export const Bookmark = Node.create<BookmarkOptions>({
       priority: 60,
       getAttrs: (node) => {
         const el = node as HTMLElement
+        const href = safeUrl(el.getAttribute('href'))
+        if (!href) return false
         return {
-          href: el.getAttribute('href'),
+          href,
           title: el.getAttribute('data-title'),
           description: el.getAttribute('data-description'),
-          thumbnail: el.getAttribute('data-thumbnail'),
-          favicon: el.getAttribute('data-favicon'),
+          thumbnail: safeUrl(el.getAttribute('data-thumbnail'), { media: true }),
+          favicon: safeUrl(el.getAttribute('data-favicon'), { media: true }),
         }
       },
     },
   ],
   renderHTML: (node) => {
-    const { href, title, description, thumbnail, favicon } = node.attrs as unknown as BookmarkAttrs
+    const raw = node.attrs as unknown as BookmarkAttrs
+    const { title, description } = raw
+    const href = safeUrl(raw.href)
+    const thumbnail = safeUrl(raw.thumbnail, { media: true })
+    const favicon = safeUrl(raw.favicon, { media: true })
     const attrs: Record<string, string> = {
       'data-bookmark': '',
       class: 'rk-bookmark',
@@ -90,7 +96,7 @@ export const Bookmark = Node.create<BookmarkOptions>({
       const attrs: Partial<BookmarkAttrs> = typeof input === 'string' ? { href: input } : input
       return ({ state, dispatch, view }) => {
         const type = state.schema.nodes['bookmark']
-        if (!type || !attrs.href) return false
+        if (!type || !isSafeUrl(attrs.href)) return false
         const node = type.create({ title: hostOf(attrs.href), ...attrs })
         if (!dispatch) return true
         const tr = state.tr.replaceSelectionWith(node).scrollIntoView()

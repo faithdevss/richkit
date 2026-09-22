@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkitjs/core'
+import { Node, safeUrl, type Command } from '@richkitjs/core'
 import { mentionPlugin } from './plugin'
 
 export type MentionKind = 'user' | 'page'
@@ -36,7 +36,7 @@ export const Mention = Node.create({
           id: el.getAttribute('data-mention'),
           label: el.getAttribute('data-label') ?? el.textContent?.replace(/^@/, '') ?? '',
           kind: (el.getAttribute('data-kind') as MentionKind) || 'user',
-          href: el.getAttribute('data-href'),
+          href: safeUrl(el.getAttribute('data-href')),
         }
       },
     },
@@ -49,7 +49,8 @@ export const Mention = Node.create({
       'data-kind': kind,
       class: `rk-mention rk-mention-${kind}`,
     }
-    if (href) attrs['data-href'] = href
+    const safeHref = safeUrl(href)
+    if (safeHref) attrs['data-href'] = safeHref
     return ['span', attrs, `@${label ?? id ?? ''}`]
   },
   addProseMirrorPlugins: () => [mentionPlugin()],

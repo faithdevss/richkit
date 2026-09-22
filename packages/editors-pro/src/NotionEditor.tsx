@@ -226,7 +226,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
 
   return (
     <div
-      className={cx('demo-frame demo-notion', className)}
+      className={cx('rk-frame rk-notion', className)}
       data-theme={theme}
       style={style}
       onKeyDown={onKeyDown}
@@ -238,6 +238,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
             type="button"
             className="tb-btn"
             title="Undo"
+            aria-label="Undo"
             onMouseDown={(e) => {
               e.preventDefault()
               editor?.chain().call('undo').focus().run()
@@ -249,6 +250,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
             type="button"
             className="tb-btn"
             title="Redo"
+            aria-label="Redo"
             onMouseDown={(e) => {
               e.preventDefault()
               editor?.chain().call('redo').focus().run()
@@ -261,6 +263,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
             type="button"
             className="tb-btn"
             title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+            aria-label={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
             onMouseDown={(e) => {
               e.preventDefault()
               toggleTheme()
@@ -273,8 +276,8 @@ export const NotionEditor = forwardRef(function NotionEditor(
       </div>
 
       <div className="notion-body">
-        <div className="demo-scroll" ref={setScrollEl}>
-          <div className="demo-page demo-page-notion">
+        <div className="rk-scroll" ref={setScrollEl}>
+          <div className="rk-page rk-page-notion">
             <EditorContent editor={editor} className="editor" />
             <BlockHandle editor={editor} container={scrollEl} />
             <SlashMenu editor={editor} items={slashItems} />
@@ -356,6 +359,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
                           type="button"
                           className="notion-improve"
                           title="Improve this text with AI"
+                          aria-label="Improve this text with AI"
                           onMouseDown={(e) => {
                             e.preventDefault()
                             runAI('Improve the writing. Keep the meaning.')
@@ -409,6 +413,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
                       type="button"
                       className="tb-btn"
                       title="Comment"
+                      aria-label="Comment"
                       onMouseDown={(e) => {
                         e.preventDefault()
                         addComment()
@@ -423,6 +428,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
                       type="button"
                       className={`tb-btn${moreRow ? ' is-active' : ''}`}
                       title="More formatting"
+                      aria-label="More formatting"
                       aria-expanded={moreRow}
                       onMouseDown={(e) => {
                         e.preventDefault()
@@ -486,7 +492,7 @@ export const NotionEditor = forwardRef(function NotionEditor(
         <span>{stats.readingTimeMinutes} min read</span>
       </div>
 
-      {footer}
+      {footer != null && <div className="notion-footer">{footer}</div>}
       <FieldValue editor={editor} name={name} format={format} />
     </div>
   )

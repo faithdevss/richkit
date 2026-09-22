@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkitjs/core'
+import { Node, safeUrl, type Command } from '@richkitjs/core'
 import { EmbedNodeView, alignMargins, type EmbedAlign } from './nodeView'
 import { normalizeEmbedUrl, type EmbedProvider } from './providers'
 
@@ -63,9 +63,13 @@ export const Embed = Node.create({
     },
   ],
   renderHTML: (node) => {
-    const { src, provider, width, height, aspect, align } = node.attrs as unknown as EmbedAttrs
+    const { provider, width, height, aspect, align } = node.attrs as unknown as EmbedAttrs
+    // parseHTML already normalizes the URL; a doc loaded from JSON did not pass through it
+    const src = safeUrl(node.attrs.src) ?? ''
     const margins = alignMargins(align ?? null)
-    const marginStyle = margins.left ? `;margin-left:${margins.left};margin-right:${margins.right}` : ''
+    const marginStyle = margins.left
+      ? `;margin-left:${margins.left};margin-right:${margins.right}`
+      : ''
     const wrapper: Record<string, string> = {
       'data-embed': '',
       'data-provider': provider,

@@ -24,6 +24,9 @@ import {
   type ProFieldComponent,
 } from './field'
 
+const MOD_KEY =
+  typeof navigator !== 'undefined' && /Mac|iP(hone|ad|od)/.test(navigator.platform) ? '⌘' : 'Ctrl'
+
 export interface AgentEditorProps {
   /**
    * Drafts a section from the user's instruction and returns it as HTML, which
@@ -90,7 +93,7 @@ export const AgentEditor = forwardRef(function AgentEditor(
     // is a single onChange and a single undo step.
     const paint = () => {
       frame = 0
-      editor.setContent(base + markdownToHtml(stripFence(markdown)), {
+      editor.setContent(base + markdownToHtml(stripFence(markdown), { html: true }), {
         emitUpdate: false,
         addToHistory: false,
       })
@@ -114,7 +117,7 @@ export const AgentEditor = forwardRef(function AgentEditor(
     }
 
     const section = stripFence(markdown).trim()
-    if (section) editor.setContent(base + markdownToHtml(section))
+    if (section) editor.setContent(base + markdownToHtml(section, { html: true }))
     return !abort.signal.aborted
   }
 
@@ -141,9 +144,9 @@ export const AgentEditor = forwardRef(function AgentEditor(
   const stop = () => controller.current?.abort()
 
   return (
-    <div className={cx('demo-frame demo-agent', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-agent', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar demo-toolbar-light">
+        <Toolbar editor={editor} className="toolbar rk-toolbar rk-toolbar-light">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -210,8 +213,9 @@ export const AgentEditor = forwardRef(function AgentEditor(
             <ToolbarGroup>
               <button
                 type="button"
-                className={`tb-btn demo-ai-toggle${open ? ' is-active' : ''}`}
+                className={`tb-btn rk-ai-toggle${open ? ' is-active' : ''}`}
                 title="Ask the agent"
+                aria-label="Ask the agent"
                 onMouseDown={(e) => {
                   e.preventDefault()
                   setOpen((v) => !v)
@@ -223,8 +227,8 @@ export const AgentEditor = forwardRef(function AgentEditor(
           )}
         </Toolbar>
       )}
-      <div className="demo-scroll">
-        <div className="demo-page demo-page-agent">
+      <div className="rk-scroll">
+        <div className="rk-page rk-page-agent">
           <EditorContent editor={editor} className="editor" />
           <BubbleMenu editor={editor} className="bubble-menu">
             {editor && (
@@ -261,6 +265,7 @@ export const AgentEditor = forwardRef(function AgentEditor(
           type="button"
           className="agent-fab"
           title="Ask the agent"
+          aria-label="Ask the agent"
           onClick={() => setOpen((v) => !v)}
         >
           ✦
@@ -271,15 +276,24 @@ export const AgentEditor = forwardRef(function AgentEditor(
         <div className="agent-dock">
           <div className="agent-dock-head">
             <span>✦ Agent</span>
-            <button type="button" className="agent-dock-close" onClick={() => setOpen(false)}>
+            <button
+              type="button"
+              className="agent-dock-close"
+              aria-label="Close agent"
+              title="Close"
+              onClick={() => setOpen(false)}
+            >
               ×
             </button>
           </div>
           <p className="agent-dock-hint">
-            Describe a section. The agent drafts it and writes into the document.
+            Describe a section. The agent drafts it and writes into the document.{' '}
+            <kbd>{MOD_KEY}</kbd>+<kbd>Enter</kbd> drafts.
           </p>
           <textarea
             className="agent-dock-input"
+            aria-label="Section to draft"
+            aria-keyshortcuts="Control+Enter Meta+Enter"
             placeholder="e.g. Background & Significance"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}

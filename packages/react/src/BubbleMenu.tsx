@@ -19,7 +19,10 @@ export function BubbleMenu({ editor, children, className }: BubbleMenuProps) {
 
     const update = () => {
       const { from, to, empty } = editor.state.selection
-      if (empty) {
+      // A selection spanning only block boundaries (a double-click past the end
+      // of a line) has nothing to format or comment on. Leaf nodes such as
+      // images count as content.
+      if (empty || !editor.state.doc.textBetween(from, to, '', '\ufffc')) {
         el.style.visibility = 'hidden'
         return
       }

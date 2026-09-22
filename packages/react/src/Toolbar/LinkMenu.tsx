@@ -15,7 +15,12 @@ export function LinkMenu({ editor }: LinkMenuProps) {
     <Popover
       className="tb-pop-link"
       trigger={
-        <button type="button" className={`tb-btn ${active ? 'is-active' : ''}`} title="Link">
+        <button
+          type="button"
+          className={`tb-btn ${active ? 'is-active' : ''}`}
+          title="Link"
+          aria-label="Link"
+        >
           <LinkIcon />
         </button>
       }

@@ -1,0 +1,206 @@
+import { SanitizeDemo } from '../../components/SanitizeDemo'
+import { Demo, Install } from '../../mdx-components'
+
+<div className="docs-prose">
+
+# Sanitizing & viewing HTML
+
+Need to show HTML that came from a user, an API, an import or an old CMS? RichKit can
+sanitize it for you. Sanitizing is opt-in: `sanitizeHtml()` cleans a string,
+`renderHtml()` turns stored HTML or JSON into safe markup, and `<RichViewer />` shows that
+markup on the page without mounting an editor.
+
+They all apply the same rule: **only what your extensions define survives.** Content is
+parsed into your schema and serialized back out, so `<script>`, `on*` handlers, unknown
+tags and stray attributes never make it through. `href` and `src` values that could run
+script (`javascript:`, `vbscript:`, `data:text/html`, SVG data URLs, …) are removed too.
+
+</div>
+
+<Install packages="@richkitjs/html @richkitjs/starter-kit" />
+
+<Demo title="Sanitizer playground">
+  <SanitizeDemo />
+</Demo>
+
+<div className="docs-prose">
+
+## sanitizeHtml()
+
+Pass the untrusted string and the extensions that decide what is allowed. Use the same
+list your editor uses, so anything the editor can write also survives cleaning.
+
+```ts
+import { sanitizeHtml } from '@richkitjs/html'
+import { StarterKit } from '@richkitjs/starter-kit'
+
+const clean = sanitizeHtml(untrusted, { extensions: StarterKit })
+```
+
+```html
+<!-- in -->
+<p onclick="steal()">Read the <a href="javascript:steal()">notes</a></p>
+<img src="x" onerror="steal()" />
+<script>
+  steal()
+</script>
+
+<!-- out -->
+<p>Read the notes</p>
+<img src="x" />
+```
+
+What happens to each kind of input:
+
+| Input                                                   | Result                                |
+| ------------------------------------------------------- | ------------------------------------- |
+| `<script>`, `<style>`, `<object>`, unknown tags         | Dropped; their text may stay          |
+| `onclick`, `onerror` and other `on*` attributes         | Dropped                               |
+| Attributes the extension does not read                  | Dropped                               |
+| Link with an unsafe `href`                              | Link removed, text kept               |
+| Image or media with an unsafe `src`                     | Removed                               |
+| `iframe` with a non-`http(s)` source                    | Removed                               |
+| `iframe` with an `http(s)` source                       | Kept as a sandboxed embed (see below) |
+| `http(s):`, `mailto:`, `tel:`, relative URLs, `#hash`   | Kept                                  |
+| `data:` / `blob:` images, video, audio and file uploads | Kept, except HTML, XML, SVG and JS    |
+
+**Embeds.** With the Embed extension in the list, any `http(s)` iframe survives. YouTube
+and Vimeo URLs are rewritten to their player URLs; other sites are kept, sandboxed. That
+keeps the content from reaching your page, but it still appears in it. To refuse
+third-party frames from untrusted input, sanitize with a list that leaves Embed out:
+
+```ts
+import { Embed } from '@richkitjs/extension-embed'
+
+const NoEmbeds = StarterKit.filter((ext) => ext !== Embed)
+const clean = sanitizeHtml(untrusted, { extensions: NoEmbeds })
+```
+
+You already have an editor? Pass its schema instead of the extension list:
+
+```ts
+const clean = sanitizeHtml(untrusted, { schema: editor.schema })
+```
+
+**When to call it:** on the server before you store HTML you did not produce, and before
+rendering HTML from any source you do not control. `editor.getHTML()` is already
+schema-shaped, and its links and images go through the same URL checks, so your own
+editor's output does not need a second pass.
+
+## renderHtml()
+
+`renderHtml()` does the same cleaning and also accepts a `getJSON()` document. Use it to
+render stored content anywhere a string is useful: SSR, emails, RSS, search indexing.
+
+```ts
+import { renderHtml } from '@richkitjs/html'
+
+renderHtml(post.html, { extensions: StarterKit })
+renderHtml(post.json, { extensions: StarterKit }) // editor.getJSON() output
+```
+
+JSON bypasses HTML parsing, so the URL checks run again in each extension's renderer. A
+`javascript:` link injected straight into stored JSON is still stripped on the way out.
+Empty, `null` or `undefined` content renders as `''`.
+
+## RichViewer
+
+A read-only component for displaying content. It calls `renderHtml()` when `content`
+changes and puts the result on the page. It has no ProseMirror view, plugins or history,
+so a list of 50 comments is 50 divs, not 50 editors.
+
+</div>
+
+<Install packages="@richkitjs/react @richkitjs/starter-kit" />
+
+<div className="docs-prose">
+
+```tsx
+import { RichViewer } from '@richkitjs/react'
+import { StarterKit } from '@richkitjs/starter-kit'
+import '@richkitjs/editors/style.css'
+
+export function Comment({ body }: { body: string }) {
+  return <RichViewer className="editor" extensions={StarterKit} content={body} />
+}
+```
+
+The Vue component takes the same props:
+
+```vue
+<script setup lang="ts">
+import { RichViewer } from '@richkitjs/vue'
+import { StarterKit } from '@richkitjs/starter-kit'
+</script>
+
+<template>
+  <RichViewer class="editor" :extensions="StarterKit" :content="post.html" />
+</template>
+```
+
+| Prop         | Type                                    | Description                                                     |
+| ------------ | --------------------------------------- | --------------------------------------------------------------- |
+| `content`    | `string \| JSON \| null`                | `getHTML()` or `getJSON()` output, or any HTML.                 |
+| `extensions` | `AnyExtension[]`                        | The extensions the content was written with. Or pass `schema`.  |
+| `schema`     | `Schema`                                | An existing schema, such as `editor.schema`.                    |
+| `document`   | `Document`                              | A DOM for server rendering. See below.                          |
+| _rest_       | `div` attributes (`className`, `id`, …) | Passed to the wrapper `div`, which always has `richkit-viewer`. |
+
+**Styling.** The viewer outputs the same markup the editor renders. Add
+`className="editor"` with `@richkitjs/editors/style.css` and it matches the editor. The
+viewer skips the editor's minimum height. For your own stylesheet, target
+`.richkit-viewer`.
+
+**Keep `extensions` stable.** Schemas are cached per array, so pass a module-level
+constant like `StarterKit`, not an array rebuilt on every render.
+
+## Server rendering
+
+Parsing HTML needs a DOM. Browsers have one. On the server, pass a `document` from
+jsdom, linkedom or happy-dom:
+
+```ts
+import { parseHTML } from 'linkedom'
+import { sanitizeHtml } from '@richkitjs/html'
+
+const { document } = parseHTML('<!doctype html><html><body></body></html>')
+
+const clean = sanitizeHtml(untrusted, { extensions: StarterKit, document })
+```
+
+```tsx
+<RichViewer extensions={StarterKit} content={post.html} document={document} />
+```
+
+Without a DOM, both functions throw an error that tells you to pass `document`.
+
+## Checking a single URL
+
+The URL rule is exported for your own inputs, such as a link dialog, a profile website
+field or a redirect target:
+
+```ts
+import { isSafeUrl, safeUrl } from '@richkitjs/html' // also in @richkitjs/core
+
+isSafeUrl('https://example.com') // true
+isSafeUrl(' JaVa\tScRiPt:alert(1)') // false — whitespace and case are normalized first
+isSafeUrl('data:image/png;base64,…') // false
+isSafeUrl('data:image/png;base64,…', { media: true }) // true
+safeUrl(input) // the trimmed URL, or null
+```
+
+`setLink`, `insertImage`, `insertMedia` and `insertBookmark` apply the same check and do
+nothing (they return `false`) when given an unsafe URL.
+
+## Limits
+
+- **Your schema, your rules.** Any extension you add is allowed to render what it
+  defines. A custom extension that copies `href` or `src` from HTML should pass it
+  through `safeUrl()`, as the built-in extensions do.
+- **Static output.** The viewer renders what `renderHTML` produces. Code blocks show
+  plain code with a `language-*` class, and math shows its LaTeX source in `.rk-math`.
+  Syntax highlighting and KaTeX rendering are editor node views, not part of the viewer.
+- **HTML only.** Markdown goes through `@richkitjs/markdown` first. Text you insert
+  outside RichKit still needs escaping by your framework.
+
+</div>

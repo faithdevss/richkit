@@ -43,9 +43,9 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
   const [findOpen, setFindOpen] = useState(false)
 
   return (
-    <div className={cx('demo-frame demo-simple', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-simple', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar">
+        <Toolbar editor={editor} className="toolbar rk-toolbar">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -146,6 +146,7 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
               type="button"
               className={`tb-btn${findOpen ? ' is-active' : ''}`}
               title="Find and replace"
+              aria-label="Find and replace"
               onMouseDown={(e) => {
                 e.preventDefault()
                 setFindOpen(true)
@@ -157,6 +158,7 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
               type="button"
               className="tb-btn"
               title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+              aria-label={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
               onMouseDown={(e) => {
                 e.preventDefault()
                 toggleTheme()
@@ -167,8 +169,8 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
           </ToolbarGroup>
         </Toolbar>
       )}
-      <div className="demo-scroll">
-        <div className="demo-page demo-page-simple">
+      <div className="rk-scroll">
+        <div className="rk-page rk-page-simple">
           <EditorContent editor={editor} className="editor" />
           <SlashMenu editor={editor} />
           <BubbleMenu editor={editor} className="bubble-menu">

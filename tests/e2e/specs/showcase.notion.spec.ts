@@ -9,7 +9,7 @@ import { MOD } from './_helpers'
  */
 
 const ROUTE = '/docs/usecases/notion-blocks'
-const ED = '.demo-notion .editor .ProseMirror'
+const ED = '.rk-notion .editor .ProseMirror'
 
 /**
  * Loads the demo on a clean slate. `keepRecent` is for the one test that
@@ -748,7 +748,7 @@ test.describe('smart paste', () => {
       ([t, d]) => {
         const dt = new DataTransfer()
         dt.setData(t as string, d as string)
-        const el = document.querySelector('.demo-notion .editor .ProseMirror') as HTMLElement | null
+        const el = document.querySelector('.rk-notion .editor .ProseMirror') as HTMLElement | null
         el?.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true }))
       },
       [type, data],
@@ -878,7 +878,7 @@ test.describe('productivity', () => {
   test('word and character counts are available', async ({ page }) => {
     await open(page)
     await page.keyboard.type('one two three')
-    const status = page.locator('.demo-notion .notion-status')
+    const status = page.locator('.rk-notion .notion-status')
     await expect(status).toContainText('3 words')
     await expect(status).toContainText('characters')
     await expect(status).toContainText('min read')
@@ -892,7 +892,7 @@ test.describe('productivity', () => {
 
   test('dark mode toggles', async ({ page }) => {
     await open(page)
-    const frame = page.locator('.demo-notion')
+    const frame = page.locator('.rk-notion')
     const before = await frame.getAttribute('data-theme')
     // the docs site's sticky header overlaps the demo bar, so a real click
     // would land on the header instead of the theme button

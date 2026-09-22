@@ -68,7 +68,7 @@ export const FindReplaceEditor = forwardRef(function FindReplaceEditor(
     total && find && find.current >= 0 ? `${find.current + 1} of ${total}` : `0 of ${total}`
 
   return (
-    <div className={cx('demo-frame demo-find', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-find', className)} data-theme={theme} style={style}>
       <div className="find-bar">
         <div className="find-row">
           <input
@@ -89,6 +89,7 @@ export const FindReplaceEditor = forwardRef(function FindReplaceEditor(
             type="button"
             className={`find-btn${caseSensitive ? ' is-active' : ''}`}
             title="Match case"
+            aria-label="Match case"
             aria-pressed={caseSensitive}
             onClick={() => setCaseSensitive((v) => !v)}
           >
@@ -98,6 +99,7 @@ export const FindReplaceEditor = forwardRef(function FindReplaceEditor(
             type="button"
             className="find-btn"
             title="Previous match (Shift+Enter)"
+            aria-label="Previous match"
             disabled={!total}
             onClick={() => editor && gotoPrev(editor.view)}
           >
@@ -107,6 +109,7 @@ export const FindReplaceEditor = forwardRef(function FindReplaceEditor(
             type="button"
             className="find-btn"
             title="Next match (Enter)"
+            aria-label="Next match"
             disabled={!total}
             onClick={() => editor && gotoNext(editor.view)}
           >
@@ -139,8 +142,8 @@ export const FindReplaceEditor = forwardRef(function FindReplaceEditor(
           </button>
         </div>
       </div>
-      <div className="demo-scroll">
-        <div className="demo-page demo-page-simple">
+      <div className="rk-scroll">
+        <div className="rk-page rk-page-simple">
           <EditorContent editor={editor} className="editor" />
         </div>
       </div>

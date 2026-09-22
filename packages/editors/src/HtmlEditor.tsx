@@ -62,9 +62,9 @@ export const HtmlEditor = forwardRef(function HtmlEditor(
   }
 
   return (
-    <div className={cx('demo-frame demo-html', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-html', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar">
+        <Toolbar editor={editor} className="toolbar rk-toolbar">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -114,8 +114,8 @@ export const HtmlEditor = forwardRef(function HtmlEditor(
         </Toolbar>
       )}
       <div className="md-split">
-        <div className="demo-scroll">
-          <div className="demo-page demo-page-simple">
+        <div className="rk-scroll">
+          <div className="rk-page rk-page-simple">
             <EditorContent editor={editor} className="editor" />
           </div>
         </div>

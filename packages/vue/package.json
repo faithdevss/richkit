@@ -31,7 +31,8 @@
     "vue": "^3.3.0"
   },
   "dependencies": {
-    "@richkitjs/core": "workspace:*"
+    "@richkitjs/core": "workspace:*",
+    "@richkitjs/html": "workspace:*"
   },
   "devDependencies": {
     "jsdom": "^30.1.0",

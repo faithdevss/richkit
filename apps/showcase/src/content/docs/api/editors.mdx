@@ -64,22 +64,22 @@ function PostForm() {
 
 ## The editors
 
-| Component                                   | What it is                                                              | Default theme |
-| ------------------------------------------- | ----------------------------------------------------------------------- | ------------- |
-| [`MinimalEditor`](#minimaleditor)           | Paragraphs, bold, italic and links from a bubble menu. No toolbar.      | `dark`        |
-| [`SimpleEditor`](#simpleeditor) · Pro             | Full StarterKit behind a one-row toolbar, with a theme toggle.          | `dark`        |
-| [`ClassicEditor`](#classiceditor) · Pro           | Labelled form field: menubar, toolbar, helper text, error state.        | inherits      |
-| [`NotionEditor`](#notioneditor) · Pro             | Block page: drag handle, `/` commands, `@` mentions, outline, AI.       | `dark`        |
-| [`DocxEditor`](#docxeditor) · Pro                 | Word-processor page with `.docx` import/export, zoom and print.         | `dark`        |
-| [`MarkdownEditor`](#markdowneditor)         | Rich editing beside live, editable Markdown source.                     | `dark`        |
-| [`HtmlEditor`](#htmleditor)                 | Rich editing beside live, editable HTML source.                         | `dark`        |
-| [`CommentsEditor`](#commentseditor) · Pro         | Anchored comment threads with a sidebar.                                | `light`       |
-| [`TrackChangesEditor`](#trackchangeseditor) · Pro | Suggesting mode with accept/reject.                                     | `light`       |
-| [`MentionsEditor`](#mentionseditor)         | Chat composer: `@` mentions, Enter sends.                               | `dark`        |
-| [`CommentBoxEditor`](#commentboxeditor)     | Reply box with a character limit and a post button.                     | `dark`        |
-| [`FindReplaceEditor`](#findreplaceeditor)   | Editor under an always-open find and replace bar.                       | `dark`        |
-| [`AgentEditor`](#agenteditor) · Pro               | Document with an agent dock that drafts sections.                       | `light`       |
-| [`QuestionEditor`](#questioneditor) · Pro         | Multiple-choice question with formulas. Its value is an object.         | `light`       |
+| Component                                         | What it is                                                         | Default theme |
+| ------------------------------------------------- | ------------------------------------------------------------------ | ------------- |
+| [`MinimalEditor`](#minimaleditor)                 | Paragraphs, bold, italic and links from a bubble menu. No toolbar. | `dark`        |
+| [`SimpleEditor`](#simpleeditor) · Pro             | Full StarterKit behind a one-row toolbar, with a theme toggle.     | `dark`        |
+| [`ClassicEditor`](#classiceditor) · Pro           | Labelled form field: menubar, toolbar, helper text, error state.   | inherits      |
+| [`NotionEditor`](#notioneditor) · Pro             | Block page: drag handle, `/` commands, `@` mentions, outline, AI.  | `dark`        |
+| [`DocxEditor`](#docxeditor) · Pro                 | Word-processor page with `.docx` import/export, zoom and print.    | `dark`        |
+| [`MarkdownEditor`](#markdowneditor)               | Rich editing beside live, editable Markdown source.                | `dark`        |
+| [`HtmlEditor`](#htmleditor)                       | Rich editing beside live, editable HTML source.                    | `dark`        |
+| [`CommentsEditor`](#commentseditor) · Pro         | Anchored comment threads with a sidebar.                           | `light`       |
+| [`TrackChangesEditor`](#trackchangeseditor) · Pro | Suggesting mode with accept/reject.                                | `light`       |
+| [`MentionsEditor`](#mentionseditor)               | Chat composer: `@` mentions, Enter sends.                          | `dark`        |
+| [`CommentBoxEditor`](#commentboxeditor)           | Reply box with a character limit and a post button.                | `dark`        |
+| [`FindReplaceEditor`](#findreplaceeditor)         | Editor under an always-open find and replace bar.                  | `dark`        |
+| [`AgentEditor`](#agenteditor) · Pro               | Document with an agent dock that drafts sections.                  | `light`       |
+| [`QuestionEditor`](#questioneditor) · Pro         | Multiple-choice question with formulas. Its value is an object.    | `light`       |
 
 "Default theme" is what the editor uses when you do not pass `theme`. "inherits" means
 the editor sets no `data-theme` of its own and picks up whichever palette is active
@@ -92,26 +92,26 @@ listed further down. They are the contract of a form input, so an editor drops i
 plain `useState`, a native `<form>`, react-hook-form's `Controller` (`{...field}` spreads
 straight on) or Formik without glue code.
 
-| Prop            | Type                                       | Default   | Description |
-| --------------- | ------------------------------------------ | --------- | ----------- |
-| `value`         | `string`, or `JSONContent` when `format="json"` | —    | The content, in `format`. Passing it makes the editor **controlled**: the editor shows exactly this, and you update it from `onChange`. |
-| `defaultValue`  | same as `value`                            | —         | Starting content for an **uncontrolled** editor. Read once on mount; later changes are ignored. Use either `value` or `defaultValue`, not both. |
-| `onChange`      | `(value) => void`                          | —         | Called with the new content, in `format`, after every edit the user makes. An empty document reads as `''` (not `<p></p>`), so required and dirty checks behave like a `<textarea>`. |
-| `format`        | `'html' \| 'markdown' \| 'text' \| 'json'` | `'html'`  | Shape of `value`, `defaultValue` and `onChange`. `MarkdownEditor` defaults to `'markdown'`. See [Value formats](#value-formats). |
-| `onFocus`       | `() => void`                               | —         | The editable area gained focus. |
-| `onBlur`        | `() => void`                               | —         | The editable area lost focus. Form libraries use this to mark a field as touched. |
-| `name`          | `string`                                   | —         | Renders a hidden `<input name={name}>` holding the current value, so a native form submit (or `FormData`) carries it. JSON values are stringified. |
-| `disabled`      | `boolean`                                  | `false`   | Not editable, and styled as disabled. Sets `aria-disabled` on the editable element. Toggles the live editor — content, selection and undo history are kept. |
-| `readOnly`      | `boolean`                                  | `false`   | Not editable, but looks normal — for showing a saved document. Also toggles in place. |
-| `autoFocus`     | `boolean`                                  | `false`   | Puts the caret in the editor when it mounts. |
-| `placeholder`   | `string`                                   | varies    | Grey text shown while the document is empty. Replaces the editor's built-in placeholder. |
-| `theme`         | `'light' \| 'dark'`                        | per editor | Colour scheme (see the table above). Editors with a theme toggle (`SimpleEditor`, `NotionEditor`, `DocxEditor`) start from it and follow it when it changes. |
-| `className`     | `string`                                   | —         | Added to the editor's root element, next to its built-in classes. |
-| `style`         | `CSSProperties`                            | —         | Inline style on the root element — set a `height`, or override [CSS variables](#styling). |
-| `aria-label`    | `string`                                   | —         | Accessible name on the editable element. Give one whenever there is no visible label. |
-| `aria-invalid`  | `boolean`                                  | —         | Marks the editable element invalid for screen readers. `ClassicEditor` sets it from `error` unless you pass it. |
-| `onEditorReady` | `(editor: Editor) => void`                 | —         | Called once with the live [`Editor`](/docs/api/editor) after mount (again only if the editor is rebuilt). Use it for commands the UI does not expose. |
-| `ref`           | `Ref<EditorHandle>`                        | —         | Imperative handle — see below. |
+| Prop            | Type                                            | Default    | Description                                                                                                                                                                          |
+| --------------- | ----------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `value`         | `string`, or `JSONContent` when `format="json"` | —          | The content, in `format`. Passing it makes the editor **controlled**: the editor shows exactly this, and you update it from `onChange`.                                              |
+| `defaultValue`  | same as `value`                                 | —          | Starting content for an **uncontrolled** editor. Read once on mount; later changes are ignored. Use either `value` or `defaultValue`, not both.                                      |
+| `onChange`      | `(value) => void`                               | —          | Called with the new content, in `format`, after every edit the user makes. An empty document reads as `''` (not `<p></p>`), so required and dirty checks behave like a `<textarea>`. |
+| `format`        | `'html' \| 'markdown' \| 'text' \| 'json'`      | `'html'`   | Shape of `value`, `defaultValue` and `onChange`. `MarkdownEditor` defaults to `'markdown'`. See [Value formats](#value-formats).                                                     |
+| `onFocus`       | `() => void`                                    | —          | The editable area gained focus.                                                                                                                                                      |
+| `onBlur`        | `() => void`                                    | —          | The editable area lost focus. Form libraries use this to mark a field as touched.                                                                                                    |
+| `name`          | `string`                                        | —          | Renders a hidden `<input name={name}>` holding the current value, so a native form submit (or `FormData`) carries it. JSON values are stringified.                                   |
+| `disabled`      | `boolean`                                       | `false`    | Not editable, and styled as disabled. Sets `aria-disabled` on the editable element. Toggles the live editor — content, selection and undo history are kept.                          |
+| `readOnly`      | `boolean`                                       | `false`    | Not editable, but looks normal — for showing a saved document. Also toggles in place.                                                                                                |
+| `autoFocus`     | `boolean`                                       | `false`    | Puts the caret in the editor when it mounts.                                                                                                                                         |
+| `placeholder`   | `string`                                        | varies     | Grey text shown while the document is empty. Replaces the editor's built-in placeholder.                                                                                             |
+| `theme`         | `'light' \| 'dark'`                             | per editor | Colour scheme (see the table above). Editors with a theme toggle (`SimpleEditor`, `NotionEditor`, `DocxEditor`) start from it and follow it when it changes.                         |
+| `className`     | `string`                                        | —          | Added to the editor's root element, next to its built-in classes.                                                                                                                    |
+| `style`         | `CSSProperties`                                 | —          | Inline style on the root element — set a `height`, or override [CSS variables](#styling).                                                                                            |
+| `aria-label`    | `string`                                        | —          | Accessible name on the editable element. Give one whenever there is no visible label.                                                                                                |
+| `aria-invalid`  | `boolean`                                       | —          | Marks the editable element invalid for screen readers. `ClassicEditor` sets it from `error` unless you pass it.                                                                      |
+| `onEditorReady` | `(editor: Editor) => void`                      | —          | Called once with the live [`Editor`](/docs/api/editor) after mount (again only if the editor is rebuilt). Use it for commands the UI does not expose.                                |
+| `ref`           | `Ref<EditorHandle>`                             | —          | Imperative handle — see below.                                                                                                                                                       |
 
 ### How `value` syncs
 
@@ -126,12 +126,12 @@ straight on) or Formik without glue code.
 
 ### Value formats
 
-| `format`     | `value` type  | What you get                                                                 |
-| ------------ | ------------- | ---------------------------------------------------------------------------- |
-| `'html'`     | `string`      | `editor.getHTML()`. The default, and the lossless string format.             |
+| `format`     | `value` type  | What you get                                                                                                                         |
+| ------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `'html'`     | `string`      | `editor.getHTML()`. The default, and the lossless string format.                                                                     |
 | `'markdown'` | `string`      | CommonMark/GFM via `@richkitjs/markdown`. Anything Markdown cannot express (colours, alignment, comments) is dropped on the way out. |
-| `'text'`     | `string`      | Plain text, one line per block. Incoming text becomes one paragraph per line. |
-| `'json'`     | `JSONContent` | `editor.getJSON()` — the ProseMirror document. Lossless; store it in a JSON column. |
+| `'text'`     | `string`      | Plain text, one line per block. Incoming text becomes one paragraph per line.                                                        |
+| `'json'`     | `JSONContent` | `editor.getJSON()` — the ProseMirror document. Lossless; store it in a JSON column.                                                  |
 
 The props are generic over `format`, so TypeScript narrows for you:
 
@@ -144,14 +144,14 @@ The props are generic over `format`, so TypeScript narrows for you:
 
 A `ref` on any editor (except `QuestionEditor`, [below](#questioneditor)) gets:
 
-| Member     | Type                         | Description |
-| ---------- | ---------------------------- | ----------- |
-| `editor`   | `Editor \| null`             | The live editor; `null` before mount. |
-| `focus`    | `() => void`                 | Focuses the editable area. Form libraries call this to focus the first invalid field. |
-| `blur`     | `() => void`                 | Removes focus. |
-| `getValue` | `() => value`                | Current content in `format`. |
-| `setValue` | `(value) => void`            | Replaces the content. Does **not** fire `onChange`. |
-| `clear`    | `() => void`                 | Empties the document. Does **not** fire `onChange`. |
+| Member     | Type              | Description                                                                                                                                             |
+| ---------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `editor`   | `Editor \| null`  | The live editor; `null` before mount.                                                                                                                   |
+| `focus`    | `() => void`      | Focuses the editable area. Form libraries call this to focus the first invalid field.                                                                   |
+| `blur`     | `() => void`      | Removes focus.                                                                                                                                          |
+| `getValue` | `() => value`     | Current content in `format`.                                                                                                                            |
+| `setValue` | `(value) => void` | Replaces the content like a new `value` would. Does **not** fire `onChange`, so use it on uncontrolled editors; a controlled one should change `value`. |
+| `clear`    | `() => void`      | Empties the document and fires `onChange` with `''`, as if the user had.                                                                                |
 
 ```tsx
 const ref = useRef<EditorHandle>(null)
@@ -221,13 +221,13 @@ A labelled form control in the shape of a Material UI text field: label, menubar
 full toolbar, the editor, helper text. Default `placeholder`:
 `'Type or paste your content here!'`.
 
-| Prop         | Type        | Default                                  | Description |
-| ------------ | ----------- | ---------------------------------------- | ----------- |
-| `label`      | `ReactNode` | —                                        | Shown above the field. Also labels the editable element (`aria-labelledby`) unless you pass `aria-label`. |
-| `helperText` | `ReactNode` | —                                        | Shown below the field. Turns red with `error` — put the validation message here. |
-| `error`      | `boolean`   | `false`                                  | Invalid state: red label, border and helper text, and `aria-invalid`. |
-| `required`   | `boolean`   | `false`                                  | Adds an asterisk to the label and `aria-required` to the editable element. It does not validate by itself — check the value in your form. |
-| `menus`      | `string[]`  | `['Edit', 'Insert', 'Format', 'Help']`   | Which menubar menus to show, by label. Available: `'File'`, `'Edit'`, `'View'`, `'Insert'`, `'Format'`, `'Tools'`, `'Table'`, `'Help'`. Pass `[]` to hide the menubar. |
+| Prop         | Type        | Default                                | Description                                                                                                                                                            |
+| ------------ | ----------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`      | `ReactNode` | —                                      | Shown above the field. Also labels the editable element (`aria-labelledby`) unless you pass `aria-label`.                                                              |
+| `helperText` | `ReactNode` | —                                      | Shown below the field. Turns red with `error` — put the validation message here.                                                                                       |
+| `error`      | `boolean`   | `false`                                | Invalid state: red label, border and helper text, and `aria-invalid`.                                                                                                  |
+| `required`   | `boolean`   | `false`                                | Adds an asterisk to the label and `aria-required` to the editable element. It does not validate by itself — check the value in your form.                              |
+| `menus`      | `string[]`  | `['Edit', 'Insert', 'Format', 'Help']` | Which menubar menus to show, by label. Available: `'File'`, `'Edit'`, `'View'`, `'Insert'`, `'Format'`, `'Tools'`, `'Table'`, `'Help'`. Pass `[]` to hide the menubar. |
 
 See the [Classic editor use case](/docs/usecases/classic-editor) for a full walkthrough.
 
@@ -237,14 +237,14 @@ A Notion-style page: block handle with drag-to-reorder, `/` commands with a "Rec
 section, `@` mentions, a two-row selection bubble, find and replace (<kbd>Mod+F</kbd>
 while focus is inside), an outline rail, word count and a theme toggle.
 
-| Prop            | Type                 | Default | Description |
-| --------------- | -------------------- | ------- | ----------- |
-| `header`        | `ReactNode`          | —       | Left side of the top bar — a breadcrumb or page title. |
-| `headerActions` | `ReactNode`          | —       | Right side of the top bar, after undo/redo and the theme toggle — share buttons, avatars. |
-| `mentions`      | `MentionCandidate[]` | —       | People and pages offered after `@`. Without it `@` is plain text. `MentionCandidate` is `{ id, label, kind?: 'user' \| 'page', detail?, avatar?, href? }`; only `id` and `label` are stored in the document. |
+| Prop            | Type                 | Default | Description                                                                                                                                                                                                                                                                                                                                                           |
+| --------------- | -------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `header`        | `ReactNode`          | —       | Left side of the top bar — a breadcrumb or page title.                                                                                                                                                                                                                                                                                                                |
+| `headerActions` | `ReactNode`          | —       | Right side of the top bar, after undo/redo and the theme toggle — share buttons, avatars.                                                                                                                                                                                                                                                                             |
+| `mentions`      | `MentionCandidate[]` | —       | People and pages offered after `@`. Without it `@` is plain text. `MentionCandidate` is `{ id, label, kind?: 'user' \| 'page', detail?, avatar?, href? }`; only `id` and `label` are stored in the document.                                                                                                                                                          |
 | `ai`            | `AIComplete`         | —       | The AI transport. With it, `/` gains **Continue writing** and **Ask AI**, and the selection bubble an **Improve** button; without it they are hidden. Signature: `(request, { signal }) => AsyncIterable<string>` — yield text chunks, and stop when `signal` aborts. Use `@richkitjs/ai-openai` or `@richkitjs/ai-anthropic`, or write your own. See [AI](/docs/ai). |
-| `aiAuthor`      | `string`             | `'AI'`  | Author name recorded on AI-written text. |
-| `footer`        | `ReactNode`          | —       | Below the status bar — a hint line, a save indicator. |
+| `aiAuthor`      | `string`             | `'AI'`  | Author name recorded on AI-written text.                                                                                                                                                                                                                                                                                                                              |
+| `footer`        | `ReactNode`          | —       | Below the status bar — a hint line, a save indicator.                                                                                                                                                                                                                                                                                                                 |
 
 Swapping the `ai` function each render is fine (it is read through a ref); only switching
 AI on or off rebuilds the editor.
@@ -254,11 +254,11 @@ AI on or off rebuilds the editor.
 A word-processor page: toolbar with zoom, bold/italic/underline/strike/code, lists,
 to-do list, `.docx` import and export, print, and a theme toggle.
 
-| Prop       | Type        | Default           | Description |
-| ---------- | ----------- | ----------------- | ----------- |
+| Prop       | Type        | Default           | Description                                                              |
+| ---------- | ----------- | ----------------- | ------------------------------------------------------------------------ |
 | `title`    | `string`    | —                 | The document's title — shown above the page and used as the print title. |
-| `filename` | `string`    | `'document.docx'` | Name of the file the export button downloads. |
-| `brand`    | `ReactNode` | —                 | Shown opposite the title above the page — a logo or product name. |
+| `filename` | `string`    | `'document.docx'` | Name of the file the export button downloads.                            |
+| `brand`    | `ReactNode` | —                 | Shown opposite the title above the page — a logo or product name.        |
 
 `value` stays HTML (or your `format`); `.docx` is only for import and export. For
 converting on a server, use `@richkitjs/docx` directly — see
@@ -268,11 +268,16 @@ converting on a server, use `@richkitjs/docx` directly — see
 
 Rich editing on one side, the live Markdown source on the other. Typing in either side
 updates the other. **`format` defaults to `'markdown'`** here, so `value` and `onChange`
-are Markdown strings out of the box.
+are Markdown strings out of the box. Formulas are kept as `$…$` (inline) and `$$…$$`
+(display); load the math styles to render them:
 
-| Prop         | Type      | Default         | Description |
-| ------------ | --------- | --------------- | ----------- |
-| `filename`   | `string`  | `'document.md'` | Name of the file the download button saves. |
+```tsx
+import '@richkitjs/extension-math/style.css'
+```
+
+| Prop         | Type      | Default         | Description                                                       |
+| ------------ | --------- | --------------- | ----------------------------------------------------------------- |
+| `filename`   | `string`  | `'document.md'` | Name of the file the download button saves.                       |
 | `showSource` | `boolean` | `true`          | Show the Markdown source pane. `false` leaves only the rich side. |
 
 ### `HtmlEditor`
@@ -280,8 +285,8 @@ are Markdown strings out of the box.
 Rich editing beside a live, editable HTML source pane. The source pane is read-only
 while `disabled` or `readOnly` is set.
 
-| Prop         | Type      | Default | Description |
-| ------------ | --------- | ------- | ----------- |
+| Prop         | Type      | Default | Description                |
+| ------------ | --------- | ------- | -------------------------- |
 | `showSource` | `boolean` | `true`  | Show the HTML source pane. |
 
 ### `CommentsEditor`
@@ -290,8 +295,8 @@ Comment threads anchored to text, with a sidebar to reply and resolve. Select te
 use the toolbar or bubble-menu comment button. The threads live in the document as
 marks, so they travel with `value` — save the value and the comments come back with it.
 
-| Prop     | Type     | Default | Description |
-| -------- | -------- | ------- | ----------- |
+| Prop     | Type     | Default | Description                                                                       |
+| -------- | -------- | ------- | --------------------------------------------------------------------------------- |
 | `author` | `string` | `'You'` | Name new comments and replies are attributed to — pass the signed-in user's name. |
 
 ### `TrackChangesEditor`
@@ -300,9 +305,9 @@ Suggesting mode: insertions and deletions are recorded as suggestions, shown inl
 listed in a sidebar with accept and reject buttons. Suggestions are marks in the
 document, so they travel with `value`.
 
-| Prop           | Type      | Default | Description |
-| -------------- | --------- | ------- | ----------- |
-| `author`       | `string`  | `'You'` | Name new suggestions are attributed to. |
+| Prop           | Type      | Default | Description                                                                                   |
+| -------------- | --------- | ------- | --------------------------------------------------------------------------------------------- |
+| `author`       | `string`  | `'You'` | Name new suggestions are attributed to.                                                       |
 | `trackChanges` | `boolean` | `true`  | Record edits as suggestions. `false` edits the document directly (existing suggestions stay). |
 
 ### `MentionsEditor`
@@ -310,12 +315,12 @@ document, so they travel with `value`.
 A chat composer. <kbd>Enter</kbd> sends, <kbd>Shift+Enter</kbd> breaks the line, and
 while the `@` menu is open <kbd>Enter</kbd> picks a person instead.
 
-| Prop       | Type                     | Default | Description |
-| ---------- | ------------------------ | ------- | ----------- |
-| `mentions` | `MentionCandidate[]`     | —       | Who and what can be mentioned after `@`. Same shape as `NotionEditor`'s. |
+| Prop       | Type                     | Default | Description                                                                                                   |
+| ---------- | ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------- |
+| `mentions` | `MentionCandidate[]`     | —       | Who and what can be mentioned after `@`. Same shape as `NotionEditor`'s.                                      |
 | `onSubmit` | `(html: string) => void` | —       | Called with the message's HTML on Enter or the send button. The box then clears. Empty messages are not sent. |
-| `header`   | `ReactNode`              | —       | Rendered in the bar above the message log — a channel name, a hint. |
-| `children` | `ReactNode`              | —       | The message log, rendered above the composer. |
+| `header`   | `ReactNode`              | —       | Rendered in the bar above the message log — a channel name, a hint.                                           |
+| `children` | `ReactNode`              | —       | The message log, rendered above the composer.                                                                 |
 
 ```tsx
 <MentionsEditor
@@ -323,7 +328,9 @@ while the `@` menu is open <kbd>Enter</kbd> picks a person instead.
   mentions={[{ id: 'u1', label: 'Ada Lovelace', detail: '@ada' }]}
   onSubmit={(html) => send(html)}
 >
-  {messages.map((m) => <Message key={m.id} {...m} />)}
+  {messages.map((m) => (
+    <Message key={m.id} {...m} />
+  ))}
 </MentionsEditor>
 ```
 
@@ -331,21 +338,21 @@ while the `@` menu is open <kbd>Enter</kbd> picks a person instead.
 
 A reply box with a live character count and a post button.
 
-| Prop          | Type                     | Default   | Description |
-| ------------- | ------------------------ | --------- | ----------- |
-| `limit`       | `number`                 | `280`     | Character limit. The count turns red past it and posting is blocked. |
+| Prop          | Type                     | Default   | Description                                                                                                                                             |
+| ------------- | ------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`       | `number`                 | `280`     | Character limit. The count turns red past it and posting is blocked.                                                                                    |
 | `onSubmit`    | `(html: string) => void` | —         | Called with the reply's HTML when posted. The box then clears. The button is disabled while the box is empty, over the limit, `disabled` or `readOnly`. |
-| `submitLabel` | `string`                 | `'Reply'` | The post button's label. |
-| `children`    | `ReactNode`              | —         | Rendered above the box — the thread being replied to. |
+| `submitLabel` | `string`                 | `'Reply'` | The post button's label.                                                                                                                                |
+| `children`    | `ReactNode`              | —         | Rendered above the box — the thread being replied to.                                                                                                   |
 
 ### `FindReplaceEditor`
 
 An editor under an always-open find and replace bar: match case, previous
 (<kbd>Shift+Enter</kbd>) and next (<kbd>Enter</kbd>), replace and replace all.
 
-| Prop                 | Type     | Default | Description |
-| -------------------- | -------- | ------- | ----------- |
-| `defaultQuery`       | `string` | `''`    | What the find box starts with. |
+| Prop                 | Type     | Default | Description                       |
+| -------------------- | -------- | ------- | --------------------------------- |
+| `defaultQuery`       | `string` | `''`    | What the find box starts with.    |
 | `defaultReplacement` | `string` | `''`    | What the replace box starts with. |
 
 ### `AgentEditor`
@@ -353,10 +360,10 @@ An editor under an always-open find and replace bar: match case, previous
 A document with an "Ask the agent" dock. The user types an instruction; your function
 drafts a section, which is appended to the end of the document.
 
-| Prop       | Type                                                            | Default | Description |
-| ---------- | --------------------------------------------------------------- | ------- | ----------- |
+| Prop       | Type                                                            | Default | Description                                                                                                                                                                        |
+| ---------- | --------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `complete` | `AIComplete`                                                    | —       | A streaming AI transport, the same one [`@richkitjs/extension-ai`](/docs/ai) takes. The section streams into the document as the model writes it. Takes precedence over `onDraft`. |
-| `onDraft`  | `(prompt: string, editor: Editor) => string \| Promise<string>` | —       | Returns the new section as HTML. Receives the live `editor`, so you can send the current document as context. |
+| `onDraft`  | `(prompt: string, editor: Editor) => string \| Promise<string>` | —       | Returns the new section as HTML. Receives the live `editor`, so you can send the current document as context.                                                                      |
 
 Without `complete` or `onDraft` the agent dock is hidden.
 
@@ -367,7 +374,7 @@ passes the model's stream through — see the
 ```tsx
 import { anthropicComplete } from '@richkitjs/ai-anthropic'
 
-<AgentEditor complete={anthropicComplete({ endpoint: '/api/ai' })} />
+;<AgentEditor complete={anthropicComplete({ endpoint: '/api/ai' })} />
 ```
 
 The model is asked for Markdown (the exact wording is exported as `agentDraftPrompt`),
@@ -400,28 +407,42 @@ an object, so it has its own set.
 
 ```ts
 interface QuestionValue {
-  stem: string       // HTML
-  options: string[]  // HTML each; the count sets how many rows render
-  correct: number    // index into options
+  stem: string // HTML
+  options: string[] // HTML each, one paragraph; the count sets how many rows render
+  optionIds?: (string | number)[] // optional stable ids, parallel to options
+  correct: number // index into options, or -1 when none is marked
   points: number
 }
 ```
 
-| Prop            | Type                              | Default                                | Description |
-| --------------- | --------------------------------- | -------------------------------------- | ----------- |
-| `value`         | `QuestionValue`                   | —                                      | Controlled value. |
-| `defaultValue`  | `QuestionValue`                   | empty question                         | Uncontrolled starting value. |
-| `onChange`      | `(value: QuestionValue) => void`  | —                                      | Called with the whole question after any edit — stem, option, correct answer or points. |
-| `onBlur`        | `() => void`                      | —                                      | Focus left the question. |
-| `name`          | `string`                          | —                                      | Hidden input holding the value as JSON. |
-| `disabled`      | `boolean`                         | `false`                                | Not editable, styled as disabled. |
-| `readOnly`      | `boolean`                         | `false`                                | Not editable. |
-| `label`         | `string`                          | `'Multiple choice · single answer'`    | Shown above the question. |
-| `hint`          | `string`                          | usage hint                             | Shown below the options. |
-| `theme`         | `'light' \| 'dark'`               | `'light'`                              | Colour scheme. |
-| `className`     | `string`                          | —                                      | On the root element. |
-| `style`         | `CSSProperties`                   | —                                      | On the root element. |
-| `onEditorReady` | `(editor: Editor) => void`        | —                                      | The stem's `Editor`, once mounted. |
+Formulas in the HTML are elements carrying their LaTeX, not `$…$` text:
+
+```ts
+const value: QuestionValue = {
+  stem: '<p>Solve <span data-math="x^2 = 4"></span> for x &gt; 0.</p>',
+  options: ['<p>1</p>', '<p><span data-math="\\sqrt{4}"></span></p>'],
+  correct: 1,
+  points: 1,
+}
+```
+
+A display formula in the stem is `<div data-math-block="…"></div>`.
+
+| Prop            | Type                             | Default                             | Description                                                                             |
+| --------------- | -------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------- |
+| `value`         | `QuestionValue`                  | —                                   | Controlled value.                                                                       |
+| `defaultValue`  | `QuestionValue`                  | empty question                      | Uncontrolled starting value.                                                            |
+| `onChange`      | `(value: QuestionValue) => void` | —                                   | Called with the whole question after any edit — stem, option, correct answer or points. |
+| `onBlur`        | `() => void`                     | —                                   | Focus left the question.                                                                |
+| `name`          | `string`                         | —                                   | Hidden input holding the value as JSON.                                                 |
+| `disabled`      | `boolean`                        | `false`                             | Not editable, styled as disabled.                                                       |
+| `readOnly`      | `boolean`                        | `false`                             | Not editable.                                                                           |
+| `label`         | `string`                         | `'Multiple choice · single answer'` | Shown above the question.                                                               |
+| `hint`          | `string`                         | usage hint                          | Shown below the options.                                                                |
+| `theme`         | `'light' \| 'dark'`              | `'light'`                           | Colour scheme.                                                                          |
+| `className`     | `string`                         | —                                   | On the root element.                                                                    |
+| `style`         | `CSSProperties`                  | —                                   | On the root element.                                                                    |
+| `onEditorReady` | `(editor: Editor) => void`       | —                                   | The stem's `Editor`, once mounted.                                                      |
 
 Its `ref` is a `QuestionEditorHandle`: `{ editor, focus(), getValue() }`, where `editor`
 is the stem's editor.
@@ -440,23 +461,27 @@ variables — no need to fight selectors.
 
 ### Theme variables
 
-| Variable          | Light default        | Used for |
-| ----------------- | -------------------- | -------- |
-| `--bg`            | `#f5f6f8`            | Frame and toolbar background. |
-| `--surface`       | `#ffffff`            | Panels, menus, popovers, dialogs. |
-| `--surface-2`     | `#f0f2f5`            | Hover and pressed backgrounds. |
-| `--border`        | `#e3e6ea`            | Borders and dividers. |
-| `--border-strong` | `#d0d4da`            | Input borders, emphasised dividers. |
-| `--text`          | `#1a1d21`            | Body text. |
-| `--text-muted`    | `#5b6470`            | Secondary text, hints, counts. |
-| `--accent`        | `#2563eb`            | Active buttons, links, focus rings. |
-| `--accent-soft`   | `rgba(37,99,235,.12)`| Active-button and selection tint. |
-| `--accent-hover`  | `#1d4ed8`            | Accent on hover. |
-| `--danger`        | `#dc2626`            | Errors, destructive actions, over-limit counts. |
-| `--radius`        | `8px`                | Frames and panels. |
-| `--radius-sm`     | `6px`                | Buttons and inputs. |
-| `--radius-lg`     | `12px`               | Dialogs and large cards. |
-| `--shadow-sm` / `--shadow-md` / `--shadow-lg` | — | Elevation of toolbars, popovers and dialogs. |
+| Variable                                               | Light default         | Used for                                        |
+| ------------------------------------------------------ | --------------------- | ----------------------------------------------- |
+| `--rk-bg`                                              | `#f5f6f8`             | Frame and toolbar background.                   |
+| `--rk-surface`                                         | `#ffffff`             | Panels, menus, popovers, dialogs.               |
+| `--rk-surface-2`                                       | `#f0f2f5`             | Hover and pressed backgrounds.                  |
+| `--rk-border`                                          | `#e3e6ea`             | Borders and dividers.                           |
+| `--rk-border-strong`                                   | `#d0d4da`             | Input borders, emphasised dividers.             |
+| `--rk-text`                                            | `#1a1d21`             | Body text.                                      |
+| `--rk-text-muted`                                      | `#5b6470`             | Secondary text, hints, counts.                  |
+| `--rk-accent`                                          | `#2563eb`             | Active buttons, links, focus rings.             |
+| `--rk-accent-soft`                                     | `rgba(37,99,235,.12)` | Active-button and selection tint.               |
+| `--rk-accent-hover`                                    | `#1d4ed8`             | Accent on hover.                                |
+| `--rk-danger`                                          | `#dc2626`             | Errors, destructive actions, over-limit counts. |
+| `--rk-radius`                                          | `8px`                 | Frames and panels.                              |
+| `--rk-radius-sm`                                       | `6px`                 | Buttons and inputs.                             |
+| `--rk-radius-lg`                                       | `12px`                | Dialogs and large cards.                        |
+| `--rk-shadow-sm` / `--rk-shadow-md` / `--rk-shadow-lg` | —                     | Elevation of toolbars, popovers and dialogs.    |
+
+The variables are prefixed with `--rk-` so they never collide with your app's own
+tokens. Before 0.3 they were unprefixed (`--bg`, `--surface`, `--accent`, …); if you
+override them, add the prefix: `--accent` becomes `--rk-accent`.
 
 The light values sit on `:root` and `[data-theme='light']`; `[data-theme='dark']`
 redefines the colour ones. Each editor puts `data-theme` on its root element from the
@@ -466,41 +491,44 @@ redefines the colour ones. Each editor puts `data-theme` on its root element fro
 /* Your brand colour everywhere */
 :root,
 [data-theme='light'] {
-  --accent: #0f766e;
-  --accent-soft: rgba(15, 118, 110, 0.12);
-  --accent-hover: #115e59;
+  --rk-accent: #0f766e;
+  --rk-accent-soft: rgba(15, 118, 110, 0.12);
+  --rk-accent-hover: #115e59;
 }
 [data-theme='dark'] {
-  --accent: #2dd4bf;
+  --rk-accent: #2dd4bf;
 }
 ```
 
 Or scope an override to one editor through `className` or `style`:
 
 ```tsx
-<MinimalEditor className="my-editor" style={{ height: 480, '--radius': '0px' } as CSSProperties} />
+<MinimalEditor
+  className="my-editor"
+  style={{ height: 480, '--rk-radius': '0px' } as CSSProperties}
+/>
 ```
 
 ### Root classes
 
 Target an editor with these (plus your own `className`):
 
-| Editor               | Root element classes        |
-| -------------------- | --------------------------- |
-| `MinimalEditor`      | `.demo-frame.demo-minimal`  |
-| `SimpleEditor`       | `.demo-frame.demo-simple`   |
+| Editor               | Root element classes                        |
+| -------------------- | ------------------------------------------- |
+| `MinimalEditor`      | `.rk-frame.rk-minimal`                      |
+| `SimpleEditor`       | `.rk-frame.rk-simple`                       |
 | `ClassicEditor`      | `.ff-field` (+ `.is-error`, `.is-disabled`) |
-| `NotionEditor`       | `.demo-frame.demo-notion`   |
-| `DocxEditor`         | `.demo-frame.demo-docx`     |
-| `MarkdownEditor`     | `.demo-frame.demo-markdown` |
-| `HtmlEditor`         | `.demo-frame.demo-html`     |
-| `CommentsEditor`     | `.demo-frame.demo-comments` |
-| `TrackChangesEditor` | `.demo-frame.demo-track`    |
-| `MentionsEditor`     | `.demo-frame.demo-chat`     |
-| `CommentBoxEditor`   | `.demo-frame.demo-reply`    |
-| `FindReplaceEditor`  | `.demo-frame.demo-find`     |
-| `AgentEditor`        | `.demo-frame.demo-agent`    |
-| `QuestionEditor`     | `.demo-frame.demo-question` |
+| `NotionEditor`       | `.rk-frame.rk-notion`                       |
+| `DocxEditor`         | `.rk-frame.rk-docx`                         |
+| `MarkdownEditor`     | `.rk-frame.rk-markdown`                     |
+| `HtmlEditor`         | `.rk-frame.rk-html`                         |
+| `CommentsEditor`     | `.rk-frame.rk-comments`                     |
+| `TrackChangesEditor` | `.rk-frame.rk-track`                        |
+| `MentionsEditor`     | `.rk-frame.rk-chat`                         |
+| `CommentBoxEditor`   | `.rk-frame.rk-reply`                        |
+| `FindReplaceEditor`  | `.rk-frame.rk-find`                         |
+| `AgentEditor`        | `.rk-frame.rk-agent`                        |
+| `QuestionEditor`     | `.rk-frame.rk-question`                     |
 
 Inside every editor, the document itself is `.editor .ProseMirror` — style content
 (headings, paragraphs, tables) there. The toolbar uses the shared `@richkitjs/react`

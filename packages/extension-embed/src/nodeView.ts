@@ -1,3 +1,4 @@
+import { safeUrl } from '@richkitjs/core'
 import type { Node as PMNode } from 'prosemirror-model'
 import type { EditorView, NodeView } from 'prosemirror-view'
 import type { EmbedProvider } from './providers'
@@ -89,7 +90,8 @@ export class EmbedNodeView implements NodeView {
   }
 
   private buildMedia(node: PMNode): HTMLElement {
-    const { src, provider } = node.attrs as { src: string; provider: EmbedProvider }
+    const { provider } = node.attrs as { provider: EmbedProvider }
+    const src = safeUrl(node.attrs['src']) ?? ''
     if (provider === 'video') {
       const video = document.createElement('video')
       video.src = src

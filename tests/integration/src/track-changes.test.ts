@@ -168,4 +168,15 @@ describe('track changes', () => {
     expect(totalText).toContain('x')
     expect(totalText).not.toContain('y')
   })
+
+  it('does not suggest content replaced wholesale with setContent', () => {
+    editor.chain().call('enableTrackChanges', 'Alice').run()
+    editor.setContent('<p>Loaded record</p>', { emitUpdate: false })
+    expect(getSuggestions(editor.state)).toHaveLength(0)
+    expect(editor.getHTML()).toBe('<p>Loaded record</p>')
+
+    placeCaret(editor, editor.state.doc.content.size - 1)
+    editor.view.dispatch(editor.state.tr.insertText('!'))
+    expect(getSuggestions(editor.state).map((s) => s.text)).toEqual(['!'])
+  })
 })

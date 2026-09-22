@@ -51,8 +51,10 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
 
   const openComposer = useCallback(() => {
     if (!editor) return
-    const { from, to, empty } = editor.state.selection
-    if (empty) {
+    const { from, to } = editor.state.selection
+    // A selection of only line breaks or spaces would leave the comment
+    // with nothing to anchor to.
+    if (!editor.state.doc.textBetween(from, to, ' ', '\ufffc').trim()) {
       notify.toast.warn('Select some text in the editor first.')
       return
     }
@@ -72,9 +74,9 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
   }
 
   return (
-    <div className={cx('demo-frame demo-comments', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-comments', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar demo-toolbar-light">
+        <Toolbar editor={editor} className="toolbar rk-toolbar rk-toolbar-light">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -107,6 +109,7 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
               type="button"
               className="tb-btn"
               title="Add comment"
+              aria-label="Add comment"
               onMouseDown={(e) => {
                 e.preventDefault()
                 openComposer()
@@ -118,8 +121,8 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
         </Toolbar>
       )}
       <div className="sidebar-split">
-        <div className="demo-scroll">
-          <div className="demo-page demo-page-sheet">
+        <div className="rk-scroll">
+          <div className="rk-page rk-page-sheet">
             <EditorContent editor={editor} className="editor" />
             <BubbleMenu editor={editor} className="bubble-menu">
               {editor && (
@@ -127,6 +130,7 @@ export const CommentsEditor = forwardRef(function CommentsEditor(
                   type="button"
                   className="tb-btn"
                   title="Comment"
+                  aria-label="Comment"
                   onMouseDown={(e) => {
                     e.preventDefault()
                     openComposer()

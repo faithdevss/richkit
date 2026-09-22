@@ -9,7 +9,7 @@ import {
   type CSSProperties,
   type ForwardedRef,
 } from 'react'
-import type { AnyExtension, Editor } from '@richkitjs/core'
+import { Node, type AnyExtension, type Editor } from '@richkitjs/core'
 import {
   useControlledEditor,
   EditorContent,
@@ -49,9 +49,24 @@ export interface QuestionValue {
   stem: string
   /** The answer options, in order. Their count sets how many rows render. */
   options: string[]
-  /** Index into `options` of the correct answer. */
+  /**
+   * Stable identity for each option, parallel to `options` — your database
+   * row ids, say. When present they move with their option as options are
+   * added or removed, and new options get one from `createOptionId`.
+   */
+  optionIds?: OptionId[]
+  /** Index into `options` of the correct answer, or `-1` when none is marked. */
   correct: number
   points: number
+}
+
+export type OptionId = string | number
+
+let optionSeq = 0
+/** Default id for an option added in the editor. */
+function newOptionId(): OptionId {
+  const uuid = (globalThis.crypto as Crypto | undefined)?.randomUUID?.()
+  return uuid ?? `option-${Date.now().toString(36)}-${(optionSeq++).toString(36)}`
 }
 
 export interface QuestionEditorProps extends ProFieldProps {
@@ -67,6 +82,20 @@ export interface QuestionEditorProps extends ProFieldProps {
   label?: string
   /** Shown below the options. */
   hint?: string
+  /**
+   * Renders the points input. Turn it off when the app does not score per
+   * question; `points` stays in the value untouched. Defaults to `true`.
+   */
+  showPoints?: boolean
+  /** Fewest options the card allows; their remove buttons disable at this count. Defaults to 2. */
+  minOptions?: number
+  /** Most options the card allows; "Add option" disables at this count. Defaults to 8. */
+  maxOptions?: number
+  /**
+   * Makes the id for an option added in the editor. Passing it turns ids on
+   * even when the value has no `optionIds` yet. Defaults to `crypto.randomUUID()`.
+   */
+  createOptionId?: () => OptionId
   theme?: Theme
   className?: string
   style?: CSSProperties
@@ -90,7 +119,11 @@ const STEM_EXTENSIONS = [
   Placeholder.configure({ placeholder: 'Write the question…' }),
 ]
 
+// An option is one paragraph: Enter does nothing, and pasted paragraphs join.
+const OptionDocument = Node.create({ name: 'doc', content: 'paragraph' })
+
 const OPTION_EXTENSIONS = [
+  OptionDocument,
   Paragraph,
   Bold,
   Italic,
@@ -230,7 +263,7 @@ function QuestionToolbar({
   onMath: () => void
 }) {
   return (
-    <Toolbar editor={editor} className="toolbar demo-toolbar demo-toolbar-light">
+    <Toolbar editor={editor} className="toolbar rk-toolbar rk-toolbar-light">
       <ToolbarGroup>
         <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
         <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -292,6 +325,7 @@ function QuestionToolbar({
           type="button"
           className="tb-btn math-btn"
           title="Insert formula"
+          aria-label="Insert formula"
           onMouseDown={(e) => {
             e.preventDefault()
             onMath()
@@ -315,6 +349,9 @@ function OptionRow({
   onCorrect,
   extensions,
   onReady,
+  onDispose,
+  onRemove,
+  canRemove,
   onBlur,
   disabled,
   readOnly,
@@ -326,6 +363,9 @@ function OptionRow({
   onCorrect: () => void
   extensions: AnyExtension[]
   onReady: (editor: Editor) => void
+  onDispose: (editor: Editor) => void
+  onRemove?: () => void
+  canRemove: boolean
   onBlur?: () => void
   disabled?: boolean
   readOnly?: boolean
@@ -340,8 +380,10 @@ function OptionRow({
   })
 
   useEffect(() => {
-    if (editor) onReady(editor)
-  }, [editor, onReady])
+    if (!editor) return
+    onReady(editor)
+    return () => onDispose(editor)
+  }, [editor, onReady, onDispose])
 
   return (
     <div className={`question-option${correct ? ' is-correct' : ''}`}>
@@ -350,6 +392,7 @@ function OptionRow({
         className="question-option-mark"
         aria-pressed={correct}
         title={correct ? 'Correct answer' : 'Mark as correct'}
+        aria-label={correct ? 'Correct answer' : 'Mark as correct'}
         disabled={disabled || readOnly}
         onClick={onCorrect}
       >
@@ -357,6 +400,18 @@ function OptionRow({
       </button>
       <EditorContent editor={editor} className="editor question-option-input" />
       {correct && <span className="question-option-tag">Correct</span>}
+      {onRemove && (
+        <button
+          type="button"
+          className="question-option-remove"
+          title={`Remove option ${letter}`}
+          aria-label={`Remove option ${letter}`}
+          disabled={!canRemove}
+          onClick={onRemove}
+        >
+          <span aria-hidden>×</span>
+        </button>
+      )}
     </div>
   )
 }
@@ -377,6 +432,10 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
     readOnly,
     label = 'Multiple choice · single answer',
     hint = 'Click a letter to mark the correct answer. Double-click a formula to edit it.',
+    showPoints = true,
+    minOptions = 2,
+    maxOptions = 8,
+    createOptionId,
     theme = 'light',
     className,
     style,
@@ -450,14 +509,73 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
     editor.on('focus', () => setActive(editor))
   }, [])
 
+  const unregister = useCallback((editor: Editor) => {
+    editors.current.delete(editor)
+    setActive((current) => (current === editor ? null : current))
+    setMath((current) => (current?.editor === editor ? null : current))
+  }, [])
+
   useEffect(() => {
     if (stem) register(stem)
   }, [stem, register])
 
+  // Row keys follow the option, not its position, so removing option B keeps
+  // C's editor (with its history and focus) rather than handing it B's slot.
+  // Option ids serve when there are any; otherwise the card keeps its own.
+  const rowKeys = useRef<OptionId[]>([])
+  if (question.optionIds && question.optionIds.length === question.options.length) {
+    rowKeys.current = question.optionIds
+  } else {
+    while (rowKeys.current.length < question.options.length) rowKeys.current.push(newOptionId())
+    rowKeys.current.length = question.options.length
+  }
+
+  const tracksIds = question.optionIds !== undefined || createOptionId !== undefined
+  const editable = !disabled && !readOnly
+  const count = question.options.length
+
+  const addOption = () => {
+    const current = latest.current
+    if (current.options.length >= maxOptions) return
+    const patch: Partial<QuestionValue> = { options: [...current.options, ''] }
+    rowKeys.current = [...rowKeys.current, newOptionId()]
+    if (tracksIds) {
+      const id = (createOptionId ?? newOptionId)()
+      patch.optionIds = [...alignedIds(current), id]
+      rowKeys.current[rowKeys.current.length - 1] = id
+    }
+    update(patch)
+  }
+
+  const removeOption = (index: number) => {
+    const current = latest.current
+    if (current.options.length <= minOptions) return
+    const patch: Partial<QuestionValue> = {
+      options: current.options.filter((_, i) => i !== index),
+      correct:
+        current.correct === index
+          ? -1
+          : current.correct > index
+            ? current.correct - 1
+            : current.correct,
+    }
+    rowKeys.current = rowKeys.current.filter((_, i) => i !== index)
+    if (tracksIds) patch.optionIds = alignedIds(current).filter((_, i) => i !== index)
+    update(patch)
+  }
+
+  /** `optionIds` padded to match `options`, for values that arrive short. */
+  const alignedIds = (current: QuestionValue): OptionId[] => {
+    const ids = [...(current.optionIds ?? [])]
+    while (ids.length < current.options.length) ids.push((createOptionId ?? newOptionId)())
+    ids.length = current.options.length
+    return ids
+  }
+
   const toolbarEditor = active ?? stem
 
   return (
-    <div className={cx('demo-frame demo-question', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-question', className)} data-theme={theme} style={style}>
       {toolbarEditor && (
         <QuestionToolbar
           key={editors.current.get(toolbarEditor)}
@@ -477,29 +595,31 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
       {math && (
         <MathPanel key={`${math.pos ?? 'new'}`} target={math} onClose={() => setMath(null)} />
       )}
-      <div className="demo-scroll">
+      <div className="rk-scroll">
         <div className="question-card">
           <div className="question-head">
             <span className="question-type">{label}</span>
-            <label className="question-points">
-              Points
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={question.points}
-                disabled={disabled}
-                readOnly={readOnly}
-                onChange={(e) => update({ points: Number(e.target.value) })}
-                onBlur={() => onBlur?.()}
-              />
-            </label>
+            {showPoints && (
+              <label className="question-points">
+                Points
+                <input
+                  type="number"
+                  min={0}
+                  max={100}
+                  value={question.points}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  onChange={(e) => update({ points: Number(e.target.value) })}
+                  onBlur={() => onBlur?.()}
+                />
+              </label>
+            )}
           </div>
           <EditorContent editor={stem} className="editor question-stem" />
           <div className="question-options">
             {question.options.map((content, i) => (
               <OptionRow
-                key={i}
+                key={rowKeys.current[i]}
                 letter={letter(i)}
                 content={content}
                 onContent={(html) => {
@@ -511,12 +631,25 @@ export const QuestionEditor = forwardRef(function QuestionEditor(
                 onCorrect={() => update({ correct: i })}
                 extensions={optionExtensions}
                 onReady={register}
+                onDispose={unregister}
+                onRemove={editable ? () => removeOption(i) : undefined}
+                canRemove={count > minOptions}
                 onBlur={onBlur}
                 disabled={disabled}
                 readOnly={readOnly}
               />
             ))}
           </div>
+          {editable && (
+            <button
+              type="button"
+              className="question-add-option"
+              disabled={count >= maxOptions}
+              onClick={addOption}
+            >
+              <span aria-hidden>+</span> Add option
+            </button>
+          )}
           {hint && <p className="question-hint">{hint}</p>}
         </div>
       </div>

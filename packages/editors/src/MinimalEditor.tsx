@@ -25,9 +25,9 @@ export const MinimalEditor = forwardRef(function MinimalEditor(
   const editor = useEditorField(props, ref, extensions, { deps: [extensions] })
 
   return (
-    <div className={cx('demo-frame demo-minimal', className)} data-theme={theme} style={style}>
-      <div className="demo-scroll">
-        <div className="demo-page demo-page-minimal">
+    <div className={cx('rk-frame rk-minimal', className)} data-theme={theme} style={style}>
+      <div className="rk-scroll">
+        <div className="rk-page rk-page-minimal">
           <EditorContent editor={editor} className="editor" />
           <BubbleMenu editor={editor} className="bubble-menu">
             {editor && (

@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+.lab {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  min-height: 100vh;
+}
+.lab nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border-right: 1px solid #ddd;
+}
+.lab nav a {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+.lab nav a.on {
+  background: #e6eefc;
+}
+.lab nav small {
+  color: #a60;
+}
+.lab main {
+  padding: 16px;
+  min-width: 0;
+}
+.pane.dark {
+  background: #111;
+  color: #eee;
+}
+.knobs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.editor-slot {
+  margin-bottom: 12px;
+}
+.out {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.out pre {
+  max-height: 240px;
+  overflow: auto;
+  background: #f4f4f4;
+  color: #222;
+  padding: 8px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Simulates a host app: Tailwind-preflight-ish reset plus its own generic CSS vars. */
+.host-reset {
+  --bg: hotpink;
+  --surface: lime;
+  --text: red;
+  --accent: orange;
+  --border: blue;
+}
+.host-reset *,
+.host-reset *::before,
+.host-reset *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0 solid;
+}
+.host-reset ol,
+.host-reset ul {
+  list-style: none;
+}
+.host-reset h1,
+.host-reset h2,
+.host-reset h3 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+.host-reset button {
+  background: transparent;
+}
+.host-reset img {
+  display: block;
+  max-width: 100%;
+}

@@ -61,6 +61,7 @@ export function ToolbarButton({
       type="button"
       className={cls}
       title={title}
+      aria-label={title?.replace(/\s*\(.*\)$/, '')}
       aria-pressed={active}
       onMouseDown={(e) => {
         e.preventDefault()
@@ -309,6 +310,7 @@ function FullscreenButton() {
       type="button"
       className={`tb-btn ${on ? 'is-active' : ''}`}
       title="Fullscreen"
+      aria-label="Fullscreen"
       onMouseDown={(e) => {
         e.preventDefault()
         if (!document.fullscreenElement) {

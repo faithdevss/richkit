@@ -15,7 +15,7 @@ export function ImageMenu({ editor, uploadFile }: ImageMenuProps) {
     <Popover
       className="tb-pop-image"
       trigger={
-        <button type="button" className="tb-btn" title="Insert image">
+        <button type="button" className="tb-btn" title="Insert image" aria-label="Insert image">
           <ImageIcon />
         </button>
       }

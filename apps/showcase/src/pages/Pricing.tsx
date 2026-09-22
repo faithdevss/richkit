@@ -37,7 +37,7 @@ const PLANS: Plan[] = [
     tag: 'Startup',
     price: '$99',
     per: '/ year',
-    note: 'Up to 3 developers, one product or internal tool.',
+    note: 'Up to 10 developers, one product or internal tool.',
     includes: [
       'Every Pro package',
       'One product or internal tool',
@@ -51,7 +51,7 @@ const PLANS: Plan[] = [
     tag: 'Business',
     price: '$499',
     per: '/ year',
-    note: 'Up to 20 developers, for your whole company.',
+    note: 'Unlimited developers, for your whole company.',
     includes: [
       'Every Pro package',
       'Unlimited products and client projects',
@@ -119,7 +119,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Which plan do I need?',
-    a: 'Startup if you have up to three developers working on one product. Business for up to 20 developers and any number of products. Bigger than that, or need an SLA or invoicing? Talk to us about Enterprise.',
+    a: 'Startup if you have up to ten developers working on one product. Business for more than ten developers — no upper limit — and any number of products. Need an SLA or invoicing? Talk to us about Enterprise.',
   },
   {
     q: 'Can I read and modify the source?',
@@ -241,7 +241,7 @@ export function Pricing() {
         </div>
 
         <p className="price-legal">
-          <b>Enterprise</b> — more than 20 developers, an SLA, invoicing or a signed agreement?{' '}
+          <b>Enterprise</b> — need an SLA, invoicing or a signed agreement?{' '}
           <a href={CONTACT} target="_blank" rel="noreferrer">
             Get in touch
           </a>

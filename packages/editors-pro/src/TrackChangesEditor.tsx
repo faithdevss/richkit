@@ -45,9 +45,9 @@ export const TrackChangesEditor = forwardRef(function TrackChangesEditor(
   }, [editor, author, trackChanges])
 
   return (
-    <div className={cx('demo-frame demo-track', className)} data-theme={theme} style={style}>
+    <div className={cx('rk-frame rk-track', className)} data-theme={theme} style={style}>
       {editor && (
-        <Toolbar editor={editor} className="toolbar demo-toolbar demo-toolbar-light">
+        <Toolbar editor={editor} className="toolbar rk-toolbar rk-toolbar-light">
           <ToolbarGroup>
             <ToolbarButton editor={editor} command="undo" label={<Icons.UndoIcon />} title="Undo" />
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
@@ -78,8 +78,8 @@ export const TrackChangesEditor = forwardRef(function TrackChangesEditor(
         </Toolbar>
       )}
       <div className="sidebar-split">
-        <div className="demo-scroll">
-          <div className="demo-page demo-page-sheet">
+        <div className="rk-scroll">
+          <div className="rk-page rk-page-sheet">
             <EditorContent editor={editor} className="editor" />
           </div>
         </div>

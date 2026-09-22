@@ -74,11 +74,11 @@ export function CommentSidebar({
       onAddRequest()
       return
     }
-    if (editor.state.selection.empty) {
+    const { from, to } = editor.state.selection
+    if (!editor.state.doc.textBetween(from, to, ' ', '\ufffc').trim()) {
       notify.toast.warn('Select some text in the editor first.')
       return
     }
-    const { from, to } = editor.state.selection
     const body = await notify.prompt({
       title: 'New comment',
       placeholder: 'Write a comment…',

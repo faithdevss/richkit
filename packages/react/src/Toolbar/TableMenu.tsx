@@ -37,6 +37,7 @@ export function TableMenu({ editor, maxRows = 8, maxCols = 10 }: TableMenuProps)
           type="button"
           className={`tb-btn tb-btn-split${inTable ? ' is-active' : ''}`}
           title={inTable ? 'Table' : 'Insert table'}
+          aria-label={inTable ? 'Table' : 'Insert table'}
         >
           <TableIcon />
           <ChevronDownIcon className="tb-caret" />

@@ -34,7 +34,8 @@ export function toEditorContent(
 ): string | JSONContent {
   if (value === undefined || value === '') return ''
   if (typeof value !== 'string') return value
-  if (format === 'markdown') return markdownToHtml(value)
+  // raw HTML stays: the editor's schema filters it on setContent
+  if (format === 'markdown') return markdownToHtml(value, { html: true })
   if (format === 'text') {
     return value
       .split('\n')

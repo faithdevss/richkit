@@ -83,11 +83,15 @@ Its value is structured. Each text in it is HTML:
 ```ts
 interface QuestionValue {
   stem: string
-  options: string[]
-  correct: number
+  options: string[] // one paragraph each
+  optionIds?: (string | number)[]
+  correct: number // -1 when none is marked
   points: number
 }
 ```
+
+Formulas are elements carrying their LaTeX: `<span data-math="x^2"></span>` inline, and
+`<div data-math-block="…"></div>` on its own line in the stem. `$…$` in the HTML stays text.
 
 It needs the math styles: `import '@richkitjs/extension-math/style.css'`.
 

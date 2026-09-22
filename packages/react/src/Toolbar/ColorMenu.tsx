@@ -38,7 +38,12 @@ export function TextColorMenu({ editor }: { editor: Editor }) {
     <Popover
       className="tb-pop-color"
       trigger={
-        <button type="button" className="tb-btn tb-btn-split" title="Text color">
+        <button
+          type="button"
+          className="tb-btn tb-btn-split"
+          title="Text color"
+          aria-label="Text color"
+        >
           <TextColorIcon />
           <ChevronDownIcon className="tb-caret" />
         </button>
@@ -55,6 +60,7 @@ export function TextColorMenu({ editor }: { editor: Editor }) {
                 className="tb-swatch"
                 style={{ background: c }}
                 title={c}
+                aria-label={c}
                 onMouseDown={(e) => {
                   e.preventDefault()
                   editor.chain().call('setColor', c).focus().run()
@@ -85,7 +91,12 @@ export function HighlightMenu({ editor }: { editor: Editor }) {
     <Popover
       className="tb-pop-color"
       trigger={
-        <button type="button" className="tb-btn tb-btn-split" title="Highlight">
+        <button
+          type="button"
+          className="tb-btn tb-btn-split"
+          title="Highlight"
+          aria-label="Highlight"
+        >
           <HighlightIcon />
           <ChevronDownIcon className="tb-caret" />
         </button>
@@ -102,6 +113,7 @@ export function HighlightMenu({ editor }: { editor: Editor }) {
                 className="tb-swatch"
                 style={{ background: c }}
                 title={c}
+                aria-label={c}
                 onMouseDown={(e) => {
                   e.preventDefault()
                   editor.chain().call('setHighlight', c).focus().run()

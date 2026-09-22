@@ -121,11 +121,17 @@ Returns a cleanup function — call it on unmount.
 import { htmlToDoc, docToHtml } from '@richkitjs/core' // also re-exported from @richkitjs/html
 ```
 
-| Function    | Signature                                  |
-| ----------- | ------------------------------------------ |
-| `htmlToDoc` | `(html: string, schema: Schema) => PMNode` |
-| `docToHtml` | `(doc: PMNode, schema: Schema) => string`  |
+| Function    | Signature                                                  |
+| ----------- | ---------------------------------------------------------- |
+| `htmlToDoc` | `(html: string, schema: Schema, { document? }?) => PMNode` |
+| `docToHtml` | `(doc: PMNode, schema: Schema, { document? }?) => string`  |
+| `getSchema` | `(extensions: AnyExtension[]) => Schema`                   |
+| `isSafeUrl` | `(url: unknown, { media? }?) => boolean`                   |
+| `safeUrl`   | `(url: unknown, { media? }?) => string \| null`            |
 
-Both need the schema, so pass `editor.schema`.
+Both converters need the schema. Pass `editor.schema`, or `getSchema(extensions)` when no
+editor is mounted. On a server, pass a `document` from jsdom or linkedom. To clean
+untrusted HTML or render stored content without an editor, use `sanitizeHtml()` /
+`renderHtml()` from `@richkitjs/html`. See [Sanitizing & viewing HTML](/docs/sanitize).
 
 </div>

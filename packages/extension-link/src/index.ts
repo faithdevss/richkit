@@ -1,4 +1,4 @@
-import { Mark, setMark, unsetMark, type Command, type Editor } from '@richkitjs/core'
+import { Mark, safeUrl, setMark, unsetMark, type Command, type Editor } from '@richkitjs/core'
 import { InputRule } from 'prosemirror-inputrules'
 
 const URL_REGEX = /(?:^|\s)(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)\s$/
@@ -31,19 +31,26 @@ export const Link = Mark.create<LinkOptions>({
       tag: 'a[href]',
       getAttrs: (node) => {
         const el = node as HTMLElement
+        // a `javascript:` or other unsafe link keeps its text, not its target
+        const href = safeUrl(el.getAttribute('href'))
+        if (!href) return false
         return {
-          href: el.getAttribute('href'),
+          href,
           target: el.getAttribute('target'),
           rel: el.getAttribute('rel'),
         }
       },
     },
   ],
-  renderHTML: (mark) => ['a', mark.attrs, 0],
+  // Checked again on the way out: a doc loaded from JSON never went through
+  // parseHTML, and this is the last stop before the attribute hits the DOM.
+  renderHTML: (mark) => ['a', { ...mark.attrs, href: safeUrl(mark.attrs.href) }, 0],
   addCommands: () => ({
     setLink: (...args: unknown[]): Command => {
       const [attrs] = args as [{ href: string; target?: string; rel?: string }]
-      return setMark('link', attrs)
+      const href = safeUrl(attrs?.href)
+      if (!href) return () => false
+      return setMark('link', { ...attrs, href })
     },
     unsetLink: (): Command => unsetMark('link'),
   }),

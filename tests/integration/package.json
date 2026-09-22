@@ -43,6 +43,7 @@
     "@richkitjs/extension-track-changes": "workspace:*",
     "@richkitjs/extension-underline": "workspace:*",
     "@richkitjs/extension-word-count": "workspace:*",
+    "@richkitjs/html": "workspace:*",
     "@richkitjs/markdown": "workspace:*",
     "@richkitjs/starter-kit": "workspace:*"
   },

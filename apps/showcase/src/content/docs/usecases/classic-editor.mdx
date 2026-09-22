@@ -274,20 +274,23 @@ useEffect(() => {
 
 ## Sanitizing
 
-No sanitizer runs here, because there is nothing left for one to do: content is parsed into
-the ProseMirror schema, and anything the schema does not define — `<script>`, event-handler
-attributes, unknown tags — is dropped on the way in. `getHTML()` serializes back out of that
-document, so what leaves is always schema-shaped.
+Content is parsed into the ProseMirror schema, so anything the schema does not define is
+dropped on the way in: `<script>`, event-handler attributes, unknown tags. Link, image and
+media URLs are checked too, so `javascript:` and similar never reach the page.
+`getHTML()` serializes back out of that document, so the editor's own output is safe to
+store and show.
 
-That covers content that goes _through_ the editor. HTML you render elsewhere on the page
-still needs escaping at the render site, and if you want the same normalization without
-mounting an editor, run the round-trip directly:
+HTML from anywhere else — an API, an import, a user who posts straight to your endpoint —
+should be sanitized on the server before you store or render it:
 
 ```ts
-import { htmlToDoc, docToHtml } from '@richkitjs/html'
+import { sanitizeHtml } from '@richkitjs/html'
 
-const clean = docToHtml(htmlToDoc(untrusted, editor.schema), editor.schema)
+const clean = sanitizeHtml(untrusted, { extensions: StarterKit })
 ```
+
+To display stored content without mounting an editor, use `<RichViewer />`. See
+[Sanitizing & viewing HTML](/docs/sanitize).
 
 Paste is handled separately: `@richkitjs/extension-paste-handler` strips Word and Google
 Docs wrapper markup, and `Mod-Shift-V` pastes as plain text.

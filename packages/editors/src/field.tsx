@@ -58,8 +58,13 @@ export interface EditorHandle<F extends ValueFormat = 'html'> {
   focus: () => void
   blur: () => void
   getValue: () => EditorValue<F>
-  /** Replaces the content without firing `onChange`. */
+  /**
+   * Replaces the content without firing `onChange`, like a new `value` from
+   * the parent. Meant for uncontrolled editors: a controlled one should
+   * change `value` instead, or its state keeps the old content.
+   */
   setValue: (value: EditorValue<F>) => void
+  /** Empties the document and fires `onChange` with `''`, as if the user had. */
   clear: () => void
 }
 
@@ -111,7 +116,7 @@ export function useEditorField(
       getValue: () => (editor ? getEditorValue(editor, format) : (props.value ?? '')),
       setValue: (value) =>
         editor?.setContent(toEditorContent(value, format), { emitUpdate: false }),
-      clear: () => editor?.setContent('', { emitUpdate: false }),
+      clear: () => editor?.setContent(''),
     }),
     [editor, format, props.value],
   )

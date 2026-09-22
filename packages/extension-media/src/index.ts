@@ -1,4 +1,4 @@
-import { Node, type Command } from '@richkitjs/core'
+import { Node, safeUrl, type Command } from '@richkitjs/core'
 
 export type MediaKind = 'video' | 'audio' | 'file'
 
@@ -53,8 +53,10 @@ export const Media = Node.create({
       tag: '[data-media]',
       getAttrs: (node) => {
         const el = node as HTMLElement
-        const src =
-          el.getAttribute('data-src') ?? el.querySelector('video, audio, a')?.getAttribute('src')
+        const src = safeUrl(
+          el.getAttribute('data-src') ?? el.querySelector('video, audio, a')?.getAttribute('src'),
+          { media: true },
+        )
         if (!src) return false
         const size = el.getAttribute('data-size')
         return {
@@ -68,7 +70,9 @@ export const Media = Node.create({
     },
   ],
   renderHTML: (node) => {
-    const { kind, src, name, mime, size } = node.attrs as unknown as MediaAttrs
+    const { kind, name, mime, size } = node.attrs as unknown as MediaAttrs
+    // an unsafe source renders as an empty card rather than a live link
+    const src = safeUrl(node.attrs.src, { media: true }) ?? ''
     const wrapper: Record<string, string> = {
       'data-media': kind,
       'data-src': src,
@@ -108,8 +112,9 @@ export const Media = Node.create({
       const [input] = args as [Partial<MediaAttrs> & { src: string }]
       return ({ state, dispatch }) => {
         const type = state.schema.nodes['media']
-        if (!type || !input.src) return false
-        const attrs = { kind: 'file' as MediaKind, name: nameFromSrc(input.src), ...input }
+        const src = safeUrl(input?.src, { media: true })
+        if (!type || !src) return false
+        const attrs = { kind: 'file' as MediaKind, name: nameFromSrc(src), ...input, src }
         if (dispatch) dispatch(state.tr.replaceSelectionWith(type.create(attrs)).scrollIntoView())
         return true
       }

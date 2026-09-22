@@ -53,6 +53,7 @@ export function FontFamilyMenu({ editor, iconOnly = false }: FontMenuProps) {
           type="button"
           className={`tb-btn tb-font-trigger${iconOnly ? ' is-icon' : ''}`}
           title={`Font family — ${label}`}
+          aria-label={`Font family — ${label}`}
         >
           {iconOnly ? <FontIcon /> : <span className="tb-font-label">{label}</span>}
           <ChevronDownIcon className="tb-caret" />
@@ -94,6 +95,7 @@ export function FontSizeMenu({ editor, iconOnly = false }: FontMenuProps) {
           type="button"
           className={`tb-btn tb-fontsize-trigger${iconOnly ? ' is-icon' : ''}`}
           title={`Font size — ${label}`}
+          aria-label={`Font size — ${label}`}
         >
           {iconOnly ? <FontSizeIcon /> : <span>{label}</span>}
           <ChevronDownIcon className="tb-caret" />
