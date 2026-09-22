@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-horizontal-rule",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Horizontal rule (divider) node for RichKit.",
   "license": "MIT",
   "type": "module",

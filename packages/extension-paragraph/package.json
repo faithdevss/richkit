@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-paragraph",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Paragraph node for RichKit, with setParagraph command and Mod-Alt-0 shortcut.",
   "license": "MIT",
   "type": "module",

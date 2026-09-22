@@ -1,5 +1,13 @@
 # @richkitjs/extension-math
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [80bce48]
+- Updated dependencies [80bce48]
+  - @richkitjs/core@0.3.0
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-task-list",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Task lists (checkboxes) for RichKit: toggleTaskList, Mod-Shift-9 shortcut and nesting with Tab and Shift-Tab.",
   "license": "MIT",
   "type": "module",

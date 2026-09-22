@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-history",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Undo and redo for RichKit, with Mod-Z, Mod-Shift-Z and Mod-Y shortcuts and configurable depth and grouping delay.",
   "license": "MIT",
   "type": "module",

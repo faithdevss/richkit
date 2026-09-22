@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-text-align",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Text alignment for RichKit: left, center, right and justify via setTextAlign and Mod-Shift-L/E/R/J shortcuts.",
   "license": "MIT",
   "type": "module",

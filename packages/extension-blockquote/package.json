@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-blockquote",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Blockquote node for RichKit: toggleBlockquote command and Mod-Shift-B shortcut.",
   "license": "MIT",
   "type": "module",

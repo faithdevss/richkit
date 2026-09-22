@@ -1,5 +1,13 @@
 # @richkitjs/extension-markdown-shortcuts
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [80bce48]
+- Updated dependencies [80bce48]
+  - @richkitjs/core@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes

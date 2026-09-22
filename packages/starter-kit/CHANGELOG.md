@@ -1,5 +1,55 @@
 # @richkitjs/starter-kit
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [80bce48]
+- Updated dependencies [80bce48]
+- Updated dependencies [80bce48]
+  - @richkitjs/core@0.3.0
+  - @richkitjs/extension-paste-handler@0.2.2
+  - @richkitjs/extension-link@0.2.2
+  - @richkitjs/extension-image@0.2.2
+  - @richkitjs/extension-bookmark@0.2.2
+  - @richkitjs/extension-media@0.2.2
+  - @richkitjs/extension-mention@0.2.2
+  - @richkitjs/extension-embed@0.1.2
+  - @richkitjs/extension-blockquote@0.1.2
+  - @richkitjs/extension-bold@0.1.2
+  - @richkitjs/extension-bullet-list@0.1.2
+  - @richkitjs/extension-callout@0.2.2
+  - @richkitjs/extension-case-change@0.1.2
+  - @richkitjs/extension-code@0.1.2
+  - @richkitjs/extension-code-block@0.3.1
+  - @richkitjs/extension-drag-handle@0.2.2
+  - @richkitjs/extension-find-replace@0.1.2
+  - @richkitjs/extension-hard-break@0.2.2
+  - @richkitjs/extension-heading@0.1.2
+  - @richkitjs/extension-highlight@0.1.2
+  - @richkitjs/extension-history@0.1.2
+  - @richkitjs/extension-horizontal-rule@0.1.2
+  - @richkitjs/extension-italic@0.1.2
+  - @richkitjs/extension-line-height@0.1.2
+  - @richkitjs/extension-list-item@0.1.2
+  - @richkitjs/extension-markdown-shortcuts@0.2.2
+  - @richkitjs/extension-ordered-list@0.1.2
+  - @richkitjs/extension-page-break@0.1.2
+  - @richkitjs/extension-paragraph@0.1.2
+  - @richkitjs/extension-placeholder@0.1.2
+  - @richkitjs/extension-slash-commands@0.1.2
+  - @richkitjs/extension-strike@0.1.2
+  - @richkitjs/extension-subscript@0.1.2
+  - @richkitjs/extension-superscript@0.1.2
+  - @richkitjs/extension-table@0.2.2
+  - @richkitjs/extension-task-list@0.2.2
+  - @richkitjs/extension-text-align@0.1.2
+  - @richkitjs/extension-text-style@0.1.2
+  - @richkitjs/extension-toggle@0.2.2
+  - @richkitjs/extension-typography@0.1.2
+  - @richkitjs/extension-underline@0.1.2
+  - @richkitjs/extension-word-count@0.1.2
+
 ## 0.3.0
 
 ### Minor Changes

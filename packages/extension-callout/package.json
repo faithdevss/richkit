@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-callout",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Notion-style callout blocks for RichKit: tip, info, warning, important and success variants with custom icons.",
   "license": "MIT",
   "type": "module",

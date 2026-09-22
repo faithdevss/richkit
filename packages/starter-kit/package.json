@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/starter-kit",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Every standard RichKit extension in one import: 41 extensions covering marks, headings, lists, tables, images, code highlighting, callouts, comments, markdown shortcuts and more. 184 KB gzipped.",
   "license": "MIT",
   "type": "module",

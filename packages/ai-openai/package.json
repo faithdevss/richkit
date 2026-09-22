@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/ai-openai",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "OpenAI streaming transport for @richkitjs/extension-ai. Streams completions into the editor with cancellation support.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
