@@ -1,5 +1,6 @@
 import { Editor, Node } from '@richkitjs/core'
 import { TrackChangesKit, getSuggestions, getTrackState } from '@richkitjs/extension-track-changes'
+import { Fragment } from 'prosemirror-model'
 import { TextSelection } from 'prosemirror-state'
 import { describe, expect, it } from 'vitest'
 import { AI, type AIComplete } from '../index'
@@ -235,4 +236,39 @@ describe('AI extension', () => {
     expect(editor.getText()).not.toContain('plain')
     editor.destroy()
   })
+
+  it('parse replaces the streamed text with parsed content when the run ends', async () => {
+    const editor = new Editor({
+      extensions: [
+        Paragraph,
+        AI.configure({
+          complete: chunks(['one', '\n\n', 'two']),
+          track: false,
+          // A stand-in for a Markdown parser: blank lines split paragraphs.
+          parse: (text, schema) =>
+            Fragment.from(
+              text.split('\n\n').map((t) => schema.nodes.paragraph!.create(null, schema.text(t))),
+            ),
+        }),
+      ],
+      content: '<p></p>',
+    })
+    editor.commands.aiPrompt!({ prompt: 'write' })
+    await settle()
+
+    expect(editor.getHTML()).toBe('<p>one</p><p>two</p>')
+    expect(getAIState(editor.state)?.status).toBe('idle')
+    editor.destroy()
+  })
+
+  it('refuses to run on a read-only editor', async () => {
+    const editor = makeEditor(chunks(['nope']), '<p>hello</p>', false)
+    editor.setEditable(false)
+    expect(editor.commands.aiPrompt!({ prompt: 'write' })).toBe(false)
+    await settle()
+
+    expect(editor.getHTML()).toBe('<p>hello</p>')
+    editor.destroy()
+  })
 })
+

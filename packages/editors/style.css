@@ -3105,9 +3105,10 @@ kbd {
   text-align: right;
 }
 
-/* Agent: light editor, generous doc margins */
+/* Agent: a page on the theme's surface, generous doc margins */
 .rk-page-agent {
-  background: #fff;
+  background: var(--rk-surface);
+  color: var(--rk-text);
   border-radius: 6px;
   padding: 46px 56px 72px;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
@@ -3674,7 +3675,8 @@ kbd {
 }
 .rk-page-sheet {
   max-width: 640px;
-  background: #fff;
+  background: var(--rk-surface);
+  color: var(--rk-text);
   border: 1px solid var(--rk-border);
   border-radius: 8px;
   padding: 36px 40px 48px;
@@ -3999,6 +4001,7 @@ kbd {
   padding: 4px 6px;
   font: inherit;
   color: var(--rk-text);
+  background: var(--rk-surface);
 }
 .question-stem {
   min-height: 0;

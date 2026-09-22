@@ -68,7 +68,9 @@ export const AgentEditor = forwardRef(function AgentEditor(
   ref: AnyHandleRef,
 ) {
   const { onDraft, complete, placeholder, className, style, name, format } = props
-  const canDraft = Boolean(complete || onDraft)
+  // A read-only or disabled document can't take a draft, so the agent is hidden.
+  const editable = !props.readOnly && !props.disabled
+  const canDraft = Boolean(complete || onDraft) && editable
   const extensions = useMemo(() => withPlaceholder(StarterKit, placeholder), [placeholder])
   const editor = useEditorField(props, ref, extensions, { deps: [extensions] })
   const [theme] = useTheme(props.theme, 'light')
@@ -80,6 +82,13 @@ export const AgentEditor = forwardRef(function AgentEditor(
 
   // A stream still running when the editor goes away has nowhere to write.
   useEffect(() => () => controller.current?.abort(), [])
+
+  // Going read-only or disabled mid-draft stops the stream and closes the dock.
+  useEffect(() => {
+    if (editable) return
+    controller.current?.abort()
+    setOpen(false)
+  }, [editable])
 
   const stream = async (editor: Editor, complete: AIComplete) => {
     const base = editor.getHTML()
@@ -117,13 +126,15 @@ export const AgentEditor = forwardRef(function AgentEditor(
     }
 
     const section = stripFence(markdown).trim()
-    if (section) editor.setContent(base + markdownToHtml(section, { html: true }))
+    if (section && editor.isEditable) {
+      editor.setContent(base + markdownToHtml(section, { html: true }))
+    }
     return !abort.signal.aborted
   }
 
   const run = async () => {
     // A model needs an instruction; an `onDraft` callback may supply its own default.
-    if (!editor || !canDraft || (complete && !prompt.trim())) return
+    if (!editor || !canDraft || !editor.isEditable || (complete && !prompt.trim())) return
     setBusy(true)
     setError(null)
     try {

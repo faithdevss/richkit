@@ -34,6 +34,7 @@ import { Image, Link } from '@richkitjs/starter-kit'
 import { StarterKit } from './kit'
 import { getWordCount } from '@richkitjs/extension-word-count'
 import { AI, type AIComplete } from '@richkitjs/extension-ai'
+import { markdownToDoc } from '@richkitjs/markdown'
 import {
   cx,
   FieldValue,
@@ -173,6 +174,8 @@ export const NotionEditor = forwardRef(function NotionEditor(
                   complete: (req, opts) => aiRef.current!(req, opts),
                   attributeAs: aiAuthor,
                   track: false,
+                  // Models answer in Markdown; land it as headings and lists.
+                  parse: (text, schema) => markdownToDoc(text, schema),
                 }),
               ]
             : []),

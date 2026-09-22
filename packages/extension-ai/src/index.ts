@@ -1,6 +1,7 @@
 import { requirePro } from '@richkitjs/license'
 import { Extension, type Command } from '@richkitjs/core'
 import { trackKey } from '@richkitjs/extension-track-changes'
+import { Fragment, Slice, type Node as PMNode, type Schema } from 'prosemirror-model'
 import type { EditorState } from 'prosemirror-state'
 import type { EditorView } from 'prosemirror-view'
 import { aiKey, aiPlugin, type AIMeta, type AIRange } from './plugin'
@@ -42,6 +43,13 @@ export interface AIOptions extends Record<string, unknown> {
    */
   track: boolean
   /**
+   * Turns the finished output into document content, for transports that
+   * answer in a markup such as Markdown. Output streams in as plain text; when
+   * the run ends, that text is replaced by what this returns, the way a paste
+   * would place it. Return `null` to keep the plain text.
+   */
+  parse?: ((text: string, schema: Schema) => PMNode | Fragment | null) | null
+  /**
    * Your RichKit Pro licence key, as an alternative to calling
    * `setLicenseKey` at startup. One registration covers every Pro package.
    */
@@ -54,6 +62,18 @@ function newId(): string {
 
 function setMeta(view: EditorView, meta: AIMeta): void {
   view.dispatch(view.state.tr.setMeta(aiKey, meta))
+}
+
+/** Replaces the streamed plain text with `parse`'s content, as a paste would. */
+function commitParsed(view: EditorView, parse: NonNullable<AIOptions['parse']>): void {
+  const range = aiKey.getState(view.state)?.range
+  if (!range || range.to <= range.from) return
+  const text = view.state.doc.textBetween(range.from, range.to, '\n')
+  const parsed = parse(text, view.state.schema)
+  if (!parsed) return
+  const content = parsed instanceof Fragment ? parsed : parsed.content
+  // The plugin maps the written range through this, so it still covers the output.
+  view.dispatch(view.state.tr.replaceRange(range.from, range.to, Slice.maxOpen(content)))
 }
 
 /** Suggestion ids carried by `markName` marks inside `range`. */
@@ -152,6 +172,7 @@ async function runCompletion(
       view.dispatch(tr)
     }
     if (controller.signal.aborted) return
+    if (options.parse) commitParsed(view, options.parse)
     setMeta(view, { status: 'idle', error: null })
   } catch (err) {
     if (controller.signal.aborted) return
@@ -178,6 +199,7 @@ export const AI = Extension.create<AIOptions>({
     complete: null,
     attributeAs: 'AI Assistant',
     track: true,
+    parse: null,
   }),
   addProseMirrorPlugins: (ctx) => {
     requirePro('ai', ctx.options.licenseKey)
@@ -210,7 +232,7 @@ export const AI = Extension.create<AIOptions>({
         (...args: unknown[]): Command =>
         ({ state, view }) => {
           const [opts] = args as [{ prompt: string; range?: AIRange }?]
-          if (!opts?.prompt || !view) return false
+          if (!opts?.prompt || !view || !view.editable) return false
           if (aiKey.getState(state)?.status === 'streaming') return false
           const sel = state.selection
           const range = opts.range ?? { from: sel.from, to: sel.to }
@@ -225,7 +247,7 @@ export const AI = Extension.create<AIOptions>({
       aiRetry:
         (): Command =>
         ({ state, view }) => {
-          if (!view) return false
+          if (!view || !view.editable) return false
           const s = aiKey.getState(state)
           if (!s?.prompt) return false
           // Drop the previous attempt before trying again.

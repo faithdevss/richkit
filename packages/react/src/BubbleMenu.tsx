@@ -21,8 +21,13 @@ export function BubbleMenu({ editor, children, className }: BubbleMenuProps) {
       const { from, to, empty } = editor.state.selection
       // A selection spanning only block boundaries (a double-click past the end
       // of a line) has nothing to format or comment on. Leaf nodes such as
-      // images count as content.
-      if (empty || !editor.state.doc.textBetween(from, to, '', '\ufffc')) {
+      // images count as content. A read-only or disabled editor gets no menu:
+      // its commands would still dispatch and edit the document.
+      if (
+        !editor.isEditable ||
+        empty ||
+        !editor.state.doc.textBetween(from, to, '', '\ufffc')
+      ) {
         el.style.visibility = 'hidden'
         return
       }
@@ -54,7 +59,9 @@ export function BubbleMenu({ editor, children, className }: BubbleMenuProps) {
     }
 
     const offUpdate = editor.on('selectionUpdate', update)
-    const offDocUpdate = editor.on('update', update)
+    // Every transaction, not just doc changes, so toggling read-only with a
+    // selection in place hides the menu.
+    const offDocUpdate = editor.on('transaction', update)
     const cleanup = autoUpdate(
       { getBoundingClientRect: () => el.getBoundingClientRect() },
       el,
