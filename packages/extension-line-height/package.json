@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-line-height",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Line height for RichKit paragraphs and headings: setLineHeight and unsetLineHeight commands.",
   "license": "MIT",
   "type": "module",

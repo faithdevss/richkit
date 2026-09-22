@@ -1,5 +1,13 @@
 # @richkitjs/ai-anthropic
 
+## 0.3.0
+
+### Patch Changes
+
+- Updated dependencies [8850133]
+  - @richkitjs/extension-ai@0.3.0
+  - @richkitjs/license@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

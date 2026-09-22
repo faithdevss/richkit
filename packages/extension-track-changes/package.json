@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-track-changes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Track changes for RichKit: record insertions and deletions as suggestions, then accept or reject them one by one or all at once.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

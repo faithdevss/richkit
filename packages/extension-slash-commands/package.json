@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-slash-commands",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Notion-style \"/\" command menu for RichKit: tracks the slash query and keyboard navigation so you can search and insert blocks. Headless, bring your own menu UI.",
   "license": "MIT",
   "type": "module",

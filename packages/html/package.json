@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/html",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Sanitize and render RichKit HTML without an editor: sanitizeHtml, renderHtml, htmlToDoc, docToHtml, isSafeUrl.",
   "license": "MIT",
   "type": "module",

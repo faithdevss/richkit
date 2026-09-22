@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-placeholder",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Placeholder text shown while a RichKit editor is empty, with configurable text and class name.",
   "license": "MIT",
   "type": "module",

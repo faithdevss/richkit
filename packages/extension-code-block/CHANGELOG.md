@@ -1,5 +1,13 @@
 # @richkitjs/extension-code-block
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [80bce48]
+- Updated dependencies [80bce48]
+  - @richkitjs/core@0.3.0
+
 ## 0.3.0
 
 ### Minor Changes

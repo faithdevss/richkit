@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-heading",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Heading node for RichKit: H1–H6 via setHeading and Mod-Alt-1…6 shortcuts.",
   "license": "MIT",
   "type": "module",

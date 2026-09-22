@@ -1,6 +1,6 @@
 {
   "name": "@richkitjs/extension-table",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tables for RichKit: insert, add and delete rows and columns, merge and split cells, header rows and columns, column resizing and Tab navigation.",
   "license": "MIT",
   "type": "module",
