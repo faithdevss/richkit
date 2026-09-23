@@ -1,4 +1,5 @@
 import { isValidElement, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 export function Demo({ title, children }: { title?: string; children: ReactNode }) {
   return (
@@ -76,7 +77,10 @@ export const mdxComponents = {
       <table className="ext-table" {...props} />
     </div>
   ),
-  a: (props: ComponentPropsWithoutRef<'a'>) => <a {...props} />,
+  // Root-relative links in MDX must go through the router, or they skip the
+  // Pages base path (/richkit/) and land on the bare github.io origin.
+  a: ({ href, ...props }: ComponentPropsWithoutRef<'a'>) =>
+    href?.startsWith('/') ? <Link to={href} {...props} /> : <a href={href} {...props} />,
   Demo,
   Install,
 }
