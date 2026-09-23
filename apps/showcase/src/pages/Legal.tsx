@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 // check that the trading entity and contact route are real and reachable, and a
 // placeholder here is the most common reason a store gets rejected.
 const ENTITY = 'FaithDevs'
-const CONTACT_EMAIL = 'support@richkit.dev'
+const CONTACT_EMAIL = 'contact.faithdevs@gmail.com'
 const JURISDICTION = 'Bangladesh'
 const UPDATED = '19 September 2026'
 

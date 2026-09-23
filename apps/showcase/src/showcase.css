@@ -1194,6 +1194,22 @@ button.tpl-card {
 .foot-col a.foot-more:hover span {
   transform: translateX(3px);
 }
+.foot-credit {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--site-text-faint);
+}
+
+.foot-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.foot-credit a:hover {
+  color: var(--site-text);
+}
+
 .foot-base {
   padding-top: 22px;
   font-size: 0.82rem;

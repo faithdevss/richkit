@@ -208,6 +208,12 @@ export function SiteShell() {
               <p className="foot-tagline">
                 The rich text editor toolkit for React. $99 a year, every package.
               </p>
+              <p className="foot-credit">
+                Developed by{' '}
+                <a href="https://faithdevs.com" target="_blank" rel="noreferrer">
+                  FaithDevs
+                </a>
+              </p>
             </div>
             {FOOT_COLS.map((c) => (
               <div className="foot-col" key={c.head}>

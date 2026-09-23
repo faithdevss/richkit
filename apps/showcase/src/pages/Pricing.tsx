@@ -98,7 +98,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
     q: 'I lost my key — can you resend it?',
     a: (
       <>
-        Email <a href="mailto:support@richkit.dev">support@richkit.dev</a> from the address you
+        Email <a href="mailto:contact.faithdevs@gmail.com">contact.faithdevs@gmail.com</a> from the address you
         bought with. We check the order and resend the same key to that address — nothing is
         revoked, so a live build keeps working meanwhile. Keys can also be locked to your own
         domains on request; see the <Link to="/docs/licensing">licensing docs</Link>.
