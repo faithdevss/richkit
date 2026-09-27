@@ -1,5 +1,14 @@
 # @richkitjs/react
 
+## 0.4.1
+
+### Patch Changes
+
+- @richkitjs/docx@0.3.1
+  - @richkitjs/extension-ai@0.3.1
+  - @richkitjs/extension-comments@0.3.1
+  - @richkitjs/extension-track-changes@0.3.1
+
 ## 0.4.0
 
 ### Minor Changes

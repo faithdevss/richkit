@@ -1,5 +1,12 @@
 # @richkitjs/ai-anthropic
 
+## 0.3.1
+
+### Patch Changes
+
+- @richkitjs/extension-ai@0.3.1
+  - @richkitjs/license@0.3.1
+
 ## 0.3.0
 
 ### Patch Changes

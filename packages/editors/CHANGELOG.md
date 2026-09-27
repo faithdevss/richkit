@@ -1,5 +1,15 @@
 # @richkitjs/editors
 
+## 0.4.0
+
+### Minor Changes
+
+- 0345f8e: Add `DescriptionEditor` field to `@richkitjs/editors`. `SimpleEditor` in `@richkitjs/editors-pro` now renders the block-type menu icon-only.
+
+### Patch Changes
+
+- @richkitjs/react@0.4.1
+
 ## 0.3.0
 
 ### Minor Changes
