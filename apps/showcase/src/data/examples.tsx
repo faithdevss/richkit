@@ -31,6 +31,8 @@ export interface Example {
   /** The few lines that matter, before the full file. */
   snippet: string
   source: string
+  /** Where `source` lives in the repo, e.g. `packages/editors/src/HtmlEditor.tsx`. */
+  sourcePath: string
   demo: () => ReactNode
 }
 
@@ -63,6 +65,7 @@ const [html, setHtml] = useState('<p>Hello</p>')
   licenseKey={import.meta.env.VITE_RICHKIT_LICENSE_KEY}
 />`,
     source: simpleSource,
+    sourcePath: 'packages/editors-pro/src/SimpleEditor.tsx',
     demo: () => <SimpleEditor />,
   },
   {
@@ -93,6 +96,7 @@ editor.chain().call('addCommentReply', { id, body: 'Agreed.' }).run()
 <CommentSidebar editor={editor} onAddRequest={openComposer} />
 <CommentComposer editor={editor} range={range} onSubmit={submit} onClose={close} />`,
     source: commentsSource,
+    sourcePath: 'packages/editors-pro/src/CommentsEditor.tsx',
     demo: () => <CommentsEditor />,
   },
   {
@@ -125,6 +129,7 @@ editor.chain().call('rejectSuggestion', id).run()
 
 <SuggestionSidebar editor={editor} />`,
     source: trackSource,
+    sourcePath: 'packages/editors-pro/src/TrackChangesEditor.tsx',
     demo: () => <TrackChangesEditor />,
   },
   {
@@ -151,6 +156,7 @@ const PEOPLE = [{ id: 'priya', label: 'Priya', detail: 'Design' }]
   <MentionMenu editor={editor} items={PEOPLE} />
 </div>`,
     source: mentionsSource,
+    sourcePath: 'packages/editors/src/MentionsEditor.tsx',
     demo: () => <MentionsEditor />,
   },
   {
@@ -171,6 +177,7 @@ const editor = useEditor({
   extensions: [Paragraph, Bold, Italic, Link, History],
 })`,
     source: minimalSource,
+    sourcePath: 'packages/editors/src/MinimalEditor.tsx',
     demo: () => <MinimalEditor />,
   },
   {
@@ -194,6 +201,7 @@ useEffect(() => {
 
 const over = stats.characters > 280`,
     source: commentBoxSource,
+    sourcePath: 'packages/editors/src/CommentBoxEditor.tsx',
     demo: () => <CommentBoxEditor />,
   },
   {
@@ -217,6 +225,7 @@ const { matches, current } = getFindState(editor.state)
 gotoNext(editor.view)
 replaceAll(editor.view, 'reader')`,
     source: findSource,
+    sourcePath: 'packages/editors/src/FindReplaceEditor.tsx',
     demo: () => <FindReplaceEditor />,
   },
   {
@@ -239,6 +248,7 @@ replaceAll(editor.view, 'reader')`,
 
 editor.setContent('<h2>Pasted</h2><p>HTML</p>')`,
     source: htmlSource,
+    sourcePath: 'packages/editors/src/HtmlEditor.tsx',
     demo: () => <HtmlEditor />,
   },
 ]

@@ -1,5 +1,6 @@
 import { NotionEditor } from '../../../editors/NotionEditor'
-import { Demo } from '../../../mdx-components'
+import { AgentPrompt, Demo } from '../../../mdx-components'
+import { NOTION_BLOCKS_PROMPT } from '../../../data/prompts'
 
 <div className="docs-prose">
 
@@ -10,6 +11,8 @@ block has a gutter: hover it for the drag handle, drag to reorder, or open the b
 to turn it into something else. Type `/` for the command menu — grouped, with an AI
 section — and select text for the formatting bubble. Markdown shortcuts (`#`, `-`, `>`)
 work too, via `extension-markdown-shortcuts`.
+
+<AgentPrompt prompt={NOTION_BLOCKS_PROMPT} />
 
 ```tsx
 import { BlockHandle, SlashMenu } from '@richkitjs/react'

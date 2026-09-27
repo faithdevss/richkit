@@ -1,5 +1,6 @@
 import { SimpleEditor } from '../../../editors/SimpleEditor'
-import { Demo } from '../../../mdx-components'
+import { AgentPrompt, Demo } from '../../../mdx-components'
+import { SIMPLE_EDITOR_PROMPT } from '../../../data/prompts'
 
 <div className="docs-prose">
 
@@ -8,6 +9,8 @@ import { Demo } from '../../../mdx-components'
 The batteries-included starting point — a fixed toolbar over `StarterKit`, no extra
 configuration. This is the shortest path from `pnpm add` to a working editor; see
 [Installation](/docs/installation) for the full setup.
+
+<AgentPrompt prompt={SIMPLE_EDITOR_PROMPT} />
 
 ```tsx
 const editor = useEditor({ extensions: StarterKit, content })

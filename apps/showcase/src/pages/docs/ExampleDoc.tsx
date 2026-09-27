@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { EXAMPLES } from '../../data/examples'
-import { Demo, Install } from '../../mdx-components'
+import { examplePrompt } from '../../data/prompts'
+import { AgentPrompt, Demo, Install } from '../../mdx-components'
 
 // `code` spans in the notes are written with backticks, as in the MDX pages.
 function Inline({ text }: { text: string }) {
@@ -30,6 +31,8 @@ export function ExampleDoc() {
           <Link to={`/examples#${example.id}`}>Open it on the examples page →</Link>
         </p>
 
+        <AgentPrompt prompt={examplePrompt(example)} />
+
         <h2 id="install">Install</h2>
         <Install packages={example.install} />
 
@@ -56,7 +59,7 @@ export function ExampleDoc() {
         <h2 id="full-source">Full source</h2>
         <details className="example-source">
           <summary>
-            Show <code>packages/editors/src/…</code> — {example.source.split('\n').length} lines
+            Show <code>{example.sourcePath}</code> — {example.source.split('\n').length} lines
           </summary>
           <pre className="docs-pre">
             <code>{example.source}</code>
