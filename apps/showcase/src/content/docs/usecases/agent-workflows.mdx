@@ -1,5 +1,6 @@
 import { AgentEditor } from '../../../editors/AgentEditor'
-import { Demo } from '../../../mdx-components'
+import { AgentPrompt, Demo } from '../../../mdx-components'
+import { AGENT_WORKFLOWS_PROMPT } from '../../../data/prompts'
 
 <div className="docs-prose">
 
@@ -8,6 +9,8 @@ import { Demo } from '../../../mdx-components'
 An AI agent shouldn't need a side channel into the document — it drives the editor through
 the same public API a toolbar button uses. This demo simulates that: type an instruction,
 the "agent" drafts a section as HTML and appends it to the document, no special-cased path.
+
+<AgentPrompt prompt={AGENT_WORKFLOWS_PROMPT} />
 
 ```tsx
 const editor = useEditor({ extensions: StarterKit, content: AGENT_CONTENT })

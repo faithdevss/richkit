@@ -63,7 +63,7 @@ Fill each one in like this:
 | Confirmation modal | Title                   | `Thanks — you're on RichKit Pro`                                         |
 |                    | Message                 | see below                                                                |
 |                    | Button text             | `Set up your licence key`                                                |
-|                    | Button link             | `faithdevss.github.io/rich_editor/docs/licensing`                        |
+|                    | Button link             | `faithdevss.github.io/richkit/docs/licensing`                        |
 | Email receipt      | Thank you note          | see below                                                                |
 |                    | Button text             | leave `View Order` (buyers get invoices there)                           |
 |                    | Button link             | leave `app.lemonsqueezy.com/my-orders`                                   |
@@ -86,7 +86,7 @@ usually within a few minutes. Not there? Check spam, or email contact.faithdevs@
 ```
 Thanks for buying RichKit Pro. Your licence key arrives in a separate email from
 licenses@mail.richkit.dev within a few minutes. Setup takes one line:
-https://faithdevss.github.io/rich_editor/docs/licensing
+https://faithdevss.github.io/richkit/docs/licensing
 Questions: contact.faithdevs@gmail.com
 ```
 

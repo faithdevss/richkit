@@ -1,4 +1,5 @@
 import { isValidElement, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 export function Demo({ title, children }: { title?: string; children: ReactNode }) {
   return (
@@ -44,6 +45,61 @@ export function Install({ packages }: { packages: string }) {
   )
 }
 
+/**
+ * A ready-to-paste prompt for a coding agent (Claude Code, Cursor, Copilot…).
+ * Folded to a few lines by default — the copy button is the point, the text
+ * is there to check before pasting.
+ */
+export function AgentPrompt({
+  prompt,
+  title = 'Build it with your AI agent',
+}: {
+  prompt: string
+  title?: string
+}) {
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const text = prompt.trim()
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    } catch {
+      // clipboard unavailable — the prompt is still there to select by hand
+    }
+  }
+
+  return (
+    <div className={`agent-prompt${open ? ' is-open' : ''}`}>
+      <div className="agent-prompt-head">
+        <div>
+          <div className="agent-prompt-title">{title}</div>
+          <div className="agent-prompt-sub">
+            Paste into Claude Code, Cursor, Copilot or any coding agent — it installs the packages
+            and wires this up in your project.
+          </div>
+        </div>
+        <button type="button" className="agent-prompt-copy" onClick={copy}>
+          {copied ? 'Copied' : 'Copy prompt'}
+        </button>
+      </div>
+      <pre className="docs-pre agent-prompt-body">
+        <code>{text}</code>
+      </pre>
+      <button
+        type="button"
+        className="agent-prompt-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {open ? 'Hide prompt' : `Show full prompt · ${text.split('\n').length} lines`}
+      </button>
+    </div>
+  )
+}
+
 /** Plain text of a heading, including what sits inside inline `code`. */
 function textOf(node: ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node)
@@ -76,7 +132,11 @@ export const mdxComponents = {
       <table className="ext-table" {...props} />
     </div>
   ),
-  a: (props: ComponentPropsWithoutRef<'a'>) => <a {...props} />,
+  // Root-relative links in MDX must go through the router, or they skip the
+  // Pages base path (/richkit/) and land on the bare github.io origin.
+  a: ({ href, ...props }: ComponentPropsWithoutRef<'a'>) =>
+    href?.startsWith('/') ? <Link to={href} {...props} /> : <a href={href} {...props} />,
+  AgentPrompt,
   Demo,
   Install,
 }

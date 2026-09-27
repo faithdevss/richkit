@@ -67,6 +67,7 @@ function PostForm() {
 | Component                                         | What it is                                                         | Default theme |
 | ------------------------------------------------- | ------------------------------------------------------------------ | ------------- |
 | [`MinimalEditor`](#minimaleditor)                 | Paragraphs, bold, italic and links from a bubble menu. No toolbar. | `dark`        |
+| [`DescriptionEditor`](#descriptioneditor)         | Form field for answers and details: size, color, highlight.        | `dark`        |
 | [`SimpleEditor`](#simpleeditor) · Pro             | Full StarterKit behind a one-row toolbar, with a theme toggle.     | `dark`        |
 | [`ClassicEditor`](#classiceditor) · Pro           | Labelled form field: menubar, toolbar, helper text, error state.   | inherits      |
 | [`NotionEditor`](#notioneditor) · Pro             | Block page: drag handle, `/` commands, `@` mentions, outline, AI.  | `dark`        |
@@ -202,6 +203,17 @@ Each section lists only the props that editor adds to the shared ones.
 Paragraphs with bold, italic and links, from a bubble menu that appears over a
 selection. No toolbar, no headings or lists — for comments, captions and short fields.
 Extensions: `Paragraph`, `Bold`, `Italic`, `Link`, `History`.
+
+No extra props.
+
+### `DescriptionEditor`
+
+A form field for Q&A answers, descriptions and details. One compact toolbar:
+undo/redo, font size, bold, italic, underline, strikethrough, text color,
+highlight, link and blockquote. No headings or lists — other pasted structure
+becomes paragraphs. Shift+Enter inserts a line break. Extensions: `Paragraph`,
+`Blockquote`, `HardBreak`, `TextStyle`, `Bold`, `Italic`, `Underline`, `Strike`,
+`Highlight`, `Link`, `History`.
 
 No extra props.
 
@@ -516,6 +528,7 @@ Target an editor with these (plus your own `className`):
 | Editor               | Root element classes                        |
 | -------------------- | ------------------------------------------- |
 | `MinimalEditor`      | `.rk-frame.rk-minimal`                      |
+| `DescriptionEditor`  | `.rk-frame.rk-description`                  |
 | `SimpleEditor`       | `.rk-frame.rk-simple`                       |
 | `ClassicEditor`      | `.ff-field` (+ `.is-error`, `.is-disabled`) |
 | `NotionEditor`       | `.rk-frame.rk-notion`                       |

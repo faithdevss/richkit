@@ -1,5 +1,6 @@
 import { FormFieldEditor } from '../../../editors/FormFieldEditor'
-import { Demo } from '../../../mdx-components'
+import { AgentPrompt, Demo } from '../../../mdx-components'
+import { CLASSIC_EDITOR_PROMPT } from '../../../data/prompts'
 
 <div className="docs-prose">
 
@@ -8,6 +9,8 @@ import { Demo } from '../../../mdx-components'
 The desktop-word-processor arrangement — a menubar over a full toolbar — wired into a
 labelled, validated form control. It emits HTML for storage and plain text for validation,
 which is what a description or article field in a real app actually needs.
+
+<AgentPrompt prompt={CLASSIC_EDITOR_PROMPT} />
 
 </div>
 

@@ -1,5 +1,6 @@
 import { DocxEditor } from '../../../editors/DocxEditor'
-import { Demo } from '../../../mdx-components'
+import { AgentPrompt, Demo } from '../../../mdx-components'
+import { DOCX_EDITING_PROMPT } from '../../../data/prompts'
 
 <div className="docs-prose">
 
@@ -9,15 +10,16 @@ The `@richkitjs/docx` package handles DOCX import and export against the same do
 model as everything else — no separate "docx mode". This demo starts from an editable
 NDA template and can round-trip it to a real `.docx` file.
 
+<AgentPrompt prompt={DOCX_EDITING_PROMPT} />
+
 ```tsx
 import { downloadDocx, importDocxFile } from '@richkitjs/docx'
 
 // export
-await downloadDocx(editor, 'document.docx')
+await downloadDocx(editor, { filename: 'document.docx' })
 
-// import
-const doc = await importDocxFile(file)
-editor.commands.setContent(doc)
+// import — replaces the document, returns any conversion warnings
+const warnings = await importDocxFile(editor, file)
 ```
 
 </div>

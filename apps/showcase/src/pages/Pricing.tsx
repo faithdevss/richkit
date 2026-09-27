@@ -81,7 +81,7 @@ const PLANS: Plan[] = [
 const FAQ: { q: string; a: ReactNode }[] = [
   {
     q: 'What is free and what is Pro?',
-    a: 'Free (MIT): the core editor, React and Vue bindings, the starter kit, every basic extension, and the Minimal, HTML, Markdown, Mentions, Comment box and Find & replace editors. Pro: DOCX import and export, track changes, comments, the AI extensions, and the Simple, Notion, Classic, Question, Comments, Track changes, DOCX and Agent editors.',
+    a: 'Free (MIT): the core editor, React and Vue bindings, the starter kit, every basic extension, and the Minimal, Description, HTML, Markdown, Mentions, Comment box and Find & replace editors. Pro: DOCX import and export, track changes, comments, the AI extensions, and the Simple, Notion, Classic, Question, Comments, Track changes, DOCX and Agent editors.',
   },
   {
     q: 'How does the licence key work?',
@@ -98,7 +98,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
     q: 'I lost my key — can you resend it?',
     a: (
       <>
-        Email <a href="mailto:support@richkit.dev">support@richkit.dev</a> from the address you
+        Email <a href="mailto:contact.faithdevs@gmail.com">contact.faithdevs@gmail.com</a> from the address you
         bought with. We check the order and resend the same key to that address — nothing is
         revoked, so a live build keeps working meanwhile. Keys can also be locked to your own
         domains on request; see the <Link to="/docs/licensing">licensing docs</Link>.

@@ -1194,6 +1194,22 @@ button.tpl-card {
 .foot-col a.foot-more:hover span {
   transform: translateX(3px);
 }
+.foot-credit {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--site-text-faint);
+}
+
+.foot-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.foot-credit a:hover {
+  color: var(--site-text);
+}
+
 .foot-base {
   padding-top: 22px;
   font-size: 0.82rem;
@@ -1685,6 +1701,74 @@ button.tpl-card {
 .pm-code {
   margin: 0;
   border-top-left-radius: 0;
+}
+
+/* ---------- agent prompt ---------- */
+.agent-prompt {
+  margin: 0 0 28px;
+  padding: 16px 18px 12px;
+  border: 1px solid rgba(139, 92, 255, 0.35);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(139, 92, 255, 0.08), rgba(56, 132, 255, 0.04));
+}
+.agent-prompt-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.agent-prompt-title {
+  color: var(--site-text-strong);
+  font-weight: 650;
+}
+.agent-prompt-sub {
+  color: var(--site-text-muted);
+  font-size: 0.86rem;
+  margin-top: 2px;
+}
+.agent-prompt-copy {
+  flex: none;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 14px;
+  background: var(--site-grad);
+  color: #fff;
+  font: 600 0.84rem var(--site-sans);
+  cursor: pointer;
+}
+.agent-prompt-copy:hover {
+  filter: brightness(1.1);
+}
+.agent-prompt .agent-prompt-body {
+  margin: 0;
+  max-height: 150px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+.agent-prompt.is-open .agent-prompt-body {
+  max-height: 520px;
+  overflow: auto;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.agent-prompt-toggle {
+  border: 0;
+  background: none;
+  padding: 8px 0 0;
+  color: var(--site-text-muted);
+  font: 500 0.82rem var(--site-sans);
+  cursor: pointer;
+}
+.agent-prompt-toggle:hover {
+  color: var(--site-text-strong);
+}
+@media (max-width: 560px) {
+  .agent-prompt-head {
+    flex-direction: column;
+  }
 }
 
 /* ---------- extensions reference table ---------- */

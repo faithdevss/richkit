@@ -175,6 +175,11 @@ export const MINIMAL_CONTENT = `
 <p>There is no toolbar. Select a few words and a small menu appears, or use ⌘B, ⌘I and ⌘Z.</p>
 `
 
+export const DESCRIPTION_CONTENT = `
+<p>Refunds go back to the <strong>original payment method</strong> within <mark style="background-color: #bbf7d0">5–7 business days</mark>. Orders marked <span style="color: #dc2626">Final sale</span> can’t be refunded, but they can be <u>exchanged once</u>.</p>
+<p>Still stuck? See the <a href="https://richkit.dev">returns policy</a>.</p>
+`
+
 export const FIND_CONTENT = `
 <h2>Style guide — product copy</h2>
 <p>Write for the customer, not for the team. The customer should finish a sentence knowing what to do next, and the customer should never need to know how the product works inside.</p>

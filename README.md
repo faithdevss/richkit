@@ -7,6 +7,8 @@
 
 [Docs](https://faithdevss.github.io/richkit/) · [npm org](https://www.npmjs.com/org/richkitjs) · [Changelog](https://github.com/faithdevss/richkit/releases)
 
+Developed by [FaithDevs](https://faithdevs.com).
+
 Headless, extensible WYSIWYG rich text editor. ProseMirror core, React binding, 20 extensions. Phase 1 MVP — v0.1.0.
 
 ## Features

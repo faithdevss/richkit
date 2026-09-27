@@ -186,7 +186,7 @@ a customer's build runs. Requires `pnpm --filter @richkitjs/license build` once.
 - **A failed mint returns 500 on purpose** so Lemon Squeezy retries. Repeats are
   safe.
 - **`/recover` is a support tool, not a public form.** The pricing FAQ and the
-  licensing docs send customers to `support@richkit.dev`, and support calls this
+  licensing docs send customers to `contact.faithdevs@gmail.com`, and support calls this
   endpoint on the server after checking the order (see the `curl` above); the
   proxy configs never forward it. It only ever mails the key to the address on
   that order and never returns it in the response, so even if exposed it would
