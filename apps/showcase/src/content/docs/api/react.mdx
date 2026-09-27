@@ -260,7 +260,70 @@ the editor — you insert what it gives you.
 | `align`     | `'start' \| 'end'`                 | `'start'` | Edge alignment.                                                          |
 | `className` | `string`                           | —         | Added to the panel (`tb-pop-panel`).                                     |
 
-Clicking the trigger toggles it; clicking outside or pressing <kbd>Esc</kbd> closes it.
+Clicking the trigger toggles it; clicking outside or pressing <kbd>Esc</kbd> closes it. Opened
+from the keyboard (<kbd>Enter</kbd> / <kbd>Space</kbd> on the trigger), focus moves into the panel
+and returns to the trigger on <kbd>Esc</kbd>.
+
+### `MenuList`
+
+The list every built-in dropdown is made of — one frame, one row style, arrow-key navigation. Use it
+for your own menus and they match the rest of the editor.
+
+```tsx
+import { MenuItem, MenuLabel, MenuList, MenuSeparator, Popover } from '@richkitjs/react'
+
+;<Popover trigger={<button className="tb-btn">Insert</button>}>
+  {(close) => (
+    <MenuList inline aria-label="Insert">
+      <MenuLabel>Blocks</MenuLabel>
+      <MenuItem
+        icon={<Icons.TableIcon />}
+        onSelect={() => {
+          insertTable()
+          close()
+        }}
+      >
+        Table
+      </MenuItem>
+      <MenuItem
+        hint="⌘⇧8"
+        onSelect={() => {
+          toggleList()
+          close()
+        }}
+      >
+        Bullet list
+      </MenuItem>
+      <MenuSeparator />
+      <MenuItem
+        danger
+        onSelect={() => {
+          clear()
+          close()
+        }}
+      >
+        Clear document
+      </MenuItem>
+    </MenuList>
+  )}
+</Popover>
+```
+
+| Component       | Prop        | Type         | Description                                                                        |
+| --------------- | ----------- | ------------ | ---------------------------------------------------------------------------------- |
+| `MenuList`      | `inline`    | `boolean`    | Drop its own frame — for a list inside a panel that already draws one (a Popover). |
+|                 | `className` | `string`     | Added after `rk-menu`.                                                             |
+| `MenuItem`      | `onSelect`  | `() => void` | Click or <kbd>Enter</kbd>. The editor keeps its selection.                         |
+|                 | `icon`      | `ReactNode`  | Leading icon or glyph.                                                             |
+|                 | `hint`      | `ReactNode`  | Trailing hint, usually a shortcut.                                                 |
+|                 | `active`    | `boolean`    | The current value. Passing it makes the row a radio item (`menuitemradio`).        |
+|                 | `danger`    | `boolean`    | Destructive row, in the danger colour.                                             |
+|                 | `disabled`  | `boolean`    | —                                                                                  |
+| `MenuLabel`     | `children`  | `ReactNode`  | Small uppercase group heading.                                                     |
+| `MenuSeparator` | —           | —            | Divider line.                                                                      |
+
+Sizes come from CSS custom properties — `--rk-menu-pad`, `--rk-item-pad`, `--rk-item-gap` and the
+`--rk-text-xs/sm/md/base` scale — so one override restyles every menu.
 
 ## `BubbleMenu`
 
@@ -271,6 +334,46 @@ Floating menu positioned over the current selection; hidden when the selection i
 | `editor`    | `Editor \| null` | —              |
 | `children`  | `ReactNode`      | Menu contents. |
 | `className` | `string`         | —              |
+
+## `LinkCard`
+
+Floats under the link the cursor is in: the URL (opens in a new tab), plus edit, copy and unlink.
+Edit swaps the card for the same form as the toolbar's link button. Needs the Link extension.
+
+```tsx
+<EditorContent editor={editor} />
+<LinkCard editor={editor} />
+```
+
+| Prop        | Type             |
+| ----------- | ---------------- |
+| `editor`    | `Editor \| null` |
+| `className` | `string`         |
+
+## `TableToolbar`
+
+Floats above the table the cursor is in, with **Row**, **Column** and **Cell** menus and delete
+table — the table right-click menu's actions, for people who never right-click. Needs the Table
+extension. Props as `LinkCard`.
+
+## `WordCount`
+
+Live word and character count for a status bar. With text selected it counts the selection
+against the whole document ("12 of 340 words").
+
+```tsx
+<footer className="status">
+  <WordCount editor={editor} limit={280} />
+</footer>
+```
+
+| Prop        | Type                                           | Default                   | Description                                                      |
+| ----------- | ---------------------------------------------- | ------------------------- | ---------------------------------------------------------------- |
+| `editor`    | `Editor \| null`                               | —                         | —                                                                |
+| `show`      | `('words' \| 'characters' \| 'readingTime')[]` | `['words', 'characters']` | Figures to show, in order.                                       |
+| `limit`     | `number`                                       | —                         | Soft cap: reads "n / limit", turns to the danger colour past it. |
+| `limitBy`   | `'words' \| 'characters'`                      | `'characters'`            | What `limit` counts.                                             |
+| `className` | `string`                                       | —                         | —                                                                |
 
 ## `Menubar`
 

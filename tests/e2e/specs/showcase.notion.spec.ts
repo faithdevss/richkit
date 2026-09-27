@@ -377,7 +377,7 @@ test.describe('slash commands', () => {
     await open(page)
     await slash(page)
     const groups = await page.locator('.slash-menu-group-label, .slash-menu-group').allInnerTexts()
-    expect(groups.join(' ')).toMatch(/Style/)
+    expect(groups.join(' ')).toMatch(/Style/i)
   })
 
   test('recently used commands surface first', async ({ page }) => {

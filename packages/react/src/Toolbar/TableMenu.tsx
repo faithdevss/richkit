@@ -1,6 +1,7 @@
 import type { Editor } from '@richkitjs/core'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { ChevronDownIcon, TableIcon } from '../icons'
+import { MenuItem, MenuList, MenuSeparator } from '../Menu/MenuList'
 import { Popover } from './Popover'
 
 export interface TableMenuProps {
@@ -46,25 +47,23 @@ export function TableMenu({ editor, maxRows = 8, maxCols = 10 }: TableMenuProps)
     >
       {(close) =>
         inTable ? (
-          <div className="tb-menu" role="menu">
+          <MenuList inline className="tb-menu" aria-label="Table actions">
             {TABLE_ACTIONS.map((a) => (
-              <button
-                key={a.cmd}
-                type="button"
-                role="menuitem"
-                className={`tb-menu-item${a.separatorBefore ? ' has-separator' : ''}${
-                  a.cmd === 'deleteTable' ? ' is-danger' : ''
-                }`}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  editor.chain().call(a.cmd).focus().run()
-                  close()
-                }}
-              >
-                {a.label}
-              </button>
+              <Fragment key={a.cmd}>
+                {a.separatorBefore && <MenuSeparator />}
+                <MenuItem
+                  className="tb-menu-item"
+                  danger={a.cmd === 'deleteTable'}
+                  onSelect={() => {
+                    editor.chain().call(a.cmd).focus().run()
+                    close()
+                  }}
+                >
+                  {a.label}
+                </MenuItem>
+              </Fragment>
             ))}
-          </div>
+          </MenuList>
         ) : (
           <TableGrid
             maxRows={maxRows}

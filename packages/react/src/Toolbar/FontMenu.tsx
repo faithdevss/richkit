@@ -1,5 +1,6 @@
 import type { Editor } from '@richkitjs/core'
 import { ChevronDownIcon, FontIcon, FontSizeIcon } from '../icons'
+import { MenuItem, MenuList } from '../Menu/MenuList'
 import { Popover } from './Popover'
 
 const FONT_FAMILIES = [
@@ -61,24 +62,21 @@ export function FontFamilyMenu({ editor, iconOnly = false }: FontMenuProps) {
       }
     >
       {(close) => (
-        <div className="tb-menu" role="menu">
+        <MenuList inline className="tb-menu" aria-label="Font family">
           {FONT_FAMILIES.map((f) => (
-            <button
+            <MenuItem
+              className="tb-menu-item"
               key={f.label}
-              type="button"
-              role="menuitem"
-              className={`tb-menu-item ${current === f.value ? 'is-active' : ''}`}
-              style={{ fontFamily: f.value ?? undefined }}
-              onMouseDown={(e) => {
-                e.preventDefault()
+              active={current === f.value}
+              onSelect={() => {
                 editor.chain().call('setFontFamily', f.value).focus().run()
                 close()
               }}
             >
-              {f.label}
-            </button>
+              <span style={{ fontFamily: f.value ?? undefined }}>{f.label}</span>
+            </MenuItem>
           ))}
-        </div>
+        </MenuList>
       )}
     </Popover>
   )
@@ -103,23 +101,21 @@ export function FontSizeMenu({ editor, iconOnly = false }: FontMenuProps) {
       }
     >
       {(close) => (
-        <div className="tb-menu" role="menu">
+        <MenuList inline className="tb-menu" aria-label="Font size">
           {FONT_SIZES.map((f) => (
-            <button
+            <MenuItem
+              className="tb-menu-item"
               key={f.label}
-              type="button"
-              role="menuitem"
-              className={`tb-menu-item ${current === f.value ? 'is-active' : ''}`}
-              onMouseDown={(e) => {
-                e.preventDefault()
+              active={current === f.value}
+              onSelect={() => {
                 editor.chain().call('setFontSize', f.value).focus().run()
                 close()
               }}
             >
               {f.label}
-            </button>
+            </MenuItem>
           ))}
-        </div>
+        </MenuList>
       )}
     </Popover>
   )

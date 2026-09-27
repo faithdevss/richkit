@@ -9,9 +9,11 @@ import {
   HighlightMenu,
   Icons,
   ImageMenu,
+  LinkCard,
   Menubar,
   OrderedListMenu,
   TableMenu,
+  TableToolbar,
   TextColorMenu,
   Toolbar,
   ToolbarButton,
@@ -199,6 +201,8 @@ export const ClassicEditor = forwardRef(function ClassicEditor(
           </>
         )}
         <EditorContent editor={editor} className="editor ff-content" />
+        <LinkCard editor={editor} />
+        <TableToolbar editor={editor} />
       </div>
       {Boolean(helperText) && (
         <p className={`ff-helper${error ? ' is-error' : ''}`}>{helperText}</p>

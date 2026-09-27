@@ -14,12 +14,20 @@ const ALIGNMENTS: { align: 'left' | 'center' | 'right'; label: string }[] = [
   { align: 'right', label: 'Align right' },
 ]
 
+// Fractions of the editor's text column; stored as px like a manual resize.
+const WIDTHS: { fraction: number; label: string }[] = [
+  { fraction: 0.25, label: '25%' },
+  { fraction: 0.5, label: '50%' },
+  { fraction: 1, label: '100%' },
+]
+
 export class ImageNodeView implements NodeView {
   readonly dom: HTMLElement
   private readonly img: HTMLImageElement
   private readonly handle: HTMLSpanElement
   private readonly caption: HTMLElement
   private readonly toolbar: HTMLElement
+  private readonly alignButtons = new Map<string, HTMLElement>()
   private node: PMNode
   private readonly view: EditorView
   private readonly getPos: () => number | undefined
@@ -38,9 +46,7 @@ export class ImageNodeView implements NodeView {
 
     this.dom = document.createElement('figure')
     this.dom.className = 'richkit-image'
-    this.dom.style.display = 'inline-block'
     this.dom.style.position = 'relative'
-    this.dom.style.margin = '0'
 
     this.img = document.createElement('img')
     this.applyAttrs(node)
@@ -72,7 +78,7 @@ export class ImageNodeView implements NodeView {
     this.paint(node)
   }
 
-  /** Alignment, caption and alt text, shown while the image is selected. */
+  /** Alignment, size, caption, alt text and delete, shown while the image is selected. */
   private buildToolbar(): HTMLElement {
     const bar = document.createElement('div')
     bar.className = 'richkit-image-toolbar'
@@ -94,11 +100,23 @@ export class ImageNodeView implements NodeView {
       return btn
     }
 
+    const separator = () => {
+      const sep = document.createElement('span')
+      sep.className = 'richkit-image-sep'
+      bar.appendChild(sep)
+    }
+
     for (const { align, label } of ALIGNMENTS) {
-      button(label, () => {
+      const btn = button(label, () => {
         this.setAttr('align', this.node.attrs.align === align ? null : align)
       })
+      this.alignButtons.set(align, btn)
     }
+    separator()
+    for (const { fraction, label } of WIDTHS) {
+      button(label, () => this.setWidth(fraction)).title = `Width ${label}`
+    }
+    separator()
     button('Caption', (anchor) => {
       void this.editText({
         title: 'Caption',
@@ -119,7 +137,36 @@ export class ImageNodeView implements NodeView {
         this.setAttr('alt', value || null)
       })
     })
+    separator()
+    button('Delete', () => {
+      const pos = this.getPos()
+      if (pos == null) return
+      this.view.dispatch(this.view.state.tr.delete(pos, pos + this.node.nodeSize))
+      this.view.focus()
+    }).classList.add('is-danger')
     return bar
+  }
+
+  /** Size to a fraction of the text column, keeping the aspect ratio. */
+  private setWidth(fraction: number): void {
+    const pos = this.getPos()
+    if (pos == null) return
+    const column = this.view.dom as HTMLElement
+    const style = getComputedStyle(column)
+    const available =
+      column.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+    const width = Math.max(40, Math.round(available * fraction))
+    const ratio =
+      this.img.naturalWidth && this.img.naturalHeight
+        ? this.img.naturalHeight / this.img.naturalWidth
+        : null
+    this.view.dispatch(
+      this.view.state.tr.setNodeMarkup(pos, undefined, {
+        ...this.node.attrs,
+        width,
+        height: ratio ? Math.round(width * ratio) : null,
+      }),
+    )
   }
 
   private setAttr(name: string, value: unknown): void {
@@ -134,6 +181,14 @@ export class ImageNodeView implements NodeView {
     this.dom.setAttribute('data-image', '')
     if (align) this.dom.setAttribute('data-align', align)
     else this.dom.removeAttribute('data-align')
+    // Inline styles, so alignment works without the stylesheet. An aligned
+    // figure is a table: it shrink-wraps the image like inline-block, but
+    // still takes auto margins.
+    this.dom.style.display = align ? 'table' : 'inline-block'
+    this.dom.style.margin = align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0'
+    for (const [value, btn] of this.alignButtons) {
+      btn.setAttribute('aria-pressed', String(value === align))
+    }
     this.caption.textContent = caption ?? ''
     this.caption.hidden = !caption
   }

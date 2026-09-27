@@ -1,5 +1,6 @@
 import type { Editor } from '@richkitjs/core'
 import { ChevronDownIcon, HeadingIcon, ParagraphIcon } from '../icons'
+import { MenuItem, MenuList } from '../Menu/MenuList'
 import { Popover } from './Popover'
 
 export interface BlockTypeMenuProps {
@@ -14,9 +15,9 @@ const ITEMS: {
   args?: unknown[]
   active: string
   attrs?: Record<string, unknown>
-  preview: string
+  preview?: string
 }[] = [
-  { label: 'Paragraph', cmd: 'setParagraph', active: 'paragraph', preview: 'Normal text' },
+  { label: 'Paragraph', cmd: 'setParagraph', active: 'paragraph' },
   {
     label: 'Heading 1',
     cmd: 'setHeading',
@@ -84,33 +85,26 @@ export function BlockTypeMenu({ editor, iconOnly = false }: BlockTypeMenuProps) 
       }
     >
       {(close) => (
-        <div className="tb-menu" role="menu">
-          {ITEMS.map((item) => {
-            const active = editor.isActive(item.active, item.attrs ?? null)
-            return (
-              <button
-                key={item.label}
-                type="button"
-                role="menuitem"
-                className={`tb-menu-item ${active ? 'is-active' : ''}`}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  editor
-                    .chain()
-                    .call(item.cmd, ...(item.args ?? []))
-                    .focus()
-                    .run()
-                  close()
-                }}
-              >
-                <span className={`tb-menu-preview tb-preview-${item.preview.toLowerCase()}`}>
-                  {item.preview}
-                </span>
-                <span>{item.label}</span>
-              </button>
-            )
-          })}
-        </div>
+        <MenuList inline className="tb-menu" aria-label="Block type">
+          {ITEMS.map((item) => (
+            <MenuItem
+              className="tb-menu-item"
+              key={item.label}
+              active={editor.isActive(item.active, item.attrs ?? null)}
+              icon={<span className="tb-menu-preview">{item.preview ?? <ParagraphIcon />}</span>}
+              onSelect={() => {
+                editor
+                  .chain()
+                  .call(item.cmd, ...(item.args ?? []))
+                  .focus()
+                  .run()
+                close()
+              }}
+            >
+              {item.label}
+            </MenuItem>
+          ))}
+        </MenuList>
       )}
     </Popover>
   )
