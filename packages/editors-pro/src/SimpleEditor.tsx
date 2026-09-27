@@ -51,7 +51,7 @@ export const SimpleEditor = forwardRef(function SimpleEditor(
             <ToolbarButton editor={editor} command="redo" label={<Icons.RedoIcon />} title="Redo" />
           </ToolbarGroup>
           <ToolbarGroup>
-            <BlockTypeMenu editor={editor} />
+            <BlockTypeMenu editor={editor} iconOnly />
           </ToolbarGroup>
           <ToolbarGroup>
             <BulletListMenu editor={editor} />

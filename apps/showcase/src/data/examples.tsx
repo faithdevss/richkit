@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { CommentBoxEditor } from '../editors/CommentBoxEditor'
 import { CommentsEditor } from '../editors/CommentsEditor'
+import { DescriptionEditor } from '../editors/DescriptionEditor'
 import { FindReplaceEditor } from '../editors/FindReplaceEditor'
 import { HtmlEditor } from '../editors/HtmlEditor'
 import { MentionsEditor } from '../editors/MentionsEditor'
@@ -9,6 +10,7 @@ import { SimpleEditor } from '../editors/SimpleEditor'
 import { TrackChangesEditor } from '../editors/TrackChangesEditor'
 import commentBoxSource from '../../../../packages/editors/src/CommentBoxEditor.tsx?raw'
 import commentsSource from '../../../../packages/editors-pro/src/CommentsEditor.tsx?raw'
+import descriptionSource from '../../../../packages/editors/src/DescriptionEditor.tsx?raw'
 import findSource from '../../../../packages/editors/src/FindReplaceEditor.tsx?raw'
 import htmlSource from '../../../../packages/editors/src/HtmlEditor.tsx?raw'
 import mentionsSource from '../../../../packages/editors/src/MentionsEditor.tsx?raw'
@@ -179,6 +181,29 @@ const editor = useEditor({
     source: minimalSource,
     sourcePath: 'packages/editors/src/MinimalEditor.tsx',
     demo: () => <MinimalEditor />,
+  },
+  {
+    id: 'description',
+    title: 'Description field',
+    blurb:
+      'A form field for answers, descriptions and details: font size, text formatting, color, highlight and quotes, and no headings or lists.',
+    pkg: '@richkitjs/extension-highlight',
+    install: BASE,
+    points: [
+      'No headings or lists. The schema is paragraphs, blockquotes and text marks, so other pasted structure is flattened into running text.',
+      '`TextStyle` carries the font size and text color, `Highlight` the background. Both are marks, so they sit inside a paragraph like bold does.',
+    ],
+    snippet: `import {
+  Paragraph, Blockquote, HardBreak, TextStyle, Bold, Italic, Underline,
+  Strike, Highlight, Link, History,
+} from '@richkitjs/starter-kit'
+
+const editor = useEditor({
+  extensions: [Paragraph, Blockquote, HardBreak, TextStyle, Bold, Italic, Underline, Strike, Highlight, Link, History],
+})`,
+    source: descriptionSource,
+    sourcePath: 'packages/editors/src/DescriptionEditor.tsx',
+    demo: () => <DescriptionEditor />,
   },
   {
     id: 'comment-box',

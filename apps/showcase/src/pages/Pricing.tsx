@@ -81,7 +81,7 @@ const PLANS: Plan[] = [
 const FAQ: { q: string; a: ReactNode }[] = [
   {
     q: 'What is free and what is Pro?',
-    a: 'Free (MIT): the core editor, React and Vue bindings, the starter kit, every basic extension, and the Minimal, HTML, Markdown, Mentions, Comment box and Find & replace editors. Pro: DOCX import and export, track changes, comments, the AI extensions, and the Simple, Notion, Classic, Question, Comments, Track changes, DOCX and Agent editors.',
+    a: 'Free (MIT): the core editor, React and Vue bindings, the starter kit, every basic extension, and the Minimal, Description, HTML, Markdown, Mentions, Comment box and Find & replace editors. Pro: DOCX import and export, track changes, comments, the AI extensions, and the Simple, Notion, Classic, Question, Comments, Track changes, DOCX and Agent editors.',
   },
   {
     q: 'How does the licence key work?',

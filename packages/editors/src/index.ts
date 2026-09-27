@@ -1,4 +1,5 @@
 export { MinimalEditor } from './MinimalEditor'
+export { DescriptionEditor } from './DescriptionEditor'
 export { FindReplaceEditor } from './FindReplaceEditor'
 export type { FindReplaceEditorProps } from './FindReplaceEditor'
 export { HtmlEditor } from './HtmlEditor'
