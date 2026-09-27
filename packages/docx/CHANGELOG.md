@@ -1,5 +1,11 @@
 # @richkitjs/docx
 
+## 0.3.1
+
+### Patch Changes
+
+- @richkitjs/license@0.3.1
+
 ## 0.3.0
 
 ### Patch Changes
