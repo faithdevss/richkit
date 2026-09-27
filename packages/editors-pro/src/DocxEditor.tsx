@@ -14,10 +14,12 @@ import {
   HighlightMenu,
   ImageMenu,
   LineHeightMenu,
+  LinkCard,
   LinkMenu,
   OrderedListMenu,
   SpecialCharsMenu,
   TableMenu,
+  TableToolbar,
   TextColorMenu,
   ToolbarButton,
   ToolbarGroup,
@@ -297,6 +299,8 @@ export const DocxEditor = forwardRef(function DocxEditor(
               </>
             )}
           </BubbleMenu>
+          <LinkCard editor={editor} />
+          <TableToolbar editor={editor} />
         </div>
       </div>
       <FieldValue editor={editor} name={name} format={format} />

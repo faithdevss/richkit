@@ -42,6 +42,7 @@
     "@richkitjs/extension-mention": "workspace:*",
     "@richkitjs/extension-slash-commands": "workspace:*",
     "@richkitjs/extension-track-changes": "workspace:*",
+    "@richkitjs/extension-word-count": "workspace:*",
     "@richkitjs/html": "workspace:*",
     "@richkitjs/markdown": "workspace:*",
     "prosemirror-model": "^1.25.11",

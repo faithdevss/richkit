@@ -1320,6 +1320,9 @@ importers:
       '@richkitjs/extension-track-changes':
         specifier: workspace:*
         version: link:../extension-track-changes
+      '@richkitjs/extension-word-count':
+        specifier: workspace:*
+        version: link:../extension-word-count
       '@richkitjs/html':
         specifier: workspace:*
         version: link:../html

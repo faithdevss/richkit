@@ -20,11 +20,13 @@ import {
   HighlightMenu,
   FindReplace,
   Icons,
+  LinkCard,
   LinkMenu,
   notify,
   selectionAnchor,
   getOutline,
   defaultSlashItems,
+  TableToolbar,
   ToolbarButton,
   type MentionCandidate,
   type SlashItem,
@@ -444,6 +446,8 @@ export const NotionEditor = forwardRef(function NotionEditor(
                 </>
               )}
             </BubbleMenu>
+            <LinkCard editor={editor} />
+            <TableToolbar editor={editor} />
           </div>
         </div>
 

@@ -2,7 +2,9 @@ import { expect, test, type Page } from '@playwright/test'
 import { focusEditor } from './_helpers'
 
 async function selectFirstWord(page: Page) {
-  await page.locator('.editor .ProseMirror').click()
+  // the text itself: the editing area fills the frame, so its centre can be
+  // blank space below the last line
+  await page.locator('.editor .ProseMirror p').first().click()
   await page.keyboard.press('Home')
   await page.keyboard.down('Shift')
   for (let i = 0; i < 5; i++) await page.keyboard.press('ArrowRight')

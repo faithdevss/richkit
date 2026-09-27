@@ -30,7 +30,7 @@ export function LinkMenu({ editor }: LinkMenuProps) {
   )
 }
 
-interface LinkTarget {
+export interface LinkTarget {
   from: number
   to: number
   text: string
@@ -41,7 +41,7 @@ interface LinkTarget {
  * The range the form edits: the selection, or — when the cursor sits inside
  * a link with nothing selected — the whole link, so it can be edited in place.
  */
-function readTarget(state: EditorState, type: MarkType): LinkTarget {
+export function readLinkTarget(state: EditorState, type: MarkType): LinkTarget {
   const { from, to, empty, $from } = state.selection
   let range = { from, to }
   if (empty) {
@@ -80,7 +80,7 @@ export interface LinkPanelProps {
 /** Link + display-text form; used by the toolbar popover and `notify.link`. */
 export function LinkPanel({ editor, onClose }: LinkPanelProps) {
   const type = editor.state.schema.marks.link
-  const [target] = useState(() => (type ? readTarget(editor.state, type) : null))
+  const [target] = useState(() => (type ? readLinkTarget(editor.state, type) : null))
   const [url, setUrl] = useState(target?.href ?? '')
   const [text, setText] = useState(target?.text ?? '')
 

@@ -1,5 +1,6 @@
 import type { Editor } from '@richkitjs/core'
 import { ChevronDownIcon, EmojiIcon, LineHeightIcon, OmegaIcon } from '../icons'
+import { MenuItem, MenuList } from '../Menu/MenuList'
 import { Popover } from './Popover'
 
 const LINE_HEIGHTS = [
@@ -27,23 +28,20 @@ export function LineHeightMenu({ editor }: { editor: Editor }) {
       }
     >
       {(close) => (
-        <div className="tb-menu" role="menu">
+        <MenuList inline className="tb-menu" aria-label="Line height">
           {LINE_HEIGHTS.map((lh) => (
-            <button
-              key={lh.label}
-              type="button"
-              role="menuitem"
+            <MenuItem
               className="tb-menu-item"
-              onMouseDown={(e) => {
-                e.preventDefault()
+              key={lh.label}
+              onSelect={() => {
                 editor.chain().call('setLineHeight', lh.value).focus().run()
                 close()
               }}
             >
               {lh.label}
-            </button>
+            </MenuItem>
           ))}
-        </div>
+        </MenuList>
       )}
     </Popover>
   )
