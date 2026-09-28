@@ -1,5 +1,12 @@
 # @richkitjs/ai-openai
 
+## 0.4.0
+
+### Patch Changes
+
+- @richkitjs/extension-ai@0.4.0
+  - @richkitjs/license@0.4.0
+
 ## 0.3.1
 
 ### Patch Changes
