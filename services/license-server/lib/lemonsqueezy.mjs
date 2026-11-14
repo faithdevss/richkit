@@ -62,6 +62,13 @@ export function intentFor(body) {
   if (!event || !attrs) return null
   const company = body?.meta?.custom_data?.company?.trim()
 
+  // A refund cannot take back a key that is already out — it is verified
+  // offline — but it must stop the permanent lifetime key from ever being
+  // minted, and it is recorded against the licence for support.
+  if (event === 'order_refunded') {
+    return { refund: true, orderId: String(data.id) }
+  }
+
   if (event === 'order_created') {
     if (attrs.status === 'refunded') return null
     const plan = planForVariant(attrs.first_order_item?.variant_id)
@@ -73,7 +80,8 @@ export function intentFor(body) {
       email: attrs.user_email,
       company: company || attrs.user_name || attrs.user_email,
       issued: isoDate(attrs.created_at),
-      // Lifetime covers every release, now and later.
+      // Lifetime covers every release, now and later. The server holds this
+      // back until the refund window has closed (see LIFETIME_HOLD_DAYS).
       updatesUntil: null,
       orderId: String(data.id),
     }

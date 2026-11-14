@@ -71,7 +71,8 @@ const PLANS: Plan[] = [
       'Everything in Business',
       'Never expires',
       'Every future version, no renewal',
-      'One invoice, one purchase order, done',
+      'Permanent key 35 days after purchase',
+      'One payment, one invoice, done',
     ],
     checkout: CHECKOUT_LIFETIME,
     cta: 'Buy lifetime',
@@ -107,7 +108,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'What happens without a key?',
-    a: 'On localhost and development hosts, nothing — Pro runs clean. On a production site, Pro packages show a small “unlicensed” badge. They never stop working, never block editing, and never lose content.',
+    a: 'On localhost and development hosts, nothing — Pro runs clean. On a production site, Pro packages show a small “unlicensed” badge. They never stop working, never block editing, and never lose content. You may evaluate Pro in production this way for up to six months; after that the licence asks you to buy a plan or stop using the Pro packages in production.',
   },
   {
     q: 'What happens if I stop paying?',

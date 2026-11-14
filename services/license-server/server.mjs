@@ -26,6 +26,19 @@ const PRIVATE_KEY_PATH =
 const ORDERS_FILE = env.ORDERS_FILE ?? join(process.cwd(), 'orders.jsonl')
 const MAX_BODY = 512 * 1024
 
+// A lifetime key covers every future release and can never be revoked, so a
+// buyer who refunds would keep it for ever. A lifetime order therefore gets a
+// provisional key first, covering releases up to the end of this hold, and the
+// permanent key is minted only once the hold has passed without a refund. The
+// default is the 30-day refund window plus a few days for a refund requested on
+// the last day to be processed. 0 mints the permanent key at once.
+const LIFETIME_HOLD_DAYS = Math.max(0, Number(env.LIFETIME_HOLD_DAYS ?? 35) || 0)
+const SWEEP_INTERVAL_MS = Number(env.SWEEP_INTERVAL_MS ?? 60 * 60 * 1000)
+
+const today = () => new Date().toISOString().slice(0, 10)
+const addDays = (iso, days) =>
+  new Date(Date.parse(`${iso}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10)
+
 function fatal(message) {
   console.error(message)
   process.exit(1)
@@ -97,6 +110,14 @@ function send(res, status, payload) {
  */
 async function issue(intent) {
   const existing = store.get(intent.licenseId)
+  // Lifetime starts provisional; `finalizeLifetime` swaps in the permanent key.
+  // The date is derived from the order, so a replayed webhook lands on the
+  // same window and is recognised as a duplicate below.
+  const finalizeOn =
+    intent.plan === 'lifetime' && LIFETIME_HOLD_DAYS > 0
+      ? addDays(intent.issued, LIFETIME_HOLD_DAYS)
+      : undefined
+  if (finalizeOn) intent = { ...intent, updatesUntil: finalizeOn }
   if (existing) {
     const sameWindow = existing.payload.updatesUntil === intent.updatesUntil
     const notNewer =
@@ -128,6 +149,7 @@ async function issue(intent) {
     plan: intent.plan,
     payload,
     key,
+    ...(finalizeOn ? { finalizeOn } : {}),
   })
 
   await sendLicenseEmail(mail, {
@@ -135,11 +157,75 @@ async function issue(intent) {
     key,
     payload,
     renewal: Boolean(existing),
+    finalizeOn,
   })
   console.log(
-    `[issue] ${existing ? 'renewed' : 'minted'} ${intent.licenseId} (${intent.plan}) for ${intent.email}`,
+    `[issue] ${existing ? 'renewed' : 'minted'} ${intent.licenseId} (${intent.plan}${finalizeOn ? `, provisional until ${finalizeOn}` : ''}) for ${intent.email}`,
   )
   return { status: existing ? 'renewed' : 'issued', licenseId: intent.licenseId }
+}
+
+/** Mark every licence bought with an order as refunded. */
+function recordRefund(orderId) {
+  const hit = store.all().filter((r) => r.orderId === orderId && !r.refunded)
+  for (const record of hit) {
+    const { recordedAt: _recordedAt, ...rest } = record
+    store.put({ ...rest, refunded: true, refundedOn: today() })
+    if (record.finalizeOn) {
+      console.log(`[refund] ${record.licenseId}: permanent lifetime key will not be issued`)
+    } else if (record.payload.updatesUntil === null) {
+      // Past the hold, so the permanent key is already out and cannot be recalled.
+      console.warn(`[refund] ${record.licenseId}: refunded AFTER its permanent key was issued`)
+    } else {
+      console.log(`[refund] ${record.licenseId}: recorded`)
+    }
+  }
+  return hit.length
+}
+
+/**
+ * Swap provisional lifetime keys for permanent ones once their hold is over,
+ * and retry any permanent key whose email did not go out. Runs at boot and on
+ * a timer; every step is recorded first, so a crash or a mail outage midway
+ * is picked up by the next run.
+ */
+let sweeping = false
+async function finalizeLifetime() {
+  if (sweeping) return
+  sweeping = true
+  try {
+    const now = today()
+    for (const record of store.all()) {
+      if (record.refunded) continue
+      let current = record
+      if (record.finalizeOn && record.finalizeOn <= now) {
+        const payload = { ...record.payload, updatesUntil: null }
+        const key = await signLicensePayload(payload, signing.privateKey)
+        if (!(await verifyOwnKey(key, signing.publicKey))) {
+          console.error(`[lifetime] ${record.licenseId}: minted key failed verification`)
+          continue
+        }
+        const { recordedAt: _r, finalizeOn: _f, ...rest } = record
+        current = store.put({ ...rest, payload, key, mailPending: true })
+        console.log(`[lifetime] ${record.licenseId}: permanent key minted`)
+      }
+      if (!current.mailPending) continue
+      try {
+        await sendLicenseEmail(mail, {
+          to: current.email,
+          key: current.key,
+          payload: current.payload,
+          permanent: true,
+        })
+        const { recordedAt: _r, mailPending: _m, ...rest } = current
+        store.put(rest)
+      } catch (error) {
+        console.error(`[lifetime] ${current.licenseId}: email failed, will retry: ${error.message}`)
+      }
+    }
+  } finally {
+    sweeping = false
+  }
 }
 
 // Crude in-memory throttle for the recovery endpoint: enough to stop both
@@ -179,6 +265,14 @@ async function handleWebhook(req, res) {
     // Acknowledge anything we deliberately ignore, or Lemon Squeezy retries it
     // for days and eventually disables the endpoint.
     return send(res, 200, { ok: true, ignored: body?.meta?.event_name ?? 'unknown' })
+  }
+  if (intent.refund) {
+    try {
+      return send(res, 200, { ok: true, status: 'refund', licences: recordRefund(intent.orderId) })
+    } catch (error) {
+      console.error(`[webhook] refund of order ${intent.orderId} failed: ${error.message}`)
+      return send(res, 500, { error: 'refund not recorded' })
+    }
   }
   if (!intent.email) return send(res, 200, { ok: true, ignored: 'no email on the event' })
 
@@ -226,6 +320,7 @@ async function handleRecover(req, res) {
       key: latest.key,
       payload: latest.payload,
       renewal: false,
+      finalizeOn: latest.finalizeOn,
     })
     console.log(`[recover] resent ${latest.licenseId}`)
   } catch (error) {
@@ -253,4 +348,13 @@ server.listen(PORT, HOST, () => {
   )
   if (!mail.apiKey)
     console.warn('[richkit-license] no mail provider set — keys will be stored only')
+  console.log(
+    LIFETIME_HOLD_DAYS
+      ? `[richkit-license] lifetime keys become permanent ${LIFETIME_HOLD_DAYS} days after purchase`
+      : '[richkit-license] LIFETIME_HOLD_DAYS=0 — lifetime keys are permanent at once; a refund keeps one',
+  )
+  const sweep = () =>
+    finalizeLifetime().catch((error) => console.error(`[lifetime] sweep failed: ${error.message}`))
+  void sweep()
+  setInterval(sweep, SWEEP_INTERVAL_MS).unref()
 })

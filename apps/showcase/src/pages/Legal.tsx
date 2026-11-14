@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const ENTITY = 'FaithDevs'
 const CONTACT_EMAIL = 'contact.faithdevs@gmail.com'
 const JURISDICTION = 'Bangladesh'
-const UPDATED = '19 September 2026'
+const UPDATED = '14 November 2026'
 
 // The merchant of record has to be named in the terms. It is not a formality:
 // buyers contract with Lemon Squeezy for the payment, and with us for the
@@ -113,7 +113,8 @@ export function Terms() {
       <p>
         The Pro packages run on localhost and other development hosts with no key and no badge, so
         you can build the real integration before deciding. You may also run them in production
-        without a key for 30 days while you evaluate; the badge shows during that time.
+        without a key for six months while you evaluate; the badge shows during that time. After
+        that, buy a licence or stop using the Pro packages in production.
       </p>
 
       <h2>Renewal and expiry</h2>
@@ -252,6 +253,14 @@ export function Refunds() {
         until the end of the period you have paid for. Renewal charges are refundable under the same
         30-day window as a first purchase. After a refund, your Pro licence and its key end, though the
         MIT core remains free to use.
+      </p>
+
+      <h2>Lifetime keys</h2>
+      <p>
+        A lifetime purchase is delivered in two steps. The key you receive straight away is fully
+        working and covers every release published in the first 35 days. Once the refund window has
+        closed, the permanent key — covering every future release — is emailed to you automatically.
+        You do not need to ask for it, and the first key keeps working in the meantime.
       </p>
 
       <h2>When we may decline</h2>

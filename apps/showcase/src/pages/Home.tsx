@@ -53,7 +53,7 @@ const INSTALL = 'pnpm add @richkitjs/starter-kit'
 const METRICS: { value: string; label: string }[] = [
   { value: '40+', label: 'extensions on npm' },
   { value: '100%', label: 'headless core' },
-  { value: '$99', label: 'a year, every package' },
+  { value: '$99', label: 'a year to start, every Pro package' },
 ]
 
 const STACK = ['React 18 · 19', 'Next.js', 'Vite', 'TypeScript', 'ProseMirror', 'Yjs-ready']
@@ -104,8 +104,8 @@ const FEATURES: { id: string; icon: IconName; tag: string; title: string; body: 
 ]
 
 const PROOF: { head: string; body: string }[] = [
-  { head: 'One flat price', body: 'Unlimited devs, every package' },
-  { head: 'No license key', body: 'Never phones home' },
+  { head: 'Flat yearly price', body: 'No per-seat fees, every Pro package' },
+  { head: 'Offline licence key', body: 'Never phones home' },
   { head: 'Source available', body: 'Read and patch every line' },
   { head: 'Runs in the browser', body: 'DOCX without a service' },
   { head: 'Typed end to end', body: 'TypeScript sources, ESM + CJS' },
@@ -184,7 +184,7 @@ export function Home() {
       <section className="shell hero" id="top">
         <div>
           <div className="hero-eyebrow">
-            <b>$99/yr</b>
+            <b>From $99/yr</b>
             The rich text editor toolkit for React
           </div>
           <h1 className="hero-title">
@@ -192,8 +192,9 @@ export function Home() {
           </h1>
           <p className="hero-sub">
             A headless, transaction-based editor core with first-class React bindings. Track
-            changes, comments, DOCX round-tripping and agent workflows are in the box, for one flat
-            price — no per-seat maths, no license key, no hosted backend, no vendor account.
+            changes, comments, DOCX round-tripping and agent workflows are in the box, for a flat
+            yearly price — no per-seat maths, no activation server, no hosted backend, no vendor
+            account.
           </p>
           <div className="hero-actions">
             <a href="#examples" className="btn-primary">
@@ -386,7 +387,7 @@ export function Home() {
             <h2 className="section-title">The same premium features, a tenth of the price</h2>
             <p className="section-sub">
               Track changes, comments, DOCX round-tripping and AI sit behind four-figure plans
-              almost everywhere else. Here they are on npm, all of them, for $99 a year.
+              almost everywhere else. Here they are on npm, all of them, from $99 a year.
             </p>
           </div>
           <Link to="/docs/comparison" className="section-link">

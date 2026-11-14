@@ -70,8 +70,8 @@ Fill each one in like this:
 
 **Descriptions**
 
-- Startup: `Every RichKit Pro package — DOCX, track changes, comments, AI and the Pro editors — for up to 3 developers and one product or internal tool. Updates for a year.`
-- Business: `Every RichKit Pro package for up to 20 developers, with unlimited products and client projects, and priority email support. Updates for a year.`
+- Startup: `Every RichKit Pro package — DOCX, track changes, comments, AI and the Pro editors — for up to 10 developers and one product or internal tool. Updates for a year.`
+- Business: `Every RichKit Pro package for unlimited developers, with unlimited products and client projects, and priority email support. Updates for a year.`
 - Lifetime: `Business rights bought outright. Every RichKit Pro package and every future version, with no renewal.`
 
 **Confirmation modal message**
@@ -107,7 +107,9 @@ Settings → **Webhooks** → **+**:
 - Callback URL: `https://licenses.yourdomain.com/webhooks/lemonsqueezy`
 - Signing secret: generate a long random string (`openssl rand -hex 32`) and
   keep it for `LS_WEBHOOK_SECRET`.
-- Events: `order_created`, `subscription_created`, `subscription_updated`.
+- Events: `order_created`, `order_refunded`, `subscription_created`,
+  `subscription_updated`. `order_refunded` is what stops a refunded lifetime
+  order from getting its permanent key.
 
 ## 4. Resend (sends the key email)
 
@@ -152,6 +154,8 @@ MAIL_PROVIDER=resend
 RESEND_API_KEY=re_xxx
 MAIL_FROM=RichKit <licenses@mail.richkit.dev>
 MAIL_BCC=contact.faithdevs@gmail.com   # a copy of every key you send
+
+LIFETIME_HOLD_DAYS=35   # permanent lifetime key only after the refund window
 
 ORDERS_FILE=/var/lib/richkit-license/orders.jsonl
 HOST=127.0.0.1
@@ -215,7 +219,11 @@ stays off and the licence server exists.
   order, then on the server
   `curl -X POST 127.0.0.1:8787/recover -H 'content-type: application/json' -d '{"email":"buyer@acme.com"}'`
 - **Renewals** re-mint the same licence automatically and email it again.
-- **Refunds** cannot revoke a key; it lapses when its update window ends.
+- **Refunds** cannot revoke a key that is already out, so the server limits
+  what a refunded buyer keeps: an annual key stops at its renewal date, and a
+  lifetime order only gets a key covering the first 35 days of releases — the
+  permanent key is minted after that, and never if `order_refunded` arrived.
+  Always refund through Lemon Squeezy so that webhook fires.
 - **Back up** the private JWK and `orders.jsonl`. Lose the JWK and no new key
   will ever verify against shipped builds.
 - **Enterprise / one-off keys**: `pnpm license:mint`.

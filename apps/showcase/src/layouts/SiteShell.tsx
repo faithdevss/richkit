@@ -206,7 +206,7 @@ export function SiteShell() {
                 <Brand />
               </div>
               <p className="foot-tagline">
-                The rich text editor toolkit for React. $99 a year, every package.
+                The rich text editor toolkit for React. MIT core, Pro from $99 a year.
               </p>
               <p className="foot-credit">
                 Developed by{' '}
