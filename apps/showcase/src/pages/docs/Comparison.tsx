@@ -9,15 +9,15 @@ const TIPTAP_POINTS: { title: string; body: string }[] = [
   },
   {
     title: 'RichKit charges once, for all of it.',
-    body: 'Track changes, comments, AI and DOCX import/export are ordinary packages in this repo, and the commercial license covers every one of them for $99 a year. No per-seat maths, no add-on shopping, no bundle that only unlocks when your documents live in someone else’s cloud.',
+    body: 'Track changes, comments, AI and DOCX import/export are ordinary packages in this repo, and one Pro licence covers every one of them, from $99 a year. No per-seat maths, no add-on shopping, no bundle that only unlocks when your documents live in someone else’s cloud.',
   },
   {
     title: 'Nothing calls home.',
-    body: 'DOCX conversion runs in the browser. There is no license key to provision, no activation check, and no document that has to leave your infrastructure for a feature to switch on. You can read and patch every line you ship.',
+    body: 'DOCX conversion runs in the browser. The Pro licence key is verified offline, with no activation check, and there is no document that has to leave your infrastructure for a feature to switch on. You can read and patch every line you ship.',
   },
   {
     title: 'Where Tiptap is still ahead — plainly.',
-    body: 'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. Its core is MIT, which RichKit’s is not. If you want someone to page at 3am, pay them.',
+    body: 'It is years older, far more battle-tested, and has a real company behind support and SLAs. Managed collaboration is a solved problem there and unshipped here. If you want someone to page at 3am, pay them.',
   },
 ]
 
@@ -71,7 +71,7 @@ export function Comparison() {
         <li>You are shipping closed-source and do not want a GPL obligation.</li>
         <li>Your documents cannot leave your infrastructure.</li>
         <li>You would rather patch the editor yourself than file a ticket.</li>
-        <li>You want one price that does not move when the team or the traffic grows.</li>
+        <li>You want a flat price with no per-seat billing and no usage metering.</li>
       </ul>
 
       <h2>Pick something else when</h2>

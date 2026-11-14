@@ -34,6 +34,8 @@ export function openStore(path) {
     get: (licenseId) => byId.get(licenseId),
     forEmail: (email) => (byEmail.get(email.toLowerCase()) ?? []).map((id) => byId.get(id)),
     size: () => byId.size,
+    /** Latest record of every licence. */
+    all: () => [...byId.values()],
     /** Record a mint. Written before the email is sent, so a mail failure never loses a key. */
     put(record) {
       const row = { ...record, recordedAt: new Date().toISOString() }

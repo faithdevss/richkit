@@ -22,7 +22,9 @@ GET  /health                  liveness, plus how many licences are on file
 
 | Lemon Squeezy event                             | Result                                     |
 | ----------------------------------------------- | ------------------------------------------ |
-| `order_created`, lifetime variant               | one key, `updatesUntil: null`              |
+| `order_created`, lifetime variant               | provisional key covering the hold (below)  |
+| hold over, no refund (hourly sweep)             | permanent key, `updatesUntil: null`        |
+| `order_refunded`                                | recorded; permanent key is never minted    |
 | `order_created`, subscription variant           | ignored — the subscription events cover it |
 | `subscription_created`                          | key covering releases up to `renews_at`    |
 | `subscription_updated` with a later `renews_at` | same licence id re-minted, "renewed" email |
@@ -32,6 +34,23 @@ A licence id (`ls_sub_…`, `ls_order_…`) is stable for the life of the custom
 so a renewal extends the same licence rather than issuing an unrelated key, and
 a replayed webhook is a no-op. Every mint is appended to `orders.jsonl` before
 the email goes out, so a mail failure never loses a key.
+
+### The lifetime hold
+
+A permanent key covers every future release and cannot be recalled, so minting
+it at purchase would let a buyer refund and keep RichKit Pro for ever. A
+lifetime order instead gets a key covering releases up to `LIFETIME_HOLD_DAYS`
+after purchase (default 35: the 30-day refund window plus time for a last-day
+refund to be processed), and the email says when the permanent one arrives. An
+hourly sweep, also run at boot, mints and emails the permanent key once the
+hold has passed — unless `order_refunded` arrived first. Both keys share the
+licence id.
+
+A buyer who refunds keeps a key for the releases published during the hold,
+exactly as a refunded annual buyer keeps the window they were minted. A
+chargeback months later is past the hold and cannot be clawed back; the log
+says so (`refunded AFTER its permanent key was issued`). `LIFETIME_HOLD_DAYS=0`
+turns the hold off.
 
 ## Install
 
@@ -153,7 +172,9 @@ curl -s -X POST http://127.0.0.1:8787/recover \
 ## Lemon Squeezy
 
 1. Settings → Webhooks → add `https://licenses.yourdomain.com/webhooks/lemonsqueezy`.
-2. Subscribe to `order_created`, `subscription_created`, `subscription_updated`.
+2. Subscribe to `order_created`, `order_refunded`, `subscription_created`,
+   `subscription_updated`. Without `order_refunded` a refunded lifetime order
+   still receives its permanent key.
 3. Copy the signing secret into `LS_WEBHOOK_SECRET`.
 4. Products → each variant → copy the variant id into the matching `VARIANT_*`.
 5. Leave Lemon Squeezy's own licence-key feature **off**. Its keys are random
@@ -182,7 +203,10 @@ a customer's build runs. Requires `pnpm --filter @richkitjs/license build` once.
   builds accept can ever be minted.
 - **Refunds and chargebacks cannot be revoked.** An offline key stays valid for
   the window it was minted with. That is the cost of having no licence server in
-  the customer's runtime path; the annual window caps the exposure.
+  the customer's runtime path; the annual window caps the exposure for
+  subscriptions, and the lifetime hold caps it for lifetime orders.
+- **Refund a lifetime order in Lemon Squeezy, not by hand elsewhere**, so the
+  `order_refunded` webhook reaches this server before the hold ends.
 - **A failed mint returns 500 on purpose** so Lemon Squeezy retries. Repeats are
   safe.
 - **`/recover` is a support tool, not a public form.** The pricing FAQ and the

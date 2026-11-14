@@ -66,11 +66,11 @@ of its Plan, to:
 3. PLANS
 ----------------------------------------------------------------------
 
-  Startup     Up to three (3) Developers and one (1) product or internal
+  Startup     Up to ten (10) Developers and one (1) product or internal
               tool.
 
-  Business    Up to twenty (20) Developers. Unlimited products, internal
-              tools and client projects.
+  Business    Unlimited Developers. Unlimited products, internal tools and
+              client projects.
 
   Lifetime    The rights of the Business Plan, bought with a single payment.
               Every version of the Software the Licensor releases, at any
@@ -115,7 +115,7 @@ Anyone may use the Software free of charge on development hosts (such as
 localhost) for evaluation and development, without a License Key.
 
 Anyone may also make Production Use of the Software without a License Key
-for up to thirty (30) consecutive days to evaluate it, with the unlicensed
+for up to six (6) consecutive months to evaluate it, with the unlicensed
 notice displayed. After that period the entity must either purchase a
 license or cease Production Use of the Software.
 
@@ -134,7 +134,9 @@ Its License Key continues to work with those versions. The Licensee has no
 right to versions released after its License Key's "updates until" date.
 
 The Lifetime Plan does not expire, and its License Key covers every version
-the Licensor releases.
+the Licensor releases. The License Key issued at purchase may cover only the
+versions released during the refund period; the Licensor issues the License
+Key covering every version once that period has passed without a refund.
 
 The Licensor is not obliged to continue developing, maintaining or releasing
 the Software, for any Plan. If the Licensor stops releasing new versions, or
