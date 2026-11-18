@@ -27,7 +27,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       {
         state: 'open',
         label: 'MIT core / Pro',
-        note: 'The core editor and basic extensions are MIT. DOCX, track changes, comments, AI and the Pro editors are RichKit Pro, from $99 / yr with an offline licence key.',
+        note: 'The core editor and basic extensions are MIT. DOCX, track changes, comments, AI and the Pro editors are RichKit Pro, free for solo developers, from $99 / yr for teams, with an offline licence key.',
       },
       { state: 'open', label: 'MIT' },
       {
@@ -216,7 +216,7 @@ export const COMPARISON_ROWS: ComparisonRow[] = [
       {
         state: 'open',
         label: '$99 – $499 / yr',
-        note: 'Startup $99 / yr (up to 10 devs, one product) or Business $499 / yr (unlimited devs, unlimited products). $3,000 lifetime. Self-hosted — no per-document fees and no usage metering.',
+        note: 'Free for solo developers. Startup $99 / yr (2–10 devs, one product) or Business $499 / yr (unlimited devs, unlimited products). $3,000 lifetime. Self-hosted — no per-document fees and no usage metering.',
       },
       {
         state: 'paid',

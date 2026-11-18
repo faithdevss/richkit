@@ -10,7 +10,7 @@ import {
 } from '../lib/lemonsqueezy'
 
 // Where "talk to a human" goes — purchase orders, signed agreements, SLAs.
-const CONTACT = 'https://github.com/faithdevss/richkit/issues/new?title=License%20enquiry'
+const CONTACT = 'mailto:contact.faithdevs@gmail.com?subject=RichKit%20licence%20enquiry'
 
 type Plan = {
   tag: string
@@ -29,7 +29,8 @@ const FREE_INCLUDES = [
   'Starter kit and every basic extension',
   'Tables, images, links, lists, markdown, HTML',
   'Minimal, HTML, Markdown and Mentions editors',
-  'Pro packages on localhost, no key needed',
+  'Pro packages free for solo developers, in production too',
+  'Pro packages on localhost for everyone, no key needed',
 ]
 
 const PLANS: Plan[] = [
@@ -37,7 +38,7 @@ const PLANS: Plan[] = [
     tag: 'Startup',
     price: '$99',
     per: '/ year',
-    note: 'Up to 10 developers, one product or internal tool.',
+    note: 'For teams of 2–10 developers, one product or internal tool.',
     includes: [
       'Every Pro package',
       'One product or internal tool',
@@ -71,7 +72,7 @@ const PLANS: Plan[] = [
       'Everything in Business',
       'Never expires',
       'Every future version, no renewal',
-      'Permanent key 35 days after purchase',
+      '35-day refund window, then your permanent key is issued',
       'One payment, one invoice, done',
     ],
     checkout: CHECKOUT_LIFETIME,
@@ -107,8 +108,12 @@ const FAQ: { q: string; a: ReactNode }[] = [
     ),
   },
   {
+    q: 'Is Pro really free for solo developers?',
+    a: 'Yes. If you are one person, with no employees, contractors or co-developers using it, and you are not building for a team or company of more than one developer, you may use every Pro package in production at no cost, for as long as you stay solo. The small “unlicensed” badge may still show. The moment a second developer joins, buy Startup within 30 days.',
+  },
+  {
     q: 'What happens without a key?',
-    a: 'On localhost and development hosts, nothing — Pro runs clean. On a production site, Pro packages show a small “unlicensed” badge. They never stop working, never block editing, and never lose content. You may evaluate Pro in production this way for up to six months; after that the licence asks you to buy a plan or stop using the Pro packages in production.',
+    a: 'On localhost and development hosts, nothing — Pro runs clean. On a production site, Pro packages show a small “unlicensed” badge. They never stop working, never block editing, and never lose content. A team may evaluate Pro in production this way for up to six months; after that the licence asks you to buy a plan or stop using the Pro packages in production.',
   },
   {
     q: 'What happens if I stop paying?',
@@ -120,7 +125,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Which plan do I need?',
-    a: 'Startup if you have up to ten developers working on one product. Business for more than ten developers — no upper limit — and any number of products. Need an SLA or invoicing? Talk to us about Enterprise.',
+    a: 'None, if you work alone — Pro is free. Startup for teams of two to ten developers on one product. Business for more than ten developers — no upper limit — and any number of products. Need an SLA or invoicing? Talk to us about Enterprise.',
   },
   {
     q: 'Can I read and modify the source?',
@@ -188,9 +193,13 @@ export function Pricing() {
         <div className="page-eyebrow">Pricing</div>
         <h1 className="page-title">Free core. Pro, priced for your size.</h1>
         <p className="page-lede">
-          The editor is MIT and free forever. Track changes, comments, DOCX round-tripping and AI
-          cost four figures a month almost everywhere else. Here they are Pro, from $99 a year,
-          self-hosted, with no per-document fees and no usage metering.
+          The editor is MIT and free forever, and Pro is free for solo developers. Teams pay once
+          there is more than one developer: track changes, comments, DOCX round-tripping and AI from
+          $99 a year, where the same features run from hundreds to thousands of dollars a year
+          elsewhere. Self-hosted, with no per-document fees and no usage metering.
+        </p>
+        <p className="page-lede">
+          Try Pro in production free for six months, no key needed. Only teams need a licence.
         </p>
       </section>
 
@@ -202,7 +211,7 @@ export function Pricing() {
               <div className="price-amount">
                 <b>$0</b>
               </div>
-              <p className="price-note">MIT. Free forever, for everyone.</p>
+              <p className="price-note">MIT core free for everyone. Pro free for solo developers.</p>
             </div>
             <ul className="price-list">
               {FREE_INCLUDES.map((f) => (
@@ -284,7 +293,7 @@ export function Pricing() {
           {[
             {
               name: 'RichKit Pro',
-              cost: 'from $99 / yr',
+              cost: 'free solo · teams from $99 / yr',
               sub: 'self-hosted, no per-document fees',
               win: true,
             },

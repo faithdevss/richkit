@@ -112,9 +112,15 @@ export function Terms() {
       <h2>Evaluation</h2>
       <p>
         The Pro packages run on localhost and other development hosts with no key and no badge, so
-        you can build the real integration before deciding. You may also run them in production
-        without a key for six months while you evaluate; the badge shows during that time. After
-        that, buy a licence or stop using the Pro packages in production.
+        you can build the real integration before deciding. A team may also run them in
+        production without a key for six months while it evaluates; the badge shows during that
+        time. After that, buy a licence or stop using the Pro packages in production.
+      </p>
+      <p>
+        <b>Solo developers use Pro free.</b> One person with no employees, contractors or
+        co-developers, and not building for a team or company of more than one developer, may use
+        the Pro packages in production at no cost for as long as they stay solo. When a second
+        developer joins, a plan is required within 30 days.
       </p>
 
       <h2>Renewal and expiry</h2>

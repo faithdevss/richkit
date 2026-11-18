@@ -70,7 +70,7 @@ Fill each one in like this:
 
 **Descriptions**
 
-- Startup: `Every RichKit Pro package — DOCX, track changes, comments, AI and the Pro editors — for up to 10 developers and one product or internal tool. Updates for a year.`
+- Startup: `Every RichKit Pro package — DOCX, track changes, comments, AI and the Pro editors — for teams of 2–10 developers and one product or internal tool (solo developers use Pro free). Updates for a year.`
 - Business: `Every RichKit Pro package for unlimited developers, with unlimited products and client projects, and priority email support. Updates for a year.`
 - Lifetime: `Business rights bought outright. Every RichKit Pro package and every future version, with no renewal.`
 
